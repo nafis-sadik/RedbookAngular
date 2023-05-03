@@ -1,0 +1,24 @@
+<nb-layout>
+    <nb-layout-header fixed>
+        <section class="nav-brand-container">
+            <a>
+                <nb-icon ghost nbButton status="basic" (click)="toggle()" icon="menu-2"></nb-icon>
+            </a>
+            <h1>Redbook</h1>
+            <nb-select placeholder="{{selectedTheme}}" (selectedChange)="setTheme($event)"
+                       (ngModel)="selectedTheme"
+                       [(selected)]="selectedTheme">
+                <nb-option *ngFor="let theme of themes" [value]="theme">{{theme}}</nb-option>
+            </nb-select>
+        </section>
+    </nb-layout-header>
+
+    <nb-sidebar>
+        <nb-menu [items]="menuOptions" autoCollapse="true">
+        </nb-menu>
+    </nb-sidebar>
+    <nb-layout-column>
+        <router-outlet></router-outlet>
+    </nb-layout-column>
+    <nb-layout-footer class="footer">All rights reserved by <a href="#">Blume Digital Corporation</a></nb-layout-footer>
+</nb-layout>
