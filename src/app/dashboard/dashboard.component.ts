@@ -20,40 +20,34 @@ export class DashboardComponent {
   menuOptions: NbMenuItem[] = [
     {
       title: 'Dashboards',
+      icon: 'keypad',
       expanded: true,
       children: [
         {
           title: 'Krishi Ghor',
-          icon: 'home-outline',
+          icon: 'home',
           link: '/dashboard/home'
         },
         {
           title: 'FM SkyVision',
-          icon: 'home-outline',
+          icon: 'home',
           link: '/dashboard/home'
         }
       ],
     },
     {
       title: 'Product Management',
-      expanded: false,
-      children: [
-        {
-          title: 'Add Product',
-          icon: 'file-add'
-        },
-        {
-          title: 'Update Product',
-          icon: 'file'
-        },
-        {
-          title: 'Product List',
-          icon: 'list'
-        }
-      ]
+      icon: 'briefcase',
+      link: '/dashboard/products'
+    },
+    {
+      title: 'Category Management',
+      icon: 'layers',
+      link: '/dashboard/category'
     },
     {
       title: 'Inventory Management',
+      icon: 'trending-up',
       expanded: false,
       children: [
         {
@@ -67,25 +61,8 @@ export class DashboardComponent {
       ]
     },
     {
-      title: 'Catagory Management',
-      expanded: false,
-      children: [
-        {
-          title: 'Add Catagory',
-          icon: 'folder-add'
-        },
-        {
-          title: 'Update Catagory',
-          icon: 'folder'
-        },
-        {
-          title: 'Catagory List',
-          icon: 'list'
-        }
-      ]
-    },
-    {
       title: 'CRM',
+      icon: 'people',
       expanded: false,
       children: [
         {
