@@ -17,7 +17,8 @@
                                             (click)="openAddCategoryWindow('Update Category Information', false, category)">
                                         <nb-icon icon="copy"></nb-icon>
                                     </button>
-                                    <button nbButton nbTooltip="Delete" status="danger" class="col-md-1">
+                                    <button nbButton nbTooltip="Delete" status="danger" class="col-md-1"
+                                            (click)="openDeleteCategoryWindow('Delete Category', category.categoryId)">
                                         <nb-icon icon="close-square"></nb-icon>
                                     </button>
                                 </div>
@@ -49,7 +50,8 @@
                                             (click)="openAddCategoryWindow('Update Subcategory Information', true, subcategory)">
                                         <nb-icon icon="copy"></nb-icon>
                                     </button>
-                                    <button nbTooltip="Delete" nbButton status="danger" class="col-md-1">
+                                    <button nbTooltip="Delete" nbButton status="danger" class="col-md-1"
+                                            (click)="openDeleteCategoryWindow('Delete Subcategory', subcategory.categoryId)">
                                         <nb-icon icon="close-square"></nb-icon>
                                     </button>
                                 </div>

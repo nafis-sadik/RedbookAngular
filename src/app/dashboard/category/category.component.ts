@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { ICategoryModel } from './category-model';
+import { RemoveCategoryComponent } from './remove-category/remove-category.component';
 
 @Component({
   selector: 'app-category',
@@ -151,6 +152,32 @@ export class CategoryComponent {
         console.log('Method', method); 
         console.log('Body', categoryObj);
         this.toastrService.success(toasterMsg, 'Success');
+      }
+    });
+  }
+
+  openDeleteCategoryWindow(windowMessage: string, categoryId: Number) {
+    // Load pop up dialogue
+    let windowRef = this.windowService.open(RemoveCategoryComponent, {
+      title: windowMessage,
+      buttons: {
+        close: false,
+        fullScreen: true,
+        maximize: true,
+        minimize: true
+      },
+    });
+
+    // Remove element
+    windowRef.onClose.subscribe((deleteEntry) => {
+      if (deleteEntry) {
+        this.categories.forEach(element => {
+          if (element.categoryId == categoryId) {
+            let index = this.categories.indexOf(element);
+            this.categories.splice(index);
+            return;
+          }
+        });
       }
     });
   }
