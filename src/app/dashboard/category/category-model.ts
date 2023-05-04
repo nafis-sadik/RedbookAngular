@@ -1,4 +1,4 @@
-export declare class CategoryModel{
+export declare interface ICategoryModel{
     /**
      * Item Title
      * @type {Number}

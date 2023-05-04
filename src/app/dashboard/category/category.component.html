@@ -10,11 +10,11 @@
                         <nb-list-item *ngFor="let category of categories">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <span class="col-md-9" (click)="loadSubcategories(category.categoryId)">
+                                    <nb-radio class="col-md-9" (valueChange)="loadSubcategories(category.categoryId)">
                                         {{ category.title }}
-                                    </span>
+                                    </nb-radio>
                                     <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
-                                            (click)="openAddCategoryWindow('Update Category Information')">
+                                            (click)="openAddCategoryWindow('Update Category Information', false, category)">
                                         <nb-icon icon="copy"></nb-icon>
                                     </button>
                                     <button nbButton nbTooltip="Delete" status="danger" class="col-md-1">
@@ -26,7 +26,7 @@
                     </nb-list>
                 </nb-card-body>
                 <nb-card-footer>
-                    <button nbButton status="primary" (click)="openAddCategoryWindow('Add New Category')">
+                    <button nbButton status="primary" (click)="openAddCategoryWindow('Add New Category', false, null)">
                         <nb-icon icon="plus-square"></nb-icon> Add Category
                     </button>
                 </nb-card-footer>
@@ -45,7 +45,8 @@
                                     <span class="col-md-9">
                                         {{ subcategory.title }}
                                     </span>
-                                    <button nbTooltip="Update" nbButton status="primary" class="col-md-1">
+                                    <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
+                                            (click)="openAddCategoryWindow('Update Subcategory Information', true, subcategory)">
                                         <nb-icon icon="copy"></nb-icon>
                                     </button>
                                     <button nbTooltip="Delete" nbButton status="danger" class="col-md-1">
@@ -57,12 +58,12 @@
                     </nb-list>
                 </nb-card-body>
                 <nb-card-footer>
-                    <button nbButton shape="rectangle" status="primary">
+                    <button nbButton shape="rectangle" status="primary"
+                            (click)="openAddCategoryWindow('Update Category Information', true, null)">
                         <nb-icon icon="plus-square"></nb-icon> Add Subcategory
                     </button>
                 </nb-card-footer>
             </nb-card>
         </div>
-
     </div>
 </section>

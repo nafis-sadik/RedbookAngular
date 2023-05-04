@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddSubcategoryComponent } from './add-subcategory.component';
+import { RemoveCategoryComponent } from './remove-category.component';
 
-describe('AddSubcategoryComponent', () => {
-  let component: AddSubcategoryComponent;
-  let fixture: ComponentFixture<AddSubcategoryComponent>;
+describe('RemoveCategoryComponent', () => {
+  let component: RemoveCategoryComponent;
+  let fixture: ComponentFixture<RemoveCategoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddSubcategoryComponent ]
+      declarations: [ RemoveCategoryComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddSubcategoryComponent);
+    fixture = TestBed.createComponent(RemoveCategoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

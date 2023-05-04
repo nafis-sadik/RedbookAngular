@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbWindowModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbWindowModule, NbToastrModule, NbGlobalPhysicalPosition } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
@@ -19,6 +19,11 @@ import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
     BrowserAnimationsModule,
     NbEvaIconsModule,
     NbThemeModule.forRoot({ name: 'default' }),
+    NbToastrModule.forRoot({
+      preventDuplicates: true,
+      destroyByClick: true,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+    }),
     NbWindowModule.forChild(),
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),

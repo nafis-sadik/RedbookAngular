@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NbWindowService } from '@nebular/theme';
+import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { AddCategoryComponent } from './add-category/add-category.component';
-import { CategoryModel } from './category-model';
+import { ICategoryModel } from './category-model';
 
 @Component({
   selector: 'app-category',
@@ -9,7 +9,9 @@ import { CategoryModel } from './category-model';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent {
-  backendDataCategories: CategoryModel[] = [
+  selectedCategoryId: Number | undefined = undefined;
+
+  backendDataCategories: ICategoryModel[] = [
     {
       categoryId: 1,
       parentCategoryId: undefined,
@@ -22,9 +24,9 @@ export class CategoryComponent {
     }
   ];
 
-  categories: CategoryModel[] = [];
+  categories: ICategoryModel[] = [];
 
-  backendDataSubCategories: CategoryModel[] = [
+  backendDataSubCategories: ICategoryModel[] = [
     {
       categoryId: 3,
       parentCategoryId: 1,
@@ -82,9 +84,9 @@ export class CategoryComponent {
     }
   ];
 
-  subcategories: CategoryModel[] = [];
+  subcategories: ICategoryModel[] = [];
 
-  constructor(private windowService: NbWindowService) {
+  constructor(private windowService: NbWindowService, private toastrService: NbToastrService) {
     this.categories = this.backendDataCategories;
   }
 
@@ -92,11 +94,64 @@ export class CategoryComponent {
     this.subcategories.splice(0);
     for (let index = 0; index < this.backendDataSubCategories.length; index++) {
       if(this.backendDataSubCategories[index].parentCategoryId == categoryId)
-        this.subcategories.push(this.backendDataSubCategories[index]);      
+        this.subcategories.push(this.backendDataSubCategories[index]);
+      
+      this.selectedCategoryId = categoryId;
     }
   }
 
-  openAddCategoryWindow(windowMessage: string) {
-    this.windowService.open(AddCategoryComponent, { title: windowMessage });
+  openAddCategoryWindow(windowMessage: string, isSubcategory: boolean, categoryObj: ICategoryModel | null) {
+    let url: string;
+    let method: string;
+    let toasterMsg: string = '';
+
+    // You can not add a subcategory without having a category selected
+    if (isSubcategory) {
+      if (this.selectedCategoryId == null || this.selectedCategoryId == undefined) {
+        this.toastrService.warning('Please select a category first', 'Warning');
+        return;
+      }
+      url = '/api/Subcategory'
+    }
+    else {
+      url = '/api/Category';
+    }
+
+    // If UI sent an object, it's an update operation
+    // Otherwise it's an incertion operation
+    let windowRef = this.windowService.open(AddCategoryComponent, {
+      title: windowMessage,
+      buttons: {
+        close: false,
+        fullScreen: true,
+        maximize: true,
+        minimize: true
+      }
+    });
+
+    windowRef.onClose.subscribe((categoryTitle) => {
+      // If user closes the window without saving anything, we do not need to process anything
+      // First if shields against that
+      if (categoryTitle != undefined && categoryTitle != null) {
+        // If user used update button, categoryObj brought the stock object for us
+        // If the user used create button, categoryObj shall remain null
+        if (categoryObj == null) {
+          method = 'POST';
+          toasterMsg = 'Saved Successfully';
+          categoryObj = { title: categoryTitle, categoryId: 0, parentCategoryId: undefined };
+        } else {
+          method = 'PUT';
+          toasterMsg = 'Updated Successfully';
+          categoryObj.title = categoryTitle;
+        }
+        
+        // Replace the console logs with http request bellow
+        // Calling the backend API when pre processing is ready
+        console.log('URL', url); 
+        console.log('Method', method); 
+        console.log('Body', categoryObj);
+        this.toastrService.success(toasterMsg, 'Success');
+      }
+    });
   }
 }
