@@ -10,7 +10,7 @@ export declare interface ICategoryModel{
      */
     parentCategoryId: Number | undefined;
     /**
-     * Item relative link (for routerLink)
+     * Category Title
      * @type {string}
      */
     title: string;

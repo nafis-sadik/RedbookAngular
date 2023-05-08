@@ -36,17 +36,7 @@ export class DashboardComponent {
       ],
     },
     {
-      title: 'Product Management',
-      icon: 'briefcase',
-      link: '/dashboard/products'
-    },
-    {
-      title: 'Category Management',
-      icon: 'layers',
-      link: '/dashboard/category'
-    },
-    {
-      title: 'Inventory Management',
+      title: 'Business Operations',
       icon: 'trending-up',
       expanded: false,
       children: [
@@ -76,6 +66,23 @@ export class DashboardComponent {
         {
           title: 'Customers',
           icon: 'person'
+        }
+      ]
+    },
+    {
+      title: 'Settings',
+      icon: 'settings',
+      expanded: false,
+      children:[
+        {
+          title: 'Product Management',
+          icon: 'briefcase',
+          link: '/dashboard/products'
+        },
+        {
+          title: 'Category Management',
+          icon: 'layers',
+          link: '/dashboard/category'
         }
       ]
     }

@@ -1,71 +1,115 @@
 <section id="Categories" class="container-fluid">
-    <div class="row">
-        <div class="col-md-6">
-            <nb-card size="large">
-                <nb-card-header>
-                    Categories
-                </nb-card-header>
-                <nb-card-body>
-                    <nb-list>
-                        <nb-list-item *ngFor="let category of categories">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <nb-radio class="col-md-9" (valueChange)="loadSubcategories(category.categoryId)">
-                                        {{ category.title }}
-                                    </nb-radio>
-                                    <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
-                                            (click)="openAddCategoryWindow('Update Category Information', false, category)">
-                                        <nb-icon icon="copy"></nb-icon>
-                                    </button>
-                                    <button nbButton nbTooltip="Delete" status="danger" class="col-md-1"
-                                            (click)="openDeleteCategoryWindow('Delete Category', category.categoryId)">
-                                        <nb-icon icon="close-square"></nb-icon>
-                                    </button>
-                                </div>
-                            </div>
-                        </nb-list-item>
-                    </nb-list>
-                </nb-card-body>
-                <nb-card-footer>
-                    <button nbButton status="primary" (click)="openAddCategoryWindow('Add New Category', false, null)">
-                        <nb-icon icon="plus-square"></nb-icon> Add Category
-                    </button>
-                </nb-card-footer>
-            </nb-card>
-        </div>
-        <div class="col-md-6">
-            <nb-card size="large">
-                <nb-card-header>
-                    Subcategories
-                </nb-card-header>
-                <nb-card-body>
-                    <nb-list>
-                        <nb-list-item *ngFor="let subcategory of subcategories">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <span class="col-md-9">
-                                        {{ subcategory.title }}
-                                    </span>
-                                    <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
-                                            (click)="openAddCategoryWindow('Update Subcategory Information', true, subcategory)">
-                                        <nb-icon icon="copy"></nb-icon>
-                                    </button>
-                                    <button nbTooltip="Delete" nbButton status="danger" class="col-md-1"
-                                            (click)="openDeleteCategoryWindow('Delete Subcategory', subcategory.categoryId)">
-                                        <nb-icon icon="close-square"></nb-icon>
-                                    </button>
-                                </div>
-                            </div>
-                        </nb-list-item>
-                    </nb-list>
-                </nb-card-body>
-                <nb-card-footer>
-                    <button nbButton shape="rectangle" status="primary"
-                            (click)="openAddCategoryWindow('Update Category Information', true, null)">
-                        <nb-icon icon="plus-square"></nb-icon> Add Subcategory
-                    </button>
-                </nb-card-footer>
-            </nb-card>
-        </div>
-    </div>
+    <nb-card>
+        <nb-card-header>
+            <h5>Product Category Management</h5>
+        </nb-card-header>
+        <nb-card-body>
+            <div class="row">
+                <div class="col-md-4">
+                    <nb-card size="large">
+                        <nb-card-header>
+                            Your Businesses
+                        </nb-card-header>
+                        <nb-card-body>
+                            <nb-list>
+                                <nb-list-item *ngFor="let business of ownedBusinesses">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <nb-radio class="col-md-9"
+                                                      (valueChange)="selectBusiness(business.businessId)">
+                                                {{ business.title }}
+                                            </nb-radio>
+                                            <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
+                                                    (click)="openSaveBusinessWindow('Update Business Title', business)">
+                                                <nb-icon icon="copy"></nb-icon>
+                                            </button>
+                                            <button nbButton nbTooltip="Delete" status="danger" class="col-md-1"
+                                                    (click)="openDeleteBusinessWindow('Delete Category', business.businessId)">
+                                                <nb-icon icon="close-square"></nb-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </nb-list-item>
+                            </nb-list>
+                        </nb-card-body>
+                        <nb-card-footer>
+                            <button nbButton status="primary"
+                                    (click)="openSaveBusinessWindow('Add New Business', null)">
+                                <nb-icon icon="plus-square"></nb-icon> Add Category
+                            </button>
+                        </nb-card-footer>
+                    </nb-card>
+                </div>
+                <div class="col-md-4">
+                    <nb-card size="large">
+                        <nb-card-header>
+                            Categories
+                        </nb-card-header>
+                        <nb-card-body>
+                            <nb-list>
+                                <nb-list-item *ngFor="let category of categories">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <nb-radio class="col-md-9"
+                                                      (valueChange)="loadSubcategories(category.categoryId)">
+                                                {{ category.title }}
+                                            </nb-radio>
+                                            <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
+                                                    (click)="openSaveCategoryWindow('Update Category Information', false, category)">
+                                                <nb-icon icon="copy"></nb-icon>
+                                            </button>
+                                            <button nbButton nbTooltip="Delete" status="danger" class="col-md-1"
+                                                    (click)="openDeleteCategoryWindow('Delete Category', category.categoryId)">
+                                                <nb-icon icon="close-square"></nb-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </nb-list-item>
+                            </nb-list>
+                        </nb-card-body>
+                        <nb-card-footer>
+                            <button nbButton status="primary"
+                                    (click)="openSaveCategoryWindow('Add New Category', false, null)">
+                                <nb-icon icon="plus-square"></nb-icon> Add Category
+                            </button>
+                        </nb-card-footer>
+                    </nb-card>
+                </div>
+                <div class="col-md-4">
+                    <nb-card size="large">
+                        <nb-card-header>
+                            Subcategories
+                        </nb-card-header>
+                        <nb-card-body>
+                            <nb-list>
+                                <nb-list-item *ngFor="let subcategory of subcategories">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <span class="col-md-9">
+                                                {{ subcategory.title }}
+                                            </span>
+                                            <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
+                                                    (click)="openSaveCategoryWindow('Update Subcategory Information', true, subcategory)">
+                                                <nb-icon icon="copy"></nb-icon>
+                                            </button>
+                                            <button nbTooltip="Delete" nbButton status="danger" class="col-md-1"
+                                                    (click)="openDeleteCategoryWindow('Delete Subcategory', subcategory.categoryId)">
+                                                <nb-icon icon="close-square"></nb-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </nb-list-item>
+                            </nb-list>
+                        </nb-card-body>
+                        <nb-card-footer>
+                            <button nbButton shape="rectangle" status="primary"
+                                    (click)="openSaveCategoryWindow('Update Category Information', true, null)">
+                                <nb-icon icon="plus-square"></nb-icon> Add Subcategory
+                            </button>
+                        </nb-card-footer>
+                    </nb-card>
+                </div>
+            </div>
+        </nb-card-body>
+    </nb-card>
 </section>

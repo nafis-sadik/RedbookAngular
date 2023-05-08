@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
+import { IBusinessModel } from '../Models/IBusinessModel';
 import { AddCategoryComponent } from './add-category/add-category.component';
-import { ICategoryModel } from './category-model';
+import { ICategoryModel } from '../Models/category-model';
 import { RemoveCategoryComponent } from './remove-category/remove-category.component';
 
 @Component({
@@ -9,9 +10,8 @@ import { RemoveCategoryComponent } from './remove-category/remove-category.compo
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
+  
 export class CategoryComponent {
-  selectedCategoryId: Number | undefined = undefined;
-
   backendDataCategories: ICategoryModel[] = [
     {
       categoryId: 1,
@@ -22,10 +22,13 @@ export class CategoryComponent {
       categoryId: 2,
       parentCategoryId: undefined,
       title: 'Motors'
+    },
+    {
+      categoryId: 3,
+      parentCategoryId: undefined,
+      title: 'Engines'
     }
   ];
-
-  categories: ICategoryModel[] = [];
 
   backendDataSubCategories: ICategoryModel[] = [
     {
@@ -40,8 +43,8 @@ export class CategoryComponent {
     },
     {
       categoryId: 5,
-      parentCategoryId: 2,
-      title: 'Shallow Motor'
+      parentCategoryId: 3,
+      title: 'EFI'
     },
     {
       categoryId: 6,
@@ -50,8 +53,8 @@ export class CategoryComponent {
     },
     {
       categoryId: 7,
-      parentCategoryId: 2,
-      title: 'AC Motor'
+      parentCategoryId: 3,
+      title: 'VVTi'
     },
     {
       categoryId: 8,
@@ -82,13 +85,41 @@ export class CategoryComponent {
       categoryId: 13,
       parentCategoryId: 1,
       title: 'Conventional Oil'
+    },
+    {
+      categoryId: 14,
+      parentCategoryId: 3,
+      title: 'Classic Engines'
     }
   ];
 
+  backendOwnedBusinesses: IBusinessModel[] = [
+    {
+      businessId: 1,
+      ownerId: 'GUID',
+      title: 'Krishi Ghor'
+    },
+    {
+      businessId: 2,
+      ownerId: 'GUID',
+      title: 'FM Sky Vision'
+    }
+  ];
+  
+  selectedBusiness: string | undefined = undefined;
+
+  selectedCategoryId: Number | undefined = undefined;
+
+  categories: ICategoryModel[] = [];
+
   subcategories: ICategoryModel[] = [];
 
+  ownedBusinesses: IBusinessModel[] = [];
+
   constructor(private windowService: NbWindowService, private toastrService: NbToastrService) {
-    this.categories = this.backendDataCategories;
+    this.ownedBusinesses = this.backendOwnedBusinesses;
+    if(this.backendOwnedBusinesses.length > 0)
+      this.selectBusiness(this.backendOwnedBusinesses[0].businessId);
   }
 
   loadSubcategories(categoryId: Number) {
@@ -101,7 +132,7 @@ export class CategoryComponent {
     }
   }
 
-  openAddCategoryWindow(windowMessage: string, isSubcategory: boolean, categoryObj: ICategoryModel | null) {
+  openSaveCategoryWindow(windowMessage: string, isSubcategory: boolean, categoryObj: ICategoryModel | null) {
     let url: string;
     let method: string;
     let toasterMsg: string = '';
@@ -175,6 +206,85 @@ export class CategoryComponent {
           if (element.categoryId == categoryId) {
             let index = this.categories.indexOf(element);
             this.categories.splice(index);
+            return;
+          }
+        });
+      }
+    });
+  }
+
+  selectBusiness(businessId: Number) {
+    this.backendOwnedBusinesses.filter((elem) => {
+      if (elem.businessId == businessId) {
+        // Load product categories of selected business
+        this.selectedBusiness = elem.title;
+        this.categories = this.backendDataCategories;
+      }
+    })
+  }
+
+  openSaveBusinessWindow(windowMessage: string, businessModel: IBusinessModel | null) {
+    let url: string;
+    let method: string;
+    let toasterMsg: string = '';
+
+    // If UI sent an object, it's an update operation
+    // Otherwise it's an incertion operation
+    let windowRef = this.windowService.open(AddCategoryComponent, {
+      title: windowMessage,
+      buttons: {
+        close: false,
+        fullScreen: true,
+        maximize: true,
+        minimize: true
+      }
+    });
+
+    windowRef.onClose.subscribe((businessTitle) => {
+      // If user closes the window without saving anything, we do not need to process anything
+      // First if shields against that
+      if (businessTitle != undefined && businessTitle != null) {
+        // If user used update button, businessModel brought the stock object for us
+        // If the user used create button, businessModel shall remain null
+        if (businessModel == null) {
+          method = 'POST';
+          toasterMsg = 'Saved Successfully';
+          businessModel = { title: businessTitle, businessId: 0, ownerId: 'GUID' };
+        } else {
+          method = 'PUT';
+          toasterMsg = 'Updated Successfully';
+          businessModel.title = businessTitle;
+        }
+        
+        // Replace the console logs with http request bellow
+        // Calling the backend API when pre processing is ready
+        console.log('URL', url); 
+        console.log('Method', method); 
+        console.log('Body', businessModel);
+        this.toastrService.success(toasterMsg, 'Success');
+      }
+    });
+  }
+
+  openDeleteBusinessWindow(windowMessage: string, businessId: Number) {
+    // Load pop up dialogue
+    let windowRef = this.windowService.open(RemoveCategoryComponent, {
+      title: windowMessage,
+      buttons: {
+        close: false,
+        fullScreen: true,
+        maximize: true,
+        minimize: true
+      },
+    });
+
+    // Remove element
+    windowRef.onClose.subscribe((deleteEntry) => {
+      if (deleteEntry) {
+        this.ownedBusinesses.filter(element => {
+          if (element.businessId == businessId) {
+            let index = this.ownedBusinesses.indexOf(element);
+            this.ownedBusinesses.splice(index);
             return;
           }
         });
