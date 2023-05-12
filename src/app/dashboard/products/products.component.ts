@@ -67,9 +67,9 @@ export class ProductsComponent {
           type: 'list',
           config: {
             list: [
-              { value: 0, title: 'Oil' },
-              { value: 1, title: 'Motors' },
-              { value: 2, title: 'Engines' }
+              { id: 0, value: 'Oil', title: 'Oil' },
+              { id: 1, value: 'Motors', title: 'Motors' },
+              { id: 2, value: 'Engines', title: 'Engines' }
             ]
           }
         }
@@ -80,9 +80,9 @@ export class ProductsComponent {
           type: 'list',
           config: {
             list: [
-              { value: 0, title: 'EFI' },
-              { value: 1, title: 'VVTi' },
-              { value: 2, title: 'Classic Engines' }
+              { id: 0, value: 'EFI', title: 'EFI' },
+              { id: 1, value: 'VVTi', title: 'VVTi' },
+              { id: 2, value: 'Classic Engines', title: 'Classic Engines' }
             ],
           }
         }

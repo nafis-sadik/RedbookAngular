@@ -6,3 +6,26 @@
   @include nb-theme-global();
 };
 /* You can add global styles to this file, and also import other style files */
+#Products select {
+  width: 100%;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  background-color: transparent !important;
+  color: white;
+}
+
+#Products select:focus{
+  background-color: transparent !important;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+#Products select option{
+  padding: 1vh 0 !important;
+  color: black;
+}
+
+#Products input{
+  background-color: transparent !important;
+  color: white;
+}
