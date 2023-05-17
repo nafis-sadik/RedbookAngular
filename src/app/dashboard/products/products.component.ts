@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { IProductModel } from '../Models/IProductModel';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-products',
@@ -46,15 +47,17 @@ export class ProductsComponent {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmSave: true
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
+      confirmDelete: true
     },
     columns: {
       id: {
@@ -103,7 +106,7 @@ export class ProductsComponent {
   };
 
 
-  constructor(private changeDetector: ChangeDetectorRef) {
+  constructor(private changeDetector: ChangeDetectorRef, private toastrService: NbToastrService) {
   }
 
   paginationSelectionUpdate(value: any): void {
@@ -111,10 +114,35 @@ export class ProductsComponent {
     this.changeDetector.markForCheck();
   }
 
-  onDeleteConfirm(event: any): void {
-    if (window.confirm('Are you sure you want to delete?')) {
+  onCreateConfirm(event: any): void {
+    if (window.confirm('Are you sure you want to create?')) {
+      this.toastrService.success('Product added successfully', 'Success');
       event.confirm.resolve();
     } else {
+      this.toastrService.danger('Failed to add product', 'Error');
+      event.confirm.reject();
+    }
+  }
+
+  onSaveConfirm(event: any): void {
+    if (window.confirm('Are you sure you want to save?')) {
+      this.toastrService.success('Product details updated successfully', 'Success');
+      event.confirm.resolve(event.newData);
+      console.log(event.newData); //this contains the new edited data
+    }
+      // your post request goes here
+      // example
+        // const req = http.post('/api/items/add', body);
+        // 0 requests made - .subscribe() not called.
+        // req.subscribe(); // 1 request made.
+  }
+
+  onDeleteConfirm(event: any): void {
+    if (window.confirm('Are you sure you want to delete?')) {
+      this.toastrService.success('Product added successfully', 'Success');
+      event.confirm.resolve();
+    } else {
+      this.toastrService.danger('Failed to delete product', 'Error');
       event.confirm.reject();
     }
   }
