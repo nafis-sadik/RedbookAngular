@@ -3,12 +3,12 @@ export declare interface ICategoryModel{
      * Item Title
      * @type {Number}
      */
-    categoryId: Number;
+    categoryId: number;
     /**
      * Item Title
      * @type {Number}
      */
-    parentCategoryId: Number | undefined;
+    parentCategoryId: number | undefined;
     /**
      * Category Title
      * @type {string}
