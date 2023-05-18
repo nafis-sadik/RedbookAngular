@@ -15,18 +15,28 @@
                                 <nb-list-item *ngFor="let business of ownedBusinesses">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <nb-radio class="col-md-9"
+                                            <nb-radio class="col-xxl-8"
                                                       (valueChange)="selectBusiness(business.businessId)">
                                                 {{ business.title }}
                                             </nb-radio>
-                                            <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
-                                                    (click)="openSaveBusinessWindow('Update Business Title', business)">
-                                                <nb-icon icon="copy"></nb-icon>
-                                            </button>
-                                            <button nbButton nbTooltip="Delete" status="danger" class="col-md-1"
-                                                    (click)="openDeleteBusinessWindow('Delete Category', business.businessId)">
-                                                <nb-icon icon="close-square"></nb-icon>
-                                            </button>
+                                            <div class="col-xxl-4">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <button nbButton nbTooltip="Update" status="primary"
+                                                                class="btn-custom"
+                                                                (click)="openSaveBusinessWindow('Update Business Title', business)">
+                                                            <nb-icon icon="copy"></nb-icon>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button nbButton nbTooltip="Delete" status="danger"
+                                                                class="btn-custom"
+                                                                (click)="openDeleteBusinessWindow('Delete Category', business.businessId)">
+                                                            <nb-icon icon="close-square"></nb-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </nb-list-item>
@@ -50,18 +60,28 @@
                                 <nb-list-item *ngFor="let category of categories">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <nb-radio class="col-md-9"
+                                            <nb-radio class="col-xxl-8"
                                                       (valueChange)="loadSubcategories(category.categoryId)">
                                                 {{ category.title }}
                                             </nb-radio>
-                                            <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
-                                                    (click)="openSaveCategoryWindow('Update Category Information', false, category)">
-                                                <nb-icon icon="copy"></nb-icon>
-                                            </button>
-                                            <button nbButton nbTooltip="Delete" status="danger" class="col-md-1"
-                                                    (click)="openDeleteCategoryWindow('Delete Category', category.categoryId)">
-                                                <nb-icon icon="close-square"></nb-icon>
-                                            </button>
+                                            <div class="col-xxl-4">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <button nbButton nbTooltip="Update" status="primary"
+                                                                class="btn-custom"
+                                                                (click)="openSaveCategoryWindow('Update Category Information', false, category)">
+                                                            <nb-icon icon="copy"></nb-icon>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button nbButton nbTooltip="Delete" status="danger"
+                                                                class="btn-custom"
+                                                                (click)="openDeleteCategoryWindow('Delete Category', category.categoryId)">
+                                                            <nb-icon icon="close-square"></nb-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </nb-list-item>
@@ -85,17 +105,27 @@
                                 <nb-list-item *ngFor="let subcategory of subcategories">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <span class="col-md-9">
+                                            <span class="col-xxl-8">
                                                 {{ subcategory.title }}
                                             </span>
-                                            <button nbButton nbTooltip="Update" status="primary" class="col-md-1"
-                                                    (click)="openSaveCategoryWindow('Update Subcategory Information', true, subcategory)">
-                                                <nb-icon icon="copy"></nb-icon>
-                                            </button>
-                                            <button nbTooltip="Delete" nbButton status="danger" class="col-md-1"
-                                                    (click)="openDeleteCategoryWindow('Delete Subcategory', subcategory.categoryId)">
-                                                <nb-icon icon="close-square"></nb-icon>
-                                            </button>
+                                            <div class="col-xxl-4">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <button nbButton nbTooltip="Update" status="primary"
+                                                                class="btn-custom"
+                                                                (click)="openSaveCategoryWindow('Update Subcategory Information', true, subcategory)">
+                                                            <nb-icon icon="copy"></nb-icon>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button nbTooltip="Delete" nbButton status="danger"
+                                                                class="btn-custom"
+                                                                (click)="openDeleteCategoryWindow('Delete Subcategory', subcategory.categoryId)">
+                                                            <nb-icon icon="close-square"></nb-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </nb-list-item>

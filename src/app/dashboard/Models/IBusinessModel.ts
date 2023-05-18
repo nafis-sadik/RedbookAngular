@@ -3,7 +3,7 @@ export declare interface IBusinessModel{
      * Item Title
      * @type {Number}
      */
-    businessId: Number;
+    businessId: number;
     /**
      * Business Owner Id
      * @type {string}

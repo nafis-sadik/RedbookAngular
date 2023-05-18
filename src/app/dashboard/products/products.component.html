@@ -4,20 +4,26 @@
             Product Management
         </nb-card-header>
         <nb-card-body>
-            <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+            <ng2-smart-table
+                             [settings]="settings"
+                             [source]="source"
+                             (deleteConfirm)="onDeleteConfirm($event)"
+                             (editConfirm)="onSaveConfirm($event)"
+                             (createConfirm)="onCreateConfirm($event)">
             </ng2-smart-table>
         </nb-card-body>
         <nb-card-footer>
-            <nb-button-group status="primary" (valueChange)="paginationSelectionUpdate($event)">
+            <!-- <nb-button-group (valueChange)="paginationSelectionUpdate($event)">
                 <button nbButton><nb-icon icon="arrowhead-left"></nb-icon></button>
                 <button nbButton value="One"><nb-icon icon="arrow-ios-back"></nb-icon></button>
-                <button nbButton>1</button>
+                <button nbButton status="primary">1</button>
                 <button nbButton>2</button>
                 <button nbButton>3</button>
                 <button nbButton>4</button>
                 <button nbButton value="One"><nb-icon icon="arrow-ios-forward"></nb-icon></button>
                 <button nbButton value="One"><nb-icon icon="arrowhead-right"></nb-icon></button>
-            </nb-button-group>
+            </nb-button-group> -->
+            <app-pagination [paginationModel]="pagedProductModel"></app-pagination>
         </nb-card-footer>
     </nb-card>
 </section>
