@@ -11,6 +11,7 @@ import { CategoryComponent } from './category/category.component';
 import { AddCategoryComponent } from './category/add-category/add-category.component';
 import { RemoveCategoryComponent } from './category/remove-category/remove-category.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NbSelectModule,
     NbRadioModule,
     NbButtonGroupModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    SharedModule
   ],
   bootstrap: [DashboardComponent]
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { IBusinessModel } from '../Models/IBusinessModel';
 import { AddCategoryComponent } from './add-category/add-category.component';
-import { ICategoryModel } from '../Models/category-model';
+import { ICategoryModel } from '../Models/ICategoryModel';
 import { RemoveCategoryComponent } from './remove-category/remove-category.component';
 
 @Component({

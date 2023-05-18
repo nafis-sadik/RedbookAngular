@@ -1,0 +1,13 @@
+<section id="Pagination">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link"><nb-icon icon="arrowhead-left"></nb-icon></a></li>
+        <li class="page-item"><a class="page-link"><nb-icon icon="arrow-ios-back"></nb-icon></a></li>
+
+        <li class="page-item page-number-container" *ngFor="let i of [].constructor(pageNumberRange); let j = index" [ngClass]="{'active': j==0}">
+            <a class="page-link page-number" (click)="onPageSelect($event)">{{ j + 1 }}</a>
+        </li>
+
+        <li class="page-item"><a class="page-link"><nb-icon icon="arrow-ios-forward"></nb-icon></a></li>
+        <li class="page-item"><a class="page-link"><nb-icon icon="arrowhead-right"></nb-icon></a></li>
+    </ul>
+</section>

@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { IProductModel } from '../Models/IProductModel';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
+import { IPaginationModel } from '../../shared/Models/IPaginationModel';
 
 @Component({
   selector: 'app-products',
@@ -11,11 +12,12 @@ import { NbToastrService } from '@nebular/theme';
 export class ProductsComponent {
   singleSelectGroupValue = [];
 
-  source = [
+  source: IProductModel[] = [
     {
       id: 1,
       categoryId: 1,
       category: 'Motors',
+      subcategoryId: 2,
       subcategory: 'EFI',
       productName: '4E-FE',
       price: 80000,
@@ -25,6 +27,7 @@ export class ProductsComponent {
       id: 2,
       categoryId: 1,
       category: 'Motors',
+      subcategoryId: 2,
       subcategory: 'Classic',
       productName: '2JZ-GTE',
       price: 80000,
@@ -34,12 +37,14 @@ export class ProductsComponent {
       id: 3,
       categoryId: 1,
       category: 'Motors',
+      subcategoryId: 2,
       subcategory: 'VVTi',
       productName: '2ZR-FE',
       price: 80000,
       retailPrice: 100000
     }
   ];
+
   // reference : https://stackblitz.com/edit/ng2-smart-table-select-title-as-value?file=src%2Fapp%2Fapp.component.ts
   // docs : https://akveo.github.io/ng2-smart-table/#/examples/using-filters
   settings = {
@@ -105,12 +110,20 @@ export class ProductsComponent {
     },
   };
 
+  pagedProductModel: IPaginationModel<IProductModel>;
 
   constructor(private changeDetector: ChangeDetectorRef, private toastrService: NbToastrService) {
+    this.pagedProductModel = {
+      itemsPerPage: 8,
+      pageNumber: 2,
+      totalItems: 250,
+      itemsLoaded: this.source
+    };
   }
 
   paginationSelectionUpdate(value: any): void {
     this.singleSelectGroupValue = value;
+    console.log(this.singleSelectGroupValue);
     this.changeDetector.markForCheck();
   }
 
