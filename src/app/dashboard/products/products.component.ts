@@ -3,8 +3,6 @@ import { IProductModel } from '../Models/IProductModel';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
 import { IPaginationModel } from '../../shared/Models/IPaginationModel';
-import { NbToastrService } from '@nebular/theme';
-import { IPaginationModel } from '../../shared/Models/IPaginationModel';
 
 @Component({
   selector: 'app-products',
@@ -127,29 +125,6 @@ export class ProductsComponent {
     this.singleSelectGroupValue = value;
     console.log(this.singleSelectGroupValue);
     this.changeDetector.markForCheck();
-  }
-
-  onCreateConfirm(event: any): void {
-    if (window.confirm('Are you sure you want to create?')) {
-      this.toastrService.success('Product added successfully', 'Success');
-      event.confirm.resolve();
-    } else {
-      this.toastrService.danger('Failed to add product', 'Error');
-      event.confirm.reject();
-    }
-  }
-
-  onSaveConfirm(event: any): void {
-    if (window.confirm('Are you sure you want to save?')) {
-      this.toastrService.success('Product details updated successfully', 'Success');
-      event.confirm.resolve(event.newData);
-      console.log(event.newData); //this contains the new edited data
-    }
-      // your post request goes here
-      // example
-        // const req = http.post('/api/items/add', body);
-        // 0 requests made - .subscribe() not called.
-        // req.subscribe(); // 1 request made.
   }
 
   onCreateConfirm(event: any): void {
