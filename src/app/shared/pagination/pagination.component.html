@@ -1,14 +1,15 @@
 <section id="Pagination">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link"><nb-icon icon="arrowhead-left"></nb-icon></a></li>
-        <li class="page-item"><a class="page-link"><nb-icon icon="arrow-ios-back"></nb-icon></a></li>
+        <li class="page-item" (click)="loadFirst()"><a class="page-link"><nb-icon icon="arrowhead-left"></nb-icon></a></li>
+        <li class="page-item" (click)="loadPrevious()"><a class="page-link"><nb-icon icon="arrow-ios-back"></nb-icon></a></li>
 
         <li class="page-item page-number-container" *ngFor="let pageNumber of pageNumbersToPrint"
-            [ngClass]="{'active': pageNumber==paginationModel.pageNumber}">
-            <a class="page-link page-number" (click)="onPageSelect(pageNumber)">{{ pageNumber }}</a>
+            [ngClass]="{'active': pageNumber==paginationModel?.pageNumber}"
+            (click)="onPageSelect(pageNumber)">
+            <a class="page-link page-number">{{ pageNumber }}</a>
         </li>
 
-        <li class="page-item"><a class="page-link"><nb-icon icon="arrow-ios-forward"></nb-icon></a></li>
-        <li class="page-item"><a class="page-link"><nb-icon icon="arrowhead-right"></nb-icon></a></li>
+        <li class="page-item" (click)="loadNext()"><a class="page-link"><nb-icon icon="arrow-ios-forward"></nb-icon></a></li>
+        <li class="page-item" (click)="loadLast()"><a class="page-link"><nb-icon icon="arrowhead-right"></nb-icon></a></li>
     </ul>
 </section>

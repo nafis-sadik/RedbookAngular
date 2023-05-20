@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { IProductModel } from '../Models/IProductModel';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
 import { IPaginationModel } from '../../shared/Models/IPaginationModel';
 
