@@ -1,0 +1,20 @@
+<section id="NGX-Pagination">
+  <nb-card>
+    <nb-card-header>
+        {{cardHeader}}
+    </nb-card-header>
+    <nb-card-body>
+      <!-- <ngx-paged-table
+        [config]="config"
+        [source]="source"
+        (deleteConfirm)="onDeleteConfirm($event)"
+        (editConfirm)="onSaveConfirm($event)"
+        (createConfirm)="onCreateConfirm($event)"
+      ></ngx-paged-table> -->
+      <ngx-paged-table [config]="config"></ngx-paged-table>
+    </nb-card-body>
+    <nb-card-footer>
+      <ngx-pagination-pages [paginationModel]="paginationModel"></ngx-pagination-pages>
+    </nb-card-footer>
+  </nb-card>
+</section>

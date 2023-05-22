@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { IProductModel } from '../Models/IProductModel';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NbToastrService } from '@nebular/theme';
-import { IPaginationModel } from '../../shared/Models/IPaginationModel';
+import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
+import { ITableConfig } from 'src/app/shared/ngx-pagination/Models/ITableConfig';
 
 @Component({
   selector: 'app-products',
@@ -16,9 +16,9 @@ export class ProductsComponent {
     {
       id: 1,
       categoryId: 1,
-      category: 'Motors',
+      categoryName: 'Motors',
       subcategoryId: 2,
-      subcategory: 'EFI',
+      subcategoryName: 'EFI',
       productName: '4E-FE',
       price: 80000,
       retailPrice: 100000
@@ -26,9 +26,9 @@ export class ProductsComponent {
     {
       id: 2,
       categoryId: 1,
-      category: 'Motors',
+      categoryName: 'Motors',
       subcategoryId: 2,
-      subcategory: 'Classic',
+      subcategoryName: 'Classic',
       productName: '2JZ-GTE',
       price: 80000,
       retailPrice: 100000
@@ -36,14 +36,16 @@ export class ProductsComponent {
     {
       id: 3,
       categoryId: 1,
-      category: 'Motors',
+      categoryName: 'Motors',
       subcategoryId: 2,
-      subcategory: 'VVTi',
+      subcategoryName: 'VVTi',
       productName: '2ZR-FE',
       price: 80000,
       retailPrice: 100000
     }
   ];
+
+  cardHeader: string = "Product Management";
 
   // reference : https://stackblitz.com/edit/ng2-smart-table-select-title-as-value?file=src%2Fapp%2Fapp.component.ts
   // docs : https://akveo.github.io/ng2-smart-table/#/examples/using-filters
@@ -113,11 +115,31 @@ export class ProductsComponent {
   pagedProductModel: IPaginationModel<IProductModel>;
 
   constructor(private changeDetector: ChangeDetectorRef, private toastrService: NbToastrService) {
+    let tableConfig: ITableConfig = {
+      allowDelete: true,
+      allowEdit: true,
+      isEditableTable: false,
+      columnNames: [],
+      sourceData: []
+    };
+
     this.pagedProductModel = {
+      tableCardHeader: "Product Management",
+      allowDelete: tableConfig.allowDelete,
+      allowEdit: tableConfig.allowEdit,
+      isEditableTable: tableConfig.isEditableTable,
+      tableMaping: {
+        "Product Id": "Id",
+        "Product Category": "categoryName",
+        "Product Subcategory": "subcategoryName",
+        "Product Name": "productName",
+        "Price": "price",
+        "MRP": "retailPrice"
+      },
       itemsPerPage: 6,
       pageNumber: 2,
       totalItems: 268,
-      itemsLoaded: this.source
+      sourceData: this.source
     };
   }
 

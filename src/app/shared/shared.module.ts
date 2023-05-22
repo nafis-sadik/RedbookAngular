@@ -1,21 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PaginationComponent } from './pagination/pagination.component';
 import { FormsModule } from '@angular/forms';
-import { NbIconModule } from '@nebular/theme';
+import { NbCardModule, NbIconModule } from '@nebular/theme';
+import { NgxPaginationComponent } from './ngx-pagination/ngx-pagination.component';
+import { PagedTableComponent } from './ngx-pagination/paged-table/paged-table.component';
+import { PaginationComponent } from './ngx-pagination/pagination/pagination.component';
 
 
 
 @NgModule({
   declarations: [
-    PaginationComponent
+    PaginationComponent,
+    PagedTableComponent,
+    NgxPaginationComponent
   ],
   imports: [
+    NbCardModule,
     CommonModule,
     NbIconModule
   ],
   exports: [
-    PaginationComponent,
+    NgxPaginationComponent,
     CommonModule,
     FormsModule
   ]

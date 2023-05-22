@@ -20,10 +20,11 @@
                 <button nbButton>2</button>
                 <button nbButton>3</button>
                 <button nbButton>4</button>
-                <button nbButton value="One"><nb-icon icon="arrow-ios-forward"></nb-icon></button>
+                <button nbButton value="One"><nb-icon icon="arrow-ios-forward"[config]=""></nb-icon></button>
                 <button nbButton value="One"><nb-icon icon="arrowhead-right"></nb-icon></button>
             </nb-button-group> -->
-            <app-pagination [paginationModel]="pagedProductModel"></app-pagination>
         </nb-card-footer>
     </nb-card>
 </section>
+
+<ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination>

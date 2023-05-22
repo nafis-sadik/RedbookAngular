@@ -13,7 +13,7 @@ export declare interface IProductModel{
      * Product Category or Subcategory Name
      * @type {string}
      */
-    category: string;
+    categoryName: string;
     /**
      * Product subcategory or Subcategory Id
      * @type {Number}
@@ -23,7 +23,7 @@ export declare interface IProductModel{
      * Product subcategory or Subcategory Name
      * @type {string}
      */
-    subcategory: string;
+    subcategoryName: string;
     /**
      * Product Name
      * @type {string}
