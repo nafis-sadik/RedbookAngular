@@ -23,16 +23,36 @@
     margin-left: 5px;
 }
 
-#DashboardLayout .collapsed, #DashboardLayout .expanded {
+#DashboardLayout .collapsed, #DashboardLayout .collapsed nb-menu {
   transition: 1s;
+  animation-duration: 1s;
+  animation-name: sidebar-collapse-animation;
 }
 
-#DashboardLayout .expanded nb-menu{
+#DashboardLayout .expanded, #DashboardLayout .expanded nb-menu {
+  transition: 1s;
   animation-duration: 1s;
   animation-name: sidebar-expansion-animation;
 }
 
 @keyframes sidebar-expansion-animation {
-  from { width:0px; }
-  to { width:var(--sidebar-width); }
+  from {
+    width: 0px;
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    width: var(--sidebar-width);
+  }
+}
+
+@keyframes sidebar-collapse-animation {
+  from {
+    opacity: 1;
+    width: var(--sidebar-width);
+  }
+  to {
+    opacity: 0;
+    width: 0px;
+  }
 }

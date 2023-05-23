@@ -1,53 +1,52 @@
 import { AfterViewInit, Component, Input, Renderer2 } from '@angular/core';
-import { IPaginationModel } from '../Models/IPaginationModel';
+import { IPagingModel } from '../Models/IPagingModel';
 
 @Component({
   selector: 'ngx-pagination-pages',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent<T> implements AfterViewInit {
-  @Input() paginationModel: IPaginationModel<T> | undefined;
+export class PaginationComponent implements AfterViewInit {
+  @Input() pagingModel: IPagingModel;
 
-  totalPageCount: number;
   pageNumbersToPrint: number [];
   maxNumberOfPagesToRender: number = 5;
-  selectedItem: number = 1;
+  pageLength: number = 3;
 
   constructor(private renderer: Renderer2){
-    // If no products found, there shall still always be page 1 as the page has loaded successfully
-    this.totalPageCount = 1;
-
     // Preparing page numbers to print
     // When we are creating the pagination for the first time, the pagination shall always start from 1
     this.pageNumbersToPrint = [1, 2, 3, 4, 5];
+
+    this.pagingModel = {
+      pageLengthOptions: [ 5, 10, 50 ],
+      pageLength: 0,
+      pageNumber: 0,
+      totalPageCount: 0,
+      onPageLengthChange: null
+    };
   }
 
   // implement OnInit's `ngOnInit` method
   ngOnInit(): void {
-    if(this.paginationModel == undefined || this.paginationModel == null)
-      throw 'Failed to initialize: Object of IPaginationModel<T> can not be undefined';
+    if(this.pagingModel == undefined || this.pagingModel == null)
+      throw 'Failed to initialize: Object of IPagingModel can not be undefined';
 
-    this.paginationModel.pageNumber = this.paginationModel.pageNumber == null? 1 : this.paginationModel.pageNumber;
-    this.paginationModel.itemsPerPage = this.paginationModel.itemsPerPage == null? 5 : this.paginationModel.itemsPerPage;
-    this.totalPageCount = Math.ceil(this.paginationModel.totalItems/this.paginationModel.itemsPerPage);
-
-    // If no products found, there shall still always be page 1 as the page has loaded successfully
-    this.totalPageCount = this.totalPageCount <= 0? 1: this.totalPageCount;
+    this.pageLength = this.pagingModel.pageLength;
   }
 
   ngAfterViewInit(): void {
-    if(this.paginationModel == undefined || this.paginationModel == null)
-      throw 'Failed to render: Object of IPaginationModel<T> can not be undefined';
+    if(this.pagingModel == undefined || this.pagingModel == null)
+      throw 'Failed to render: Object of IPagingModel can not be undefined';
 
     this.loadFirst();
   }
 
   onPageSelect(pageNumber: number): void {
-    if(this.paginationModel == undefined || this.paginationModel == null)
-      throw 'Failed to execute operation: Object of IPaginationModel<T> can not be undefined';
+    if(this.pagingModel == undefined || this.pagingModel == null)
+      throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
 
-    if(pageNumber > this.totalPageCount)
+    if(pageNumber > this.pagingModel.totalPageCount)
       return
 
     let allPagedButtons = Array.from(document.getElementsByClassName('page-number-container'));
@@ -61,18 +60,18 @@ export class PaginationComponent<T> implements AfterViewInit {
     });
 
     // Selected page must be updated in view model
-    this.paginationModel.pageNumber = pageNumber;
+    this.pagingModel.pageNumber = pageNumber;
   }
 
   loadNext(): void {
-    if(this.paginationModel == undefined || this.paginationModel == null)
-      throw 'Failed to execute operation: Object of IPaginationModel<T> can not be undefined';
+    if(this.pagingModel == undefined || this.pagingModel == null)
+      throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
 
-    // Generate next page number, need to handle possible null object
-    let nextPageNumber = this.paginationModel?.pageNumber != null? this.paginationModel?.pageNumber + 1  : -1;
+    // Generate next page number, need to handle page limit exceed issue
+    let nextPageNumber = this.pagingModel.pageNumber < this.pagingModel.totalPageCount-1? this.pagingModel.pageNumber + 1  : -1;
 
     // If the next page is not in page, push it in the end and pop the first one
-    if(this.pageNumbersToPrint.indexOf(nextPageNumber) < 0){
+    if(this.pageNumbersToPrint.indexOf(nextPageNumber) < 0 && nextPageNumber > 0){
       this.pageNumbersToPrint.push(nextPageNumber);
       this.pageNumbersToPrint.splice(0, 1);
     }
@@ -83,11 +82,11 @@ export class PaginationComponent<T> implements AfterViewInit {
   }
 
   loadPrevious(): void {
-    if(this.paginationModel == undefined || this.paginationModel == null)
-      throw 'Failed to execute operation: Object of IPaginationModel<T> can not be undefined';
+    if(this.pagingModel == undefined || this.pagingModel == null)
+      throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
 
     // Generate next page number, need to handle possible null object
-    let nextPageNumber = this.paginationModel?.pageNumber != null? this.paginationModel?.pageNumber - 1  : -1;
+    let nextPageNumber = this.pagingModel?.pageNumber != null? this.pagingModel?.pageNumber - 1  : -1;
 
     if(nextPageNumber > 0)
     {
@@ -104,15 +103,15 @@ export class PaginationComponent<T> implements AfterViewInit {
   }
 
   loadFirst(): void {
-    if(this.paginationModel == undefined || this.paginationModel == null)
-      throw 'Failed to execute operation: Object of IPaginationModel<T> can not be undefined';
+    if(this.pagingModel == undefined || this.pagingModel == null)
+      throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
 
     // The first page shall always contain these page numbers
     this.pageNumbersToPrint = [1, 2, 3, 4, 5];
 
     // If max page count is bellow 5, we filter them out here
-    if(this.totalPageCount < this.maxNumberOfPagesToRender){
-      this.pageNumbersToPrint = this.pageNumbersToPrint.filter(element => element < this.totalPageCount);
+    if(this.pagingModel.totalPageCount < this.maxNumberOfPagesToRender){
+      this.pageNumbersToPrint = this.pageNumbersToPrint.filter(element => element < this.pagingModel.totalPageCount);
       this.pageNumbersToPrint.length <= 0 ? this.pageNumbersToPrint.push(1) : this.pageNumbersToPrint;
     }
 
@@ -121,20 +120,20 @@ export class PaginationComponent<T> implements AfterViewInit {
     this.renderer.addClass(selectedPageBtn, 'active');
 
     // First page is definitely always page 1
-    this.paginationModel.pageNumber = 1;
+    this.pagingModel.pageNumber = 1;
   }
 
   loadLast(): void {
-    if(this.paginationModel == undefined || this.paginationModel == null)
-      throw 'Failed to execute operation: Object of IPaginationModel<T> can not be undefined';
+    if(this.pagingModel == undefined || this.pagingModel == null)
+      throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
 
     // Empty the array to load fixed values
     this.pageNumbersToPrint = [];
 
     // Add last 5 numbers from max page number
     for(let i = 0; i < this.maxNumberOfPagesToRender; i++){
-      if(this.totalPageCount - i > 0)
-        this.pageNumbersToPrint.push(this.totalPageCount - i);
+      if(this.pagingModel.totalPageCount - i > 0)
+        this.pageNumbersToPrint.push(this.pagingModel.totalPageCount - i);
       else
         break;
     }
@@ -146,11 +145,12 @@ export class PaginationComponent<T> implements AfterViewInit {
     this.pageNumbersToPrint.sort();
 
     // Last page is definitely always page totalPageCount
-    this.paginationModel.pageNumber = this.totalPageCount;
+    this.pagingModel.pageNumber = this.pagingModel.totalPageCount;
   }
 
   onPageLengthChange(): void{
-    console.log(this.selectedItem);
+    if(this.pagingModel.onPageLengthChange != null)
+      this.pagingModel.onPageLengthChange();
   }
   // https://dev.to/this-is-angular/how-to-share-data-between-components-in-angular-4i60
 }

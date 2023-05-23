@@ -11,10 +11,10 @@
         (editConfirm)="onSaveConfirm($event)"
         (createConfirm)="onCreateConfirm($event)"
       ></ngx-paged-table> -->
-      <ngx-paged-table [config]="config"></ngx-paged-table>
+      <ngx-paged-table [config]="tableConfig"></ngx-paged-table>
     </nb-card-body>
     <nb-card-footer>
-      <ngx-pagination-pages [paginationModel]="paginationModel"></ngx-pagination-pages>
+      <ngx-pagination-pages [pagingModel]="pagingModel"></ngx-pagination-pages>
     </nb-card-footer>
   </nb-card>
 </section>

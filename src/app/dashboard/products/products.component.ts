@@ -127,10 +127,11 @@ export class ProductsComponent {
         "Price": "purchasePrice",
         "MRP": "retailPrice"
       },
-      itemsPerPage: 6,
       pageNumber: 2,
       totalItems: 268,
-      sourceData: this.source
+      sourceData: this.source,
+      pageLength: 0,
+      pageLengthOptions: [ 5, 10, 100 ]
     };
   }
 

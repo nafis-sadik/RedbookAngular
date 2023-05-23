@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
+import { IPagingModel } from './Models/IPagingModel';
 
 @Component({
   selector: 'ngx-pagination',
@@ -9,29 +10,39 @@ import { ITableModel } from './Models/ITableModel';
 })
 export class NgxPaginationComponent<T> implements OnInit {
   @Input() paginationModel: IPaginationModel<T> | undefined;
-  config: ITableModel;
+
   cardHeader: string;
+  tableConfig: ITableModel;
+  pagingModel: IPagingModel;
 
   constructor() {
     // Initialization to avoid error
     this.cardHeader = '';
 
-    this.config = {
+    this.tableConfig = {
       allowDelete: false,
       allowEdit: false,
       isEditableTable: false,
       columnNames: new Array<string>,
       sourceData: new Array<Array<string>>
     };
+
+    this.pagingModel = {
+      pageNumber: 0,
+      totalPageCount: 0,
+      pageLengthOptions: [ 5, 10, 50 ],
+      pageLength: 0,
+      onPageLengthChange: null
+    };
   }
 
   ngOnInit(): void {
-    if(this.paginationModel == null || this.paginationModel == undefined){
+    if(this.paginationModel == null || this.paginationModel == undefined)
       throw new Error('Object of type IPaginationModel is expected for paginationModel');
-    }
 
     this.cardHeader = this.paginationModel == undefined? '' : this.paginationModel.tableCardHeader;
 
+    // Works for the table
     // Get column labels for ui tables
     let collumnLabels: string[] = Object.keys(this.paginationModel.tableMaping);
 
@@ -54,13 +65,30 @@ export class NgxPaginationComponent<T> implements OnInit {
       sourceData.push(elementKeyValuePair);
     });
 
-    // Load the config to render
-    this.config = {
+    // Load table config to render
+    this.tableConfig = {
       allowDelete: this.paginationModel == undefined? false : this.paginationModel.allowDelete,
       allowEdit: this.paginationModel == undefined? false : this.paginationModel.allowEdit,
       isEditableTable: this.paginationModel == undefined? false : this.paginationModel.isEditableTable,
       columnNames: collumnLabels,
       sourceData: sourceData
+    };
+
+    // Works for paging
+    let itemsPerPage = this.paginationModel.pageLengthOptions[this.paginationModel.pageLength];
+    let totalPageCount = Math.ceil(this.paginationModel.totalItems/itemsPerPage);
+    // If no products found, there shall still always be page 1 as the page has loaded successfully
+    totalPageCount = totalPageCount <= 0? 1: totalPageCount;
+
+    // Load paging config to render
+    this.pagingModel = {
+      pageNumber: this.paginationModel.pageNumber,
+      pageLength: this.paginationModel.pageLength,
+      pageLengthOptions: this.paginationModel.pageLengthOptions,
+      totalPageCount: totalPageCount,
+      onPageLengthChange: () => {
+        console.log('Reload data');
+      }
     };
   }
 }
