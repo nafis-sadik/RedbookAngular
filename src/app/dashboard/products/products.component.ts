@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { IProductModel } from '../Models/IProductModel';
 import { NbToastrService } from '@nebular/theme';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
-import { ITableConfig } from 'src/app/shared/ngx-pagination/Models/ITableConfig';
 
 @Component({
   selector: 'app-products',
@@ -20,7 +19,7 @@ export class ProductsComponent {
       subcategoryId: 2,
       subcategoryName: 'EFI',
       productName: '4E-FE',
-      price: 80000,
+      purchasePrice: 80000,
       retailPrice: 100000
     },
     {
@@ -30,7 +29,7 @@ export class ProductsComponent {
       subcategoryId: 2,
       subcategoryName: 'Classic',
       productName: '2JZ-GTE',
-      price: 80000,
+      purchasePrice: 80000,
       retailPrice: 100000
     },
     {
@@ -40,7 +39,7 @@ export class ProductsComponent {
       subcategoryId: 2,
       subcategoryName: 'VVTi',
       productName: '2ZR-FE',
-      price: 80000,
+      purchasePrice: 80000,
       retailPrice: 100000
     }
   ];
@@ -115,25 +114,17 @@ export class ProductsComponent {
   pagedProductModel: IPaginationModel<IProductModel>;
 
   constructor(private changeDetector: ChangeDetectorRef, private toastrService: NbToastrService) {
-    let tableConfig: ITableConfig = {
+    this.pagedProductModel = {
+      tableCardHeader: "Product Management",
       allowDelete: true,
       allowEdit: true,
       isEditableTable: false,
-      columnNames: [],
-      sourceData: []
-    };
-
-    this.pagedProductModel = {
-      tableCardHeader: "Product Management",
-      allowDelete: tableConfig.allowDelete,
-      allowEdit: tableConfig.allowEdit,
-      isEditableTable: tableConfig.isEditableTable,
       tableMaping: {
-        "Product Id": "Id",
+        "Product Id": "id",
         "Product Category": "categoryName",
         "Product Subcategory": "subcategoryName",
         "Product Name": "productName",
-        "Price": "price",
+        "Price": "purchasePrice",
         "MRP": "retailPrice"
       },
       itemsPerPage: 6,

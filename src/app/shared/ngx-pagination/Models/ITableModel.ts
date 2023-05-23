@@ -1,9 +1,9 @@
-export declare interface ITableConfig{
+export declare interface ITableModel{
   /**
    * Labels for collumn of HTML table
-   * @type {string}
+   * @type {Array<string>}
    */
-  columnNames: string[];
+  columnNames: Array<string>;
   /**
    * Defines if table is editable table or not
    * @type {boolean}
@@ -21,7 +21,7 @@ export declare interface ITableConfig{
   allowDelete: boolean;
   /**
    * Data source for table to render
-   * @type {string}
+   * @type {Array<Array<anyh>>}
    */
-  sourceData: string[];
+  sourceData: Array<Array<any>>;
 }

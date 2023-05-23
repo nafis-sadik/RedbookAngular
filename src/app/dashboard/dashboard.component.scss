@@ -22,3 +22,17 @@
     text-decoration: none;
     margin-left: 5px;
 }
+
+#DashboardLayout .collapsed, #DashboardLayout .expanded {
+  transition: 1s;
+}
+
+#DashboardLayout .expanded nb-menu{
+  animation-duration: 1s;
+  animation-name: sidebar-expansion-animation;
+}
+
+@keyframes sidebar-expansion-animation {
+  from { width:0px; }
+  to { width:var(--sidebar-width); }
+}

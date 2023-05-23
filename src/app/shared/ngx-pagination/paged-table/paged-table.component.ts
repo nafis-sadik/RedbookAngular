@@ -1,21 +1,22 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { ITableConfig } from '../Models/ITableConfig';
+import { Component, Input, OnInit } from '@angular/core';
+import { ITableModel } from '../Models/ITableModel';
 
 @Component({
   selector: 'ngx-paged-table',
   templateUrl: './paged-table.component.html',
   styleUrls: ['./paged-table.component.scss']
 })
-export class PagedTableComponent {
-  @Input() config: ITableConfig;
+export class PagedTableComponent implements OnInit {
+  @Input() config: ITableModel;
 
   constructor(){
     this.config = {
       isEditableTable: false,
       allowDelete: false,
       allowEdit: false,
-      columnNames: [],
-      sourceData: []
+      columnNames: new Array<string>,
+      sourceData: new Array<Array<any>>
     }
   }
+  ngOnInit(): void { }
 }

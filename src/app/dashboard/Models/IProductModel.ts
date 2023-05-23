@@ -33,7 +33,7 @@ export declare interface IProductModel{
      * Product purchase price
      * @type {Number}
      */
-    price: number;
+    purchasePrice: number;
     /**
      * Product retail price
      * @type {Number}

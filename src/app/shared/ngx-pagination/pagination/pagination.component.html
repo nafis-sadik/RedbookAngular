@@ -1,15 +1,31 @@
-<section id="Paging">
-  <ul class="pagination">
-    <li class="page-item" (click)="loadFirst()"><a class="page-link"><nb-icon icon="arrowhead-left"></nb-icon></a></li>
-    <li class="page-item" (click)="loadPrevious()"><a class="page-link"><nb-icon icon="arrow-ios-back"></nb-icon></a></li>
+<section id="PagingSection">
+  <div class="container-fluid">
+    <div class="row">
+      <section id="Paging" class="col-md-6">
+        <ul class="pagination float-left">
+          <li class="page-item" (click)="loadFirst()"><a class="page-link"><nb-icon icon="arrowhead-left"></nb-icon></a></li>
+          <li class="page-item" (click)="loadPrevious()"><a class="page-link"><nb-icon icon="arrow-ios-back"></nb-icon></a></li>
 
-    <li class="page-item page-number-container" *ngFor="let pageNumber of pageNumbersToPrint"
-        [ngClass]="{'active': pageNumber==paginationModel?.pageNumber}"
-        (click)="onPageSelect(pageNumber)">
-        <a class="page-link page-number">{{ pageNumber }}</a>
-    </li>
+          <li class="page-item page-number-container" *ngFor="let pageNumber of pageNumbersToPrint"
+              [ngClass]="{'active': pageNumber==paginationModel?.pageNumber}"
+              (click)="onPageSelect(pageNumber)">
+              <a class="page-link page-number">{{ pageNumber }}</a>
+          </li>
 
-    <li class="page-item" (click)="loadNext()"><a class="page-link"><nb-icon icon="arrow-ios-forward"></nb-icon></a></li>
-    <li class="page-item" (click)="loadLast()"><a class="page-link"><nb-icon icon="arrowhead-right"></nb-icon></a></li>
-  </ul>
+          <li class="page-item" (click)="loadNext()"><a class="page-link"><nb-icon icon="arrow-ios-forward"></nb-icon></a></li>
+          <li class="page-item" (click)="loadLast()"><a class="page-link"><nb-icon icon="arrowhead-right"></nb-icon></a></li>
+        </ul>
+      </section>
+      <section id="PageItemCountDropdown" class="col-md-6">
+        <nb-select class="float-right" placeholder="Items per page" [(selected)]="selectedItem" (change)="onPageLengthChange()">
+          <nb-option value>Option empty</nb-option>
+          <nb-option value=0>Option 0</nb-option>
+          <nb-option value=1>Option 1</nb-option>
+          <nb-option value=2>Option 2</nb-option>
+          <nb-option value=3>Option 3</nb-option>
+          <nb-option value=4>Option 4</nb-option>
+        </nb-select>
+      </section>
+    </div>
+  </div>
 </section>

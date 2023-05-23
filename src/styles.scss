@@ -6,6 +6,7 @@
   @include nb-theme-global();
 };
 /* You can add global styles to this file, and also import other style files */
+
 #Products select {
   width: 100%;
   background-clip: padding-box;
@@ -28,4 +29,12 @@
 #Products input{
   background-color: transparent !important;
   color: white;
+}
+
+.float-right{
+  float: left;
+}
+
+.float-right{
+  float: right;
 }

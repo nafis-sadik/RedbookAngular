@@ -22,45 +22,10 @@
             </span>
           </div>
         </td>
-        <th>1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <td scope="col" *ngIf="config?.allowEdit || config?.allowDelete" class="table-actions">
-          <div class="d-block">
-            <span *ngIf="config?.allowEdit">
-              <nb-icon icon="edit-2-outline" class="edit"></nb-icon>
-            </span>
-            <span *ngIf="config?.allowDelete">
-              <nb-icon icon="trash-2-outline" class="delete"></nb-icon>
-            </span>
-          </div>
+        <td *ngFor="let col of row">
+          {{ col }}
         </td>
-        <th>1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <td scope="col" *ngIf="config?.allowEdit || config?.allowDelete" class="table-actions">
-          <div class="d-block">
-            <span *ngIf="config?.allowEdit">
-              <nb-icon icon="edit-2-outline" class="edit"></nb-icon>
-            </span>
-            <span *ngIf="config?.allowDelete">
-              <nb-icon icon="trash-2-outline" class="delete"></nb-icon>
-            </span>
-          </div>
-        </td>
-        <th>1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
       </tr>
     </tbody>
-
   </table>
-
 </section>
