@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NbCardModule, NbIconModule, NbSelectModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 import { NgxPaginationComponent } from './ngx-pagination/ngx-pagination.component';
 import { PagedTableComponent } from './ngx-pagination/paged-table/paged-table.component';
 import { PaginationComponent } from './ngx-pagination/pagination/pagination.component';
@@ -22,7 +22,9 @@ import { AddNewComponent } from './ngx-pagination/add-new/add-new.component';
     NbCardModule,
     CommonModule,
     NbIconModule,
-    NbSelectModule
+    NbSelectModule,
+    NbInputModule,
+    NbButtonModule
   ],
   exports: [
     NgxPaginationComponent,

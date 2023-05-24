@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ITableModel } from '../Models/ITableModel';
 
 @Component({
@@ -6,7 +6,7 @@ import { ITableModel } from '../Models/ITableModel';
   templateUrl: './paged-table.component.html',
   styleUrls: ['./paged-table.component.scss']
 })
-export class PagedTableComponent implements OnInit {
+export class PagedTableComponent {
   @Input() config: ITableModel;
 
   constructor(){
@@ -18,5 +18,4 @@ export class PagedTableComponent implements OnInit {
       sourceData: new Array<Array<any>>
     }
   }
-  ngOnInit(): void { }
 }

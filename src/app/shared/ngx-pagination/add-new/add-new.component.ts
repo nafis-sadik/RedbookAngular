@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-add-new',
+  selector: 'ngx-paged-add-new',
   templateUrl: './add-new.component.html',
   styleUrls: ['./add-new.component.scss']
 })

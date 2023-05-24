@@ -116,22 +116,32 @@ export class ProductsComponent {
   constructor(private changeDetector: ChangeDetectorRef, private toastrService: NbToastrService) {
     this.pagedProductModel = {
       tableCardHeader: "Product Management",
-      allowDelete: true,
-      allowEdit: true,
-      isEditableTable: false,
-      tableMaping: {
-        "Product Id": "id",
-        "Product Category": "categoryName",
-        "Product Subcategory": "subcategoryName",
-        "Product Name": "productName",
-        "Price": "purchasePrice",
-        "MRP": "retailPrice"
+      tableConfig: {
+        allowDelete: true,
+        allowEdit: true,
+        isEditableTable: false,
+        tableMaping: {
+          "Product Id": "id",
+          "Product Category": "categoryName",
+          "Product Subcategory": "subcategoryName",
+          "Product Name": "productName",
+          "Price": "purchasePrice",
+          "MRP": "retailPrice"
+        },
       },
-      pageNumber: 2,
-      totalItems: 268,
-      sourceData: this.source,
-      pageLength: 0,
-      pageLengthOptions: [ 5, 10, 100 ]
+      pagingConfig:{
+        pageNumber: 2,
+        totalItems: 268,
+        pageLength: 0,
+        pageLengthOptions: [ 5, 10, 100 ]
+      },
+      searchingConfig:{
+        searchString: null,
+        inputFieldPlaceholder: 'Search Product Name',
+        searchButtonLabel: 'Search',
+        showSearchIcon: true
+      },
+      sourceData: this.source
     };
   }
 

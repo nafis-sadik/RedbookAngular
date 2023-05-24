@@ -1,1 +1,7 @@
-<p>search works!</p>
+<section id="SearchComponent">
+  <input type="text" nbInput placeholder={{searchModel.inputFieldPlaceholder}}>
+  <button nbButton status="primary">
+    <nb-icon *ngIf="searchModel.showSearchIcon" icon="search" class="edit"></nb-icon>
+    <span *ngIf="searchModel.searchButtonLabel != null">{{ searchModel.searchButtonLabel }}</span>
+  </button>
+</section>

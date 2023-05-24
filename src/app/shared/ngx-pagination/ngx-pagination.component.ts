@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
 import { IPagingModel } from './Models/IPagingModel';
+import { ISearchModel } from './Models/ISearchModel';
 
 @Component({
   selector: 'ngx-pagination',
@@ -14,6 +15,7 @@ export class NgxPaginationComponent<T> implements OnInit {
   cardHeader: string;
   tableConfig: ITableModel;
   pagingModel: IPagingModel;
+  searchModel: ISearchModel;
 
   constructor() {
     // Initialization to avoid error
@@ -34,6 +36,13 @@ export class NgxPaginationComponent<T> implements OnInit {
       pageLength: 0,
       onPageLengthChange: null
     };
+
+    this.searchModel = {
+      inputFieldPlaceholder: 'Search Here',
+      searchString: null,
+      searchButtonLabel: null,
+      showSearchIcon: true
+    };
   }
 
   ngOnInit(): void {
@@ -44,14 +53,14 @@ export class NgxPaginationComponent<T> implements OnInit {
 
     // Works for the table
     // Get column labels for ui tables
-    let collumnLabels: string[] = Object.keys(this.paginationModel.tableMaping);
+    let collumnLabels: string[] = Object.keys(this.paginationModel.tableConfig.tableMaping);
 
     // Get variable names of dynamic type T from mapping
     // As we are running the loop on label names and extracting the variable names from label and variable mapping,
     // we shall get the variable names in the correct sequence (the sequence of table column label)
     let variableNames: any[] = [];
     collumnLabels.forEach(label => {
-      variableNames.push(this.paginationModel?.tableMaping[label]);
+      variableNames.push(this.paginationModel?.tableConfig.tableMaping[label]);
     })
 
     // Here we filter the source data for UI
@@ -67,28 +76,36 @@ export class NgxPaginationComponent<T> implements OnInit {
 
     // Load table config to render
     this.tableConfig = {
-      allowDelete: this.paginationModel == undefined? false : this.paginationModel.allowDelete,
-      allowEdit: this.paginationModel == undefined? false : this.paginationModel.allowEdit,
-      isEditableTable: this.paginationModel == undefined? false : this.paginationModel.isEditableTable,
+      allowDelete: this.paginationModel == undefined? false : this.paginationModel.tableConfig.allowDelete,
+      allowEdit: this.paginationModel == undefined? false : this.paginationModel.tableConfig.allowEdit,
+      isEditableTable: this.paginationModel == undefined? false : this.paginationModel.tableConfig.isEditableTable,
       columnNames: collumnLabels,
       sourceData: sourceData
     };
 
     // Works for paging
-    let itemsPerPage = this.paginationModel.pageLengthOptions[this.paginationModel.pageLength];
-    let totalPageCount = Math.ceil(this.paginationModel.totalItems/itemsPerPage);
+    let itemsPerPage = this.paginationModel.pagingConfig.pageLengthOptions[this.paginationModel.pagingConfig.pageLength];
+    let totalPageCount = Math.ceil(this.paginationModel.pagingConfig.totalItems/itemsPerPage);
     // If no products found, there shall still always be page 1 as the page has loaded successfully
     totalPageCount = totalPageCount <= 0? 1: totalPageCount;
 
     // Load paging config to render
     this.pagingModel = {
-      pageNumber: this.paginationModel.pageNumber,
-      pageLength: this.paginationModel.pageLength,
-      pageLengthOptions: this.paginationModel.pageLengthOptions,
+      pageNumber: this.paginationModel.pagingConfig.pageNumber,
+      pageLength: this.paginationModel.pagingConfig.pageLength,
+      pageLengthOptions: this.paginationModel.pagingConfig.pageLengthOptions,
       totalPageCount: totalPageCount,
       onPageLengthChange: () => {
         console.log('Reload data');
       }
+    };
+
+    // Load search field config to render
+    this.searchModel = {
+      inputFieldPlaceholder: this.paginationModel.searchingConfig.inputFieldPlaceholder,
+      searchString: this.paginationModel.searchingConfig.searchString,
+      searchButtonLabel: this.paginationModel.searchingConfig.searchButtonLabel,
+      showSearchIcon: this.paginationModel.searchingConfig.showSearchIcon
     };
   }
 }

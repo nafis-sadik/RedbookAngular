@@ -4,6 +4,10 @@
         {{cardHeader}}
     </nb-card-header>
     <nb-card-body>
+      <div class="row top">
+        <ngx-paged-search class="col-md-6" [searchModel]="searchModel"></ngx-paged-search>
+        <ngx-paged-add-new class="col-md-6"></ngx-paged-add-new>
+      </div>
       <!-- <ngx-paged-table
         [config]="config"
         [source]="source"
