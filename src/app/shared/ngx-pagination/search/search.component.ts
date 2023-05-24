@@ -14,7 +14,13 @@ export class SearchComponent {
       inputFieldPlaceholder: '',
       searchString: null,
       searchButtonLabel: null,
-      showSearchIcon: true
+      showSearchIcon: true,
+      onClick: null
     };
+  }
+
+  search(): void{
+    if(this.searchModel.onClick != null && typeof(this.searchModel.onClick) == typeof(Function))
+      this.searchModel.onClick();
   }
 }

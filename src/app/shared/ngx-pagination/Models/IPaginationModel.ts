@@ -12,6 +12,18 @@ export declare interface IPaginationModel<T>{
    */
   sourceData: T[];
   /**
+   * Default value:
+   * Description: Allow search field to appeear
+   * @type {boolean}
+   */
+  allowSearch: boolean;
+  /**
+   * Default value:
+   * Description: Allow add button to appeear
+   * @type {boolean}
+   */
+  allowAdd: boolean;
+  /**
    * Configuration for paging your table
    */
   tableConfig: {
@@ -68,34 +80,69 @@ export declare interface IPaginationModel<T>{
      * @type {Number}
      */
     totalItems: number;
+    /**
+     * Default value: null
+     * Description: Callback method for onClick event
+     * @type {Function}
+     */
+    onChange: Function | null;
   }
   /**
    * Configuration for search field
    */
-  searchingConfig:{
+  searchingConfig: {
     /**
      * Default value: null
      * Description: Text to search in database
-     * @type {Number}
+     * @type {string | null}
      */
-    searchString: string | null,
+    searchString: string | null;
     /**
      * Default value: 'Search Here'
      * Description: Place holder text for search input field
-     * @type {Number}
+     * @type {string}
      */
-    inputFieldPlaceholder: string,
+    inputFieldPlaceholder: string;
     /**
      * Default value: 'Search Here'
      * Description: Place holder text for search input field
-     * @type {Number}
+     * @type {string | null}
      */
-    searchButtonLabel: string | null,
+    buttonLabel: string | null;
     /**
      * Default value: 'Search Here'
      * Description: Place holder text for search input field
-     * @type {Number}
+     * @type {boolean}
      */
-    showSearchIcon: boolean
-  }
+    showIcon: boolean;
+    /**
+     * Default value: null
+     * Description: Callback method for onClick event
+     * @type {Function | null}
+     */
+    onClick: Function | null;
+  } | null;
+  /**
+   * Configuration for add new button
+   */
+  addNewElementButtonConfig: {
+    /**
+     * Default value: true
+     * Description: View add icon visibility
+     * @type {boolean}
+     */
+    showIcon: boolean;
+    /**
+     * Default value: null
+     * Description: Label of search button
+     * @type {string}
+     */
+    buttonLabel: string | null;
+    /**
+     * Default value: null
+     * Description: Callback method for onClick event
+     * @type {Function}
+     */
+    onClick: Function | null;
+  } | null;
 }

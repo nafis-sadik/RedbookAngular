@@ -2,25 +2,31 @@ export declare interface ISearchModel{
   /**
    * Default value: null
    * Description: Text to search in database
-   * @type {Number}
+   * @type {string}
    */
   searchString: string | null,
   /**
    * Default value: 'Search Here'
    * Description: Place holder text for search input field
-   * @type {Number}
+   * @type {string}
    */
   inputFieldPlaceholder: string
   /**
    * Default value: null
    * Description: Label of search button
-   * @type {Number}
+   * @type {string}
    */
   searchButtonLabel: string | null,
   /**
    * Default value: true
    * Description: View search icon visibility
-   * @type {Number}
+   * @type {boolean}
    */
   showSearchIcon: boolean,
+  /**
+   * Default value: null
+   * Description: Callback method for onClick event
+   * @type {Function}
+   */
+  onClick: Function | null
 }

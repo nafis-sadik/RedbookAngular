@@ -3,6 +3,7 @@ import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
 import { IPagingModel } from './Models/IPagingModel';
 import { ISearchModel } from './Models/ISearchModel';
+import { IAddNewModel } from './Models/IAddNewModel';
 
 @Component({
   selector: 'ngx-pagination',
@@ -16,6 +17,10 @@ export class NgxPaginationComponent<T> implements OnInit {
   tableConfig: ITableModel;
   pagingModel: IPagingModel;
   searchModel: ISearchModel;
+  addNewButtonConfig: IAddNewModel;
+
+  allowSearch: boolean;
+  allowAdd: boolean;
 
   constructor() {
     // Initialization to avoid error
@@ -41,8 +46,18 @@ export class NgxPaginationComponent<T> implements OnInit {
       inputFieldPlaceholder: 'Search Here',
       searchString: null,
       searchButtonLabel: null,
-      showSearchIcon: true
+      showSearchIcon: true,
+      onClick: null
     };
+
+    this.addNewButtonConfig = {
+      showIcon: true,
+      addNewButtonLabel: null,
+      onClick: null
+    }
+
+    this.allowAdd = false;
+    this.allowSearch = false;
   }
 
   ngOnInit(): void {
@@ -50,6 +65,8 @@ export class NgxPaginationComponent<T> implements OnInit {
       throw new Error('Object of type IPaginationModel is expected for paginationModel');
 
     this.cardHeader = this.paginationModel == undefined? '' : this.paginationModel.tableCardHeader;
+    this.allowAdd = this.paginationModel.allowAdd;
+    this.allowSearch = this.paginationModel.allowSearch;
 
     // Works for the table
     // Get column labels for ui tables
@@ -95,17 +112,25 @@ export class NgxPaginationComponent<T> implements OnInit {
       pageLength: this.paginationModel.pagingConfig.pageLength,
       pageLengthOptions: this.paginationModel.pagingConfig.pageLengthOptions,
       totalPageCount: totalPageCount,
-      onPageLengthChange: () => {
-        console.log('Reload data');
-      }
+      onPageLengthChange: this.paginationModel.pagingConfig.onChange
     };
 
     // Load search field config to render
-    this.searchModel = {
-      inputFieldPlaceholder: this.paginationModel.searchingConfig.inputFieldPlaceholder,
-      searchString: this.paginationModel.searchingConfig.searchString,
-      searchButtonLabel: this.paginationModel.searchingConfig.searchButtonLabel,
-      showSearchIcon: this.paginationModel.searchingConfig.showSearchIcon
-    };
+    if(this.paginationModel.searchingConfig != null && this.paginationModel.allowSearch)
+      this.searchModel = {
+        inputFieldPlaceholder: this.paginationModel.searchingConfig.inputFieldPlaceholder,
+        searchString: this.paginationModel.searchingConfig.searchString,
+        searchButtonLabel: this.paginationModel.searchingConfig.buttonLabel,
+        showSearchIcon: this.paginationModel.searchingConfig.showIcon,
+        onClick: this.paginationModel.searchingConfig.onClick
+      };
+
+    // Load add new button config to render
+    if(this.paginationModel.addNewElementButtonConfig != null && this.paginationModel.allowAdd)
+      this.addNewButtonConfig = {
+        addNewButtonLabel: this.paginationModel.addNewElementButtonConfig.buttonLabel,
+        showIcon: this.paginationModel.addNewElementButtonConfig.showIcon,
+        onClick: this.paginationModel.addNewElementButtonConfig.onClick
+      }
   }
 }

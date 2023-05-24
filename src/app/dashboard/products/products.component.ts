@@ -116,6 +116,9 @@ export class ProductsComponent {
   constructor(private changeDetector: ChangeDetectorRef, private toastrService: NbToastrService) {
     this.pagedProductModel = {
       tableCardHeader: "Product Management",
+      sourceData: this.source,
+      allowAdd: true,
+      allowSearch: true,
       tableConfig: {
         allowDelete: true,
         allowEdit: true,
@@ -133,15 +136,27 @@ export class ProductsComponent {
         pageNumber: 2,
         totalItems: 268,
         pageLength: 0,
-        pageLengthOptions: [ 5, 10, 100 ]
+        pageLengthOptions: [ 5, 10, 100 ],
+        onChange: () => {
+          console.log('Page length change callback');
+        }
       },
       searchingConfig:{
         searchString: null,
-        inputFieldPlaceholder: 'Search Product Name',
-        searchButtonLabel: 'Search',
-        showSearchIcon: true
+        inputFieldPlaceholder: 'Search Product',
+        buttonLabel: 'Search',
+        showIcon: true,
+        onClick: () => {
+          console.log('Search Callback')
+        }
       },
-      sourceData: this.source
+      addNewElementButtonConfig: {
+        buttonLabel: 'Add New Product',
+        showIcon: true,
+        onClick: () => {
+          console.log('Add New Element Callback')
+        }
+      },
     };
   }
 
