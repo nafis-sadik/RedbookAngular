@@ -31,6 +31,7 @@ import { ProductsDetailsFormComponent } from './products/products-details-form/p
 import { SellComponent } from './sell/sell.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { AddPurchaseComponent } from './purchase/add-purchase/add-purchase.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { AddPurchaseComponent } from './purchase/add-purchase/add-purchase.compo
     NbTabsetModule,
     SharedModule,
     NbDatepickerModule,
-    NbCheckboxModule
+    NbCheckboxModule,
+    FormsModule // <--- import into the NgModule
   ],
   bootstrap: [DashboardComponent]
 })

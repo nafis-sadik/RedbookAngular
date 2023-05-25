@@ -17,40 +17,61 @@
               <div class="row">
                 <div class="col-md-6">
                   <label class="mb-2 mt-4 p-0">Select Client</label>
-                  <nb-select fullWidth placeholder="Select Showcase" [(selected)]="selectedClient" required>
+                  <nb-select fullWidth required
+                             placeholder="Select Showcase"
+                             name="ClientId"
+                             [(ngModel)]="invoiceModel.ClientId">
                     <nb-option value>Select Client</nb-option>
-                    <nb-option *ngFor="let client of clientList" value="{{client.clientId}}">{{ client.clientName }}</nb-option>
+                    <nb-option *ngFor="let client of clientList" value={{client.clientId}}>{{ client.clientName
+                      }}</nb-option>
                   </nb-select>
                 </div>
+                <!-- Nebular Date Picker has bug 
+                    https://github.com/akveo/nebular/issues/2338
+                -->
                 <div class="col-md-6">
                   <label class="mb-2 mt-4 p-0">Issue Date</label>
                   <div class="input-group">
-                    <input fullWidth nbInput placeholder="Issue Date" [nbDatepicker]="dateTimePicker" required>
+                    <input fullWidth nbInput required
+                           placeholder="Issue Date"
+                           [nbDatepicker]="dateTimePicker"
+                           name="IssueDate"
+                           [(ngModel)]="invoiceModel.IssueDate">
                     <nb-datepicker #dateTimePicker></nb-datepicker>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <label class="mb-2 mt-4 p-0">Notes</label>
                   <div class="input-group">
-                    <textarea fullWidth nbInput placeholder="Notes"></textarea>
+                    <textarea fullWidth nbInput
+                              placeholder="Notes"
+                              name="Notes"
+                              [(ngModel)]="invoiceModel.Notes"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <label class="mb-2 mt-4 p-0">Terms</label>
                   <div class="input-group">
-                    <textarea fullWidth nbInput placeholder="Terms"></textarea>
+                    <textarea fullWidth nbInput
+                              placeholder="Terms"
+                              name="Terms"
+                              [(ngModel)]="invoiceModel.Terms"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <label class="mb-2 mt-4 p-0">Select Address</label>
-                  <span *ngFor="let address of invoiceModel.address">
+                  <span *ngFor="let address of addressesOfCurrentOutlet">
                     <div class="input-group">
-                      <nb-checkbox status="primary">{{address}}</nb-checkbox>
+                      <nb-checkbox
+                                   status="primary"
+                                   (checkedChange)="addSelectedAddress(address.AddressId)">
+                        {{ address.FullAddress }}
+                      </nb-checkbox>
                     </div>
                   </span>
                 </div>
                 <div class="col-md-12 mt-5">
-                  <button nbButton status="primary" class="float-right" nbStepperNext>next</button>
+                  <button nbButton status="primary" class="float-right" nbStepperNext (click)="save()">next</button>
                 </div>
               </div>
             </div>
@@ -61,31 +82,31 @@
           <form #movieForm="ngForm" class="step-container">
             <div class="input-group">
               <input type="text"
-                    placeholder="Enter your favorite movie"
-                    class="form-control"
-                    name="movie"
-                    required
-                    nbInput
-                    ngModel
-                    #movie="ngModel"
-                    [status]="movie.invalid ? 'danger' : 'basic'">
+                     placeholder="Enter your favorite movie"
+                     class="form-control"
+                     name="movie"
+                     required
+                     nbInput
+                     ngModel
+                     #movie="ngModel"
+                     [status]="movie.invalid ? 'danger' : 'basic'">
             </div>
             <button nbButton status="primary" nbStepperNext>next</button>
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="somethingForm" label="Confirm">
+        <nb-step [stepControl]="somethingForm" label="Payments">
           <form #somethingForm="ngForm" class="step-container">
             <div class="input-group">
               <input type="text"
-                    placeholder="Enter something"
-                    class="form-control"
-                    name="something"
-                    required
-                    nbInput
-                    ngModel
-                    #somethingInput="ngModel"
-                    [status]="somethingInput.invalid ? 'danger' : 'basic'">
+                     placeholder="Enter something"
+                     class="form-control"
+                     name="something"
+                     required
+                     nbInput
+                     ngModel
+                     #somethingInput="ngModel"
+                     [status]="somethingInput.invalid ? 'danger' : 'basic'">
             </div>
             <button nbButton status="primary" nbStepperNext>next</button>
           </form>

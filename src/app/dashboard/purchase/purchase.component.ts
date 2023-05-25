@@ -3,6 +3,7 @@ import { NbDialogService, NbMenuItem } from '@nebular/theme';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { IInvoiceModel } from '../Models/IInvoiceModel';
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
+import { IAddressModel } from '../Models/IAddressModel';
 
 @Component({
   selector: 'app-purchase',
@@ -12,18 +13,9 @@ import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
 export class PurchaseComponent {
   cardHeader: string = "Purchase";
 
-  outlets: NbMenuItem[] = [
+  dummyBackendDataSource: IInvoiceModel[] = [
     {
-      title: 'Krishi Ghor',
-    },
-    {
-      title: 'FM SkyVision',
-    }
-  ];
-
-   sourceData: IInvoiceModel[];
-   dummyBackendDataSource: IInvoiceModel[] = [
-    {
+      InvoiceId: 1,
       ClientId: 1,
       ClientName: "Chittagong Builders",
       CreatedBy: "User 1",
@@ -35,13 +27,18 @@ export class PurchaseComponent {
       PaymentStatus: "Due",
       PaymentStatusId: 1,
       UpdateDate: new Date(),
-      UserId: "Hakina Matata",
+      UpdateBy: "Hakina Matata",
       Discount: 15,
       Notes: '',
       Terms: '',
-      address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
+      address: [
+        { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
+        { 2: 'Test Address' }
+      ],
+      selectedAddresses: []
     },
     {
+      InvoiceId: 2,
       ClientId: 2,
       ClientName: "RFL",
       CreatedBy: "User 1",
@@ -53,13 +50,18 @@ export class PurchaseComponent {
       PaymentStatus: "Paid",
       PaymentStatusId: 2,
       UpdateDate: new Date(),
-      UserId: "Hakina Matata",
+      UpdateBy: "Hakina Matata",
       Discount: 15,
       Notes: '',
       Terms: '',
-      address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
+      address: [
+        { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
+        { 2: 'Test Address' }
+      ],
+      selectedAddresses: []
     },
     {
+      InvoiceId: 3,
       ClientId: 1,
       ClientName: "Chittagong Builders",
       CreatedBy: "User 1",
@@ -71,17 +73,32 @@ export class PurchaseComponent {
       PaymentStatus: "Due",
       PaymentStatusId: 1,
       UpdateDate: new Date(),
-      UserId: "Hakina Matata",
+      UpdateBy: "Hakina Matata",
       Discount: 15,
       Notes: '',
       Terms: '',
-      address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
+      address: [
+        { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
+        { 2: 'Test Address' }
+      ],
+      selectedAddresses: []
     }
-   ];
+  ];
 
-   pagedProductModel: IPaginationModel<IInvoiceModel>;
+  outlets: NbMenuItem[] = [
+    {
+      title: 'Krishi Ghor',
+    },
+    {
+      title: 'FM SkyVision',
+    }
+  ];
 
-   constructor(private dialogService: NbDialogService) {
+  sourceData: IInvoiceModel[];
+
+  pagedProductModel: IPaginationModel<IInvoiceModel>;
+
+  constructor(private dialogService: NbDialogService) {
     // Load and set your backend data here on page load
     this.sourceData = this.dummyBackendDataSource;
 
@@ -122,12 +139,12 @@ export class PurchaseComponent {
         }
       },
       addNewElementButtonConfig: {
-        buttonLabel: 'New Purchase Invoice',
+        buttonLabel: 'New Purchase',
         showIcon: true,
         onClick: () => {
           this.dialogService.open(AddPurchaseComponent);
         }
       },
-     };
-   }
+    };
+  }
 }
