@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IProductModel } from '../Models/IProductModel';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbMenuItem } from '@nebular/theme';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { ProductsDetailsFormComponent } from './products-details-form/products-details-form.component';
 
@@ -42,8 +42,37 @@ export class ProductsComponent {
       productName: '2ZR-FE',
       purchasePrice: 80000,
       retailPrice: 100000
+    },
+    {
+      id: 4,
+      categoryId: 1,
+      categoryName: 'Motors',
+      subcategoryId: 2,
+      subcategoryName: 'VVTi',
+      productName: '2ZR-FE',
+      purchasePrice: 80000,
+      retailPrice: 100000
+    },
+    {
+      id: 5,
+      categoryId: 1,
+      categoryName: 'Motors',
+      subcategoryId: 2,
+      subcategoryName: 'VVTi',
+      productName: '2ZR-FE',
+      purchasePrice: 80000,
+      retailPrice: 100000
     }
   ];
+
+  outlets: NbMenuItem[] = [
+    {
+      title: 'Krishi Ghor',
+    },
+    {
+      title: 'FM SkyVision',
+    }
+   ];
 
   cardHeader: string = "Product Management";
 
