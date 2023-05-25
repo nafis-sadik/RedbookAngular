@@ -7,7 +7,7 @@ import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-  
+
 export class DashboardComponent {
   selectedTheme;
   themes: string[] = [
@@ -16,7 +16,7 @@ export class DashboardComponent {
     'Cosmic',
     'Corporate'
   ];
-  
+
   menuOptions: NbMenuItem[] = [
     {
       title: 'Dashboards',
@@ -42,11 +42,13 @@ export class DashboardComponent {
       children: [
         {
           title: 'Purchase',
-          icon: 'shopping-bag'
+          icon: 'shopping-bag',
+          link: '/dashboard/purchase'
         },
         {
           title: 'Sell',
-          icon: 'shopping-cart'
+          icon: 'shopping-cart',
+          link: '/dashboard/sell'
         }
       ]
     },

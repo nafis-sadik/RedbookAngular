@@ -1,4 +1,18 @@
 <section id="Products">
-    <ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination>
+  <nb-card>
+    <nb-card-header>
+      {{ cardHeader }}
+    </nb-card-header>
+    <nb-card-body>
+      <nb-tabset>
+        <nb-tab tabTitle="Krishi Ghor" class="p-0 mt-2 mb-2">
+          <ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination>
+        </nb-tab>
+        <nb-tab tabTitle="FM SkyVision" class="p-0 mt-2 mb-2">
+          <ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination>
+        </nb-tab>
+      </nb-tabset>
+    </nb-card-body>
+  </nb-card>
 </section>
 

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IAddNewModel } from '../Models/IAddNewModel';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-paged-add-new',
@@ -9,7 +10,7 @@ import { IAddNewModel } from '../Models/IAddNewModel';
 export class AddNewComponent {
   @Input() addNewModel: IAddNewModel;
 
-  constructor() {
+  constructor(private dialogService: NbDialogService) {
     this.addNewModel = {
       showIcon: true,
       addNewButtonLabel: null,

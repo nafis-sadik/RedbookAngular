@@ -1,0 +1,58 @@
+<section id="ProductSave">
+  <nb-card>
+    <nb-card-header>
+      <div class="container-fluid">
+        <div class="row">
+          <span>
+            Save ProductInformation
+          </span>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body class="pt-0">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <label class="mb-2 mt-4 p-0 col-md-6">Product Name</label>
+            <input type="text" nbInput fullWidth status="primary" placeholder="Product Name" aria-label="ProductName">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="mb-2 mt-4 p-0 col-md-6">Purchase Price</label>
+            <input type="number" nbInput fullWidth status="primary" placeholder="Purchase Price" aria-label="PurchasePrice">
+          </div>
+          <div class="col-md-6">
+            <label class="mb-2 mt-4 p-0 col-md-6">Retail Price</label>
+            <input type="number" nbInput fullWidth status="primary" placeholder="Retail Price" aria-label="RetailPrice">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="mb-2 mt-4 p-0 col-md-6">Product Category</label>
+            <nb-select selected fullWidth status="primary" placeholder="Product Category" aria-label="ProductCategory">
+              <nb-option value>Select Product Category</nb-option>
+              <nb-option value="1">Option 2</nb-option>
+            </nb-select>
+          </div>
+          <div class="col-md-6">
+            <label class="mb-2 mt-4 p-0 col-md-6">Product Subcategory</label>
+            <nb-select selected fullWidth status="primary" placeholder="Product Subcategory" aria-label="ProductSubcategory">
+              <nb-option value>Select Product Subcategory</nb-option>
+              <nb-option value="1">Option 2</nb-option>
+            </nb-select>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="container-fluid">
+        <div class="row">
+          <span>
+            <button nbButton status="primary">Save</button>
+          </span>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</section>

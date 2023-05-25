@@ -13,7 +13,7 @@ import { IAddNewModel } from './Models/IAddNewModel';
 export class NgxPaginationComponent<T> implements OnInit {
   @Input() paginationModel: IPaginationModel<T> | undefined;
 
-  cardHeader: string;
+  cardHeader: string | null;
   tableConfig: ITableModel;
   pagingModel: IPagingModel;
   searchModel: ISearchModel;

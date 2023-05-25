@@ -1,21 +1,14 @@
-<section id="NGX-Pagination">
+<section id="NGX-Pagination" class="p-0 mt-3">
   <nb-card>
-    <nb-card-header>
+    <nb-card-header *ngIf="cardHeader != null && cardHeader.length > 0">
         {{cardHeader}}
     </nb-card-header>
     <nb-card-body>
-      <div class="row top"  *ngIf="allowSearch || allowAdd">
+      <div class="row mt-2 mb-2"  *ngIf="allowSearch || allowAdd">
         <div *ngIf="!allowSearch && allowAdd" class="col-md-6"></div>
         <ngx-paged-search *ngIf="allowSearch" class="col-md-6" [searchModel]="searchModel"></ngx-paged-search>
         <ngx-paged-add-new *ngIf="allowAdd" class="col-md-6" [addNewModel]="addNewButtonConfig"></ngx-paged-add-new>
       </div>
-      <!-- <ngx-paged-table
-        [config]="config"
-        [source]="source"
-        (deleteConfirm)="onDeleteConfirm($event)"
-        (editConfirm)="onSaveConfirm($event)"
-        (createConfirm)="onCreateConfirm($event)"
-      ></ngx-paged-table> -->
       <ngx-paged-table [config]="tableConfig"></ngx-paged-table>
     </nb-card-body>
     <nb-card-footer>

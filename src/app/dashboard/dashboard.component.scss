@@ -24,13 +24,11 @@
 }
 
 #DashboardLayout .collapsed, #DashboardLayout .collapsed nb-menu {
-  transition: 1s;
   animation-duration: 1s;
   animation-name: sidebar-collapse-animation;
 }
 
 #DashboardLayout .expanded, #DashboardLayout .expanded nb-menu {
-  transition: 1s;
   animation-duration: 1s;
   animation-name: sidebar-expansion-animation;
 }

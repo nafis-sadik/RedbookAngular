@@ -4,7 +4,7 @@ export declare interface IPaginationModel<T>{
    * Description: Heading for the card that shall contain the table
    * @type {string}
    */
-  tableCardHeader: string;
+  tableCardHeader: string | null;
   /**
    * Default value:
    * Description: Array of items to be displayed in current page
