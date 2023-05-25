@@ -143,6 +143,7 @@ export class CategoryComponent {
 
       this.selectedBusinessId = selectedBusiness;
     }
+    this.subcategories = [];
   }
 
   loadSubcategories(categoryId: number) {

@@ -21,19 +21,7 @@ export class DashboardComponent {
     {
       title: 'Dashboards',
       icon: 'keypad',
-      expanded: true,
-      children: [
-        {
-          title: 'Krishi Ghor',
-          icon: 'home',
-          link: '/dashboard/home'
-        },
-        {
-          title: 'FM SkyVision',
-          icon: 'home',
-          link: '/dashboard/home'
-        }
-      ],
+      link: '/dashboard/home'
     },
     {
       title: 'Business Operations',
@@ -53,6 +41,23 @@ export class DashboardComponent {
       ]
     },
     {
+      title: 'Product Management',
+      icon: 'briefcase',
+      expanded: false,
+      children:[
+        {
+          title: 'Product List',
+          icon: 'list',
+          link: '/dashboard/products'
+        },
+        {
+          title: 'Category Management',
+          icon: 'layers',
+          link: '/dashboard/category'
+        }
+      ]
+    },
+    {
       title: 'CRM',
       icon: 'people',
       expanded: false,
@@ -68,23 +73,6 @@ export class DashboardComponent {
         {
           title: 'Customers',
           icon: 'person'
-        }
-      ]
-    },
-    {
-      title: 'Settings',
-      icon: 'settings',
-      expanded: false,
-      children:[
-        {
-          title: 'Product Management',
-          icon: 'briefcase',
-          link: '/dashboard/products'
-        },
-        {
-          title: 'Category Management',
-          icon: 'layers',
-          link: '/dashboard/category'
         }
       ]
     }

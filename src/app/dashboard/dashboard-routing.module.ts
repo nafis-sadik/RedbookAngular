@@ -4,13 +4,15 @@ import { CategoryComponent } from './category/category.component';
 import { DashboardComponent } from './dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './products/products.component';
+import { SellComponent } from './sell/sell.component';
+import { PurchaseComponent } from './purchase/purchase.component';
 
 const routes: Routes = [{
   path: '',
   component: DashboardComponent,
   children: [
     {
-      path: '',
+      path: 'home',
       component: HomeComponent
     },
     {
@@ -20,6 +22,14 @@ const routes: Routes = [{
     {
       path: 'category',
       component: CategoryComponent
+    },
+    {
+      path: 'sell',
+      component: SellComponent
+    },
+    {
+      path: 'purchase',
+      component: PurchaseComponent
     }
   ]
 }];
