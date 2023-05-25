@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbWindowModule, NbToastrModule, NbGlobalPhysicalPosition, NbDialogModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbWindowModule, NbToastrModule, NbGlobalPhysicalPosition, NbDialogModule, NbDatepickerModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
@@ -30,6 +30,7 @@ import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
       hasBackdrop: true,
       hasScroll: true
     }),
+    NbDatepickerModule.forRoot(),
     NbWindowModule.forChild(),
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
@@ -43,7 +44,7 @@ import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
         }),
       ],
       forms: {},
-    }),
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

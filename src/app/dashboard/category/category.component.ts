@@ -112,12 +112,14 @@ export class CategoryComponent {
     {
       businessId: 1,
       ownerId: 'GUID',
-      title: 'Krishi Ghor'
+      title: 'Krishi Ghor',
+      address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
     },
     {
       businessId: 2,
       ownerId: 'GUID',
-      title: 'FM Sky Vision'
+      title: 'FM Sky Vision',
+      address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
     }
   ];
 
@@ -271,7 +273,7 @@ export class CategoryComponent {
         if (businessModel == null) {
           method = 'POST';
           toasterMsg = 'Saved Successfully';
-          businessModel = { title: businessTitle, businessId: 0, ownerId: 'GUID' };
+          businessModel = { title: businessTitle, businessId: 0, ownerId: 'GUID', address: null };
         } else {
           method = 'PUT';
           toasterMsg = 'Updated Successfully';

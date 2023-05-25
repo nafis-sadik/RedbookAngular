@@ -4,7 +4,23 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard.component';
-import { NbButtonGroupModule, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbLayoutModule, NbListModule, NbMenuModule, NbRadioModule, NbSelectModule, NbSidebarModule, NbTabsetModule } from '@nebular/theme';
+import {
+  NbButtonGroupModule,
+  NbButtonModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbDatepickerModule,
+  NbIconModule,
+  NbInputModule,
+  NbLayoutModule,
+  NbListModule,
+  NbMenuModule,
+  NbRadioModule,
+  NbSelectModule,
+  NbSidebarModule,
+  NbStepperModule,
+  NbTabsetModule
+} from '@nebular/theme';
 import { RouterModule } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { CategoryComponent } from './category/category.component';
@@ -14,6 +30,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ProductsDetailsFormComponent } from './products/products-details-form/products-details-form.component';
 import { SellComponent } from './sell/sell.component';
 import { PurchaseComponent } from './purchase/purchase.component';
+import { AddPurchaseComponent } from './purchase/add-purchase/add-purchase.component';
 
 
 @NgModule({
@@ -27,6 +44,7 @@ import { PurchaseComponent } from './purchase/purchase.component';
     ProductsDetailsFormComponent,
     SellComponent,
     PurchaseComponent,
+    AddPurchaseComponent,
   ],
   imports: [
     CommonModule,
@@ -42,9 +60,12 @@ import { PurchaseComponent } from './purchase/purchase.component';
     NbListModule,
     NbSelectModule,
     NbRadioModule,
+    NbStepperModule,
     NbButtonGroupModule,
     NbTabsetModule,
-    SharedModule
+    SharedModule,
+    NbDatepickerModule,
+    NbCheckboxModule
   ],
   bootstrap: [DashboardComponent]
 })

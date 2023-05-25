@@ -85,8 +85,10 @@ export class NgxPaginationComponent<T> implements OnInit {
     this.paginationModel.sourceData.forEach(element => {
       let elementKeyValuePair: string[] = [];
       Object.getOwnPropertyNames(element).forEach((val: string, idx, array) => {
-        if(variableNames.includes(val))
-          elementKeyValuePair.push((element as any)[val]);
+        if(variableNames.includes(val)){
+          elementKeyValuePair[variableNames.indexOf(val)] = (element as any)[val];
+        }
+          // elementKeyValuePair.push((element as any)[val]);
       });
       sourceData.push(elementKeyValuePair);
     });

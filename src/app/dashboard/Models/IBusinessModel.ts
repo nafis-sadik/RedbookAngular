@@ -14,4 +14,9 @@ export declare interface IBusinessModel{
      * @type {string}
      */
     title: string;
+    /**
+     * Collection of addresses of a business with corresponding Address Ids
+     * @type { { [ key: number ]: string }[] | null }
+     */
+    address: { [ key: number ]: string }[] | null;
 }

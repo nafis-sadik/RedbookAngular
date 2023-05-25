@@ -1,1 +1,21 @@
-<p>purchase works!</p>
+<section id="Products">
+  <nb-card>
+    <nb-card-header>
+      <h5>{{ cardHeader }}</h5>
+    </nb-card-header>
+    <nb-card-body class="p-0">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-2">
+            <nb-menu [items]="outlets" class="menu-container">
+            </nb-menu>
+          </div>
+          <div class="col-md-10">
+            <ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</section>
+

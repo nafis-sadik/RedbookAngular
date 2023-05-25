@@ -9,7 +9,7 @@ import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
 })
 
 export class DashboardComponent {
-  selectedTheme;
+  selectedTheme: string | undefined;
   themes: string[] = [
     'Default',
     'Dark',
@@ -29,7 +29,7 @@ export class DashboardComponent {
       expanded: false,
       children: [
         {
-          title: 'Purchase',
+          title: 'Invoice/Purchase',
           icon: 'shopping-bag',
           link: '/dashboard/purchase'
         },

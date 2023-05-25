@@ -1,0 +1,103 @@
+<section id="InvoiceForm">
+  <nb-card>
+    <nb-card-header>
+      <div class="container-fluid">
+        <div class="row">
+          <h5>
+            Save Invoice
+          </h5>
+        </div>
+      </div>
+    </nb-card-header>
+    <nb-card-body>
+      <nb-stepper #stepper [linear]="linearMode">
+        <nb-step [stepControl]="nameForm" label="Client Details">
+          <form #nameForm="ngForm" class="step-container">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="mb-2 mt-4 p-0">Select Client</label>
+                  <nb-select fullWidth placeholder="Select Showcase" [(selected)]="selectedClient" required>
+                    <nb-option value>Select Client</nb-option>
+                    <nb-option *ngFor="let client of clientList" value="{{client.clientId}}">{{ client.clientName }}</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-md-6">
+                  <label class="mb-2 mt-4 p-0">Issue Date</label>
+                  <div class="input-group">
+                    <input fullWidth nbInput placeholder="Issue Date" [nbDatepicker]="dateTimePicker" required>
+                    <nb-datepicker #dateTimePicker></nb-datepicker>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label class="mb-2 mt-4 p-0">Notes</label>
+                  <div class="input-group">
+                    <textarea fullWidth nbInput placeholder="Notes"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label class="mb-2 mt-4 p-0">Terms</label>
+                  <div class="input-group">
+                    <textarea fullWidth nbInput placeholder="Terms"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label class="mb-2 mt-4 p-0">Select Address</label>
+                  <span *ngFor="let address of invoiceModel.address">
+                    <div class="input-group">
+                      <nb-checkbox status="primary">{{address}}</nb-checkbox>
+                    </div>
+                  </span>
+                </div>
+                <div class="col-md-12 mt-5">
+                  <button nbButton status="primary" class="float-right" nbStepperNext>next</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </nb-step>
+
+        <nb-step [stepControl]="movieForm" label="Product Details">
+          <form #movieForm="ngForm" class="step-container">
+            <div class="input-group">
+              <input type="text"
+                    placeholder="Enter your favorite movie"
+                    class="form-control"
+                    name="movie"
+                    required
+                    nbInput
+                    ngModel
+                    #movie="ngModel"
+                    [status]="movie.invalid ? 'danger' : 'basic'">
+            </div>
+            <button nbButton status="primary" nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
+        <nb-step [stepControl]="somethingForm" label="Confirm">
+          <form #somethingForm="ngForm" class="step-container">
+            <div class="input-group">
+              <input type="text"
+                    placeholder="Enter something"
+                    class="form-control"
+                    name="something"
+                    required
+                    nbInput
+                    ngModel
+                    #somethingInput="ngModel"
+                    [status]="somethingInput.invalid ? 'danger' : 'basic'">
+            </div>
+            <button nbButton status="primary" nbStepperNext>next</button>
+          </form>
+        </nb-step>
+
+        <nb-step [hidden]="true">
+          <div class="step-container">
+            <h3>Wizard completed!</h3>
+            <button nbButton status="primary" (click)="stepper.reset()">Done</button>
+          </div>
+        </nb-step>
+      </nb-stepper>
+    </nb-card-body>
+  </nb-card>
+</section>
