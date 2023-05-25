@@ -42,7 +42,7 @@ export class DashboardComponent {
     },
     {
       title: 'Product Management',
-      icon: 'briefcase',
+      icon: 'layers',
       expanded: false,
       children:[
         {
@@ -52,7 +52,7 @@ export class DashboardComponent {
         },
         {
           title: 'Category Management',
-          icon: 'layers',
+          icon: 'list',
           link: '/dashboard/category'
         }
       ]
@@ -73,6 +73,21 @@ export class DashboardComponent {
         {
           title: 'Customers',
           icon: 'person'
+        }
+      ]
+    },
+    {
+      title: 'Settings',
+      icon: 'settings',
+      expanded: false,
+      children: [
+        {
+          title: 'User Management',
+          icon: 'person'
+        },
+        {
+          title: 'Business Management',
+          icon: 'briefcase'
         }
       ]
     }
