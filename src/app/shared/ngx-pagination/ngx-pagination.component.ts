@@ -4,6 +4,7 @@ import { ITableModel } from './Models/ITableModel';
 import { IPagingModel } from './Models/IPagingModel';
 import { ISearchModel } from './Models/ISearchModel';
 import { IAddNewModel } from './Models/IAddNewModel';
+import { NGXPaginationService } from './ngx-pagination.service';
 
 @Component({
   selector: 'ngx-pagination',
@@ -22,7 +23,7 @@ export class NgxPaginationComponent<T> implements OnInit {
   allowSearch: boolean;
   allowAdd: boolean;
 
-  constructor() {
+  constructor(private ngxPaginationService: NGXPaginationService<T>) {
     // Initialization to avoid error
     this.cardHeader = '';
 
@@ -64,6 +65,11 @@ export class NgxPaginationComponent<T> implements OnInit {
     if(this.paginationModel == null || this.paginationModel == undefined)
       throw new Error('Object of type IPaginationModel is expected for paginationModel');
 
+
+    this.ngxPaginationService.getData().subscribe((newPaginationModel) => {
+      this.paginationModel = newPaginationModel;
+    });
+
     this.cardHeader = this.paginationModel == undefined? '' : this.paginationModel.tableCardHeader;
     this.allowAdd = this.paginationModel.allowAdd;
     this.allowSearch = this.paginationModel.allowSearch;
@@ -88,7 +94,6 @@ export class NgxPaginationComponent<T> implements OnInit {
         if(variableNames.includes(val)){
           elementKeyValuePair[variableNames.indexOf(val)] = (element as any)[val];
         }
-          // elementKeyValuePair.push((element as any)[val]);
       });
       sourceData.push(elementKeyValuePair);
     });

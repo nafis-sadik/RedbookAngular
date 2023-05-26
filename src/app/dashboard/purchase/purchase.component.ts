@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { NbDialogService, NbMenuItem, NbMenuService } from '@nebular/theme';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { IInvoiceModel } from '../Models/IInvoiceModel';
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
-import { IAddressModel } from '../Models/IAddressModel';
+import { IBusinessModel } from '../Models/IBusinessModel';
+import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 
 @Component({
   selector: 'app-purchase',
@@ -85,20 +86,26 @@ export class PurchaseComponent {
     }
   ];
 
-  outlets: NbMenuItem[] = [
+  outlets: IBusinessModel[] = [
     {
       title: 'Krishi Ghor',
+      address: [],
+      businessId: 1,
+      ownerId: ''
     },
     {
       title: 'FM SkyVision',
+      address: [],
+      businessId: 2,
+      ownerId: ''
     }
-  ];
+   ];
 
   sourceData: IInvoiceModel[];
 
   pagedProductModel: IPaginationModel<IInvoiceModel>;
 
-  constructor(private dialogService: NbDialogService) {
+  constructor(private dialogService: NbDialogService, private ngxPaginationService: NGXPaginationService<IInvoiceModel>) {
     // Load and set your backend data here on page load
     this.sourceData = this.dummyBackendDataSource;
 
@@ -146,5 +153,18 @@ export class PurchaseComponent {
         }
       },
     };
+  }
+
+  selectOutlet(businessId: number, event: any): void{
+    // Add active class to source element and remove from sibling elements
+    let sourceElem = event.srcElement;
+    Array.from(sourceElem.parentNode.children).forEach((element: any) => {
+      if(element != sourceElem)
+        element.classList.remove('active');
+      else
+        element.classList.add('active');
+    });
+
+    this.ngxPaginationService.updateData(this.pagedProductModel);
   }
 }

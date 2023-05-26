@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IProductModel } from '../Models/IProductModel';
-import { NbDialogService, NbMenuItem } from '@nebular/theme';
+import { NbDialogService, NbMenuBag, NbMenuItem, NbMenuService } from '@nebular/theme';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { ProductsDetailsFormComponent } from './products-details-form/products-details-form.component';
+import { IBusinessModel } from '../Models/IBusinessModel';
 
 @Component({
   selector: 'app-products',
@@ -42,7 +43,10 @@ export class ProductsComponent {
       productName: '2ZR-FE',
       purchasePrice: 80000,
       retailPrice: 100000
-    },
+    }
+  ];
+
+  source2: IProductModel[] = [
     {
       id: 4,
       categoryId: 1,
@@ -65,12 +69,18 @@ export class ProductsComponent {
     }
   ];
 
-  outlets: NbMenuItem[] = [
+  outlets: IBusinessModel[] = [
     {
       title: 'Krishi Ghor',
+      address: [],
+      businessId: 1,
+      ownerId: ''
     },
     {
       title: 'FM SkyVision',
+      address: [],
+      businessId: 2,
+      ownerId: ''
     }
    ];
 
@@ -78,7 +88,7 @@ export class ProductsComponent {
 
   pagedProductModel: IPaginationModel<IProductModel>;
 
-  constructor(private dialogService: NbDialogService) {
+  constructor(private dialogService: NbDialogService, private menuService: NbMenuService) {
     this.pagedProductModel = {
       tableCardHeader: null,
       sourceData: this.source,
@@ -123,5 +133,17 @@ export class ProductsComponent {
         }
       },
     };
+  }
+
+  selectOutlet(businessId: number, event: any): void{
+    // Add active class to source element and remove from sibling elements
+    let sourceElem = event.srcElement;
+    Array.from(sourceElem.parentNode.children).forEach((element: any) => {
+      if(element != sourceElem)
+        element.classList.remove('active');
+      else
+        element.classList.add('active');
+    });
+    this.pagedProductModel.sourceData = this.source2;
   }
 }
