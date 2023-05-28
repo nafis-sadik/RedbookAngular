@@ -94,7 +94,6 @@ export class ProductsComponent {
       tableCardHeader: null,
       sourceData: this.source,
       allowAdd: true,
-      allowSearch: true,
       tableConfig: {
         allowDelete: true,
         allowEdit: true,

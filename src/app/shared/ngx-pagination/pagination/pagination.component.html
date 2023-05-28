@@ -3,24 +3,31 @@
     <div class="row">
       <section id="Paging" class="col-md-6">
         <ul class="pagination float-left">
-          <li class="page-item" (click)="loadFirst()"><a class="page-link"><nb-icon icon="arrowhead-left"></nb-icon></a></li>
-          <li class="page-item" (click)="loadPrevious()"><a class="page-link"><nb-icon icon="arrow-ios-back"></nb-icon></a></li>
+          <li class="page-item" (click)="loadFirst()"><a class="page-link"><nb-icon icon="arrowhead-left"></nb-icon></a>
+          </li>
+          <li class="page-item" (click)="loadPrevious()"><a class="page-link"><nb-icon
+                       icon="arrow-ios-back"></nb-icon></a></li>
 
           <li class="page-item page-number-container" *ngFor="let pageNumber of pageNumbersToPrint"
-              [ngClass]="{'active': pageNumber==pagingModel.pageNumber}"
+              [ngClass]="{'active': pageNumber==pagingModel?.pageNumber}"
               (click)="onPageSelect(pageNumber)">
-              <a class="page-link page-number">{{ pageNumber }}</a>
+            <a class="page-link page-number">{{ pageNumber }}</a>
           </li>
 
-          <li class="page-item" (click)="loadNext()"><a class="page-link"><nb-icon icon="arrow-ios-forward"></nb-icon></a></li>
-          <li class="page-item" (click)="loadLast()"><a class="page-link"><nb-icon icon="arrowhead-right"></nb-icon></a></li>
+          <li class="page-item" (click)="loadNext()"><a class="page-link"><nb-icon
+                       icon="arrow-ios-forward"></nb-icon></a></li>
+          <li class="page-item" (click)="loadLast()"><a class="page-link"><nb-icon icon="arrowhead-right"></nb-icon></a>
+          </li>
         </ul>
       </section>
-      <section id="PageItemCountDropdown" class="col-md-6">
+      <section id="PageItemCountDropdown" class="col-md-6" *ngIf="pagingModel">
         <div class="float-right text-right">
           <span><b>Items per page</b></span>
-          <nb-select selected="{{ pagingModel.pageLengthOptions[pagingModel.pageLength] }}" placeholder="{{ pagingModel.pageLengthOptions[pagingModel.pageLength] }}" [(selected)]="pageLength" (selectedChange)="onPageLengthChange()">
-            <nb-option *ngFor="let pagingOption of pagingModel.pageLengthOptions" value={{pagingOption}}>{{ pagingOption }}</nb-option>
+          <nb-select selected="{{ pagingModel.pageLengthOptions[pagingModel.pageLength] }}"
+                     placeholder="{{ pagingModel.pageLengthOptions[pagingModel.pageLength] }}" [(selected)]="pageLength"
+                     (selectedChange)="onPageLengthChange()">
+            <nb-option *ngFor="let pagingOption of pagingModel.pageLengthOptions" value={{pagingOption}}>{{ pagingOption
+              }}</nb-option>
           </nb-select>
         </div>
       </section>

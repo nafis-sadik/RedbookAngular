@@ -8,34 +8,12 @@ import { IPaginationModel } from './Models/IPaginationModel';
 export class NGXPaginationService<T> {
   private subject = new BehaviorSubject<IPaginationModel<T>>({
     allowAdd: false,
-    allowSearch: false,
     sourceData: [],
     tableCardHeader: '',
-    addNewElementButtonConfig: {
-      showIcon: false,
-      buttonLabel: '',
-      onClick: null
-    },
-    pagingConfig: {
-      pageNumber: 0,
-      pageLengthOptions: [],
-      pageLength: 5,
-      totalItems: 0,
-      onChange: null
-    },
-    searchingConfig: {
-      buttonLabel: '',
-      inputFieldPlaceholder: '',
-      searchString: '',
-      showIcon: false,
-      onClick: null
-    },
-    tableConfig: {
-      allowDelete: false,
-      allowEdit: false,
-      isEditableTable: false,
-      tableMaping: { "": "" }
-    }
+    addNewElementButtonConfig: null,
+    pagingConfig: null,
+    searchingConfig: null,
+    tableConfig:  null
   });
 
   get() { return this.subject.asObservable(); }

@@ -7,7 +7,7 @@ import { IPagingModel } from '../Models/IPagingModel';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements AfterViewInit {
-  @Input() pagingModel: IPagingModel;
+  @Input() pagingModel: IPagingModel | null;
 
   pageNumbersToPrint: number [];
   maxNumberOfPagesToRender: number = 5;
@@ -29,7 +29,7 @@ export class PaginationComponent implements AfterViewInit {
 
   // implement OnInit's `ngOnInit` method
   ngOnInit(): void {
-    if(this.pagingModel == undefined || this.pagingModel == null)
+    if(!this.pagingModel)
       throw 'Failed to initialize: Object of IPagingModel can not be undefined';
 
     this.pageLength = this.pagingModel.pageLength;
@@ -103,15 +103,17 @@ export class PaginationComponent implements AfterViewInit {
   }
 
   loadFirst(): void {
-    if(this.pagingModel == undefined || this.pagingModel == null)
+    if (this.pagingModel == null) {
       throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
+    }
 
     // The first page shall always contain these page numbers
     this.pageNumbersToPrint = [1, 2, 3, 4, 5];
 
     // If max page count is bellow 5, we filter them out here
-    if(this.pagingModel.totalPageCount < this.maxNumberOfPagesToRender){
-      this.pageNumbersToPrint = this.pageNumbersToPrint.filter(element => element < this.pagingModel.totalPageCount);
+    if (this.pagingModel.totalPageCount < this.maxNumberOfPagesToRender) {
+      let totalPageCount = this.pagingModel.totalPageCount;
+      this.pageNumbersToPrint = this.pageNumbersToPrint.filter(element => element < totalPageCount);
       this.pageNumbersToPrint.length <= 0 ? this.pageNumbersToPrint.push(1) : this.pageNumbersToPrint;
     }
 
@@ -149,7 +151,7 @@ export class PaginationComponent implements AfterViewInit {
   }
 
   onPageLengthChange(): void{
-    if(this.pagingModel.onPageLengthChange != null)
+    if(this.pagingModel?.onPageLengthChange != null)
       this.pagingModel.onPageLengthChange();
   }
   // https://dev.to/this-is-angular/how-to-share-data-between-components-in-angular-4i60

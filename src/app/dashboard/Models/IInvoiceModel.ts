@@ -81,12 +81,17 @@ export declare interface IInvoiceModel{
   Discount: number;
   /**
    * Addresses of the invoice issuer to be printed in UI
-   * @type {string}
+   * @type { [key: number]: string }
    */
   address: { [key: number]: string }[];
   /**
    * Primary keys of selected addresses to be printed on final invoice
-   * @type {string}
+   * @type {number[]}
    */
   selectedAddresses: number[];
+  /**
+   * Primary keys of selected products to be purchased against this invoice
+   * @type {number[]}
+   */
+  selectedProducts: number[];
 }

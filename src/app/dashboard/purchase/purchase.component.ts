@@ -5,6 +5,7 @@ import { IInvoiceModel } from '../Models/IInvoiceModel';
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
 import { IBusinessModel } from '../Models/IBusinessModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
+import { PurchaseService } from './purchase.service';
 
 @Component({
   selector: 'app-purchase',
@@ -12,7 +13,9 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
   styleUrls: ['./purchase.component.scss']
 })
 export class PurchaseComponent {
-  cardHeader: string = "Purchase";
+  cardHeader: string = "Product Purchase";
+
+  selectedOutlet: number = 0;
 
   dummyBackendDataSource: IInvoiceModel[] = [
     {
@@ -36,6 +39,7 @@ export class PurchaseComponent {
         { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
         { 2: 'Test Address' }
       ],
+      selectedProducts: [],
       selectedAddresses: []
     },
     {
@@ -59,6 +63,7 @@ export class PurchaseComponent {
         { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
         { 2: 'Test Address' }
       ],
+      selectedProducts: [],
       selectedAddresses: []
     },
     {
@@ -82,6 +87,7 @@ export class PurchaseComponent {
         { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
         { 2: 'Test Address' }
       ],
+      selectedProducts: [],
       selectedAddresses: []
     }
   ];
@@ -105,7 +111,7 @@ export class PurchaseComponent {
 
   pagedProductModel: IPaginationModel<IInvoiceModel>;
 
-  constructor(private dialogService: NbDialogService, private ngxPaginationService: NGXPaginationService<IInvoiceModel>) {
+  constructor(private dialogService: NbDialogService, private purchaseService: PurchaseService , private ngxPaginationService: NGXPaginationService<IInvoiceModel>) {
     // Load and set your backend data here on page load
     this.sourceData = this.dummyBackendDataSource;
 
@@ -113,7 +119,6 @@ export class PurchaseComponent {
       tableCardHeader: null,
       sourceData: this.sourceData,
       allowAdd: true,
-      allowSearch: true,
       tableConfig: {
         allowDelete: true,
         allowEdit: true,
@@ -164,7 +169,8 @@ export class PurchaseComponent {
       else
         element.classList.add('active');
     });
-
+    
+    this.purchaseService.selectedOutletId = businessId;
     this.ngxPaginationService.set(this.pagedProductModel);
   }
 }

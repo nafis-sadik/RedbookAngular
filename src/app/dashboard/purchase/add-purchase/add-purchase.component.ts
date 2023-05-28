@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { IClientList } from '../../Models/IClientList';
 import { IInvoiceModel } from '../../Models/IInvoiceModel';
-import { NbDateService } from '@nebular/theme';
 import { IAddressModel } from '../../Models/IAddressModel';
-import { FormControl } from '@angular/forms';
+import { PurchaseService } from '../purchase.service';
+import { AddPurchaseService } from './add-purchase.service';
+import { IProductModel } from '../../Models/IProductModel';
+import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 
 @Component({
   selector: 'app-add-purchase',
@@ -15,22 +17,25 @@ export class AddPurchaseComponent {
 
   clientList: IClientList[];
 
-  invoiceModel: IInvoiceModel;
+  productList: IProductModel[] = [];
 
-  dummyBackendaddressesOfCurrentOutlet: IAddressModel[] = [
-    {
-      AddressId: 1,
-      FullAddress: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400'
-    },
-    {
-      AddressId: 2,
-      FullAddress: 'Test Address'
-    }
-  ]
+  pagedProductModel: IPaginationModel<IProductModel>;
+
+  invoiceModel: IInvoiceModel;
 
   addressesOfCurrentOutlet: IAddressModel[];
 
-  constructor(protected dateService: NbDateService<Date>) {
+  constructor(private purchaseService: PurchaseService, private addPurchaseService: AddPurchaseService) {
+    this.pagedProductModel = {
+      allowAdd: false,
+      pagingConfig: null,
+      addNewElementButtonConfig: null,
+      searchingConfig: null,
+      sourceData: this.productList,
+      tableCardHeader: 'Products',
+      tableConfig: null,
+    }
+
     this.clientList = [
       {
         clientId: 1,
@@ -64,10 +69,11 @@ export class AddPurchaseComponent {
       UpdateDate: new Date().toISOString().slice(0, 10),
       UpdateBy: '',
       address: [],
-      selectedAddresses: []
+      selectedAddresses: [],
+      selectedProducts: []
     }
 
-    this.addressesOfCurrentOutlet = this.dummyBackendaddressesOfCurrentOutlet;
+    this.addressesOfCurrentOutlet = this.addPurchaseService.getAddressesOfOutlet(this.purchaseService.selectedOutletId);
   }
 
   addSelectedAddress(addressId: number): void{
@@ -80,7 +86,9 @@ export class AddPurchaseComponent {
       this.invoiceModel.selectedAddresses = this.invoiceModel.selectedAddresses.filter(x => x != addressId);
   }
 
-  save(): void{
-    console.log(this.invoiceModel);
+  initializeProductDetailsForm(): void{
+      this.productList = this.addPurchaseService.getProductsByBusinessId(this.purchaseService.selectedOutletId);
   }
+
+  
 }

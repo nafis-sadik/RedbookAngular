@@ -13,12 +13,6 @@ export declare interface IPaginationModel<T>{
   sourceData: T[];
   /**
    * Default value:
-   * Description: Allow search field to appeear
-   * @type {boolean}
-   */
-  allowSearch: boolean;
-  /**
-   * Default value:
    * Description: Allow add button to appeear
    * @type {boolean}
    */
@@ -32,7 +26,7 @@ export declare interface IPaginationModel<T>{
      * Description: Collumn names for table
      * @type {[key: string]: string}
      */
-    tableMaping: {[key: string]: string};
+    tableMaping: { [key: string]: string };
     /**
      * Default value:
      * Description: Defines if table is editable table or not
@@ -51,7 +45,7 @@ export declare interface IPaginationModel<T>{
      * @type {boolean}
      */
     allowDelete: boolean;
-  }
+  } | null;
   /**
    * Configuration for pages
    */
@@ -86,7 +80,7 @@ export declare interface IPaginationModel<T>{
      * @type {Function}
      */
     onChange: Function | null;
-  }
+  } | null;
   /**
    * Configuration for search field
    */

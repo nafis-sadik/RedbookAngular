@@ -32,6 +32,7 @@ import { SellComponent } from './sell/sell.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { AddPurchaseComponent } from './purchase/add-purchase/add-purchase.component';
 import { FormsModule } from '@angular/forms';
+import { AddSalesComponent } from './sell/add-sales/add-sales.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { FormsModule } from '@angular/forms';
     SellComponent,
     PurchaseComponent,
     AddPurchaseComponent,
+    AddSalesComponent,
   ],
   imports: [
     CommonModule,

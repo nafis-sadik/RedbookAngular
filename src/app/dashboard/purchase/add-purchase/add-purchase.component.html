@@ -11,8 +11,8 @@
     </nb-card-header>
     <nb-card-body>
       <nb-stepper #stepper [linear]="linearMode">
-        <nb-step [stepControl]="nameForm" label="Client Details">
-          <form #nameForm="ngForm" class="step-container">
+        <nb-step [stepControl]="clientDetails" label="Client Details">
+          <form #clientDetails="ngForm" class="step-container">
             <div class="container-fluid">
               <div class="row">
                 <div class="col-md-6">
@@ -72,27 +72,36 @@
                   </span>
                 </div>
                 <div class="col-md-12 mt-5">
-                  <button nbButton status="primary" class="float-right" nbStepperNext (click)="save()">next</button>
+                  <button nbButton status="primary" class="float-right" nbStepperNext
+                          (click)="initializeProductDetailsForm()">next</button>
                 </div>
               </div>
             </div>
           </form>
         </nb-step>
 
-        <nb-step [stepControl]="movieForm" label="Product Details">
-          <form #movieForm="ngForm" class="step-container">
-            <div class="input-group">
-              <input type="text"
-                     placeholder="Enter your favorite movie"
-                     class="form-control"
-                     name="movie"
-                     required
-                     nbInput
-                     ngModel
-                     #movie="ngModel"
-                     [status]="movie.invalid ? 'danger' : 'basic'">
+        <nb-step [stepControl]="productDetails" label="Product Details">
+          <form #productDetails="ngForm" class="step-container">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="mb-2 mt-4 p-0">Select Product</label>
+                  <nb-select fullWidth multiple required
+                             placeholder="Select Product"
+                             name="selectedProducts">
+                    <nb-option *ngFor="let product of productList" value={{product.id}}>
+                      {{ product.productName }}</nb-option>
+                  </nb-select>
+                </div>
+                <div class="col-md-12">
+                  <ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination>
+                </div>
+                <div class="col-md-12 mt-5">
+                  <button nbButton status="primary" class="float-right" nbStepperNext
+                          (click)="initializeProductDetailsForm()">next</button>
+                </div>
+              </div>
             </div>
-            <button nbButton status="primary" nbStepperNext>next</button>
           </form>
         </nb-step>
 
