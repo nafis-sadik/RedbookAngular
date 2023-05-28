@@ -28,8 +28,11 @@
 .outletItems{
   list-style-type: none;
   padding: var(--menu-item-padding);
-  border-bottom: 1px solid black;
+  border-bottom: var(--menu-item-divider-width) var(--menu-item-divider-style) var(--menu-item-divider-color);
   margin-bottom: 0.2rem;
+  font-family: var(--radio-text-font-family);
+  font-size: var(--radio-text-font-size);
+  font-weight: var(--radio-text-font-weight);
 }
 
 .outletItems:last-of-type{

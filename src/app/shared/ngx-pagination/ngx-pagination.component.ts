@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
 import { IPagingModel } from './Models/IPagingModel';
@@ -11,8 +11,8 @@ import { NGXPaginationService } from './ngx-pagination.service';
   templateUrl: './ngx-pagination.component.html',
   styleUrls: ['./ngx-pagination.component.scss']
 })
-export class NgxPaginationComponent<T> implements OnInit {
-  @Input() paginationModel: IPaginationModel<T> | undefined;
+export class NgxPaginationComponent<T>{
+  paginationModel: IPaginationModel<T> | undefined;
 
   cardHeader: string | null;
   tableConfig: ITableModel;
@@ -57,6 +57,11 @@ export class NgxPaginationComponent<T> implements OnInit {
       onClick: null
     }
 
+    this.ngxPaginationService.get().subscribe(updatedModel => {
+      this.paginationModel = updatedModel;
+      this.ngOnInit();
+    });
+
     this.allowAdd = false;
     this.allowSearch = false;
   }
@@ -64,11 +69,6 @@ export class NgxPaginationComponent<T> implements OnInit {
   ngOnInit(): void {
     if(this.paginationModel == null || this.paginationModel == undefined)
       throw new Error('Object of type IPaginationModel is expected for paginationModel');
-
-
-    this.ngxPaginationService.getData().subscribe((newPaginationModel) => {
-      this.paginationModel = newPaginationModel;
-    });
 
     this.cardHeader = this.paginationModel == undefined? '' : this.paginationModel.tableCardHeader;
     this.allowAdd = this.paginationModel.allowAdd;

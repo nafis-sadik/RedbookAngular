@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NbDialogService, NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbDialogService } from '@nebular/theme';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { IInvoiceModel } from '../Models/IInvoiceModel';
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
@@ -99,7 +99,7 @@ export class PurchaseComponent {
       businessId: 2,
       ownerId: ''
     }
-   ];
+  ];
 
   sourceData: IInvoiceModel[];
 
@@ -165,6 +165,6 @@ export class PurchaseComponent {
         element.classList.add('active');
     });
 
-    this.ngxPaginationService.updateData(this.pagedProductModel);
+    this.ngxPaginationService.set(this.pagedProductModel);
   }
 }

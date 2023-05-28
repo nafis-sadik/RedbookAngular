@@ -4,6 +4,7 @@ import { NbDialogService, NbMenuBag, NbMenuItem, NbMenuService } from '@nebular/
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { ProductsDetailsFormComponent } from './products-details-form/products-details-form.component';
 import { IBusinessModel } from '../Models/IBusinessModel';
+import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 
 @Component({
   selector: 'app-products',
@@ -82,13 +83,13 @@ export class ProductsComponent {
       businessId: 2,
       ownerId: ''
     }
-   ];
+  ];
 
   cardHeader: string = "Product Management";
 
   pagedProductModel: IPaginationModel<IProductModel>;
 
-  constructor(private dialogService: NbDialogService, private menuService: NbMenuService) {
+  constructor(private dialogService: NbDialogService, private pagingService: NGXPaginationService<IProductModel>) {
     this.pagedProductModel = {
       tableCardHeader: null,
       sourceData: this.source,
@@ -144,6 +145,11 @@ export class ProductsComponent {
       else
         element.classList.add('active');
     });
-    this.pagedProductModel.sourceData = this.source2;
+    
+    if(businessId % 2 == 0)
+      this.pagedProductModel.sourceData = this.source;
+    else
+      this.pagedProductModel.sourceData = this.source2;
+    this.pagingService.set(this.pagedProductModel);
   }
 }

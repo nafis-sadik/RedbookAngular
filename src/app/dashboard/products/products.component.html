@@ -9,16 +9,17 @@
           <div class="col-md-2">
             <div class="menu-container">
               <ul>
-                <li *ngFor="let menuItem of outlets" class="outletItems" (click)="selectOutlet(menuItem.businessId, $event)">{{ menuItem.title }}</li>
+                <li *ngFor="let menuItem of outlets" class="outletItems"
+                    (click)="selectOutlet(menuItem.businessId, $event)">{{ menuItem.title }}</li>
               </ul>
             </div>
           </div>
           <div class="col-md-10">
-            <ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination>
+            <!-- <ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination> -->
+            <ngx-pagination></ngx-pagination>
           </div>
         </div>
       </div>
     </nb-card-body>
   </nb-card>
 </section>
-
