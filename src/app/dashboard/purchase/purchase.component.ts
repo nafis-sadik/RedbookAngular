@@ -15,7 +15,7 @@ import { PurchaseService } from './purchase.service';
 
 export class PurchaseComponent {
   cardHeader: string = "Product Purchase";
-
+  
   selectedOutlet: number = 0;
 
   dummyBackendDataSource: IInvoiceModel[] = [
@@ -121,7 +121,12 @@ export class PurchaseComponent {
 
   pagedProductModel: IPaginationModel<IInvoiceModel>;
 
-  constructor(private dialogService: NbDialogService, private purchaseService: PurchaseService , private ngxPaginationService: NGXPaginationService<IInvoiceModel>) {
+  constructor(
+    private dialogService: NbDialogService,
+    private purchaseService: PurchaseService,
+    private ngxPaginationService: NGXPaginationService<IInvoiceModel>
+  )
+  {
     // Load and set your backend data here on page load
     this.sourceData = this.dummyBackendDataSource;
 

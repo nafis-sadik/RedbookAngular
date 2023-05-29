@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IProductModel } from '../Models/IProductModel';
-import { NbDialogService, NbMenuBag, NbMenuItem, NbMenuService } from '@nebular/theme';
+import { NbDialogService } from '@nebular/theme';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { ProductsDetailsFormComponent } from './products-details-form/products-details-form.component';
 import { IBusinessModel } from '../Models/IBusinessModel';
@@ -12,8 +12,6 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
-  singleSelectGroupValue = [];
-
   source: IProductModel[] = [
     {
       id: 1,
@@ -154,6 +152,7 @@ export class ProductsComponent {
       this.pagedProductModel.sourceData = this.source;
     else
       this.pagedProductModel.sourceData = this.source2;
+    
     this.pagingService.set(this.pagedProductModel);
   }
 }
