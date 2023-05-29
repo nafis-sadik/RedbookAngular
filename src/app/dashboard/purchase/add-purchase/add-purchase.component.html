@@ -88,13 +88,53 @@
                   <label class="mb-2 mt-4 p-0">Select Product</label>
                   <nb-select fullWidth multiple required
                              placeholder="Select Product"
-                             name="selectedProducts">
-                    <nb-option *ngFor="let product of productList" value={{product.id}}>
+                             [(selected)]="invoiceProductIds"
+                             (selectedChange)="selectProductForPurchase()">
+                    <nb-option *ngFor="let product of outletProductList" value={{product.id}}>
                       {{ product.productName }}</nb-option>
                   </nb-select>
                 </div>
                 <div class="col-md-12">
-                  <ngx-pagination [paginationModel]="pagedProductModel"></ngx-pagination>
+                  <table class="mt-4" style="width:100%">
+                    <thead>
+                      <tr class="align-bottom row-color-2">
+                        <th class="ng-star-inserted">Product Id</th>
+                        <th class="ng-star-inserted">Product Name</th>
+                        <th class="ng-star-inserted">Quantity</th>
+                        <th class="ng-star-inserted">Price</th>
+                        <th class="ng-star-inserted">Net Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let product of invoiceModel.invoiceProducts; let i = index">
+                        <td>{{ product.ProductId }}</td>
+                        <td>{{ product.ProductName }}</td>
+                        <td>
+                          <!-- {{product.Quantity}} -->
+                          <input fullWidth nbInput required
+                              placeholder="Purchase Quantity"
+                              [(ngModel)]="product.Quantity"
+                              name="product.Quantity[{{i}}]"
+                              [value]="product.Quantity"
+                              (change)="updateProductNetTotalAmount(product.ProductId)">
+                        </td>
+                        <td>
+                          <!-- {{product.PurchasePrice}} -->
+                          <input fullWidth nbInput required
+                              placeholder="Purchase Price"
+                              [(ngModel)]="product.PurchasePrice"
+                              name="product.PurchasePrice[{{i}}]"
+                              [value]="product.PurchasePrice"
+                              (change)="updateProductNetTotalAmount(product.ProductId)">
+                        </td>
+                        <td>{{ product.ProductNetTotalPrice }}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="4"><b>Net Total</b></td>
+                        <td><b>{{ invoiceModel.InvoiceTotal }}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <div class="col-md-12 mt-5">
                   <button nbButton status="primary" class="float-right" nbStepperNext

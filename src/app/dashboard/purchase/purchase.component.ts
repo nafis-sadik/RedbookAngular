@@ -12,6 +12,7 @@ import { PurchaseService } from './purchase.service';
   templateUrl: './purchase.component.html',
   styleUrls: ['./purchase.component.scss']
 })
+
 export class PurchaseComponent {
   cardHeader: string = "Product Purchase";
 
@@ -23,72 +24,81 @@ export class PurchaseComponent {
       ClientId: 1,
       ClientName: "Chittagong Builders",
       CreatedBy: "User 1",
-      DueAmount: 300,
       InvoiceNo: "Dudu Dada",
-      PaidAmount: 500,
-      InvoiceTotal: 800,
       IssueDate: new Date().toISOString().slice(0, 10),
       PaymentStatus: "Due",
       PaymentStatusId: 1,
       UpdateDate: new Date(),
       UpdateBy: "Hakina Matata",
-      Discount: 15,
       Notes: '',
       Terms: '',
-      address: [
-        { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
-        { 2: 'Test Address' }
+      selectedAddresses: [],
+      invoiceProducts: [],
+      paymentHistory:[
+        {
+          DueAmount: 300,
+          PaidAmount: 500,
+          InvoiceTotal: 800,
+          Discount: 15,
+          PaymentDate: new Date()
+        }
       ],
-      selectedProducts: [],
-      selectedAddresses: []
+      InvoiceTotal: 0,
+      PaidAmount: 0
     },
     {
       InvoiceId: 2,
       ClientId: 2,
       ClientName: "RFL",
       CreatedBy: "User 1",
-      DueAmount: 300,
       InvoiceNo: "TuTu TaTa",
-      PaidAmount: 500,
-      InvoiceTotal: 800,
       IssueDate: new Date().toISOString().slice(0, 10),
       PaymentStatus: "Paid",
       PaymentStatusId: 2,
       UpdateDate: new Date(),
       UpdateBy: "Hakina Matata",
-      Discount: 15,
       Notes: '',
       Terms: '',
-      address: [
-        { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
-        { 2: 'Test Address' }
+      selectedAddresses: [],
+      invoiceProducts: [],
+      paymentHistory:[
+        {
+          DueAmount: 300,
+          PaidAmount: 500,
+          InvoiceTotal: 800,
+          Discount: 15,
+          PaymentDate: new Date()
+        }
       ],
-      selectedProducts: [],
-      selectedAddresses: []
+      InvoiceTotal: 0,
+      PaidAmount: 0
     },
     {
       InvoiceId: 3,
       ClientId: 1,
       ClientName: "Chittagong Builders",
       CreatedBy: "User 1",
-      DueAmount: 300,
       InvoiceNo: "Dudu Dada",
-      PaidAmount: 500,
-      InvoiceTotal: 800,
       IssueDate: new Date().toISOString().slice(0, 10),
       PaymentStatus: "Due",
       PaymentStatusId: 1,
       UpdateDate: new Date(),
       UpdateBy: "Hakina Matata",
-      Discount: 15,
       Notes: '',
       Terms: '',
-      address: [
-        { 1: 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' },
-        { 2: 'Test Address' }
+      invoiceProducts: [],
+      selectedAddresses: [],
+      paymentHistory:[
+        {
+          DueAmount: 300,
+          PaidAmount: 500,
+          InvoiceTotal: 800,
+          Discount: 15,
+          PaymentDate: new Date()
+        }
       ],
-      selectedProducts: [],
-      selectedAddresses: []
+      InvoiceTotal: 0,
+      PaidAmount: 0
     }
   ];
 
@@ -169,7 +179,7 @@ export class PurchaseComponent {
       else
         element.classList.add('active');
     });
-    
+
     this.purchaseService.selectedOutletId = businessId;
     this.ngxPaginationService.set(this.pagedProductModel);
   }

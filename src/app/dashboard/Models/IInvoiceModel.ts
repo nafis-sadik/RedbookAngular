@@ -1,3 +1,6 @@
+import { IInvoicePaymentModel } from "./IInvoicePayment";
+import { IInvoiceProductModel } from "./IInvoiceProductModel";
+
 export declare interface IInvoiceModel{
   /**
    * Unique Identifier of the Invoices for database
@@ -20,7 +23,7 @@ export declare interface IInvoiceModel{
    */
   ClientName: string;
   /**
-   * Invoice issue date (should be entered from front end) 
+   * Invoice issue date (should be entered from front end)
    * @type {Date}
    */
   IssueDate: Date | string;
@@ -40,20 +43,10 @@ export declare interface IInvoiceModel{
    */
   PaymentStatusId: number;
   /**
-   * Total bill amount of this invoice
-   * @type {Number}
+   * Primary keys of selected products to be purchased against this invoice
+   * @type {IProductModel[]}
    */
-  InvoiceTotal: number;
-  /**
-   * Total due amount of this invoice
-   * @type {Number}
-   */
-  DueAmount: number;
-  /**
-   * Total paid amount of this invoice
-   * @type {Number}
-   */
-  PaidAmount: number;
+  invoiceProducts: IInvoiceProductModel[];
   /**
    * User who created the invoice
    * @type {string}
@@ -75,23 +68,23 @@ export declare interface IInvoiceModel{
    */
   Terms: string;
   /**
-   * Discount amount on this Invoice
-   * @type {string}
-   */
-  Discount: number;
-  /**
-   * Addresses of the invoice issuer to be printed in UI
-   * @type { [key: number]: string }
-   */
-  address: { [key: number]: string }[];
-  /**
    * Primary keys of selected addresses to be printed on final invoice
    * @type {number[]}
    */
   selectedAddresses: number[];
   /**
-   * Primary keys of selected products to be purchased against this invoice
+   * Payment history of invoice
    * @type {number[]}
    */
-  selectedProducts: number[];
+  paymentHistory: IInvoicePaymentModel[];
+  /**
+   * Total bill against this invoice
+   * @type {number[]}
+   */
+  InvoiceTotal: number;
+  /**
+   * Total paid amount against this invoice
+   * @type {number[]}
+   */
+  PaidAmount: number;
 }

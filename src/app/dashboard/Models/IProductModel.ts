@@ -39,4 +39,9 @@ export declare interface IProductModel{
      * @type {Number}
      */
     retailPrice: number;
+    /**
+     * Purchase/Sales/Inventory Quantity
+     * @type {Number | null}
+     */
+    quantity: number | null;
 }

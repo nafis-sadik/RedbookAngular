@@ -24,7 +24,8 @@ export class SellComponent {
       subcategoryName: 'EFI',
       productName: '4E-FE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     },
     {
       id: 2,
@@ -34,7 +35,8 @@ export class SellComponent {
       subcategoryName: 'Classic',
       productName: '2JZ-GTE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     },
     {
       id: 3,
@@ -44,7 +46,8 @@ export class SellComponent {
       subcategoryName: 'VVTi',
       productName: '2ZR-FE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     }
   ];
 
@@ -57,7 +60,8 @@ export class SellComponent {
       subcategoryName: 'VVTi',
       productName: '2ZR-FE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     },
     {
       id: 5,
@@ -67,7 +71,8 @@ export class SellComponent {
       subcategoryName: 'VVTi',
       productName: '2ZR-FE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     }
   ];
 
@@ -88,40 +93,40 @@ export class SellComponent {
     }
   ];
 
-  sourceDataKG: ISalesModel[] = [    
+  sourceDataKG: ISalesModel[] = [
     {
       id: 1,
       MemoNumber: 'KG-1728',
       NetTotal: 150000,
       PaidAmount: 100000,
       SalesDate: new Date().toISOString().slice(0, 10),
-    },  
+    },
     {
       id: 2,
       MemoNumber: 'KG-1729',
       NetTotal: 180000,
       PaidAmount: 100000,
       SalesDate: new Date().toISOString().slice(0, 10),
-    }  
+    }
   ];
 
-  sourceDataFM: ISalesModel[] = [    
+  sourceDataFM: ISalesModel[] = [
     {
       id: 1,
       MemoNumber: 'FM-1728',
       NetTotal: 2000,
       PaidAmount: 2000,
       SalesDate: new Date().toISOString().slice(0, 10),
-    },  
+    },
     {
       id: 2,
       MemoNumber: 'FM-1729',
       NetTotal: 1800,
       PaidAmount: 1800,
       SalesDate: new Date().toISOString().slice(0, 10),
-    }  
+    }
   ];
-  
+
   pagedSalesModel: IPaginationModel<ISalesModel>;
 
   constructor(private dialogService: NbDialogService, private ngxPaginationService: NGXPaginationService<ISalesModel>) {

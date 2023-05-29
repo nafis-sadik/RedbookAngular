@@ -23,7 +23,8 @@ export class ProductsComponent {
       subcategoryName: 'EFI',
       productName: '4E-FE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     },
     {
       id: 2,
@@ -33,7 +34,8 @@ export class ProductsComponent {
       subcategoryName: 'Classic',
       productName: '2JZ-GTE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     },
     {
       id: 3,
@@ -43,7 +45,8 @@ export class ProductsComponent {
       subcategoryName: 'VVTi',
       productName: '2ZR-FE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     }
   ];
 
@@ -56,7 +59,8 @@ export class ProductsComponent {
       subcategoryName: 'VVTi',
       productName: '2ZR-FE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     },
     {
       id: 5,
@@ -66,7 +70,8 @@ export class ProductsComponent {
       subcategoryName: 'VVTi',
       productName: '2ZR-FE',
       purchasePrice: 80000,
-      retailPrice: 100000
+      retailPrice: 100000,
+      quantity: null
     }
   ];
 
@@ -144,7 +149,7 @@ export class ProductsComponent {
       else
         element.classList.add('active');
     });
-    
+
     if(businessId % 2 == 0)
       this.pagedProductModel.sourceData = this.source;
     else

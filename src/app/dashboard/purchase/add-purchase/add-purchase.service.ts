@@ -29,7 +29,7 @@ export class AddPurchaseService {
                 }
             ];
     }
-    
+
     getProductsByBusinessId(businessId: number): IProductModel[]{
         if (businessId == 1)
             return [
@@ -41,7 +41,8 @@ export class AddPurchaseService {
                         subcategoryName: 'VVTi',
                         productName: '2ZR-FE',
                         purchasePrice: 80000,
-                        retailPrice: 100000
+                        retailPrice: 100000,
+                        quantity: null
                     },
                     {
                         id: 5,
@@ -51,7 +52,8 @@ export class AddPurchaseService {
                         subcategoryName: 'VVTi',
                         productName: '2ZR-FE',
                         purchasePrice: 80000,
-                        retailPrice: 100000
+                        retailPrice: 100000,
+                        quantity: null
                     }
                 ];
         else
@@ -64,7 +66,8 @@ export class AddPurchaseService {
                         subcategoryName: 'EFI',
                         productName: '4E-FE',
                         purchasePrice: 80000,
-                        retailPrice: 100000
+                        retailPrice: 100000,
+                        quantity: null
                     },
                     {
                         id: 2,
@@ -74,7 +77,8 @@ export class AddPurchaseService {
                         subcategoryName: 'Classic',
                         productName: '2JZ-GTE',
                         purchasePrice: 80000,
-                        retailPrice: 100000
+                        retailPrice: 100000,
+                        quantity: null
                     },
                     {
                         id: 3,
@@ -84,7 +88,8 @@ export class AddPurchaseService {
                         subcategoryName: 'VVTi',
                         productName: '2ZR-FE',
                         purchasePrice: 80000,
-                        retailPrice: 100000
+                        retailPrice: 100000,
+                        quantity: null
                     }
                 ];
     }
