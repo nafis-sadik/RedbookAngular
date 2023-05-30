@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
 import { IPagingModel } from './Models/IPagingModel';
@@ -11,7 +11,7 @@ import { NGXPaginationService } from './ngx-pagination.service';
   templateUrl: './ngx-pagination.component.html',
   styleUrls: ['./ngx-pagination.component.scss']
 })
-export class NgxPaginationComponent<T>{
+export class NgxPaginationComponent<T> {
   @Input() paginationModel: IPaginationModel<T> | undefined;
 
   cardHeader: string = '';
@@ -30,9 +30,10 @@ export class NgxPaginationComponent<T>{
   ngOnInit(): void {
     if (!this.paginationModel)
       throw new Error('Object of type IPaginationModel is expected for paginationModel.');
-    
+
     this.cardHeader = this.paginationModel?.tableCardHeader == null? '' : this.paginationModel.tableCardHeader;
-    
+
+    // Load table config to render
     if (this.paginationModel.tableConfig)
     {
       // Works for the table
@@ -69,6 +70,7 @@ export class NgxPaginationComponent<T>{
       };
     }
 
+    // Load pagination config to render
     if (this.paginationModel.pagingConfig) {
       // Works for paging
       let itemsPerPage: number = this.paginationModel.pagingConfig?.pageLengthOptions[this.paginationModel.pagingConfig.pageLength];
@@ -84,9 +86,8 @@ export class NgxPaginationComponent<T>{
         pageLengthOptions: this.paginationModel.pagingConfig.pageLengthOptions,
         totalPageCount: totalPageCount,
         onPageLengthChange: this.paginationModel.pagingConfig.onChange
-      };      
+      };
     }
-
 
     // Load search field config to render
     if(this.paginationModel.searchingConfig)

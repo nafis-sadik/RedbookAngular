@@ -26,7 +26,7 @@ export class ProductsComponent {
   ) {
     this.outlets = dashboardService.getOutlets();
 
-    this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent);
+    this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'New Product');
 
     if(this.pagedProductModel.tableConfig)
       this.pagedProductModel.tableConfig.tableMaping = {
@@ -41,6 +41,11 @@ export class ProductsComponent {
 
   selectOutlet(outletId: number, event: any): void{
     this.productService.selectedOutletId = outletId;
+
+    // Is display is hidden, make it visible
+    let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
+    if(dataTableCard && dataTableCard.classList.contains('d-none'))
+      dataTableCard.classList.remove('d-none');
 
     // Add active class to source element and remove from sibling elements
     let sourceElem = event.srcElement;

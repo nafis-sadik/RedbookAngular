@@ -1,8 +1,11 @@
 @forward '@nebular/theme/styles/theming';
 @use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
 @use '@nebular/theme/styles/themes/corporate';
 @use '@nebular/theme/styles/themes/dark';
 @use '@nebular/theme/styles/themes/cosmic';
+
+$nb-enable-css-custom-properties: true; // <-- enable css custom properties
 
 $nb-themes: nb-register-theme((
 
@@ -16,7 +19,6 @@ $nb-themes: nb-register-theme((
   // color-primary-600: #274bdb,
   // color-primary-700: #1a34b8,
   // color-primary-800: #102694,
-  // color-primary-900: #091c7a,
 
 ), corporate, corporate);
 

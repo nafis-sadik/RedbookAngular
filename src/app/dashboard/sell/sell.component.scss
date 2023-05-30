@@ -4,6 +4,12 @@
     padding-right: 0;
 }
 
+#Sales .active{
+  background-color: var(--menu-item-hover-background-color);
+  color: var(--menu-item-hover-text-color);
+  cursor: var(--menu-item-hover-cursor);
+}
+
 .outletItems{
     list-style-type: none;
     padding: var(--menu-item-padding);

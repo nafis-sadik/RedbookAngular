@@ -26,8 +26,9 @@
           <nb-select selected="{{ pagingModel.pageLengthOptions[pagingModel.pageLength] }}"
                      placeholder="{{ pagingModel.pageLengthOptions[pagingModel.pageLength] }}" [(selected)]="pageLength"
                      (selectedChange)="onPageLengthChange()">
-            <nb-option *ngFor="let pagingOption of pagingModel.pageLengthOptions" value={{pagingOption}}>{{ pagingOption
-              }}</nb-option>
+            <nb-option *ngFor="let pagingOption of pagingModel.pageLengthOptions" value={{pagingOption}}>
+              {{ pagingOption }}
+            </nb-option>
           </nb-select>
         </div>
       </section>

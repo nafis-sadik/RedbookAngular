@@ -43,7 +43,7 @@ export class DashboardService {
     ];
   }
 
-  getPagingConfig(dialogueComponent: any) {
+  getPagingConfig(dialogueComponent: any, addNewButtonLabel: string) {
     return {
       tableCardHeader: null,
       sourceData: [],
@@ -62,9 +62,9 @@ export class DashboardService {
         },
       },
       pagingConfig:{
-        pageNumber: 0,
+        pageNumber: 1,
         totalItems: 268,
-        pageLength: 0,
+        pageLength: 5,
         pageLengthOptions: [ 5, 10, 100 ],
         onChange: () => {
           console.log('Page length change callback');
@@ -80,7 +80,7 @@ export class DashboardService {
         }
       },
       addNewElementButtonConfig: {
-        buttonLabel: 'New Purchase',
+        buttonLabel: addNewButtonLabel,
         showIcon: true,
         onClick: () => {
           this.dialogService.open(dialogueComponent);

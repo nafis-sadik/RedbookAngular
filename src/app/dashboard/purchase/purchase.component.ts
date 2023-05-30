@@ -30,7 +30,7 @@ export class PurchaseComponent {
   {
     this.outlets = dashboardService.getOutlets();
 
-    this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent);
+    this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent, 'New Purchase');
 
     if(this.pagedPurchaseModel.tableConfig)
       this.pagedPurchaseModel.tableConfig.tableMaping = {
@@ -45,6 +45,11 @@ export class PurchaseComponent {
 
   selectOutlet(outletId: number, event: any): void{
     this.purchaseService.selectedOutletId = outletId;
+
+    // Is display is hidden, make it visible
+    let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
+    if(dataTableCard && dataTableCard.classList.contains('d-none'))
+      dataTableCard.classList.remove('d-none');
 
     // Add active class to source element and remove from sibling elements
     let sourceElem = event.srcElement;

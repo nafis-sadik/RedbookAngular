@@ -27,7 +27,7 @@ export class SellComponent {
   ) {
     this.outlets = dashboardService.getOutlets();
 
-    this.pagedSalesModel = dashboardService.getPagingConfig(AddSalesComponent);
+    this.pagedSalesModel = dashboardService.getPagingConfig(AddSalesComponent, 'New Sales');
 
     if(this.pagedSalesModel.tableConfig)
       this.pagedSalesModel.tableConfig.tableMaping = {
@@ -41,6 +41,11 @@ export class SellComponent {
   selectOutlet(outletId: number, event: any): void{
     this.salesService.selectedOutletId = outletId;
 
+    // Is display is hidden, make it visible
+    let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
+    if(dataTableCard && dataTableCard.classList.contains('d-none'))
+      dataTableCard.classList.remove('d-none');
+
     // Add active class to source element and remove from sibling elements
     let sourceElem = event.srcElement;
     Array.from(sourceElem.parentNode.children).forEach((element: any) => {
@@ -50,8 +55,10 @@ export class SellComponent {
         element.classList.add('active');
     });
 
+    // Get data from service
     let pageLength: number = this.pagedSalesModel.pagingConfig? this.pagedSalesModel.pagingConfig.pageLength : 5;
     let searchString: string = this.pagedSalesModel.searchingConfig? this.pagedSalesModel.searchingConfig.searchString : "";
+    // Set data to observable view model to render in UI
     this.pagedSalesModel.sourceData = this.salesService.getSalesList(outletId, 1, pageLength, searchString);
     this.ngxPaginationService.set(this.pagedSalesModel);
   }
