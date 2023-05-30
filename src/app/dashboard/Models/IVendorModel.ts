@@ -1,4 +1,4 @@
-export declare interface IClientList{
+export declare interface IVendorModel{
   clientId: number;
   clientName: string;
   contactNumber: string | null;

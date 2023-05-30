@@ -24,10 +24,20 @@ export class DashboardComponent {
       link: '/dashboard/home'
     },
     {
-      title: 'Business Operations',
-      icon: 'trending-up',
+      title: 'Product Management',
+      icon: 'layers',
       expanded: false,
-      children: [
+      children:[
+        {
+          title: 'Category Management',
+          icon: 'list',
+          link: '/dashboard/category'
+        },
+        {
+          title: 'Product List',
+          icon: 'list',
+          link: '/dashboard/products'
+        },
         {
           title: 'Invoice/Purchase',
           icon: 'shopping-bag',
@@ -37,23 +47,6 @@ export class DashboardComponent {
           title: 'Sell',
           icon: 'shopping-cart',
           link: '/dashboard/sell'
-        }
-      ]
-    },
-    {
-      title: 'Product Management',
-      icon: 'layers',
-      expanded: false,
-      children:[
-        {
-          title: 'Product List',
-          icon: 'list',
-          link: '/dashboard/products'
-        },
-        {
-          title: 'Category Management',
-          icon: 'list',
-          link: '/dashboard/category'
         }
       ]
     },

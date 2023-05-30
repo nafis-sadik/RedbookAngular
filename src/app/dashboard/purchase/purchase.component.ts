@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { IInvoiceModel } from '../Models/IInvoiceModel';
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
 import { IBusinessModel } from '../Models/IBusinessModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { PurchaseService } from './purchase.service';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'app-purchase',
@@ -15,167 +15,37 @@ import { PurchaseService } from './purchase.service';
 
 export class PurchaseComponent {
   cardHeader: string = "Product Purchase";
-  
+
   selectedOutlet: number = 0;
 
-  dummyBackendDataSource: IInvoiceModel[] = [
-    {
-      InvoiceId: 1,
-      ClientId: 1,
-      ClientName: "Chittagong Builders",
-      CreatedBy: "User 1",
-      InvoiceNo: "Dudu Dada",
-      IssueDate: new Date().toISOString().slice(0, 10),
-      PaymentStatus: "Due",
-      PaymentStatusId: 1,
-      UpdateDate: new Date(),
-      UpdateBy: "Hakina Matata",
-      Notes: '',
-      Terms: '',
-      selectedAddresses: [],
-      invoiceProducts: [],
-      paymentHistory:[
-        {
-          DueAmount: 300,
-          PaidAmount: 500,
-          InvoiceTotal: 800,
-          Discount: 15,
-          PaymentDate: new Date()
-        }
-      ],
-      InvoiceTotal: 0,
-      PaidAmount: 0
-    },
-    {
-      InvoiceId: 2,
-      ClientId: 2,
-      ClientName: "RFL",
-      CreatedBy: "User 1",
-      InvoiceNo: "TuTu TaTa",
-      IssueDate: new Date().toISOString().slice(0, 10),
-      PaymentStatus: "Paid",
-      PaymentStatusId: 2,
-      UpdateDate: new Date(),
-      UpdateBy: "Hakina Matata",
-      Notes: '',
-      Terms: '',
-      selectedAddresses: [],
-      invoiceProducts: [],
-      paymentHistory:[
-        {
-          DueAmount: 300,
-          PaidAmount: 500,
-          InvoiceTotal: 800,
-          Discount: 15,
-          PaymentDate: new Date()
-        }
-      ],
-      InvoiceTotal: 0,
-      PaidAmount: 0
-    },
-    {
-      InvoiceId: 3,
-      ClientId: 1,
-      ClientName: "Chittagong Builders",
-      CreatedBy: "User 1",
-      InvoiceNo: "Dudu Dada",
-      IssueDate: new Date().toISOString().slice(0, 10),
-      PaymentStatus: "Due",
-      PaymentStatusId: 1,
-      UpdateDate: new Date(),
-      UpdateBy: "Hakina Matata",
-      Notes: '',
-      Terms: '',
-      invoiceProducts: [],
-      selectedAddresses: [],
-      paymentHistory:[
-        {
-          DueAmount: 300,
-          PaidAmount: 500,
-          InvoiceTotal: 800,
-          Discount: 15,
-          PaymentDate: new Date()
-        }
-      ],
-      InvoiceTotal: 0,
-      PaidAmount: 0
-    }
-  ];
+  outlets: IBusinessModel[];
 
-  outlets: IBusinessModel[] = [
-    {
-      title: 'Krishi Ghor',
-      address: [],
-      businessId: 1,
-      ownerId: ''
-    },
-    {
-      title: 'FM SkyVision',
-      address: [],
-      businessId: 2,
-      ownerId: ''
-    }
-  ];
-
-  sourceData: IInvoiceModel[];
-
-  pagedProductModel: IPaginationModel<IInvoiceModel>;
+  pagedPurchaseModel: IPaginationModel<IInvoiceModel>;
 
   constructor(
-    private dialogService: NbDialogService,
+    dashboardService: DashboardService,
     private purchaseService: PurchaseService,
     private ngxPaginationService: NGXPaginationService<IInvoiceModel>
   )
   {
-    // Load and set your backend data here on page load
-    this.sourceData = this.dummyBackendDataSource;
+    this.outlets = dashboardService.getOutlets();
 
-    this.pagedProductModel = {
-      tableCardHeader: null,
-      sourceData: this.sourceData,
-      allowAdd: true,
-      tableConfig: {
-        allowDelete: true,
-        allowEdit: true,
-        isEditableTable: false,
-        tableMaping: {
-          "Invoice Number": "InvoiceNo",
-          "Client Name": "ClientName",
-          "Issue Date": "IssueDate",
-          "Payment Status": "PaymentStatus",
-          "Invoice Total": "InvoiceTotal",
-          "Paid Amount": "PaidAmount"
-        },
-      },
-      pagingConfig:{
-        pageNumber: 0,
-        totalItems: 268,
-        pageLength: 0,
-        pageLengthOptions: [ 5, 10, 100 ],
-        onChange: () => {
-          console.log('Page length change callback');
-        }
-      },
-      searchingConfig:{
-        searchString: null,
-        inputFieldPlaceholder: 'Search Invoice',
-        buttonLabel: 'Search',
-        showIcon: true,
-        onClick: () => {
-          console.log('Search Callback')
-        }
-      },
-      addNewElementButtonConfig: {
-        buttonLabel: 'New Purchase',
-        showIcon: true,
-        onClick: () => {
-          this.dialogService.open(AddPurchaseComponent);
-        }
-      },
-    };
+    this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent);
+
+    if(this.pagedPurchaseModel.tableConfig)
+      this.pagedPurchaseModel.tableConfig.tableMaping = {
+        "Invoice Number": "InvoiceNo",
+        "Client Name": "ClientName",
+        "Issue Date": "IssueDate",
+        "Payment Status": "PaymentStatus",
+        "Invoice Total": "InvoiceTotal",
+        "Paid Amount": "PaidAmount"
+      };
   }
 
-  selectOutlet(businessId: number, event: any): void{
+  selectOutlet(outletId: number, event: any): void{
+    this.purchaseService.selectedOutletId = outletId;
+
     // Add active class to source element and remove from sibling elements
     let sourceElem = event.srcElement;
     Array.from(sourceElem.parentNode.children).forEach((element: any) => {
@@ -185,7 +55,9 @@ export class PurchaseComponent {
         element.classList.add('active');
     });
 
-    this.purchaseService.selectedOutletId = businessId;
-    this.ngxPaginationService.set(this.pagedProductModel);
+    let pageLength: number = this.pagedPurchaseModel.pagingConfig? this.pagedPurchaseModel.pagingConfig.pageLength : 5;
+    let searchString: string = this.pagedPurchaseModel.searchingConfig? this.pagedPurchaseModel.searchingConfig.searchString : "";
+    this.pagedPurchaseModel.sourceData = this.purchaseService.getInvoiceList(outletId, 1, pageLength, searchString);
+    this.ngxPaginationService.set(this.pagedPurchaseModel);
   }
 }

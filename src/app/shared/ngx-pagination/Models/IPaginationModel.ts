@@ -90,7 +90,7 @@ export declare interface IPaginationModel<T>{
      * Description: Text to search in database
      * @type {string | null}
      */
-    searchString: string | null;
+    searchString: string;
     /**
      * Default value: 'Search Here'
      * Description: Place holder text for search input field

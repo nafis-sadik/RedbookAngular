@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IClientList } from '../../Models/IClientList';
+import { IVendorModel } from '../../Models/IVendorModel';
 import { IInvoiceModel } from '../../Models/IInvoiceModel';
 import { IAddressModel } from '../../Models/IAddressModel';
 import { PurchaseService } from '../purchase.service';
@@ -7,6 +7,7 @@ import { AddPurchaseService } from './add-purchase.service';
 import { IProductModel } from '../../Models/IProductModel';
 import { IInvoiceProductModel } from '../../Models/IInvoiceProductModel';
 import { IInvoicePaymentModel } from '../../Models/IInvoicePayment';
+import { DashboardService } from '../../dashboard.service';
 
 @Component({
   selector: 'app-add-purchase',
@@ -16,7 +17,7 @@ import { IInvoicePaymentModel } from '../../Models/IInvoicePayment';
 export class AddPurchaseComponent {
   linearMode = true;
 
-  clientList: IClientList[];
+  vendorList: IVendorModel[];
 
   outletProductList: IProductModel[] = [];
 
@@ -28,21 +29,12 @@ export class AddPurchaseComponent {
 
   invoiceModel: IInvoiceModel;
 
-  constructor(private purchaseService: PurchaseService, private addPurchaseService: AddPurchaseService) {
-    this.clientList = [
-      {
-        clientId: 1,
-        clientName: 'Chittagong Builders',
-        contactNumber: null,
-        emailAddress: null
-      },
-      {
-        clientId: 2,
-        clientName: 'RFL',
-        contactNumber: null,
-        emailAddress: null
-      }
-    ];
+  constructor(
+    dashboardService: DashboardService,
+    private purchaseService: PurchaseService,
+    private addPurchaseService: AddPurchaseService,
+  ) {
+    this.vendorList = dashboardService.getVendors();
 
     this.invoiceModel = {
       InvoiceId: 0,

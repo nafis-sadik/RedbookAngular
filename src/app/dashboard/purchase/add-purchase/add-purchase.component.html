@@ -22,7 +22,7 @@
                              name="ClientId"
                              [(ngModel)]="invoiceModel.ClientId">
                     <nb-option value>Select Client</nb-option>
-                    <nb-option *ngFor="let client of clientList" value={{client.clientId}}>{{ client.clientName
+                    <nb-option *ngFor="let client of vendorList" value={{client.clientId}}>{{ client.clientName
                       }}</nb-option>
                   </nb-select>
                 </div>
