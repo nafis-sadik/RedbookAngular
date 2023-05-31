@@ -8,6 +8,7 @@ import { IProductModel } from '../../Models/IProductModel';
 import { IInvoiceProductModel } from '../../Models/IInvoiceProductModel';
 import { IInvoicePaymentModel } from '../../Models/IInvoicePayment';
 import { DashboardService } from '../../dashboard.service';
+import { IPaymentModel } from '../../Models/IPaymentModel';
 
 @Component({
   selector: 'app-add-purchase',
@@ -27,7 +28,11 @@ export class AddPurchaseComponent {
 
   addressesOfCurrentOutlet: IAddressModel[];
 
+  paymentInvoice: IPaymentModel;
+
   invoiceModel: IInvoiceModel;
+
+  paymentRecords: IPaymentModel[] = [];
 
   constructor(
     dashboardService: DashboardService,
@@ -35,6 +40,15 @@ export class AddPurchaseComponent {
     private addPurchaseService: AddPurchaseService,
   ) {
     this.vendorList = dashboardService.getVendors();
+
+    this.paymentInvoice = {
+      id: 0,
+      InvoiceId: 0,
+      InvoiceTotalAmount: 0,
+      PaymentAmount: 0,
+      PaymentDate: new Date().toISOString().slice(0, 10),
+      TotalDueAmount: 0
+    }
 
     this.invoiceModel = {
       InvoiceId: 0,
@@ -72,6 +86,17 @@ export class AddPurchaseComponent {
   initializeProductDetailsForm(): void{
     this.invoiceModel.invoiceProducts = [];
     this.outletProductList = this.addPurchaseService.getProductsByBusinessId(this.purchaseService.selectedOutletId);
+  }
+
+  initializePaymentDetailsForm(): void{
+    this.invoiceModel.invoiceProducts = [];
+    this.paymentRecords = this.addPurchaseService.getPaymentsByInvoiceId(this.invoiceModel.InvoiceId);
+
+    this.paymentRecords.forEach(paymentRecord => {
+      if(this.invoiceModel){
+        paymentRecord.InvoiceTotalAmount = this.invoiceModel.InvoiceTotal;
+      }
+    })
   }
 
   selectProductForPurchase(): void{

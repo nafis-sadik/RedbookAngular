@@ -13,7 +13,7 @@
       <nb-stepper #stepper [linear]="linearMode">
         <nb-step [stepControl]="clientDetails" label="Client Details">
           <form #clientDetails="ngForm" class="step-container">
-            <div class="container-fluid">
+            <div class="container-fluid input-group">
               <div class="row">
                 <div class="col-md-6">
                   <label class="mb-2 mt-4 p-0">Select Client</label>
@@ -82,7 +82,7 @@
 
         <nb-step [stepControl]="productDetails" label="Product Details">
           <form #productDetails="ngForm" class="step-container">
-            <div class="container-fluid">
+            <div class="container-fluid input-group">
               <div class="row">
                 <div class="col-md-12">
                   <label class="mb-2 mt-4 p-0">Select Product</label>
@@ -112,20 +112,20 @@
                         <td>
                           <!-- {{product.Quantity}} -->
                           <input fullWidth nbInput required
-                              placeholder="Purchase Quantity"
-                              [(ngModel)]="product.Quantity"
-                              name="product.Quantity[{{i}}]"
-                              [value]="product.Quantity"
-                              (change)="updateProductNetTotalAmount(product.ProductId)">
+                                 placeholder="Purchase Quantity"
+                                 [(ngModel)]="product.Quantity"
+                                 name="product.Quantity[{{i}}]"
+                                 [value]="product.Quantity"
+                                 (change)="updateProductNetTotalAmount(product.ProductId)">
                         </td>
                         <td>
                           <!-- {{product.PurchasePrice}} -->
                           <input fullWidth nbInput required
-                              placeholder="Purchase Price"
-                              [(ngModel)]="product.PurchasePrice"
-                              name="product.PurchasePrice[{{i}}]"
-                              [value]="product.PurchasePrice"
-                              (change)="updateProductNetTotalAmount(product.ProductId)">
+                                 placeholder="Purchase Price"
+                                 [(ngModel)]="product.PurchasePrice"
+                                 name="product.PurchasePrice[{{i}}]"
+                                 [value]="product.PurchasePrice"
+                                 (change)="updateProductNetTotalAmount(product.ProductId)">
                         </td>
                         <td>{{ product.ProductNetTotalPrice }}</td>
                       </tr>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="col-md-12 mt-5">
                   <button nbButton status="primary" class="float-right" nbStepperNext
-                          (click)="initializeProductDetailsForm()">next</button>
+                          (click)="initializePaymentDetailsForm()">next</button>
                 </div>
               </div>
             </div>
@@ -146,20 +146,72 @@
         </nb-step>
 
         <nb-step [stepControl]="somethingForm" label="Payments">
-          <form #somethingForm="ngForm" class="step-container">
-            <div class="input-group">
-              <input type="text"
-                     placeholder="Enter something"
-                     class="form-control"
-                     name="something"
-                     required
-                     nbInput
-                     ngModel
-                     #somethingInput="ngModel"
-                     [status]="somethingInput.invalid ? 'danger' : 'basic'">
-            </div>
-            <button nbButton status="primary" nbStepperNext>next</button>
-          </form>
+          <div class="container-fluid input-group">
+            <form #somethingForm="ngForm" class="step-container" id="step3Form">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="mt-3 pt-3">All Payment Records</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="mt-4" style="width:100%">
+                    <thead>
+                      <tr class="align-bottom row-color-2">
+                        <th class="ng-star-inserted">Payment Id</th>
+                        <th class="ng-star-inserted">Payment Date</th>
+                        <th class="ng-star-inserted">Payment Amount</th>
+                        <th class="ng-star-inserted">Invoice Total</th>
+                        <th class="ng-star-inserted">Due Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let payment of paymentRecords; let i = index">
+                        <td>{{ payment.id }}</td>
+                        <td>{{ payment.PaymentDate }}</td>
+                        <td>{{ payment.PaymentAmount }}</td>
+                        <td>{{ payment.InvoiceTotalAmount }}</td>
+                        <td>{{ payment.TotalDueAmount }}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="3"><b>Net Total</b></td>
+                        <td><b>{{ invoiceModel.InvoiceTotal }}</b></td>
+                        <td><b>{{ invoiceModel.InvoiceTotal }}</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="mt-3 pt-3">New Payment Details</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="mb-2 mt-4 p-0">Payment Date</label>
+                  <input fullWidth nbInput required
+                         placeholder="Payment Date"
+                         name="PaymentDate"
+                         class="input-group"
+                         [nbDatepicker]="dateTimePicker"
+                         [(ngModel)]="paymentInvoice.PaymentDate">
+                  <nb-datepicker #dateTimePicker></nb-datepicker>
+                </div>
+                <div class="col-md-6">
+                  <label class="mb-2 mt-4 p-0">Payment Amount</label>
+                  <input fullWidth nbInput required
+                         placeholder="Payment Amount"
+                         name="PaymentAmount"
+                         class="input-group"
+                         [(ngModel)]="paymentInvoice.PaymentAmount">
+                </div>
+              </div>
+              <div class="col-md-12 mt-5">
+                <button nbButton status="primary" class="float-right" nbStepperNext>Pay</button>
+              </div>
+            </form>
+          </div>
         </nb-step>
 
         <nb-step [hidden]="true">

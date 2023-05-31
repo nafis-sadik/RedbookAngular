@@ -1,4 +1,3 @@
-
 export declare interface IInvoicePaymentModel{
   /**
    * Total bill amount of this invoice

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProductModel } from '../../Models/IProductModel';
+import { IPaymentModel } from '../../Models/IPaymentModel';
 
 @Injectable({
     providedIn: 'root',
@@ -92,5 +93,34 @@ export class AddPurchaseService {
                         quantity: null
                     }
                 ];
+    }
+
+    getPaymentsByInvoiceId(invoiceId: number): IPaymentModel[]{
+        return [
+            {
+                id: 1,
+                InvoiceId: invoiceId,
+                InvoiceTotalAmount: 500,
+                PaymentAmount: 0,
+                PaymentDate: new Date().toISOString().slice(0, 10),
+                TotalDueAmount: 0
+            },
+            {
+                id: 3,
+                InvoiceId: invoiceId,
+                InvoiceTotalAmount: 300,
+                PaymentAmount: 0,
+                PaymentDate: new Date().toISOString().slice(0, 10),
+                TotalDueAmount: 0
+            },
+            {
+                id: 5,
+                InvoiceId: invoiceId,
+                InvoiceTotalAmount: 700,
+                PaymentAmount: 0,
+                PaymentDate: new Date().toISOString().slice(0, 10),
+                TotalDueAmount: 0
+            }
+        ];
     }
 }
