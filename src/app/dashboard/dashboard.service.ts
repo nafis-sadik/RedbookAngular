@@ -49,8 +49,8 @@ export class DashboardService {
       sourceData: [],
       allowAdd: true,
       tableConfig: {
-        allowDelete: true,
-        allowEdit: true,
+        onEdit: null,
+        onDelete: null,
         isEditableTable: false,
         tableMaping: {
           "Invoice Number": "InvoiceNo",

@@ -41,6 +41,16 @@ export class PurchaseComponent {
         "Invoice Total": "InvoiceTotal",
         "Paid Amount": "PaidAmount"
       };
+    
+    if(this.pagedPurchaseModel.tableConfig){
+      this.pagedPurchaseModel.tableConfig.onEdit = () => {
+        console.log('onEdit');
+      };
+      
+      this.pagedPurchaseModel.tableConfig.onDelete = () => {
+        console.log('onDelete');
+      };
+    }
   }
 
   selectOutlet(outletId: number, event: any): void{

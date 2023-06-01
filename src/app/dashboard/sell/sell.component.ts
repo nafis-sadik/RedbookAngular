@@ -28,14 +28,23 @@ export class SellComponent {
     this.outlets = dashboardService.getOutlets();
 
     this.pagedSalesModel = dashboardService.getPagingConfig(AddSalesComponent, 'New Sales');
-
-    if(this.pagedSalesModel.tableConfig)
+    
+    if(this.pagedSalesModel.tableConfig){
       this.pagedSalesModel.tableConfig.tableMaping = {
         "Memo No": "MemoNumber",
         "Net Total": "NetTotal",
         "Paid Amount": "PaidAmount",
         "Sales Date": "SalesDate",
       };
+
+      this.pagedSalesModel.tableConfig.onEdit = () => {
+        console.log('onEdit');
+      };
+      
+      this.pagedSalesModel.tableConfig.onDelete = () => {
+        console.log('onDelete');
+      };
+    }
   }
 
   selectOutlet(outletId: number, event: any): void{

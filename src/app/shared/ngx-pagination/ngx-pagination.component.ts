@@ -62,11 +62,11 @@ export class NgxPaginationComponent<T> {
 
       // Load table config to render
       this.tableConfig = {
-        allowDelete: !this.paginationModel.tableConfig? false : this.paginationModel.tableConfig?.allowDelete,
-        allowEdit: !this.paginationModel.tableConfig? false : this.paginationModel.tableConfig?.allowEdit,
         isEditableTable: !this.paginationModel.tableConfig? false : this.paginationModel.tableConfig?.isEditableTable,
         columnNames: collumnLabels,
-        sourceData: sourceData
+        sourceData: sourceData,
+        onDelete: this.paginationModel.tableConfig.onDelete,
+        onEdit: this.paginationModel.tableConfig.onEdit
       };
     }
 

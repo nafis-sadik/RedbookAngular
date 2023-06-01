@@ -215,9 +215,13 @@
         </nb-step>
 
         <nb-step [hidden]="true">
-          <div class="step-container">
-            <h3>Wizard completed!</h3>
-            <button nbButton status="primary" (click)="stepper.reset()">Done</button>
+          <div class="container-fluid">
+            <div class="step-container">
+              <div class="row">
+                <h3 style="text-align: center;">Invoice Saved Successfully!</h3>
+                <button nbButton status="primary" class="float-right" (click)="stepper.reset()">Done</button>
+              </div>
+            </div>
           </div>
         </nb-step>
       </nb-stepper>

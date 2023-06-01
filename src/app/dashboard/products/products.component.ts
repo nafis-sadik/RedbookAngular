@@ -28,7 +28,7 @@ export class ProductsComponent {
 
     this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'New Product');
 
-    if(this.pagedProductModel.tableConfig)
+    if (this.pagedProductModel.tableConfig) {      
       this.pagedProductModel.tableConfig.tableMaping = {
         "Product Id": "id",
         "Product Category": "categoryName",
@@ -37,6 +37,15 @@ export class ProductsComponent {
         "Price": "purchasePrice",
         "MRP": "retailPrice"
       };
+
+      this.pagedProductModel.tableConfig.onEdit = () => {
+        console.log('onEdit');
+      };
+      
+      this.pagedProductModel.tableConfig.onDelete = () => {
+        console.log('onDelete');
+      };
+    }
   }
 
   selectOutlet(outletId: number, event: any): void{

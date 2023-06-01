@@ -10,18 +10,20 @@ export declare interface ITableModel{
    */
   isEditableTable: boolean;
   /**
-   * View edit button in action column
-   * @type {boolean}
-   */
-  allowEdit: boolean;
-  /**
-   * View remove button in action column
-   * @type {boolean}
-   */
-  allowDelete: boolean;
-  /**
    * Data source for table to render
    * @type {Array<Array<anyh>>}
    */
   sourceData: Array<Array<any>>;
+  /**
+   * Default value: null
+   * Description: Callback method for onClick event on edit button
+   * @type {Function}
+   */
+  onEdit: Function | null
+  /**
+   * Default value: null
+   * Description: Callback method for onClick event on delete button
+   * @type {Function}
+   */
+  onDelete: Function | null
 }

@@ -34,17 +34,17 @@ export declare interface IPaginationModel<T>{
      */
     isEditableTable: boolean;
     /**
-     * Default value:
-     * Description: View edit button in action column
-     * @type {boolean}
+     * Default value: null
+     * Description: Callback method for onClick event on edit button
+     * @type {Function}
      */
-    allowEdit: boolean;
+    onEdit: Function | null
     /**
-     * Default value:
-     * Description: View remove button in action column
-     * @type {boolean}
+     * Default value: null
+     * Description: Callback method for onClick event on delete button
+     * @type {Function}
      */
-    allowDelete: boolean;
+    onDelete: Function | null
   } | null;
   /**
    * Configuration for pages

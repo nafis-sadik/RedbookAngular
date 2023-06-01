@@ -12,10 +12,10 @@ export class PagedTableComponent {
   constructor(){
     this.config = {
       isEditableTable: false,
-      allowDelete: false,
-      allowEdit: false,
       columnNames: new Array<string>,
-      sourceData: new Array<Array<any>>
+      sourceData: new Array<Array<any>>,
+      onEdit: null,
+      onDelete: null
     }
   }
 }
