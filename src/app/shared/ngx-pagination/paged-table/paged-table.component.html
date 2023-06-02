@@ -14,10 +14,10 @@
       <tr *ngFor="let row of config.sourceData">
         <td scope="col" *ngIf="config?.onEdit || config?.onDelete" class="table-actions">
           <div class="d-block">
-            <span *ngIf="config?.onEdit" (click)="config?.onEdit()">
+            <span *ngIf="config.onEdit" (click)="config.onEdit()">
               <nb-icon icon="edit-2-outline" class="edit"></nb-icon>
             </span>
-            <span *ngIf="config?.onDelete" (click)="config?.onDelete()">
+            <span *ngIf="config.onDelete" (click)="config.onDelete()">
               <nb-icon icon="trash-2-outline" class="delete"></nb-icon>
             </span>
           </div>

@@ -32,7 +32,7 @@ export class PurchaseComponent {
 
     this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent, 'New Purchase');
 
-    if(this.pagedPurchaseModel.tableConfig)
+    if(this.pagedPurchaseModel.tableConfig){
       this.pagedPurchaseModel.tableConfig.tableMaping = {
         "Invoice Number": "InvoiceNo",
         "Client Name": "ClientName",
@@ -41,12 +41,11 @@ export class PurchaseComponent {
         "Invoice Total": "InvoiceTotal",
         "Paid Amount": "PaidAmount"
       };
-    
-    if(this.pagedPurchaseModel.tableConfig){
+
       this.pagedPurchaseModel.tableConfig.onEdit = () => {
         console.log('onEdit');
       };
-      
+
       this.pagedPurchaseModel.tableConfig.onDelete = () => {
         console.log('onDelete');
       };
