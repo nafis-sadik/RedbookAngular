@@ -17,9 +17,11 @@
               <div class="row">
                 <div class="col-md-6">
                   <label class="mb-2 mt-4 p-0">Select Client</label>
-                  <nb-select fullWidth required
+                  <nb-select fullWidth
                              placeholder="Select Showcase"
                              name="ClientId"
+                             [required]="!isUpdateOperation"
+                             [disabled]="isUpdateOperation"
                              [(ngModel)]="invoiceModel.ClientId">
                     <nb-option value>Select Client</nb-option>
                     <nb-option *ngFor="let client of vendorList" value={{client.clientId}}>{{ client.clientName
@@ -33,11 +35,13 @@
                 <div class="col-md-6">
                   <label class="mb-2 mt-4 p-0">Issue Date</label>
                   <div class="input-group">
-                    <input fullWidth nbInput required
+                    <input fullWidth nbInput
                            placeholder="Issue Date"
                            [nbDatepicker]="dateTimePicker"
                            name="IssueDate"
-                           [(ngModel)]="invoiceModel.IssueDate">
+                           [(ngModel)]="invoiceModel.IssueDate"
+                           [required]="!isUpdateOperation"
+                           [disabled]="isUpdateOperation">
                     <nb-datepicker #dateTimePicker></nb-datepicker>
                   </div>
                 </div>
@@ -47,6 +51,8 @@
                     <textarea fullWidth nbInput
                               placeholder="Notes"
                               name="Notes"
+                              [required]="!isUpdateOperation"
+                              [disabled]="isUpdateOperation"
                               [(ngModel)]="invoiceModel.Notes"></textarea>
                   </div>
                 </div>
@@ -55,8 +61,16 @@
                   <div class="input-group">
                     <textarea fullWidth nbInput
                               placeholder="Terms"
+                              name="InvoiceTerms"
+                              [required]="!isUpdateOperation"
+                              [disabled]="isUpdateOperation"
+                              [(ngModel)]="invoiceModel.InvoiceTerms"></textarea>
+                    <!-- NBNext doesn't work without this -->
+                    <textarea fullWidth nbInput
+                              placeholder="Terms"
                               name="Terms"
-                              [(ngModel)]="invoiceModel.Terms"></textarea>
+                              class="d-none"
+                              [(ngModel)]="invoiceModel.InvoiceTerms"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -72,7 +86,7 @@
                   </span>
                 </div>
                 <div class="col-md-12 mt-5">
-                  <button nbButton status="primary" class="float-right" nbStepperNext
+                  <button nbButton type="button" status="primary" class="float-right" nbStepperNext
                           (click)="initializeProductDetailsForm()">next</button>
                 </div>
               </div>
@@ -89,6 +103,7 @@
                   <nb-select fullWidth multiple required
                              placeholder="Select Product"
                              [(selected)]="invoiceProductIds"
+                             [disabled]="isUpdateOperation"
                              (selectedChange)="selectProductForPurchase()">
                     <nb-option *ngFor="let product of outletProductList" value={{product.id}}>
                       {{ product.productName }}</nb-option>
@@ -137,7 +152,7 @@
                   </table>
                 </div>
                 <div class="col-md-12 mt-5">
-                  <button nbButton status="primary" class="float-right" nbStepperNext
+                  <button nbButton type="button" status="primary" class="float-right" nbStepperNext
                           (click)="initializePaymentDetailsForm()">next</button>
                 </div>
               </div>
@@ -208,7 +223,7 @@
                 </div>
               </div>
               <div class="col-md-12 mt-5">
-                <button nbButton status="primary" class="float-right" nbStepperNext>Pay</button>
+                <button nbButton type="button" status="primary" class="float-right" nbStepperNext>Pay</button>
               </div>
             </form>
           </div>
@@ -219,7 +234,8 @@
             <div class="step-container">
               <div class="row">
                 <h3 style="text-align: center;">Invoice Saved Successfully!</h3>
-                <button nbButton status="primary" class="float-right" (click)="stepper.reset()">Done</button>
+                <button nbButton type="button" status="primary" class="float-right"
+                        (click)="stepper.reset()">Done</button>
               </div>
             </div>
           </div>

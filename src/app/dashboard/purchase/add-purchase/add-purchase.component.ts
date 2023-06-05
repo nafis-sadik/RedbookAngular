@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IVendorModel } from '../../Models/IVendorModel';
 import { IInvoiceModel } from '../../Models/IInvoiceModel';
 import { IAddressModel } from '../../Models/IAddressModel';
@@ -16,6 +16,8 @@ import { IPaymentModel } from '../../Models/IPaymentModel';
   styleUrls: ['./add-purchase.component.scss']
 })
 export class AddPurchaseComponent {
+  @Input() isUpdateOperation: boolean = false;
+
   linearMode = true;
 
   vendorList: IVendorModel[];
@@ -56,7 +58,7 @@ export class AddPurchaseComponent {
       ClientName: '',
       PaymentStatusId: 0,
       InvoiceNo: '',
-      Terms: '',
+      InvoiceTerms: '',
       Notes: '',
       PaymentStatus: '',
       IssueDate: new Date().toISOString().slice(0, 10),

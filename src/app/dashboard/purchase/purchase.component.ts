@@ -14,6 +14,8 @@ import { DashboardService } from '../dashboard.service';
 })
 
 export class PurchaseComponent {
+  isUpdateOperation: boolean = false;
+
   cardHeader: string = "Product Purchase";
 
   selectedOutlet: number = 0;
@@ -43,12 +45,30 @@ export class PurchaseComponent {
       };
 
       this.pagedPurchaseModel.tableConfig.onEdit = () => {
-        console.log('onEdit');
-      };
+        this.isUpdateOperation = true;
+
+        dashboardService.ngDialogService.open(AddPurchaseComponent, {
+          context: {
+            isUpdateOperation: this.isUpdateOperation
+          }
+        });
+      }
 
       this.pagedPurchaseModel.tableConfig.onDelete = () => {
         console.log('onDelete');
       };
+    }
+
+    if(this.pagedPurchaseModel.addNewElementButtonConfig){
+      this.pagedPurchaseModel.addNewElementButtonConfig.onClick = () => {
+        this.isUpdateOperation = false;
+        
+        dashboardService.ngDialogService.open(AddPurchaseComponent, {
+          context: {
+            isUpdateOperation: this.isUpdateOperation
+          }
+        });
+      }
     }
   }
 

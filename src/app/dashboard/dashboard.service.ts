@@ -7,7 +7,11 @@ import { NbDialogService } from '@nebular/theme';
     providedIn: 'root',
 })
 export class DashboardService {
-  constructor(private dialogService: NbDialogService) { }
+  public readonly ngDialogService: NbDialogService;
+
+  constructor(private dialogService: NbDialogService) {
+    this.ngDialogService = dialogService;
+  }
 
   getVendors(): IVendorModel[]{
     return [

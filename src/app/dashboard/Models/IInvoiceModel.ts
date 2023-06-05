@@ -66,7 +66,7 @@ export declare interface IInvoiceModel{
    * Invoice terms & conditions
    * @type {string}
    */
-  Terms: string;
+  InvoiceTerms: string;
   /**
    * Primary keys of selected addresses to be printed on final invoice
    * @type {number[]}

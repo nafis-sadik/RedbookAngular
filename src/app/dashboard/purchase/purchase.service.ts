@@ -28,7 +28,7 @@ export class PurchaseService {
           UpdateDate: new Date(),
           UpdateBy: "Hakina Matata",
           Notes: '',
-          Terms: '',
+          InvoiceTerms: '',
           selectedAddresses: [],
           invoiceProducts: [],
           paymentHistory:[
@@ -55,7 +55,7 @@ export class PurchaseService {
           UpdateDate: new Date(),
           UpdateBy: "Hakina Matata",
           Notes: '',
-          Terms: '',
+          InvoiceTerms: '',
           selectedAddresses: [],
           invoiceProducts: [],
           paymentHistory:[
@@ -85,7 +85,7 @@ export class PurchaseService {
           UpdateDate: new Date(),
           UpdateBy: "Hakina Matata",
           Notes: '',
-          Terms: '',
+          InvoiceTerms: '',
           selectedAddresses: [],
           invoiceProducts: [],
           paymentHistory:[
@@ -112,7 +112,7 @@ export class PurchaseService {
           UpdateDate: new Date(),
           UpdateBy: "Hakina Matata",
           Notes: '',
-          Terms: '',
+          InvoiceTerms: '',
           invoiceProducts: [],
           selectedAddresses: [],
           paymentHistory:[
