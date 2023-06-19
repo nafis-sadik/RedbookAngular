@@ -13,6 +13,8 @@ import { ProductService } from './products.service';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
+  isUpdateOperation: boolean = false;
+
   outlets: IBusinessModel[];
 
   cardHeader: string = "Product Management";
@@ -28,7 +30,7 @@ export class ProductsComponent {
 
     this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'New Product');
 
-    if (this.pagedProductModel.tableConfig) {      
+    if (this.pagedProductModel.tableConfig) {
       this.pagedProductModel.tableConfig.tableMaping = {
         "Product Id": "id",
         "Product Category": "categoryName",
@@ -39,9 +41,15 @@ export class ProductsComponent {
       };
 
       this.pagedProductModel.tableConfig.onEdit = () => {
-        console.log('onEdit');
+        this.isUpdateOperation = true;
+
+        dashboardService.ngDialogService.open(ProductsDetailsFormComponent, {
+          context: {
+            isUpdateOperation: this.isUpdateOperation
+          }
+        });
       };
-      
+
       this.pagedProductModel.tableConfig.onDelete = () => {
         console.log('onDelete');
       };
