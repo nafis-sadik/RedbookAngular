@@ -15,6 +15,11 @@ export declare interface IInvoiceProductModel{
    */
   Quantity: number;
   /**
+   * Selling price of product
+   * @type {number}
+   */
+  RetailPrice: number;
+  /**
    * Purchasing price of product
    * @type {number}
    */

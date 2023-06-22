@@ -6,12 +6,6 @@ import { IInvoiceModel } from '../Models/IInvoiceModel';
 })
 
 export class PurchaseService {
-  /**
-   * Primary key of selected outlet
-   * Needs to be passed to dialogue components
-   */
-  selectedOutletId: number = 0;
-
   getInvoiceList(outletId: number, pageNumber: number, pageLength: number, searchString: string): IInvoiceModel[]{
     let sourceData: IInvoiceModel[];
     if(outletId == 1){

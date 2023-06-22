@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ISalesModel } from '../Models/ISalesModel';
-import { IProductModel } from '../Models/IProductModel';
 import { IBusinessModel } from '../Models/IBusinessModel';
 import { AddSalesComponent } from './add-sales/add-sales.component';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
@@ -14,6 +13,8 @@ import { SalesService } from './sell.service';
   styleUrls: ['./sell.component.scss']
 })
 export class SellComponent {
+  isUpdateOperation: boolean = false;
+
   cardHeader: string = 'Product Sales';
 
   outlets: IBusinessModel[];
@@ -21,14 +22,14 @@ export class SellComponent {
   pagedSalesModel: IPaginationModel<ISalesModel>;
 
   constructor(
-    dashboardService: DashboardService,
+    private dashboardService: DashboardService,
     private salesService: SalesService,
     private ngxPaginationService: NGXPaginationService<ISalesModel>
   ) {
     this.outlets = dashboardService.getOutlets();
 
     this.pagedSalesModel = dashboardService.getPagingConfig(AddSalesComponent, 'New Sales');
-    
+
     if(this.pagedSalesModel.tableConfig){
       this.pagedSalesModel.tableConfig.tableMaping = {
         "Memo No": "MemoNumber",
@@ -38,9 +39,15 @@ export class SellComponent {
       };
 
       this.pagedSalesModel.tableConfig.onEdit = () => {
-        console.log('onEdit');
+        this.isUpdateOperation = true;
+
+        dashboardService.ngDialogService.open(AddSalesComponent, {
+          context: {
+            isUpdateOperation: this.isUpdateOperation
+          }
+        });
       };
-      
+
       this.pagedSalesModel.tableConfig.onDelete = () => {
         console.log('onDelete');
       };
@@ -48,7 +55,7 @@ export class SellComponent {
   }
 
   selectOutlet(outletId: number, event: any): void{
-    this.salesService.selectedOutletId = outletId;
+    this.dashboardService.selectedOutletId = outletId;
 
     // Is display is hidden, make it visible
     let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];

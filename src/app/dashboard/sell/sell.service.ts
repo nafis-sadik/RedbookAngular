@@ -6,12 +6,6 @@ import { ISalesModel } from "../Models/ISalesModel";
 })
 
 export class SalesService {
-  /**
-   * Primary key of selected outlet
-   * Needs to be passed to dialogue components
-   */
-  selectedOutletId: number = 0;
-
   getSalesList(outletId: number, pageNumber: number, pageLength: number, searchString: string): ISalesModel[] {
     let sourceData: ISalesModel[];
     if(outletId == 1){
@@ -20,15 +14,27 @@ export class SalesService {
           id: 1,
           MemoNumber: 'KG-1728',
           NetTotal: 150000,
-          PaidAmount: 100000,
+          PaymentAmount: 0,
           SalesDate: new Date().toISOString().slice(0, 10),
+          ProductsSold: [],
+          CustomerName: '',
+          DeliveryLocation: '',
+          CustomerPhoneNumber: '',
+          Terms: '',
+          PaymentHistory: []
         },
         {
           id: 2,
           MemoNumber: 'KG-1729',
           NetTotal: 180000,
-          PaidAmount: 100000,
+          PaymentAmount: 0,
           SalesDate: new Date().toISOString().slice(0, 10),
+          ProductsSold: [],
+          CustomerName: '',
+          DeliveryLocation: '',
+          CustomerPhoneNumber: '',
+          Terms: '',
+          PaymentHistory: []
         }
       ];
     } else if (outletId == 2) {
@@ -37,15 +43,27 @@ export class SalesService {
           id: 1,
           MemoNumber: 'FM-1728',
           NetTotal: 2000,
-          PaidAmount: 2000,
+          PaymentAmount: 0,
           SalesDate: new Date().toISOString().slice(0, 10),
+          ProductsSold: [],
+          CustomerName: '',
+          DeliveryLocation: '',
+          CustomerPhoneNumber: '',
+          Terms: '',
+          PaymentHistory: []
         },
         {
           id: 2,
           MemoNumber: 'FM-1729',
           NetTotal: 1800,
-          PaidAmount: 1800,
+          PaymentAmount: 0,
           SalesDate: new Date().toISOString().slice(0, 10),
+          ProductsSold: [],
+          CustomerName: '',
+          DeliveryLocation: '',
+          CustomerPhoneNumber: '',
+          Terms: '',
+          PaymentHistory: []
         }
       ];
     } else {

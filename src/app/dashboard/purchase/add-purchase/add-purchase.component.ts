@@ -37,7 +37,7 @@ export class AddPurchaseComponent {
   paymentRecords: IPaymentModel[] = [];
 
   constructor(
-    dashboardService: DashboardService,
+    private dashboardService: DashboardService,
     private purchaseService: PurchaseService,
     private addPurchaseService: AddPurchaseService,
   ) {
@@ -72,7 +72,7 @@ export class AddPurchaseComponent {
       PaidAmount: 0
     }
 
-    this.addressesOfCurrentOutlet = this.addPurchaseService.getAddressesOfOutlet(this.purchaseService.selectedOutletId);
+    this.addressesOfCurrentOutlet = this.addPurchaseService.getAddressesOfOutlet(this.dashboardService.selectedOutletId);
   }
 
   addSelectedAddress(addressId: number): void{
@@ -87,7 +87,7 @@ export class AddPurchaseComponent {
 
   initializeProductDetailsForm(): void{
     this.invoiceModel.invoiceProducts = [];
-    this.outletProductList = this.addPurchaseService.getProductsByBusinessId(this.purchaseService.selectedOutletId);
+    this.outletProductList = this.addPurchaseService.getProductsByBusinessId(this.dashboardService.selectedOutletId);
   }
 
   initializePaymentDetailsForm(): void{
@@ -124,6 +124,7 @@ export class AddPurchaseComponent {
           ProductName: newlySelectedItems.productName,
           Quantity: 0,
           PurchasePrice: 0,
+          RetailPrice: 0,
           ProductNetTotalPrice: 0
         }
       }

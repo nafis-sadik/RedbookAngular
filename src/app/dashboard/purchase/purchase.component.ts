@@ -25,7 +25,7 @@ export class PurchaseComponent {
   pagedPurchaseModel: IPaginationModel<IInvoiceModel>;
 
   constructor(
-    dashboardService: DashboardService,
+    private dashboardService: DashboardService,
     private purchaseService: PurchaseService,
     private ngxPaginationService: NGXPaginationService<IInvoiceModel>
   )
@@ -62,7 +62,7 @@ export class PurchaseComponent {
     if(this.pagedPurchaseModel.addNewElementButtonConfig){
       this.pagedPurchaseModel.addNewElementButtonConfig.onClick = () => {
         this.isUpdateOperation = false;
-        
+
         dashboardService.ngDialogService.open(AddPurchaseComponent, {
           context: {
             isUpdateOperation: this.isUpdateOperation
@@ -73,7 +73,7 @@ export class PurchaseComponent {
   }
 
   selectOutlet(outletId: number, event: any): void{
-    this.purchaseService.selectedOutletId = outletId;
+    this.dashboardService.selectedOutletId = outletId;
 
     // Is display is hidden, make it visible
     let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
