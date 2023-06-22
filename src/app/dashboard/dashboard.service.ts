@@ -261,5 +261,78 @@ export class DashboardService {
             quantity: null
           }
         ];
-    }
+  }
+
+  getMenuOptionsByUserId(userId: string){
+    return [
+      {
+        title: 'Dashboards',
+        icon: 'keypad',
+        link: '/dashboard/home'
+      },
+      {
+        title: 'Product Management',
+        icon: 'layers',
+        expanded: false,
+        children:[
+          {
+            title: 'Category Management',
+            icon: 'list',
+            link: '/dashboard/category'
+          },
+          {
+            title: 'Product List',
+            icon: 'list',
+            link: '/dashboard/products'
+          },
+          {
+            title: 'Invoice/Purchase',
+            icon: 'shopping-bag',
+            link: '/dashboard/purchase'
+          },
+          {
+            title: 'Sell',
+            icon: 'shopping-cart',
+            link: '/dashboard/sell'
+          }
+        ]
+      },
+      {
+        title: 'CRM',
+        icon: 'people',
+        expanded: false,
+        children: [
+          {
+            title: 'Messenger',
+            icon: 'message-circle'
+          },
+          {
+            title: 'Whatsapp',
+            icon: 'email'
+          },
+          {
+            title: 'Customers',
+            icon: 'person'
+          }
+        ]
+      },
+      {
+        title: 'Settings',
+        icon: 'settings',
+        expanded: false,
+        children: [
+          {
+            title: 'User Management',
+            icon: 'person',
+            link: '/dashboard/ums'
+          },
+          {
+            title: 'System Settings',
+            icon: 'briefcase',
+            link: '/dashboard/settings'
+          }
+        ]
+      }
+    ];
+  }
 }

@@ -5,6 +5,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard.component';
 import {
+  NbAccordionModule,
   NbButtonGroupModule,
   NbButtonModule,
   NbCardModule,
@@ -33,6 +34,8 @@ import { PurchaseComponent } from './purchase/purchase.component';
 import { AddPurchaseComponent } from './purchase/add-purchase/add-purchase.component';
 import { FormsModule } from '@angular/forms';
 import { AddSalesComponent } from './sell/add-sales/add-sales.component';
+import { UmsComponent } from './ums/ums.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 @NgModule({
@@ -48,6 +51,8 @@ import { AddSalesComponent } from './sell/add-sales/add-sales.component';
     PurchaseComponent,
     AddPurchaseComponent,
     AddSalesComponent,
+    UmsComponent,
+    SettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -69,6 +74,7 @@ import { AddSalesComponent } from './sell/add-sales/add-sales.component';
     SharedModule,
     NbDatepickerModule,
     NbCheckboxModule,
+    NbAccordionModule,
     FormsModule // <--- import into the NgModule
   ],
   bootstrap: [DashboardComponent]

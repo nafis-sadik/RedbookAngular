@@ -17,8 +17,6 @@ export class ProductsComponent {
 
   outlets: IBusinessModel[];
 
-  cardHeader: string = "Product Management";
-
   pagedProductModel: IPaginationModel<IProductModel>;
 
   constructor(

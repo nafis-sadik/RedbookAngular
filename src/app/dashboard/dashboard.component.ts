@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,76 +18,9 @@ export class DashboardComponent {
     'Corporate'
   ];
 
-  menuOptions: NbMenuItem[] = [
-    {
-      title: 'Dashboards',
-      icon: 'keypad',
-      link: '/dashboard/home'
-    },
-    {
-      title: 'Product Management',
-      icon: 'layers',
-      expanded: false,
-      children:[
-        {
-          title: 'Category Management',
-          icon: 'list',
-          link: '/dashboard/category'
-        },
-        {
-          title: 'Product List',
-          icon: 'list',
-          link: '/dashboard/products'
-        },
-        {
-          title: 'Invoice/Purchase',
-          icon: 'shopping-bag',
-          link: '/dashboard/purchase'
-        },
-        {
-          title: 'Sell',
-          icon: 'shopping-cart',
-          link: '/dashboard/sell'
-        }
-      ]
-    },
-    {
-      title: 'CRM',
-      icon: 'people',
-      expanded: false,
-      children: [
-        {
-          title: 'Messenger',
-          icon: 'message-circle'
-        },
-        {
-          title: 'Whatsapp',
-          icon: 'email'
-        },
-        {
-          title: 'Customers',
-          icon: 'person'
-        }
-      ]
-    },
-    {
-      title: 'Settings',
-      icon: 'settings',
-      expanded: false,
-      children: [
-        {
-          title: 'User Management',
-          icon: 'person'
-        },
-        {
-          title: 'Business Management',
-          icon: 'briefcase'
-        }
-      ]
-    }
-  ];
+  menuOptions: NbMenuItem[];
 
-  constructor(private sidebarService: NbSidebarService, private themeService: NbThemeService) {
+  constructor(private dashboardService: DashboardService, private sidebarService: NbSidebarService, private themeService: NbThemeService) {
     // If no theme has been cached, select default theme
     if (localStorage.getItem('theme') == null && this.themes.length > 0) {
       this.setTheme(this.themes[0]);
@@ -100,6 +34,8 @@ export class DashboardComponent {
         }
       });
     }
+
+    this.menuOptions = dashboardService.getMenuOptionsByUserId("GUID");
   }
 
   toggle() {
