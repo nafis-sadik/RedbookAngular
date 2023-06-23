@@ -53,3 +53,23 @@ body.nb-theme-corporate nb-card, body.nb-theme-corporate nb-sidebar, body.nb-the
   -webkit-box-shadow: 0!important;
   -moz-box-shadow: 0!important;
 }
+
+#InvoiceForm nb-stepper .header{
+  padding-left: 20px!important;
+  padding-right: 20px!important;
+}
+
+#InvoiceForm nb-stepper .step-content{
+  padding-left: 0!important;
+  padding-right: 0!important;
+}
+
+#CashMemoForm nb-stepper .header{
+  padding-left: 20px!important;
+  padding-right: 20px!important;
+}
+
+#CashMemoForm nb-stepper .step-content{
+  padding-left: 0!important;
+  padding-right: 0!important;
+}
