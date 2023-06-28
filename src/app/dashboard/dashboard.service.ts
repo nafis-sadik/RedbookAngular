@@ -3,16 +3,114 @@ import { IVendorModel } from './Models/IVendorModel';
 import { IBusinessModel } from './Models/IBusinessModel';
 import { NbDialogService } from '@nebular/theme';
 import { IProductModel } from './Models/IProductModel';
+import { ICategoryModel } from './Models/ICategoryModel';
 
 @Injectable({
     providedIn: 'root',
 })
+
 export class DashboardService {
   /**
    * Primary key of selected outlet
    * Needs to be passed to dialogue components
    */
   selectedOutletId: number = 0;
+
+  backendDataCategories: ICategoryModel[] = [
+    {
+      categoryId: 1,
+      parentCategoryId: undefined,
+      title: 'Oil',
+      businessId: 2
+    },
+    {
+      categoryId: 2,
+      parentCategoryId: undefined,
+      title: 'Motors',
+      businessId: 1
+    },
+    {
+      categoryId: 3,
+      parentCategoryId: undefined,
+      title: 'Engines',
+      businessId: 1
+    }
+  ];
+
+  backendDataSubCategories: ICategoryModel[] = [
+    {
+      categoryId: 3,
+      parentCategoryId: 1,
+      title: 'Gear Oil',
+      businessId: 1
+    },
+    {
+      categoryId: 4,
+      parentCategoryId: 1,
+      title: 'Engine Oil Oil',
+      businessId: 2
+    },
+    {
+      categoryId: 5,
+      parentCategoryId: 3,
+      title: 'EFI',
+      businessId: 1
+    },
+    {
+      categoryId: 6,
+      parentCategoryId: 2,
+      title: 'Deep Tubewell Motor',
+      businessId: 2
+    },
+    {
+      categoryId: 7,
+      parentCategoryId: 3,
+      title: 'VVTi',
+      businessId: 1
+    },
+    {
+      categoryId: 8,
+      parentCategoryId: 2,
+      title: 'DC Motor',
+      businessId: 2
+    },
+    {
+      categoryId: 9,
+      parentCategoryId: 2,
+      title: 'Stepper Motor',
+      businessId: 1
+    },
+    {
+      categoryId: 10,
+      parentCategoryId: 1,
+      title: 'Synthetic Oil',
+      businessId: 2
+    },
+    {
+      categoryId: 11,
+      parentCategoryId: 1,
+      title: 'High-Mileage Oil',
+      businessId: 1
+    },
+    {
+      categoryId: 12,
+      parentCategoryId: 1,
+      title: 'Synthetic Blend Oil',
+      businessId: 2
+    },
+    {
+      categoryId: 13,
+      parentCategoryId: 1,
+      title: 'Conventional Oil',
+      businessId: 1
+    },
+    {
+      categoryId: 14,
+      parentCategoryId: 3,
+      title: 'Classic Engines',
+      businessId: 2
+    }
+  ];
 
   public readonly ngDialogService: NbDialogService;
 
@@ -40,16 +138,16 @@ export class DashboardService {
   getOutlets(): IBusinessModel[]{
     return [
       {
-        title: 'Krishi Ghor',
-        address: [],
         businessId: 1,
-        ownerId: ''
+        ownerId: 'GUID',
+        title: 'Krishi Ghor',
+        address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
       },
       {
-        title: 'FM SkyVision',
-        address: [],
         businessId: 2,
-        ownerId: ''
+        ownerId: 'GUID',
+        title: 'FM Sky Vision',
+        address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
       }
     ];
   }
@@ -100,8 +198,8 @@ export class DashboardService {
     };
   }
 
-  getProductsByBusinessId(businessId: number): IProductModel[]{
-    if (businessId == 1)
+  getProductsByBusinessId(selectedOutletId: number): IProductModel[]{
+    if (selectedOutletId == 1)
         return [
           {
             id: 4,
@@ -334,5 +432,25 @@ export class DashboardService {
         ]
       }
     ];
+  }
+
+  loadCategories(selectedOutletId: number): ICategoryModel[] {
+    let categories: ICategoryModel[] = [];
+    for (let index = 0; index < this.backendDataCategories.length; index++) {
+      if(this.backendDataCategories[index].businessId == selectedOutletId)
+        categories.push(this.backendDataCategories[index]);
+    }
+    this.selectedOutletId = selectedOutletId;
+    return categories;
+  }
+
+  loadSubcategories(categoryId: number): ICategoryModel[] {
+    let subcategories: ICategoryModel[] = [];
+    for (let index = 0; index < this.backendDataSubCategories.length; index++) {
+      if(this.backendDataSubCategories[index].parentCategoryId == categoryId)
+        subcategories.push(this.backendDataSubCategories[index]);
+    }
+
+    return subcategories;
   }
 }

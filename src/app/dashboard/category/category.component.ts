@@ -4,6 +4,7 @@ import { IBusinessModel } from '../Models/IBusinessModel';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { ICategoryModel } from '../Models/ICategoryModel';
 import { RemoveCategoryComponent } from './remove-category/remove-category.component';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'app-category',
@@ -108,21 +109,6 @@ export class CategoryComponent {
     }
   ];
 
-  backendOwnedBusinesses: IBusinessModel[] = [
-    {
-      businessId: 1,
-      ownerId: 'GUID',
-      title: 'Krishi Ghor',
-      address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
-    },
-    {
-      businessId: 2,
-      ownerId: 'GUID',
-      title: 'FM Sky Vision',
-      address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
-    }
-  ];
-
   selectedBusinessId: number | undefined = undefined;
 
   selectedCategoryId: number | undefined = undefined;
@@ -133,8 +119,12 @@ export class CategoryComponent {
 
   ownedBusinesses: IBusinessModel[] = [];
 
-  constructor(private windowService: NbWindowService, private toastrService: NbToastrService) {
-    this.ownedBusinesses = this.backendOwnedBusinesses;
+  constructor(
+    private dashboardService: DashboardService,
+    private windowService: NbWindowService,
+    private toastrService: NbToastrService
+  ) {
+    this.ownedBusinesses = this.dashboardService.getOutlets();
   }
 
   loadCategories(selectedBusiness: number) {
