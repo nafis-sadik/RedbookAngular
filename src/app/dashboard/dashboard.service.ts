@@ -192,7 +192,8 @@ export class DashboardService {
         buttonLabel: addNewButtonLabel,
         showIcon: true,
         onClick: () => {
-          this.dialogService.open(dialogueComponent);
+          if(dialogueComponent)
+            this.dialogService.open(dialogueComponent);
         }
       },
     };
