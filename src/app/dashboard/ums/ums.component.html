@@ -1,4 +1,4 @@
-<section id="Products">
+<section id="UserManagement">
   <nb-card>
     <nb-card-header>
       <h5>User Management</h5>
@@ -56,20 +56,7 @@
                   </nb-card>
               </div>
               <div class="col-md-8">
-                  <nb-card size="large">
-                      <nb-card-header>
-                          Users
-                      </nb-card-header>
-                      <nb-card-body>
-                        <ngx-pagination [paginationModel]="pagedProductModel" class="d-none"></ngx-pagination>
-                      </nb-card-body>
-                      <nb-card-footer>
-                          <button nbButton status="primary"
-                                  (click)="saveUser('Add New Category', null)">
-                              <nb-icon icon="plus-square"></nb-icon> Add New User
-                          </button>
-                      </nb-card-footer>
-                  </nb-card>
+                <ngx-pagination [paginationModel]="pagedProductModel" class="d-none col-md-8"></ngx-pagination>
               </div>
             </div>
           </div>

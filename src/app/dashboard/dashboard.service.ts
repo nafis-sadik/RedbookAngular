@@ -152,9 +152,9 @@ export class DashboardService {
     ];
   }
 
-  getPagingConfig(dialogueComponent: any, addNewButtonLabel: string) {
+  getPagingConfig(DialogueComponent: any, TableCardHeader: string, AddButtonLabel: string='Add', SearchButtonLabel: string='Search', SearchFieldPlaceholder: string='Search') {
     return {
-      tableCardHeader: null,
+      tableCardHeader: TableCardHeader,
       sourceData: [],
       allowAdd: true,
       tableConfig: {
@@ -181,19 +181,19 @@ export class DashboardService {
       },
       searchingConfig:{
         searchString: '',
-        inputFieldPlaceholder: 'Search Invoice',
-        buttonLabel: 'Search',
+        inputFieldPlaceholder: SearchFieldPlaceholder,
+        buttonLabel: SearchButtonLabel,
         showIcon: true,
         onClick: () => {
           console.log('Search Callback')
         }
       },
       addNewElementButtonConfig: {
-        buttonLabel: addNewButtonLabel,
+        buttonLabel: AddButtonLabel,
         showIcon: true,
         onClick: () => {
-          if(dialogueComponent)
-            this.dialogService.open(dialogueComponent);
+          if(DialogueComponent)
+            this.dialogService.open(DialogueComponent);
         }
       },
     };

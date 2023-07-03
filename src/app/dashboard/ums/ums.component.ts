@@ -14,34 +14,7 @@ export class UmsComponent {
   ownedBusinesses: IBusinessModel[];
   constructor(private dashboardService: DashboardService) {
     this.ownedBusinesses = dashboardService.getOutlets();
-    this.pagedProductModel = {
-      allowAdd: true,
-      tableCardHeader: 'User Management System',
-      pagingConfig: null,
-      searchingConfig: null,
-      sourceData: [],
-      addNewElementButtonConfig:{
-        buttonLabel: 'Add New User',
-        onClick: () => {},
-        showIcon: true
-      },
-      tableConfig: {
-        isEditableTable: false,
-        tableMaping: {
-          "User Id": "UserId",
-          "First Name": "FirstName",
-          "Last Name": "LastName",
-          "User Name": "UserName",
-        },
-        onDelete: () => {
-          alert('Event triggered')
-        },
-        onEdit: () => {
-          alert('Event triggered')
-        }
-      }
-    }
-    // this.pagedProductModel = dashboardService.getPagingConfig(null, 'New Product');
+    this.pagedProductModel = dashboardService.getPagingConfig(null, 'User Management', 'Add User');
   }
 
   loadUsersUnderBusiness(outletId: number): void{
