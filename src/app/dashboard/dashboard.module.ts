@@ -36,6 +36,7 @@ import { FormsModule } from '@angular/forms';
 import { AddSalesComponent } from './sell/add-sales/add-sales.component';
 import { UmsComponent } from './ums/ums.component';
 import { SettingsComponent } from './settings/settings.component';
+import { UserFormComponent } from './ums/user-form/user-form.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { SettingsComponent } from './settings/settings.component';
     AddSalesComponent,
     UmsComponent,
     SettingsComponent,
+    UserFormComponent,
   ],
   imports: [
     CommonModule,

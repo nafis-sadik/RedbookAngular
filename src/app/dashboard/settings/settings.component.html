@@ -1,9 +1,62 @@
-<section id="Products">
+<section id="SystemSettings">
   <nb-card>
     <nb-card-header>
       <h5>System Settings</h5>
     </nb-card-header>
     <nb-card-body class="p-0">
+      <nb-accordion>
+        <nb-accordion-item>
+         <nb-accordion-item-header>Role Management</nb-accordion-item-header>
+         <nb-accordion-item-body>
+          <div class="container-fluid role">
+            <div class="row">
+              <div class="col-md-3">
+                  <nb-card size="large">
+                      <nb-card-header>
+                          Your Business Outlets
+                      </nb-card-header>
+                      <nb-card-body>
+                        <nb-list>
+                          <nb-list-item *ngFor="let business of ownedBusinesses">
+                              <div class="container-fluid">
+                                  <div class="row">
+                                      <nb-radio class="col-xxl-8"
+                                                (valueChange)="loadRolesBusiness(business.businessId)">
+                                          {{ business.title }}
+                                      </nb-radio>
+                                  </div>
+                              </div>
+                          </nb-list-item>
+                        </nb-list>
+                      </nb-card-body>
+                  </nb-card>
+              </div>
+              <div class="col-md-3">
+                  <nb-card size="large">
+                      <nb-card-header>
+                          Your Business Outlets
+                      </nb-card-header>
+                      <nb-card-body>
+                        <nb-list>
+                          <nb-list-item *ngFor="let role of rolesUnderThisBusiness">
+                              <div class="container-fluid">
+                                  <div class="row">
+                                      <nb-radio class="col-xxl-8"
+                                                (valueChange)="loadRolesBusiness(role.RoleId)">
+                                          {{ role.RoleName }}
+                                      </nb-radio>
+                                  </div>
+                              </div>
+                          </nb-list-item>
+                        </nb-list>
+                      </nb-card-body>
+                  </nb-card>
+              </div>
+            </div>
+          </div>
+         </nb-accordion-item-body>
+        </nb-accordion-item>
+       </nb-accordion>
     </nb-card-body>
   </nb-card>
 </section>

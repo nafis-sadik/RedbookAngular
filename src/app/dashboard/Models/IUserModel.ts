@@ -24,4 +24,14 @@ export declare interface IUserModel{
    * @type {string}
    */
   Password: string;
+  /**
+   * Identifier of user role
+   * @type {number}
+   */
+  RoleId: number;
+  /**
+   * Name of user role
+   * @type {string}
+   */
+  RoleName: string;
 }

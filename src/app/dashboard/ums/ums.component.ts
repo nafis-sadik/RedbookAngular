@@ -3,6 +3,7 @@ import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginati
 import { DashboardService } from '../dashboard.service';
 import { IBusinessModel } from '../Models/IBusinessModel';
 import { IUserModel } from '../Models/IUserModel';
+import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 
 @Component({
   selector: 'app-ums',
@@ -10,11 +11,25 @@ import { IUserModel } from '../Models/IUserModel';
   styleUrls: ['./ums.component.scss']
 })
 export class UmsComponent {
-  pagedProductModel: IPaginationModel<IUserModel>;
+  pagedUserModel: IPaginationModel<IUserModel>;
   ownedBusinesses: IBusinessModel[];
-  constructor(private dashboardService: DashboardService) {
+  constructor(
+    private dashboardService: DashboardService,
+    private ngxPaginationService: NGXPaginationService<IUserModel>
+  ) {
     this.ownedBusinesses = dashboardService.getOutlets();
-    this.pagedProductModel = dashboardService.getPagingConfig(null, 'User Management', 'Add User');
+    this.pagedUserModel = dashboardService.getPagingConfig(null, 'User Management', 'Add User', 'Search User');
+    if(this.pagedUserModel.tableConfig){
+      this.pagedUserModel.tableConfig.tableMaping = {
+        "First Name": "FirstName",
+        "Last Name": "LastName",
+        "User Name": "UserName",
+        "Role": "RoleName"
+      };
+
+      this.pagedUserModel.tableConfig.onEdit = () => {}
+      this.pagedUserModel.tableConfig.onDelete = () => {}
+    }
   }
 
   loadUsersUnderBusiness(outletId: number): void{
@@ -23,75 +38,40 @@ export class UmsComponent {
       dataTableCard.classList.remove('d-none');
 
     if(outletId == 1) {
-      this.pagedProductModel.sourceData = [
+      this.pagedUserModel.sourceData = [
         {
           UserId: 'GUID',
           FirstName: 'Nafis',
           LastName: 'Sadik',
           UserName: 'nafis_sadik',
-          Password: 'ABC123abc.'
+          Password: 'ABC123abc.',
+          RoleId: 1,
+          RoleName: 'Sales Admin'
         },
         {
           UserId: 'GUID',
           FirstName: 'Farhan',
           LastName: 'Masud',
           UserName: 'farhan_masud',
-          Password: 'ABC123abc.'
+          Password: 'ABC123abc.',
+          RoleId: 1,
+          RoleName: 'Sales Admin'
         },
         {
           UserId: 'GUID',
           FirstName: 'Fayham',
-          LastName: '',
-          UserName: 'fayham',
-          Password: 'ABC123abc.'
-        },
-        {
-          UserId: 'GUID',
-          FirstName: 'Nafis',
-          LastName: 'Sadik',
-          UserName: 'nafis_sadik',
-          Password: 'ABC123abc.'
-        },
-        {
-          UserId: 'GUID',
-          FirstName: 'Farhan',
           LastName: 'Masud',
-          UserName: 'farhan_masud',
-          Password: 'ABC123abc.'
-        },
-        {
-          UserId: 'GUID',
-          FirstName: 'Fayham',
-          LastName: '',
           UserName: 'fayham',
-          Password: 'ABC123abc.'
-        },
-        {
-          UserId: 'GUID',
-          FirstName: 'Nafis',
-          LastName: 'Sadik',
-          UserName: 'nafis_sadik',
-          Password: 'ABC123abc.'
-        },
-        {
-          UserId: 'GUID',
-          FirstName: 'Farhan',
-          LastName: 'Masud',
-          UserName: 'farhan_masud',
-          Password: 'ABC123abc.'
-        },
-        {
-          UserId: 'GUID',
-          FirstName: 'Fayham',
-          LastName: '',
-          UserName: 'fayham',
-          Password: 'ABC123abc.'
-        },
+          Password: 'ABC123abc.',
+          RoleId: 1,
+          RoleName: 'Sales Admin'
+        }
       ]
     }
     else{
-      this.pagedProductModel.sourceData = [];
+      this.pagedUserModel.sourceData = [];
     }
+    this.ngxPaginationService.set(this.pagedUserModel)
   }
 
   saveOutlet(windowLabel: string, outletModel: IBusinessModel | null): void{ }

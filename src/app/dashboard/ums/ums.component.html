@@ -1,78 +1,61 @@
 <section id="UserManagement">
   <nb-card>
     <nb-card-header>
-      <h5>User Management</h5>
+      <h5>User Management Panel</h5>
     </nb-card-header>
-    <nb-card-body class="p-0">
-      <nb-accordion>
-        <nb-accordion-item>
-         <nb-accordion-item-header>Manage Users</nb-accordion-item-header>
-         <nb-accordion-item-body>
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-4">
-                  <nb-card size="large">
-                      <nb-card-header>
-                          Your Businesses
-                      </nb-card-header>
-                      <nb-card-body>
-                        <nb-list>
-                          <nb-list-item *ngFor="let business of ownedBusinesses">
-                              <div class="container-fluid">
-                                  <div class="row">
-                                      <nb-radio class="col-xxl-8"
-                                                (valueChange)="loadUsersUnderBusiness(business.businessId)">
-                                          {{ business.title }}
-                                      </nb-radio>
-                                      <div class="col-xxl-4">
-                                          <div class="row">
-                                              <div class="col-6">
-                                                  <button nbButton nbTooltip="Update" status="primary"
-                                                          class="btn-custom"
-                                                          (click)="saveOutlet('Update Business Title', business)">
-                                                      <nb-icon icon="copy"></nb-icon>
-                                                  </button>
-                                              </div>
-                                              <div class="col-6">
-                                                  <button nbButton nbTooltip="Delete" status="danger"
-                                                          class="btn-custom"
-                                                          (click)="removeOutlet('Delete Category', business.businessId)">
-                                                      <nb-icon icon="close-square"></nb-icon>
-                                                  </button>
-                                              </div>
+    <nb-card-body>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-4">
+              <nb-card size="large">
+                  <nb-card-header>
+                      Your Business Outlets
+                  </nb-card-header>
+                  <nb-card-body>
+                    <nb-list>
+                      <nb-list-item *ngFor="let business of ownedBusinesses">
+                          <div class="container-fluid">
+                              <div class="row">
+                                  <nb-radio class="col-xxl-8"
+                                            (valueChange)="loadUsersUnderBusiness(business.businessId)">
+                                      {{ business.title }}
+                                  </nb-radio>
+                                  <div class="col-xxl-4">
+                                      <div class="row">
+                                          <div class="col-6">
+                                              <button nbButton nbTooltip="Update" status="primary"
+                                                      class="btn-custom"
+                                                      (click)="saveOutlet('Update Business Title', business)">
+                                                  <nb-icon icon="copy"></nb-icon>
+                                              </button>
+                                          </div>
+                                          <div class="col-6">
+                                              <button nbButton nbTooltip="Delete" status="danger"
+                                                      class="btn-custom"
+                                                      (click)="removeOutlet('Delete Category', business.businessId)">
+                                                  <nb-icon icon="close-square"></nb-icon>
+                                              </button>
                                           </div>
                                       </div>
                                   </div>
                               </div>
-                          </nb-list-item>
-                        </nb-list>
-                      </nb-card-body>
-                      <nb-card-footer>
-                          <button nbButton status="primary"
-                                  (click)="saveOutlet('Add New Business', null)">
-                              <nb-icon icon="plus-square"></nb-icon> Add New Business
-                          </button>
-                      </nb-card-footer>
-                  </nb-card>
-              </div>
-              <div class="col-md-8">
-                <ngx-pagination [paginationModel]="pagedProductModel" class="d-none col-md-8"></ngx-pagination>
-              </div>
-            </div>
+                          </div>
+                      </nb-list-item>
+                    </nb-list>
+                  </nb-card-body>
+                  <nb-card-footer>
+                      <button nbButton status="primary"
+                              (click)="saveOutlet('Add New Business', null)">
+                          <nb-icon icon="plus-square"></nb-icon> Add New Business
+                      </button>
+                  </nb-card-footer>
+              </nb-card>
           </div>
-         </nb-accordion-item-body>
-        </nb-accordion-item>
-        <nb-accordion-item>
-         <nb-accordion-item-header>Manage Access Control</nb-accordion-item-header>
-         <nb-accordion-item-body>
-          <div class="container-fluid">
-            <div class="row">
-              Item Content
-            </div>
+          <div class="col-md-8">
+            <ngx-pagination [paginationModel]="pagedUserModel" class="d-none col-md-8"></ngx-pagination>
           </div>
-         </nb-accordion-item-body>
-        </nb-accordion-item>
-       </nb-accordion>
+        </div>
+      </div>
     </nb-card-body>
   </nb-card>
 </section>
