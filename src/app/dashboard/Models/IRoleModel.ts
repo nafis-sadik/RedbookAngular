@@ -7,7 +7,7 @@ export declare interface IRoleModel {
   RoleId: number;
   /**
    * Name of Role
-   * @type {Number}
+   * @type {string}
    */
-  RoleName: number;
+  RoleName: string;
 }

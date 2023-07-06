@@ -15,6 +15,8 @@ export class SettingsComponent {
   rolesUnderThisBusiness: IRoleModel[];
   pagedRoleModel: IPaginationModel<IRoleModel>;
 
+  selectedRoleId: number = 0;
+
   constructor(
     private dashboardService: DashboardService,
     private ngxPaginationService: NGXPaginationService<IRoleModel>
@@ -34,6 +36,38 @@ export class SettingsComponent {
   }
 
   loadRolesBusiness(businessId: number): void{
-    console.log(businessId);
+    if(businessId == 1){
+      this.rolesUnderThisBusiness = [
+        {
+          RoleId: 1,
+          RoleName: 'Sales Admin'
+        },
+        {
+          RoleId: 2,
+          RoleName: 'CRM Admin'
+        },
+        {
+          RoleId: 4,
+          RoleName: 'Inventory Admin'
+        },
+        {
+          RoleId: 5,
+          RoleName: 'System Admin'
+        },
+      ];
+    }
+    else
+    {
+      this.rolesUnderThisBusiness = [
+        {
+          RoleId: 5,
+          RoleName: 'System Admin'
+        }
+      ]
+    }
+  }
+
+  loadPermissionsAgainstRole(roleId: number): void{
+    this.selectedRoleId = roleId;
   }
 }
