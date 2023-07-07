@@ -8,85 +8,13 @@
         <nb-accordion-item>
          <nb-accordion-item-header>Role Management</nb-accordion-item-header>
          <nb-accordion-item-body>
-          <div class="container-fluid role">
-            <div class="row">
-              <div class="col-md-4">
-                  <nb-card size="large">
-                      <nb-card-header>
-                          Your Business Outlets
-                      </nb-card-header>
-                      <nb-card-body>
-                        <nb-list>
-                          <nb-list-item *ngFor="let business of ownedBusinesses">
-                              <div class="container-fluid">
-                                  <div class="row">
-                                      <nb-radio class="col-xxl-8"
-                                                (valueChange)="loadRolesBusiness(business.businessId)">
-                                          {{ business.title }}
-                                      </nb-radio>
-                                  </div>
-                              </div>
-                          </nb-list-item>
-                        </nb-list>
-                      </nb-card-body>
-                  </nb-card>
-              </div>
-              <div class="col-md-4">
-                  <nb-card size="large">
-                      <nb-card-header>
-                          Roles
-                      </nb-card-header>
-                      <nb-card-body>
-                        <nb-list>
-                          <nb-list-item *ngFor="let role of rolesUnderThisBusiness">
-                              <div class="container-fluid">
-                                  <div class="row">
-                                      <nb-radio class="col-xxl-8"
-                                                (valueChange)="loadPermissionsAgainstRole(role.RoleId)">
-                                          {{ role.RoleName }}
-                                      </nb-radio>
-                                  </div>
-                              </div>
-                          </nb-list-item>
-                        </nb-list>
-                      </nb-card-body>
-                      <nb-card-footer>
-                        <button nbButton status="primary">
-                          <nb-icon icon="plus-square"></nb-icon>
-                          Add Role
-                        </button>
-                      </nb-card-footer>
-                  </nb-card>
-              </div>
-              <div class="col-md-4">
-                  <nb-card size="large">
-                      <nb-card-header>
-                          Routes
-                      </nb-card-header>
-                      <nb-card-body>
-                        <nb-list>
-                          <nb-list-item *ngFor="let role of rolesUnderThisBusiness">
-                              <div class="container-fluid">
-                                  <div class="row">
-                                      <nb-radio class="col-xxl-8"
-                                                (valueChange)="loadPermissionsAgainstRole(role.RoleId)">
-                                          {{ role.RoleName }}
-                                      </nb-radio>
-                                  </div>
-                              </div>
-                          </nb-list-item>
-                        </nb-list>
-                      </nb-card-body>
-                      <nb-card-footer>
-                        <button nbButton status="success">
-                          <nb-icon icon="checkmark-square-2"></nb-icon>
-                          Save Permissions
-                        </button>
-                      </nb-card-footer>
-                  </nb-card>
-              </div>
-            </div>
-          </div>
+          <app-role-management></app-role-management>
+         </nb-accordion-item-body>
+        </nb-accordion-item>
+        <nb-accordion-item>
+         <nb-accordion-item-header>Outlet Management</nb-accordion-item-header>
+         <nb-accordion-item-body>
+          <app-outlet-management></app-outlet-management>
          </nb-accordion-item-body>
         </nb-accordion-item>
        </nb-accordion>

@@ -1,0 +1,70 @@
+<div class="container-fluid role">
+  <div class="row">
+    <div class="col-md-4">
+        <nb-card size="large">
+            <nb-card-header>
+                Your Business Outlets
+            </nb-card-header>
+            <nb-card-body>
+              <nb-list>
+                <nb-list-item *ngFor="let business of ownedBusinesses">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <nb-radio class="col-xxl-8"
+                                      (valueChange)="loadRolesBusiness(business.businessId)">
+                                {{ business.title }}
+                            </nb-radio>
+                        </div>
+                    </div>
+                </nb-list-item>
+              </nb-list>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-4">
+        <nb-card size="large">
+            <nb-card-header>
+                Roles
+            </nb-card-header>
+            <nb-card-body>
+              <nb-list>
+                <nb-list-item *ngFor="let role of rolesUnderThisBusiness">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <nb-radio class="col-xxl-8"
+                                      (valueChange)="loadPermissionsAgainstRole(role.RoleId)">
+                                {{ role.RoleName }}
+                            </nb-radio>
+                        </div>
+                    </div>
+                </nb-list-item>
+              </nb-list>
+            </nb-card-body>
+            <nb-card-footer>
+              <button nbButton status="primary">
+                <nb-icon icon="plus-square"></nb-icon>
+                Add Role
+              </button>
+            </nb-card-footer>
+        </nb-card>
+    </div>
+    <div class="col-md-4">
+        <nb-card size="large">
+            <nb-card-header>
+                Routes
+            </nb-card-header>
+            <nb-card-body>
+              <nb-list>
+                <nb-list-item *ngFor="let route of routesCollection">
+                    <div class="container-fluid">
+                        <div class="row">
+                          <nb-checkbox (checkedChange)="allowRouteToRole(route.RouteId)" [checked]="route.IsPermitted" status="primary"> {{ route.RouteName }} </nb-checkbox>
+                        </div>
+                    </div>
+                </nb-list-item>
+              </nb-list>
+            </nb-card-body>
+        </nb-card>
+    </div>
+  </div>
+</div>

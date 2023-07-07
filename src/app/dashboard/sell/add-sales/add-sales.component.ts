@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IProductModel } from '../../Models/IProductModel';
 import { ISalesModel } from '../../Models/ISalesModel';
-import { IPaymentModel } from '../../Models/IPaymentModel';
 import { AddSalesService } from './add-sales.service';
 import { SalesService } from '../sell.service';
 import { DashboardService } from '../../dashboard.service';

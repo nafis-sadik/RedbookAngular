@@ -26,7 +26,7 @@ const routes: Routes = [{
       component: CategoryComponent
     },
     {
-      path: 'sell',
+      path: 'sales',
       component: SellComponent
     },
     {

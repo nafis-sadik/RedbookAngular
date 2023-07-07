@@ -25,8 +25,6 @@ import {
 import { RouterModule } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { CategoryComponent } from './category/category.component';
-import { AddCategoryComponent } from './category/add-category/add-category.component';
-import { RemoveCategoryComponent } from './category/remove-category/remove-category.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProductsDetailsFormComponent } from './products/products-details-form/products-details-form.component';
 import { SellComponent } from './sell/sell.component';
@@ -37,6 +35,8 @@ import { AddSalesComponent } from './sell/add-sales/add-sales.component';
 import { UmsComponent } from './ums/ums.component';
 import { SettingsComponent } from './settings/settings.component';
 import { UserFormComponent } from './ums/user-form/user-form.component';
+import { RoleManagementComponent } from './settings/role-management/role-management.component';
+import { OutletManagementComponent } from './settings/outlet-management/outlet-management.component';
 
 
 @NgModule({
@@ -45,8 +45,6 @@ import { UserFormComponent } from './ums/user-form/user-form.component';
     DashboardComponent,
     ProductsComponent,
     CategoryComponent,
-    AddCategoryComponent,
-    RemoveCategoryComponent,
     ProductsDetailsFormComponent,
     SellComponent,
     PurchaseComponent,
@@ -55,6 +53,8 @@ import { UserFormComponent } from './ums/user-form/user-form.component';
     UmsComponent,
     SettingsComponent,
     UserFormComponent,
+    RoleManagementComponent,
+    OutletManagementComponent,
   ],
   imports: [
     CommonModule,

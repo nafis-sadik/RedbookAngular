@@ -7,6 +7,8 @@ import { PagedTableComponent } from './ngx-pagination/paged-table/paged-table.co
 import { PaginationComponent } from './ngx-pagination/pagination/pagination.component';
 import { SearchComponent } from './ngx-pagination/search/search.component';
 import { AddNewComponent } from './ngx-pagination/add-new/add-new.component';
+import { AddDialogueComponent } from './ngx-dialogues/add-dialogue/add-dialogue.component';
+import { RemoveDialogueComponent } from './ngx-dialogues/remove-dialogue/remove-dialogue.component';
 
 
 
@@ -16,7 +18,9 @@ import { AddNewComponent } from './ngx-pagination/add-new/add-new.component';
     PagedTableComponent,
     NgxPaginationComponent,
     SearchComponent,
-    AddNewComponent
+    AddNewComponent,
+    AddDialogueComponent,
+    RemoveDialogueComponent,
   ],
   imports: [
     NbCardModule,

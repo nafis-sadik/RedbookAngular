@@ -4,6 +4,7 @@ import { IBusinessModel } from './Models/IBusinessModel';
 import { NbDialogService } from '@nebular/theme';
 import { IProductModel } from './Models/IProductModel';
 import { ICategoryModel } from './Models/ICategoryModel';
+import { IRoutePermissionModel } from './Models/IRoutePermissionModel';
 
 @Injectable({
     providedIn: 'root',
@@ -370,29 +371,19 @@ export class DashboardService {
         link: '/dashboard/home'
       },
       {
-        title: 'Product Management',
+        title: 'Business Operations',
         icon: 'layers',
         expanded: false,
         children:[
-          {
-            title: 'Category Management',
-            icon: 'list',
-            link: '/dashboard/category'
-          },
-          {
-            title: 'Product List',
-            icon: 'list',
-            link: '/dashboard/products'
-          },
           {
             title: 'Invoice/Purchase',
             icon: 'shopping-bag',
             link: '/dashboard/purchase'
           },
           {
-            title: 'Sell',
+            title: 'Sales',
             icon: 'shopping-cart',
-            link: '/dashboard/sell'
+            link: '/dashboard/sales'
           }
         ]
       },
@@ -420,6 +411,22 @@ export class DashboardService {
         icon: 'settings',
         expanded: false,
         children: [
+          {
+            title: 'Product Management',
+            icon: 'cube',
+            children: [
+              {
+                title: 'Categories',
+                icon: 'list',
+                link: '/dashboard/category'
+              },
+              {
+                title: 'Product List',
+                icon: 'list',
+                link: '/dashboard/products'
+              }
+            ]
+          },
           {
             title: 'User Management',
             icon: 'person',
@@ -453,5 +460,74 @@ export class DashboardService {
     }
 
     return subcategories;
+  }
+
+  getRoutePermissions(roleId: number): IRoutePermissionModel[]{
+    if(roleId == 5)
+      return [
+        {
+          RouteId: 1,
+          RouteName: 'Category',
+          IsPermitted: false
+        },
+        {
+          RouteId: 2,
+          RouteName: 'Products',
+          IsPermitted: false
+        },
+        {
+          RouteId: 3,
+          RouteName: 'Purchase',
+          IsPermitted: false
+        },
+        {
+          RouteId: 4,
+          RouteName: 'Sales',
+          IsPermitted: false
+        },
+        {
+          RouteId: 5,
+          RouteName: 'UMS',
+          IsPermitted: true
+        },
+        {
+          RouteId: 6,
+          RouteName: 'Settings',
+          IsPermitted: true
+        }
+      ]
+    else
+      return [
+        {
+          RouteId: 1,
+          RouteName: 'Category',
+          IsPermitted: true
+        },
+        {
+          RouteId: 2,
+          RouteName: 'Products',
+          IsPermitted: true
+        },
+        {
+          RouteId: 3,
+          RouteName: 'Purchase',
+          IsPermitted: true
+        },
+        {
+          RouteId: 4,
+          RouteName: 'Sales',
+          IsPermitted: true
+        },
+        {
+          RouteId: 5,
+          RouteName: 'UMS',
+          IsPermitted: false
+        },
+        {
+          RouteId: 6,
+          RouteName: 'Settings',
+          IsPermitted: false
+        }
+      ]
   }
 }

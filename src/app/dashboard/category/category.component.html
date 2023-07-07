@@ -14,41 +14,13 @@
                         <nb-card-body>
                             <nb-list>
                                 <nb-list-item *ngFor="let business of ownedBusinesses">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <nb-radio class="col-xxl-8"
-                                                      (valueChange)="loadCategories(business.businessId)">
-                                                {{ business.title }}
-                                            </nb-radio>
-                                            <div class="col-xxl-4">
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <button nbButton nbTooltip="Update" status="primary"
-                                                                class="btn-custom"
-                                                                (click)="openSaveBusinessWindow('Update Business Title', business)">
-                                                            <nb-icon icon="copy"></nb-icon>
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <button nbButton nbTooltip="Delete" status="danger"
-                                                                class="btn-custom"
-                                                                (click)="openDeleteBusinessWindow('Delete Category', business.businessId)">
-                                                            <nb-icon icon="close-square"></nb-icon>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                  <nb-radio class="col-xxl-8"
+                                            (valueChange)="loadCategories(business.businessId)">
+                                      {{ business.title }}
+                                  </nb-radio>
                                 </nb-list-item>
                             </nb-list>
                         </nb-card-body>
-                        <nb-card-footer>
-                            <button nbButton status="primary"
-                                    (click)="openSaveBusinessWindow('Add New Business', null)">
-                                <nb-icon icon="plus-square"></nb-icon> Add Category
-                            </button>
-                        </nb-card-footer>
                     </nb-card>
                 </div>
                 <div class="col-md-4">
