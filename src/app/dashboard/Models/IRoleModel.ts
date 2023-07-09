@@ -10,4 +10,9 @@ export declare interface IRoleModel {
    * @type {string}
    */
   RoleName: string;
+  /**
+   * Unique Id of the business that contains this role
+   * @type {Number}
+   */
+  BusinessId: number;
 }

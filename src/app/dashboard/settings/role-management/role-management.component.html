@@ -2,23 +2,44 @@
   <div class="row">
     <div class="col-md-4">
         <nb-card size="large">
-            <nb-card-header>
-                Your Business Outlets
-            </nb-card-header>
-            <nb-card-body>
-              <nb-list>
-                <nb-list-item *ngFor="let business of ownedBusinesses">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <nb-radio class="col-xxl-8"
-                                      (valueChange)="loadRolesBusiness(business.businessId)">
-                                {{ business.title }}
-                            </nb-radio>
-                        </div>
+          <nb-card-header>
+              Your Business Outlets
+          </nb-card-header>
+          <nb-card-body>
+            <nb-list class="container-fluid">
+              <nb-list-item *ngFor="let business of ownedBusinesses">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <nb-radio name="BusinessOutlet" (click)="loadRolesBusiness(business.businessId)">
+                        {{ business.title }}
+                      </nb-radio>
                     </div>
-                </nb-list-item>
-              </nb-list>
-            </nb-card-body>
+                    <div class="col-md-4">
+                      <div class="row">
+                        <div class="col-6">
+                          <button nbButton type="button" status="primary" (click)="openSaveBusinessWindow('Update Business Title', business)">
+                            <nb-icon icon="copy"></nb-icon>
+                          </button>
+                        </div>
+                        <div class="col-6">
+                          <button nbButton type="button" status="danger" (click)="openDeleteBusinessWindow('Delete Category', business.businessId)">
+                            <nb-icon icon="close-square"></nb-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nb-list-item>
+            </nb-list>
+          </nb-card-body>
+          <nb-card-footer>
+            <button nbButton status="primary" class="btn-save" (click)="openSaveBusinessWindow('Update Business Title', null)">
+              <nb-icon icon="plus-square"></nb-icon>
+              Add New Business Outlet
+            </button>
+          </nb-card-footer>
         </nb-card>
     </div>
     <div class="col-md-4">
@@ -31,7 +52,7 @@
                 <nb-list-item *ngFor="let role of rolesUnderThisBusiness">
                     <div class="container-fluid">
                         <div class="row">
-                            <nb-radio class="col-xxl-8"
+                            <nb-radio class="col-xxl-8" name="Role"
                                       (valueChange)="loadPermissionsAgainstRole(role.RoleId)">
                                 {{ role.RoleName }}
                             </nb-radio>

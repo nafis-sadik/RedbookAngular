@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
-import { DashboardService } from '../dashboard.service';
-import { IBusinessModel } from '../Models/IBusinessModel';
-import { IUserModel } from '../Models/IUserModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
+import { DashboardService } from '../../dashboard.service';
+import { IBusinessModel } from '../../Models/IBusinessModel';
+import { IUserModel } from '../../Models/IUserModel';
 
 @Component({
   selector: 'app-ums',
@@ -14,7 +14,7 @@ export class UmsComponent {
   pagedUserModel: IPaginationModel<IUserModel>;
   ownedBusinesses: IBusinessModel[];
   constructor(
-    private dashboardService: DashboardService,
+    dashboardService: DashboardService,
     private ngxPaginationService: NGXPaginationService<IUserModel>
   ) {
     this.ownedBusinesses = dashboardService.getOutlets();
@@ -74,9 +74,9 @@ export class UmsComponent {
     this.ngxPaginationService.set(this.pagedUserModel)
   }
 
-  saveOutlet(windowLabel: string, outletModel: IBusinessModel | null): void{ }
   removeOutlet(windowLabel: string, businessId: number): void{ }
 
   saveUser(windowLabel: string, userModel: IUserModel | null){ }
+
   removeUser(windowLabel: string, userId: string){ }
 }

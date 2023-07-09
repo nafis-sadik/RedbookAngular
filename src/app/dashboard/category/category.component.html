@@ -14,7 +14,7 @@
                         <nb-card-body>
                             <nb-list>
                                 <nb-list-item *ngFor="let business of ownedBusinesses">
-                                  <nb-radio class="col-xxl-8"
+                                  <nb-radio class="col-xxl-8" name="BusinessOutlet"
                                             (valueChange)="loadCategories(business.businessId)">
                                       {{ business.title }}
                                   </nb-radio>
@@ -33,7 +33,7 @@
                                 <nb-list-item *ngFor="let category of categories">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            <nb-radio class="col-xxl-8"
+                                            <nb-radio class="col-xxl-8" name="Category"
                                                       (valueChange)="loadSubcategories(category.categoryId)">
                                                 {{ category.title }}
                                             </nb-radio>

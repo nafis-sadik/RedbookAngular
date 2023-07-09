@@ -78,3 +78,7 @@ body.nb-theme-corporate nb-card, body.nb-theme-corporate nb-sidebar, body.nb-the
   padding-top: 0!important;
   margin-top: 0!important;
 }
+
+nb-radio :hover{
+  cursor: pointer;
+}

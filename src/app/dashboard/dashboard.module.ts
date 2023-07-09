@@ -32,11 +32,10 @@ import { PurchaseComponent } from './purchase/purchase.component';
 import { AddPurchaseComponent } from './purchase/add-purchase/add-purchase.component';
 import { FormsModule } from '@angular/forms';
 import { AddSalesComponent } from './sell/add-sales/add-sales.component';
-import { UmsComponent } from './ums/ums.component';
 import { SettingsComponent } from './settings/settings.component';
-import { UserFormComponent } from './ums/user-form/user-form.component';
 import { RoleManagementComponent } from './settings/role-management/role-management.component';
-import { OutletManagementComponent } from './settings/outlet-management/outlet-management.component';
+import { UmsComponent } from './settings/ums/ums.component';
+import { UserFormComponent } from './settings/ums/user-form/user-form.component';
 
 
 @NgModule({
@@ -50,11 +49,10 @@ import { OutletManagementComponent } from './settings/outlet-management/outlet-m
     PurchaseComponent,
     AddPurchaseComponent,
     AddSalesComponent,
-    UmsComponent,
     SettingsComponent,
-    UserFormComponent,
     RoleManagementComponent,
-    OutletManagementComponent,
+    UmsComponent,
+    UserFormComponent
   ],
   imports: [
     CommonModule,
