@@ -24,10 +24,8 @@ import {
   NbUserModule
 } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
-import { ProductsComponent } from './products/products.component';
-import { CategoryComponent } from './category/category.component';
+import { CategoryComponent } from './settings/ProductManagement/category/category.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ProductsDetailsFormComponent } from './products/products-details-form/products-details-form.component';
 import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from './settings/settings.component';
 import { RoleManagementComponent } from './settings/role-management/role-management.component';
@@ -38,6 +36,8 @@ import { AddPurchaseComponent } from './BusinessOperations/purchase/add-purchase
 import { PurchaseComponent } from './BusinessOperations/purchase/purchase.component';
 import { SellComponent } from './BusinessOperations/sell/sell.component';
 import { AddSalesComponent } from './BusinessOperations/sell/add-sales/add-sales.component';
+import { ProductsComponent } from './settings/ProductManagement/products/products.component';
+import { ProductsDetailsFormComponent } from './settings/ProductManagement/products/products-details-form/products-details-form.component';
 
 
 @NgModule({

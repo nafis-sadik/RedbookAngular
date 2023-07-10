@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IProductModel } from '../Models/IProductModel';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { ProductsDetailsFormComponent } from './products-details-form/products-details-form.component';
-import { IBusinessModel } from '../Models/IBusinessModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { DashboardService } from '../dashboard.service';
 import { ProductService } from './products.service';
+import { IBusinessModel } from 'src/app/dashboard/Models/IBusinessModel';
+import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
+import { DashboardService } from 'src/app/dashboard/dashboard.service';
 
 @Component({
   selector: 'app-products',
