@@ -1,0 +1,24 @@
+<section id="Sales">
+  <nb-card>
+    <nb-card-header>
+      <h5>{{ cardHeader }}</h5>
+    </nb-card-header>
+    <nb-card-body class="p-0">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="menu-container">
+              <ul>
+                <li *ngFor="let menuItem of outlets" class="outletItems"
+                    (click)="selectOutlet(menuItem.businessId, $event)">{{ menuItem.title }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-10">
+            <ngx-pagination [paginationModel]="pagedSalesModel" class="d-none"></ngx-pagination>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</section>

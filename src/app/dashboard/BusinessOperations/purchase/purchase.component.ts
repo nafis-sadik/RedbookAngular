@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
-import { IInvoiceModel } from '../Models/IInvoiceModel';
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
-import { IBusinessModel } from '../Models/IBusinessModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { PurchaseService } from './purchase.service';
-import { DashboardService } from '../dashboard.service';
+import { IBusinessModel } from '../../Models/IBusinessModel';
+import { IInvoiceModel } from '../../Models/IInvoiceModel';
+import { DashboardService } from '../../dashboard.service';
 
 @Component({
   selector: 'app-purchase',

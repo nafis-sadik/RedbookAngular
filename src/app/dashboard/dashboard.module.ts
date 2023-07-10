@@ -20,22 +20,24 @@ import {
   NbSelectModule,
   NbSidebarModule,
   NbStepperModule,
-  NbTabsetModule
+  NbTabsetModule,
+  NbUserModule
 } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { CategoryComponent } from './category/category.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProductsDetailsFormComponent } from './products/products-details-form/products-details-form.component';
-import { SellComponent } from './sell/sell.component';
-import { PurchaseComponent } from './purchase/purchase.component';
-import { AddPurchaseComponent } from './purchase/add-purchase/add-purchase.component';
 import { FormsModule } from '@angular/forms';
-import { AddSalesComponent } from './sell/add-sales/add-sales.component';
 import { SettingsComponent } from './settings/settings.component';
 import { RoleManagementComponent } from './settings/role-management/role-management.component';
 import { UmsComponent } from './settings/ums/ums.component';
 import { UserFormComponent } from './settings/ums/user-form/user-form.component';
+import { CustomersComponent } from './CRM/customers/customers.component';
+import { AddPurchaseComponent } from './BusinessOperations/purchase/add-purchase/add-purchase.component';
+import { PurchaseComponent } from './BusinessOperations/purchase/purchase.component';
+import { SellComponent } from './BusinessOperations/sell/sell.component';
+import { AddSalesComponent } from './BusinessOperations/sell/add-sales/add-sales.component';
 
 
 @NgModule({
@@ -45,14 +47,15 @@ import { UserFormComponent } from './settings/ums/user-form/user-form.component'
     ProductsComponent,
     CategoryComponent,
     ProductsDetailsFormComponent,
-    SellComponent,
     PurchaseComponent,
     AddPurchaseComponent,
+    SellComponent,
     AddSalesComponent,
     SettingsComponent,
     RoleManagementComponent,
     UmsComponent,
-    UserFormComponent
+    UserFormComponent,
+    CustomersComponent
   ],
   imports: [
     CommonModule,
@@ -75,6 +78,7 @@ import { UserFormComponent } from './settings/ums/user-form/user-form.component'
     NbDatepickerModule,
     NbCheckboxModule,
     NbAccordionModule,
+    NbUserModule,
     FormsModule // <--- import into the NgModule
   ],
   bootstrap: [DashboardComponent]

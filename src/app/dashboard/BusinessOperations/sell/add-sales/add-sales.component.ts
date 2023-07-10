@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { IProductModel } from '../../Models/IProductModel';
-import { ISalesModel } from '../../Models/ISalesModel';
 import { AddSalesService } from './add-sales.service';
 import { SalesService } from '../sell.service';
-import { DashboardService } from '../../dashboard.service';
-import { IInvoiceProductModel } from '../../Models/IInvoiceProductModel';
+import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
+import { ISalesModel } from 'src/app/dashboard/Models/ISalesModel';
+import { IInvoiceProductModel } from 'src/app/dashboard/Models/IInvoiceProductModel';
+import { DashboardService } from 'src/app/dashboard/dashboard.service';
 
 @Component({
   selector: 'app-add-sales',

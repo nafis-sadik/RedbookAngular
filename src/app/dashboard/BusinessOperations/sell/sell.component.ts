@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { ISalesModel } from '../Models/ISalesModel';
-import { IBusinessModel } from '../Models/IBusinessModel';
 import { AddSalesComponent } from './add-sales/add-sales.component';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { DashboardService } from '../dashboard.service';
 import { SalesService } from './sell.service';
+import { IBusinessModel } from '../../Models/IBusinessModel';
+import { ISalesModel } from '../../Models/ISalesModel';
+import { DashboardService } from '../../dashboard.service';
 
 @Component({
   selector: 'app-sell',

@@ -393,16 +393,9 @@ export class DashboardService {
         expanded: false,
         children: [
           {
-            title: 'Messenger',
-            icon: 'message-circle'
-          },
-          {
-            title: 'Whatsapp',
-            icon: 'email'
-          },
-          {
             title: 'Customers',
-            icon: 'person'
+            icon: 'person',
+            link: '/dashboard/customers'
           }
         ]
       },
@@ -426,11 +419,6 @@ export class DashboardService {
                 link: '/dashboard/products'
               }
             ]
-          },
-          {
-            title: 'User Management',
-            icon: 'person',
-            link: '/dashboard/ums'
           },
           {
             title: 'System Settings',
