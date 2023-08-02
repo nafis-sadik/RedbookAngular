@@ -11,6 +11,7 @@ import { DashboardService } from './dashboard.service';
 
 export class DashboardComponent {
   selectedTheme: string | undefined;
+  isButtonVisible: boolean;
   themes: string[] = [
     'Default',
     'Dark',
@@ -36,6 +37,7 @@ export class DashboardComponent {
     }
 
     this.menuOptions = dashboardService.getMenuOptionsByUserId("GUID");
+    this.isButtonVisible = false;
   }
 
   toggle() {
@@ -46,4 +48,6 @@ export class DashboardComponent {
     this.themeService.changeTheme(theme.toLowerCase());
     localStorage.setItem('theme', theme);
   }
+
+  flipProfilePanelVisibility() :void{ this.isButtonVisible = !this.isButtonVisible; }
 }

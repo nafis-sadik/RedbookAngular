@@ -22,6 +22,7 @@
     "@nebular/auth": "^11.0.0",
     "@nebular/eva-icons": "^11.0.0",
     "@nebular/theme": "11.0.0",
+    "chart.js": "^4.3.0",
     "eva-icons": "^1.1.3",
     "lite-server": "^2.6.1",
     "nebular-icons": "^1.1.0",

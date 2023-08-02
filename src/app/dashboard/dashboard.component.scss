@@ -1,26 +1,39 @@
-.nav-brand-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+#DashboardLayout .nav-top-bar-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
-.nav-brand-container h1{
-    border-left: 1px solid white;
-    padding-left: 1vw;
-    margin-left: 1vw;
+#DashboardLayout .left-cluster{
+  display: flex;
+  align-items: center;
 }
 
-.nav-brand-container a nb-icon{
-    height: 5vh;
+#DashboardLayout .left-cluster nb-select{
+  padding-left: 1rem;
 }
 
-.nav-brand-container nb-select{
-    margin-left: 1vw;
+#DashboardLayout .left-cluster span{
+  font-size: 2rem;
+  margin-left: 1rem;
+  padding-left: 1rem;
+  font-weight: 800;
+  border-left: 1px solid wheat;
 }
 
-.footer a{
-    text-decoration: none;
-    margin-left: 5px;
+#DashboardLayout .spacer{
+  flex: 2;
+}
+
+#DashboardLayout .right-cluster :hover{
+  cursor: pointer;
+}
+
+#DashboardLayout .footer a{
+  text-decoration: none;
+  margin-left: 5px;
 }
 
 #DashboardLayout .collapsed, #DashboardLayout .collapsed nb-menu {
@@ -53,4 +66,24 @@
     opacity: 0;
     width: 0px;
   }
+}
+
+#ProfilePanel{
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  transform: translateX(-100%);
+}
+
+#ProfilePanel nb-select{
+  padding-bottom: 1rem;
+}
+
+#ProfilePanel nb-card{
+  padding: 1rem;
+}
+
+#ProfilePanel .themes span{
+  display: block;
+  margin-bottom: 0.5rem;
 }

@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { IVendorModel } from '../../Models/IVendorModel';
-import { IInvoiceModel } from '../../Models/IInvoiceModel';
-import { IAddressModel } from '../../Models/IAddressModel';
 import { PurchaseService } from '../purchase.service';
 import { AddPurchaseService } from './add-purchase.service';
-import { IProductModel } from '../../Models/IProductModel';
-import { IInvoiceProductModel } from '../../Models/IInvoiceProductModel';
-import { IInvoicePaymentModel } from '../../Models/IInvoicePayment';
-import { DashboardService } from '../../dashboard.service';
-import { IPaymentModel } from '../../Models/IPaymentModel';
+import { IVendorModel } from 'src/app/dashboard/Models/IVendorModel';
+import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
+import { IInvoicePaymentModel } from 'src/app/dashboard/Models/IInvoicePayment';
+import { IAddressModel } from 'src/app/dashboard/Models/IAddressModel';
+import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
+import { IInvoiceModel } from 'src/app/dashboard/Models/IInvoiceModel';
+import { DashboardService } from 'src/app/dashboard/dashboard.service';
+import { IInvoiceProductModel } from 'src/app/dashboard/Models/IInvoiceProductModel';
 
 @Component({
   selector: 'app-add-purchase',

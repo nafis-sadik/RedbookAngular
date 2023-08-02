@@ -393,16 +393,9 @@ export class DashboardService {
         expanded: false,
         children: [
           {
-            title: 'Messenger',
-            icon: 'message-circle'
-          },
-          {
-            title: 'Whatsapp',
-            icon: 'email'
-          },
-          {
             title: 'Customers',
-            icon: 'person'
+            icon: 'person',
+            link: '/dashboard/customers'
           }
         ]
       },

@@ -1,15 +1,42 @@
 <nb-layout id="DashboardLayout">
     <nb-layout-header fixed>
-        <section class="nav-brand-container">
-            <a>
-                <nb-icon ghost nbButton status="basic" (click)="toggle()" icon="menu-2"></nb-icon>
-            </a>
-            <h1>Redbook</h1>
-            <nb-select placeholder="{{selectedTheme}}" (selectedChange)="setTheme($event)"
-                       (ngModel)="selectedTheme"
-                       [(selected)]="selectedTheme">
-                <nb-option *ngFor="let theme of themes" [value]="theme">{{theme}}</nb-option>
-            </nb-select>
+        <section class="nav-top-bar-container">
+          <div class="left-cluster">
+            <nb-icon ghost nbButton status="basic" (click)="toggle()" icon="menu-2"></nb-icon>
+            <span>Redbook</span>
+            <nb-select class="d-none d-md-block" placeholder="{{selectedTheme}}" (selectedChange)="setTheme($event)"
+                          (ngModel)="selectedTheme"
+                          [(selected)]="selectedTheme">
+                    <nb-option *ngFor="let theme of themes" [value]="theme">{{theme}}</nb-option>
+                </nb-select>
+          </div>
+          <div class="spacer"></div>
+          <div class="right-cluster">
+            <nb-user size="large"
+                    name="John Doe"
+                    title="Engineer"
+                    (click)="flipProfilePanelVisibility()"
+                    picture="https://via.placeholder.com/50/4479e7/ffffff?Text=IMG">
+            </nb-user>
+          </div>
+        </section>
+        <section id="ProfilePanel" *ngIf="isButtonVisible">
+          <nb-card>
+            <div class="d-block d-md-none themes">
+              <span>Theme Selection</span>
+              <nb-select
+                placeholder="{{selectedTheme}}"
+                (selectedChange)="setTheme($event)"
+                (ngModel)="selectedTheme"
+                [(selected)]="selectedTheme">
+                  <nb-option *ngFor="let theme of themes" [value]="theme">{{theme}}</nb-option>
+              </nb-select>
+            </div>
+            <button nbButton status="primary">
+              <nb-icon icon="log-out"></nb-icon>
+              Logout
+            </button>
+          </nb-card>
         </section>
     </nb-layout-header>
 
