@@ -428,11 +428,6 @@ export class DashboardService {
             ]
           },
           {
-            title: 'User Management',
-            icon: 'person',
-            link: '/dashboard/ums'
-          },
-          {
             title: 'System Settings',
             icon: 'briefcase',
             link: '/dashboard/settings'

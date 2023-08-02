@@ -7,7 +7,6 @@ import { ProductsComponent } from './products/products.component';
 import { SellComponent } from './sell/sell.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { SettingsComponent } from './settings/settings.component';
-import { UmsComponent } from './settings/ums/ums.component';
 
 const routes: Routes = [{
   path: '',
@@ -36,10 +35,6 @@ const routes: Routes = [{
     {
       path: 'settings',
       component: SettingsComponent
-    },
-    {
-      path: 'ums',
-      component: UmsComponent
     }
   ]
 }];
