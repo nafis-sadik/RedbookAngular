@@ -1,4 +1,4 @@
-export declare interface ITableModel{
+export declare interface ITableModel {
   /**
    * Labels for collumn of HTML table
    * @type {Array<string>}
@@ -19,11 +19,23 @@ export declare interface ITableModel{
    * Description: Callback method for onClick event on edit button
    * @type {Function}
    */
-  onEdit: Function | null
+  onEdit: Function | null;
   /**
    * Default value: null
    * Description: Callback method for onClick event on delete button
    * @type {Function}
    */
-  onDelete: Function | null
+  onDelete: Function | null;
+  /**
+     * Default value: null
+     * Description: Callback method for onClick event on View Details button
+     * @type {Function}
+     */
+  onView: Function | null;
+  /**
+     * Default value:
+     * Description: width of column to be displayed in current page
+     * @type {string}
+     */
+  actionColWidth: string;
 }

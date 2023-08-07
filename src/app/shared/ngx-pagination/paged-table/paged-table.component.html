@@ -2,20 +2,34 @@
   <table class="table table-bordered align-middle">
     <thead>
       <tr class="align-bottom row-color-2">
-        <th scope="col" *ngIf="config?.onEdit || config?.onDelete" class="table-actions">
+        <th
+          scope="col"
+          *ngIf="config?.onEdit || config?.onDelete"
+          class="table-actions"
+        >
           <span><b>Actions</b></span>
         </th>
-        <th *ngFor="let item of this.config.columnNames" class="ng-star-inserted">
+        <th
+          *ngFor="let item of this.config.columnNames"
+          class="ng-star-inserted"
+        >
           {{ item }}
         </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of config.sourceData">
-        <td scope="col" *ngIf="config?.onEdit || config?.onDelete" class="table-actions">
+        <td
+          scope="col"
+          *ngIf="config?.onEdit || config?.onDelete"
+          class="table-actions"
+        >
           <div class="d-block">
             <span *ngIf="config.onEdit" (click)="config.onEdit()">
               <nb-icon icon="edit-2-outline" class="edit"></nb-icon>
+            </span>
+            <span *ngIf="config.onView" (click)="config.onView()">
+              <nb-icon icon="file-text-outline" class="delete"></nb-icon>
             </span>
             <span *ngIf="config.onDelete" (click)="config.onDelete()">
               <nb-icon icon="trash-2-outline" class="delete"></nb-icon>

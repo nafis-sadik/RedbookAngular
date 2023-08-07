@@ -6,16 +6,26 @@
     <nb-card-body>
       <div class="row mt-2 mb-2" *ngIf="searchModel || addNewButtonConfig">
         <div *ngIf="!searchModel && addNewButtonConfig" class="col-md-6"></div>
-        <ngx-paged-search *ngIf="searchModel" class="col-md-6" [searchModel]="searchModel"></ngx-paged-search>
-        <ngx-paged-add-new *ngIf="addNewButtonConfig" class="col-md-6"
-                           [addNewModel]="addNewButtonConfig"></ngx-paged-add-new>
+        <ngx-paged-search
+          *ngIf="searchModel"
+          class="col-md-6"
+          [searchModel]="searchModel"
+        ></ngx-paged-search>
+        <ngx-paged-add-new
+          *ngIf="addNewButtonConfig"
+          class="col-md-6"
+          [addNewModel]="addNewButtonConfig"
+        ></ngx-paged-add-new>
       </div>
       <ngx-paged-table [config]="tableConfig"></ngx-paged-table>
     </nb-card-body>
     <nb-card-footer *ngIf="pagingModel">
       <ngx-pagination-pages [pagingModel]="pagingModel"></ngx-pagination-pages>
-      <span class="pagindDetails">Showing {{ pagingModel.pageNumber }} of {{ pagingModel.totalPageCount }} pages of {{
-        paginationModel?.pagingConfig?.totalItems }} entries</span>
+      <span class="pagindDetails"
+        >Showing {{ pagingModel.pageNumber }} of
+        {{ pagingModel.totalPageCount }} pages of
+        {{ paginationModel?.pagingConfig?.totalItems }} entries</span
+      >
     </nb-card-footer>
   </nb-card>
 </section>

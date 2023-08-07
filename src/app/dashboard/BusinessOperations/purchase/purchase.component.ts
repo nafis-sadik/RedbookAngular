@@ -91,7 +91,8 @@ export class PurchaseComponent {
 
     let pageLength: number = this.pagedPurchaseModel.pagingConfig? this.pagedPurchaseModel.pagingConfig.pageLength : 5;
     let searchString: string = this.pagedPurchaseModel.searchingConfig? this.pagedPurchaseModel.searchingConfig.searchString : "";
-    this.pagedPurchaseModel.sourceData = this.purchaseService.getInvoiceList(outletId, 1, pageLength, searchString);
+    if(this.pagedPurchaseModel.tableConfig)
+      this.pagedPurchaseModel.tableConfig.sourceData = this.purchaseService.getInvoiceList(outletId, 1, pageLength, searchString);
     this.ngxPaginationService.set(this.pagedPurchaseModel);
   }
 }

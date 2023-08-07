@@ -1,22 +1,10 @@
-export declare interface IPaginationModel<T>{
+export declare interface IPaginationModel<T> {
   /**
    * Default value:
    * Description: Heading for the card that shall contain the table
    * @type {string}
    */
   tableCardHeader: string | null;
-  /**
-   * Default value:
-   * Description: Array of items to be displayed in current page
-   * @type {T}
-   */
-  sourceData: T[];
-  /**
-   * Default value:
-   * Description: Allow add button to appeear
-   * @type {boolean}
-   */
-  allowAdd: boolean;
   /**
    * Configuration for paging your table
    */
@@ -38,13 +26,31 @@ export declare interface IPaginationModel<T>{
      * Description: Callback method for onClick event on edit button
      * @type {Function}
      */
-    onEdit: Function | null
+    onEdit: Function | null;
     /**
      * Default value: null
      * Description: Callback method for onClick event on delete button
      * @type {Function}
      */
-    onDelete: Function | null
+    onDelete: Function | null;
+    /**
+     * Default value: null
+     * Description: Callback method for onClick event on View Details button
+     * @type {Function}
+     */
+    onView: Function | null;
+    /**
+     * Default value:
+     * Description: Array of items to be displayed in current page
+     * @type {T | null}
+     */
+    sourceData: T[]
+    /**
+     * Default value:
+     * Description: width of column to be displayed in current page
+     * @type {string}
+     */
+    actionColWidth: string | null;
   } | null;
   /**
    * Configuration for pages

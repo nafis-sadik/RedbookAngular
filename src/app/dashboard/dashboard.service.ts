@@ -161,7 +161,9 @@ export class DashboardService {
       tableConfig: {
         onEdit: null,
         onDelete: null,
+        onView: null,
         isEditableTable: false,
+        actionColWidth: '100px',
         tableMaping: {
           "Invoice Number": "InvoiceNo",
           "Client Name": "ClientName",
@@ -170,6 +172,7 @@ export class DashboardService {
           "Invoice Total": "InvoiceTotal",
           "Paid Amount": "PaidAmount"
         },
+        sourceData: []
       },
       pagingConfig:{
         pageNumber: 1,

@@ -1,7 +1,17 @@
 <section id="SearchComponent">
-  <input type="text" nbInput placeholder={{searchModel.inputFieldPlaceholder}}>
+  <input
+    type="text"
+    nbInput
+    placeholder="{{ searchModel.inputFieldPlaceholder }}"
+  />
   <button nbButton status="primary" (click)="search()">
-    <nb-icon *ngIf="searchModel.showSearchIcon" icon="search" class="edit"></nb-icon>
-    <span *ngIf="searchModel.searchButtonLabel != null">{{ searchModel.searchButtonLabel }}</span>
+    <nb-icon
+      *ngIf="searchModel.showSearchIcon"
+      icon="search"
+      class="edit"
+    ></nb-icon>
+    <span *ngIf="searchModel.searchButtonLabel != null">{{
+      searchModel.searchButtonLabel
+    }}</span>
   </button>
 </section>

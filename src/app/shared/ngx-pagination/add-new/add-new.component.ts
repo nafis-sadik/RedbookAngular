@@ -5,7 +5,7 @@ import { NbDialogService } from '@nebular/theme';
 @Component({
   selector: 'ngx-paged-add-new',
   templateUrl: './add-new.component.html',
-  styleUrls: ['./add-new.component.scss']
+  styleUrls: ['./add-new.component.scss'],
 })
 export class AddNewComponent {
   @Input() addNewModel: IAddNewModel;
@@ -14,12 +14,15 @@ export class AddNewComponent {
     this.addNewModel = {
       showIcon: true,
       addNewButtonLabel: null,
-      onClick: null
-    }
+      onClick: null,
+    };
   }
 
-  addNew(): void{
-    if(this.addNewModel.onClick != null && typeof(this.addNewModel.onClick) == typeof(Function))
+  addNew(): void {
+    if (
+      this.addNewModel.onClick != null &&
+      typeof this.addNewModel.onClick == typeof Function
+    )
       this.addNewModel.onClick();
   }
 }

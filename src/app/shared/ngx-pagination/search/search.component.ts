@@ -4,7 +4,7 @@ import { ISearchModel } from '../Models/ISearchModel';
 @Component({
   selector: 'ngx-paged-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
   @Input() searchModel: ISearchModel;
@@ -15,12 +15,15 @@ export class SearchComponent {
       searchString: null,
       searchButtonLabel: null,
       showSearchIcon: true,
-      onClick: null
+      onClick: null,
     };
   }
 
-  search(): void{
-    if(this.searchModel.onClick != null && typeof(this.searchModel.onClick) == typeof(Function))
+  search(): void {
+    if (
+      this.searchModel.onClick != null &&
+      typeof this.searchModel.onClick == typeof Function
+    )
       this.searchModel.onClick();
   }
 }

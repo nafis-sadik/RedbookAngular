@@ -37,8 +37,9 @@ export class UmsComponent {
     if(dataTableCard && dataTableCard.classList.contains('d-none'))
       dataTableCard.classList.remove('d-none');
 
+    if(this.pagedUserModel.tableConfig == null) return;
     if(outletId == 1) {
-      this.pagedUserModel.sourceData = [
+      this.pagedUserModel.tableConfig.sourceData = [
         {
           UserId: 'GUID',
           FirstName: 'Nafis',
@@ -69,7 +70,7 @@ export class UmsComponent {
       ]
     }
     else{
-      this.pagedUserModel.sourceData = [];
+      this.pagedUserModel.tableConfig.sourceData = [];
     }
     this.ngxPaginationService.set(this.pagedUserModel)
   }

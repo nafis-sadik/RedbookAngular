@@ -1,4 +1,4 @@
-export declare interface IPagingModel{
+export declare interface IPagingModel {
   /**
    * Default value:
    * Description: Selected page number

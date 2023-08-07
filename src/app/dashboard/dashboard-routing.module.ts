@@ -42,6 +42,8 @@ const routes: Routes = [{
       path: 'customers',
       component: CustomersComponent
     }
+  ]
+}]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

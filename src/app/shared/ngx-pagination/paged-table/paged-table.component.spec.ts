@@ -8,9 +8,8 @@ describe('PagedTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PagedTableComponent ]
-    })
-    .compileComponents();
+      declarations: [PagedTableComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PagedTableComponent);
     component = fixture.componentInstance;

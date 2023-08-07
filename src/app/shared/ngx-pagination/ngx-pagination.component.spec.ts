@@ -8,9 +8,8 @@ describe('NgxPaginationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NgxPaginationComponent ]
-    })
-    .compileComponents();
+      declarations: [NgxPaginationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NgxPaginationComponent);
     component = fixture.componentInstance;

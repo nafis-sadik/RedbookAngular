@@ -75,7 +75,8 @@ export class SellComponent {
     let pageLength: number = this.pagedSalesModel.pagingConfig? this.pagedSalesModel.pagingConfig.pageLength : 5;
     let searchString: string = this.pagedSalesModel.searchingConfig? this.pagedSalesModel.searchingConfig.searchString : "";
     // Set data to observable view model to render in UI
-    this.pagedSalesModel.sourceData = this.salesService.getSalesList(outletId, 1, pageLength, searchString);
+    if(this.pagedSalesModel.tableConfig)
+      this.pagedSalesModel.tableConfig.sourceData = this.salesService.getSalesList(outletId, 1, pageLength, searchString);
     this.ngxPaginationService.set(this.pagedSalesModel);
   }
 }

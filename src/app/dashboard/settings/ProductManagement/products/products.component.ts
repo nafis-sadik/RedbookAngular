@@ -73,7 +73,8 @@ export class ProductsComponent {
 
     let pageLength: number = this.pagedProductModel.pagingConfig? this.pagedProductModel.pagingConfig.pageLength : 5;
     let searchString: string = this.pagedProductModel.searchingConfig? this.pagedProductModel.searchingConfig.searchString : "";
-    this.pagedProductModel.sourceData = this.productService.getProductList(outletId, 1, pageLength, searchString);
+    if(this.pagedProductModel.tableConfig)
+      this.pagedProductModel.tableConfig.sourceData = this.productService.getProductList(outletId, 1, pageLength, searchString);
     this.ngxPaginationService.set(this.pagedProductModel);
   }
 }
