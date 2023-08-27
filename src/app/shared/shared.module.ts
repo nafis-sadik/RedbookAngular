@@ -15,6 +15,7 @@ import { SearchComponent } from './ngx-pagination/search/search.component';
 import { AddNewComponent } from './ngx-pagination/add-new/add-new.component';
 import { AddDialogueComponent } from './ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from './ngx-dialogues/remove-dialogue/remove-dialogue.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { RemoveDialogueComponent } from './ngx-dialogues/remove-dialogue/remove-
     AddNewComponent,
     AddDialogueComponent,
     RemoveDialogueComponent,
+    NotFoundComponent,
   ],
   imports: [
     NbCardModule,

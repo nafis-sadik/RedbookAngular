@@ -6,8 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbWindowModule, NbToastrModule, NbGlobalPhysicalPosition, NbDialogModule, NbDatepickerModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { HttpClientModule } from '@angular/common/http';
-import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NbPasswordAuthStrategy, NbAuthModule, NbAuthJWTToken } from '@nebular/auth';
+import { AuthGuard } from './shared/auth/auth-guard.service';
+import { AuthInterceptorService } from './shared/auth/api-Interceptor.service';
 
 @NgModule({
   declarations: [
@@ -40,13 +42,31 @@ import { NbPasswordAuthStrategy, NbAuthModule } from '@nebular/auth';
     NbAuthModule.forRoot({
       strategies: [
         NbPasswordAuthStrategy.setup({
-          name: 'email'
+          name: 'email',
+          token: {
+            class: NbAuthJWTToken,
+            key: 'response', // key where the token is located in local storage
+          },
+          baseEndpoint: 'http://localhost:5062',
+          login: {
+            endpoint: '/api/User/LogIn',
+            redirect: {
+              success: '/dashboard',
+            },
+          },
         }),
       ],
       forms: {},
     })
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NbAuthComponent, NbLoginComponent, NbLogoutComponent, NbRegisterComponent, NbRequestPasswordComponent, NbResetPasswordComponent } from '@nebular/auth';
+import { AuthGuard } from './shared/auth/auth-guard.service';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -9,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
+    canActivate: [AuthGuard], // here we tell Angular to check the access with our AuthGuard
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
@@ -19,10 +22,10 @@ const routes: Routes = [
         path: 'login',
         component: NbLoginComponent,
       },
-      {
-        path: 'register',
-        component: NbRegisterComponent,
-      },
+      // {
+      //   path: 'register',
+      //   component: NbRegisterComponent,
+      // },
       {
         path: 'logout',
         component: NbLogoutComponent,
@@ -36,7 +39,11 @@ const routes: Routes = [
         component: NbResetPasswordComponent,
       },
     ],
-  }
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({

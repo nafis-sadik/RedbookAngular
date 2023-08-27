@@ -32,7 +32,7 @@
                   <nb-option *ngFor="let theme of themes" [value]="theme">{{theme}}</nb-option>
               </nb-select>
             </div>
-            <button nbButton status="primary">
+            <button nbButton status="primary" (click)="logout()">
               <nb-icon icon="log-out"></nb-icon>
               Logout
             </button>

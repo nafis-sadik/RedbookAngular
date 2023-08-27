@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { NbAuthService } from '@nebular/auth';
 import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './dashboard.service';
 
@@ -21,7 +22,12 @@ export class DashboardComponent {
 
   menuOptions: NbMenuItem[];
 
-  constructor(private dashboardService: DashboardService, private sidebarService: NbSidebarService, private themeService: NbThemeService) {
+  constructor(
+    private dashboardService: DashboardService,
+    private sidebarService: NbSidebarService,
+    private themeService: NbThemeService,
+    private authService: NbAuthService
+  ) {
     // If no theme has been cached, select default theme
     if (localStorage.getItem('theme') == null && this.themes.length > 0) {
       this.setTheme(this.themes[0]);
@@ -50,4 +56,9 @@ export class DashboardComponent {
   }
 
   flipProfilePanelVisibility() :void{ this.isButtonVisible = !this.isButtonVisible; }
+
+  logout(): void {
+    localStorage.removeItem('auth_app_token');
+    window.location.reload();
+  }
 }
