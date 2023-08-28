@@ -11,8 +11,8 @@
                 <div class="container-fluid">
                   <div class="row">
                     <div class="col-md-8">
-                      <nb-radio name="BusinessOutlet" (click)="loadRolesBusiness(business.businessId)">
-                        {{ business.title }}
+                      <nb-radio name="BusinessOutlet" (click)="loadRolesBusiness(business.organizationId)">
+                        {{ business.organizationName }}
                       </nb-radio>
                     </div>
                     <div class="col-md-4">
@@ -23,7 +23,7 @@
                           </button>
                         </div>
                         <div class="col-6">
-                          <button nbButton type="button" status="danger" (click)="openDeleteBusinessWindow('Delete Category', business.businessId)">
+                          <button nbButton type="button" status="danger" (click)="openDeleteBusinessWindow('Delete Category', business.organizationId)">
                             <nb-icon icon="close-square"></nb-icon>
                           </button>
                         </div>

@@ -3,7 +3,7 @@ import { AddSalesComponent } from './add-sales/add-sales.component';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { SalesService } from './sell.service';
-import { IBusinessModel } from '../../Models/IBusinessModel';
+import { IOrganizationModel } from '../../Models/IOrganizationModel';
 import { ISalesModel } from '../../Models/ISalesModel';
 import { DashboardService } from '../../dashboard.service';
 
@@ -12,12 +12,13 @@ import { DashboardService } from '../../dashboard.service';
   templateUrl: './sell.component.html',
   styleUrls: ['./sell.component.scss']
 })
+
 export class SellComponent {
   isUpdateOperation: boolean = false;
 
   cardHeader: string = 'Product Sales';
 
-  outlets: IBusinessModel[];
+  outlets: IOrganizationModel[];
 
   pagedSalesModel: IPaginationModel<ISalesModel>;
 

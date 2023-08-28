@@ -26,7 +26,7 @@ import {
 import { RouterModule } from '@angular/router';
 import { CategoryComponent } from './settings/ProductManagement/category/category.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SettingsComponent } from './settings/settings.component';
 import { RoleManagementComponent } from './settings/role-management/role-management.component';
 import { UmsComponent } from './settings/ums/ums.component';
@@ -38,6 +38,7 @@ import { SellComponent } from './BusinessOperations/sell/sell.component';
 import { AddSalesComponent } from './BusinessOperations/sell/add-sales/add-sales.component';
 import { ProductsComponent } from './settings/ProductManagement/products/products.component';
 import { ProductsDetailsFormComponent } from './settings/ProductManagement/products/products-details-form/products-details-form.component';
+import { RetailerComponent } from './retailer/retailer.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ProductsDetailsFormComponent } from './settings/ProductManagement/produ
     RoleManagementComponent,
     UmsComponent,
     UserFormComponent,
-    CustomersComponent
+    CustomersComponent,
+    RetailerComponent
   ],
   imports: [
     CommonModule,
@@ -79,6 +81,7 @@ import { ProductsDetailsFormComponent } from './settings/ProductManagement/produ
     NbCheckboxModule,
     NbAccordionModule,
     NbUserModule,
+    ReactiveFormsModule,
     FormsModule // <--- import into the NgModule
   ],
   bootstrap: [DashboardComponent]

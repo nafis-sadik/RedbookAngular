@@ -4,11 +4,11 @@ import { CategoryComponent } from './settings/ProductManagement/category/categor
 import { DashboardComponent } from './dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { SettingsComponent } from './settings/settings.component';
-import { UmsComponent } from './settings/ums/ums.component';
 import { CustomersComponent } from './CRM/customers/customers.component';
 import { SellComponent } from './BusinessOperations/sell/sell.component';
 import { PurchaseComponent } from './BusinessOperations/purchase/purchase.component';
 import { ProductsComponent } from './settings/ProductManagement/products/products.component';
+import { RetailerComponent } from './retailer/retailer.component';
 
 const routes: Routes = [{
   path: '',
@@ -41,6 +41,10 @@ const routes: Routes = [{
     {
       path: 'customers',
       component: CustomersComponent
+    },
+    {
+      path: 'retailer',
+      component: RetailerComponent
     }
   ]
 }]

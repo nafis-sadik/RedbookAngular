@@ -10,7 +10,7 @@
             <div class="menu-container">
               <ul>
                 <li *ngFor="let menuItem of outlets" class="outletItems"
-                    (click)="selectOutlet(menuItem.businessId, $event)">{{ menuItem.title }}</li>
+                    (click)="selectOutlet(menuItem.organizationId, $event)">{{ menuItem.organizationName }}</li>
               </ul>
             </div>
           </div>

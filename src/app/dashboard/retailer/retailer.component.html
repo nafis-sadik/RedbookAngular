@@ -1,0 +1,132 @@
+<section id="RetailForm">
+    <nb-card>
+        <nb-card-header>Retail Form</nb-card-header>
+        <nb-card-body>
+            <nb-stepper orientation="vertical" class="container-fluid" [linear]="linearMode" #stepper>
+                <nb-step label="Register Client Organization">
+                    <ng-template #labelOne>Organization step</ng-template>
+                    <form [formGroup]="OrganizationForm" (ngSubmit)="addNewOrganization(stepper)" class="step-container row">
+                        <div class="col-md-12 p-1">
+                            <label for="OrganizationName">Organization Name</label>
+                        </div>
+                        <div class="col-md-12 p-1">
+                            <input
+                                nbInput
+                                fullWidth 
+                                name="orgModel.organizationName"
+                                status="primary" type="text" 
+                                class="form-control" 
+                                id="OrganizationName"
+                                placeholder="Organization Name"
+                                formControlName="OrganizationFormCtrl"
+                                required
+                            >
+                            <div id="OrganizationNameWarning" *ngIf="OrganizationForm.get('OrganizationFormCtrl')?.touched && OrganizationForm.get('OrganizationFormCtrl')?.invalid" class="validationError"></div>
+                        </div>
+                        <div class="col-md-12 p-1">
+                            <button nbButton status="primary" class="float-right">next</button>
+                        </div>
+                    </form>
+                </nb-step>
+                <nb-step label="Register Admin User" #stepper>
+                    <ng-template #labelTwo>Admin User Step</ng-template>
+                    <form [formGroup]="AdminUserForm" (ngSubmit)="addAdminUser(stepper)" class="step-container row">
+                        <div class="col-md-6 p-1">
+                            <label for="FirstName" class="mb-2">First Name</label>
+                            <input
+                                name="userModel.FirstName"
+                                nbInput
+                                fullWidth
+                                status="primary"
+                                type="text"
+                                class="form-control"
+                                id="FirstName"
+                                placeholder="First Name"
+                                formControlName="AdminUserFormCtrl"
+                            >
+                        </div>
+                        <div class="col-md-6 p-1">
+                            <label for="LastName" class="mb-2">Last Name</label>
+                            <div class="col-md-12">
+                                <input
+                                    name="userModel.LastName"
+                                    nbInput
+                                    fullWidth
+                                    status="primary"
+                                    type="text"
+                                    class="form-control"
+                                    id="LastName"
+                                    placeholder="Last Name"
+                                    formControlName="AdminUserFormCtrl"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-1">
+                            <label for="UserName" class="mb-2">User Name</label>
+                            <div class="col-md-12">
+                                <input
+                                    name="userModel.UserName"
+                                    nbInput
+                                    fullWidth
+                                    status="primary"
+                                    type="text"
+                                    class="form-control"
+                                    id="UserName"
+                                    placeholder="User Name"
+                                    formControlName="AdminUserFormCtrl"
+                                    required
+                                >
+                                <div *ngIf="AdminUserForm.get('AdminUserFormCtrl')?.touched && AdminUserForm.get('AdminUserFormCtrl')?.invalid" class="validationError"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-1">
+                            <label for="Email" class="mb-2">User Email</label>
+                            <div class="col-md-12">
+                                <input
+                                    name="userModel.Email"
+                                    nbInput
+                                    fullWidth
+                                    status="primary"
+                                    type="email"
+                                    class="form-control"
+                                    id="Email"
+                                    placeholder="Email"
+                                    formControlName="AdminUserFormCtrl"
+                                    required
+                                >
+                                <div *ngIf="AdminUserForm.get('AdminUserFormCtrl')?.touched && AdminUserForm.get('AdminUserFormCtrl')?.invalid" class="validationError"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-1">
+                            <label for="AccountBalance" class="mb-2">Initial Account Balance</label>
+                            <div class="col-md-12">
+                                <input
+                                    name="userModel.AccountBalance"
+                                    nbInput
+                                    fullWidth
+                                    status="primary"
+                                    type="number"
+                                    class="form-control"
+                                    id="AccountBalance"
+                                    placeholder="AccountBalance"
+                                    formControlName="AdminUserFormCtrl"
+                                    required
+                                >
+                                <div *ngIf="AdminUserForm.get('AdminUserFormCtrl')?.touched && AdminUserForm.get('AdminUserFormCtrl')?.invalid" class="validationError"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-1">
+                            <button nbButton status="primary" class="float-right">next</button>
+                        </div>
+                    </form>
+                </nb-step>
+                <nb-step [hidden]="true">
+                    <div class="step-container">
+                      <h3>Wizard completed!</h3>
+                      <button nbButton (click)="stepper.reset()">Add Another User</button>
+                    </div>
+                  </nb-step>
+              </nb-stepper>
+        </nb-card-body>
+    </nb-card>
+</section>

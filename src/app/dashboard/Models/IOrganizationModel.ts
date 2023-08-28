@@ -1,19 +1,14 @@
-export declare interface IBusinessModel{
+export declare interface IOrganizationModel{
     /**
      * Item Title
      * @type {Number}
      */
-    businessId: number;
-    /**
-     * Business Owner Id
-     * @type {string}
-     */
-    ownerId: string;
+    organizationId: number;
     /**
      * Business Title
      * @type {string}
      */
-    title: string;
+    organizationName: string;
     /**
      * Collection of addresses of a business with corresponding Address Ids
      * @type { { [ key: number ]: string }[] | null }

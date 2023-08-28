@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
-import { IBusinessModel } from '../../../Models/IBusinessModel';
+import { IOrganizationModel } from '../../../Models/IOrganizationModel';
 import { ICategoryModel } from '../../../Models/ICategoryModel';
 import { DashboardService } from '../../../dashboard.service';
 import { AddDialogueComponent } from '../../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
@@ -117,7 +117,7 @@ export class CategoryComponent {
 
   subcategories: ICategoryModel[] = [];
 
-  ownedBusinesses: IBusinessModel[] = [];
+  ownedBusinesses: IOrganizationModel[] = [];
 
   constructor(
     private dashboardService: DashboardService,

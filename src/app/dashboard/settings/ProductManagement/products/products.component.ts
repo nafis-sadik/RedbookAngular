@@ -3,7 +3,7 @@ import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginati
 import { ProductsDetailsFormComponent } from './products-details-form/products-details-form.component';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { ProductService } from './products.service';
-import { IBusinessModel } from 'src/app/dashboard/Models/IBusinessModel';
+import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { DashboardService } from 'src/app/dashboard/dashboard.service';
 
@@ -15,7 +15,7 @@ import { DashboardService } from 'src/app/dashboard/dashboard.service';
 export class ProductsComponent {
   isUpdateOperation: boolean = false;
 
-  outlets: IBusinessModel[];
+  outlets: IOrganizationModel[];
 
   pagedProductModel: IPaginationModel<IProductModel>;
 

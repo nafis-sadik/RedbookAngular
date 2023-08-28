@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DashboardService } from '../../dashboard.service';
-import { IBusinessModel } from '../../Models/IBusinessModel';
+import { IOrganizationModel } from '../../Models/IOrganizationModel';
 import { IRoleModel } from '../../Models/IRoleModel';
 import { IRoutePermissionModel } from '../../Models/IRoutePermissionModel';
 import { AddDialogueComponent } from '../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
@@ -12,8 +12,9 @@ import { NbToastrService, NbWindowService } from '@nebular/theme';
   templateUrl: './role-management.component.html',
   styleUrls: ['./role-management.component.scss']
 })
+
 export class RoleManagementComponent {
-  ownedBusinesses: IBusinessModel[];
+  ownedBusinesses: IOrganizationModel[];
   rolesUnderThisBusiness: IRoleModel[];
   routesCollection: IRoutePermissionModel[];
 
@@ -74,7 +75,7 @@ export class RoleManagementComponent {
     console.log('Business Id: ' + this.selectedBusinessId + ' Role Id: ' + this.selectedRoleId + ' Selected Route Id ' + routeId);
   }
 
-  openSaveBusinessWindow(windowMessage: string, businessModel: IBusinessModel | null) {
+  openSaveBusinessWindow(windowMessage: string, businessModel: IOrganizationModel | null) {
     let url: string;
     let method: string;
     let toasterMsg: string = '';
@@ -100,11 +101,11 @@ export class RoleManagementComponent {
         if (businessModel == null) {
           method = 'POST';
           toasterMsg = 'Saved Successfully';
-          businessModel = { title: businessTitle, businessId: 0, ownerId: 'GUID', address: null };
+          businessModel = { organizationName: businessTitle, organizationId: 0, address: null };
         } else {
           method = 'PUT';
           toasterMsg = 'Updated Successfully';
-          businessModel.title = businessTitle;
+          businessModel.organizationName = businessTitle;
         }
 
         // Replace the console logs with http request bellow
@@ -133,7 +134,7 @@ export class RoleManagementComponent {
     windowRef.onClose.subscribe((deleteEntry) => {
       if (deleteEntry) {
         this.ownedBusinesses.filter(element => {
-          if (element.businessId == businessId) {
+          if (element.organizationId == businessId) {
             let index = this.ownedBusinesses.indexOf(element);
             this.ownedBusinesses.splice(index);
             return;

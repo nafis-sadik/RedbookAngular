@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IVendorModel } from './Models/IVendorModel';
-import { IBusinessModel } from './Models/IBusinessModel';
+import { IOrganizationModel } from './Models/IOrganizationModel';
 import { NbDialogService } from '@nebular/theme';
 import { IProductModel } from './Models/IProductModel';
 import { ICategoryModel } from './Models/ICategoryModel';
@@ -136,18 +136,16 @@ export class DashboardService {
     ];
   }
 
-  getOutlets(): IBusinessModel[]{
+  getOutlets(): IOrganizationModel[]{
     return [
       {
-        businessId: 1,
-        ownerId: 'GUID',
-        title: 'Krishi Ghor',
+        organizationId: 1,
+        organizationName: 'Krishi Ghor',
         address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
       },
       {
-        businessId: 2,
-        ownerId: 'GUID',
-        title: 'FM Sky Vision',
+        organizationId: 2,
+        organizationName: 'FM Sky Vision',
         address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
       }
     ];
@@ -429,6 +427,11 @@ export class DashboardService {
             link: '/dashboard/settings'
           }
         ]
+      },
+      {
+        title: 'Register New Business',
+        icon: 'briefcase',
+        link: '/dashboard/retailer'
       }
     ];
   }

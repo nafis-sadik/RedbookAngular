@@ -5,6 +5,11 @@ export declare interface IUserModel{
    */
   UserId: string;
   /**
+   * Email address of user
+   * @type {string}
+   */
+  Email: string;
+  /**
    * User name of user
    * @type {string}
    */
@@ -34,4 +39,19 @@ export declare interface IUserModel{
    * @type {string}
    */
   RoleName: string;
+  /**
+   * Identifier of user organization
+   * @type {number}
+   */
+  OrganizationId: number;
+  /**
+   * Name of user Organization
+   * @type {string}
+   */
+  OrganizationName: string;
+  /**
+   * Current account balance of user
+   * @type {number}
+   */
+  AccountBalance: number;
 }

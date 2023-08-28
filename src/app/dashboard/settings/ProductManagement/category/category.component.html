@@ -15,8 +15,8 @@
                             <nb-list>
                                 <nb-list-item *ngFor="let business of ownedBusinesses">
                                   <nb-radio class="col-xxl-8" name="BusinessOutlet"
-                                            (valueChange)="loadCategories(business.businessId)">
-                                      {{ business.title }}
+                                            (valueChange)="loadCategories(business.organizationId)">
+                                      {{ business.organizationName }}
                                   </nb-radio>
                                 </nb-list-item>
                             </nb-list>

@@ -82,3 +82,15 @@ body.nb-theme-corporate nb-card, body.nb-theme-corporate nb-sidebar, body.nb-the
 nb-radio :hover{
   cursor: pointer;
 }
+
+#RetailForm nb-stepper .step-content {
+  padding: var(--stepper-step-content-padding);
+  width: 100%;
+}
+
+.validationError::after{
+  content: '** Required Field **';
+  font-style: italic;
+  color: var(--card-header-danger-background-color);
+  font-size: 0.7rem;
+}

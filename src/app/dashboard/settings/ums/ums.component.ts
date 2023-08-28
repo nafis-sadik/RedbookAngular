@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { DashboardService } from '../../dashboard.service';
-import { IBusinessModel } from '../../Models/IBusinessModel';
+import { IOrganizationModel } from '../../Models/IOrganizationModel';
 import { IUserModel } from '../../Models/IUserModel';
 
 @Component({
@@ -12,7 +12,7 @@ import { IUserModel } from '../../Models/IUserModel';
 })
 export class UmsComponent {
   pagedUserModel: IPaginationModel<IUserModel>;
-  ownedBusinesses: IBusinessModel[];
+  ownedBusinesses: IOrganizationModel[];
   constructor(
     dashboardService: DashboardService,
     private ngxPaginationService: NGXPaginationService<IUserModel>
@@ -47,7 +47,11 @@ export class UmsComponent {
           UserName: 'nafis_sadik',
           Password: 'ABC123abc.',
           RoleId: 1,
-          RoleName: 'Sales Admin'
+          RoleName: 'Sales Admin',
+          AccountBalance: 999999,
+          Email: 'hemail@shemail.com',
+          OrganizationId: 0,
+          OrganizationName: 'Honululiu'
         },
         {
           UserId: 'GUID',
@@ -56,7 +60,11 @@ export class UmsComponent {
           UserName: 'farhan_masud',
           Password: 'ABC123abc.',
           RoleId: 1,
-          RoleName: 'Sales Admin'
+          RoleName: 'Sales Admin',
+          AccountBalance: 999999,
+          Email: 'hemail@shemail.com',
+          OrganizationId: 0,
+          OrganizationName: 'Honululiu'
         },
         {
           UserId: 'GUID',
@@ -65,7 +73,11 @@ export class UmsComponent {
           UserName: 'fayham',
           Password: 'ABC123abc.',
           RoleId: 1,
-          RoleName: 'Sales Admin'
+          RoleName: 'Sales Admin',
+          AccountBalance: 999999,
+          Email: 'hemail@shemail.com',
+          OrganizationId: 0,
+          OrganizationName: 'Honululiu'
         }
       ]
     }
