@@ -12,29 +12,29 @@
                         <div class="col-md-12 p-1">
                             <input
                                 nbInput
-                                fullWidth 
-                                name="orgModel.organizationName"
-                                status="primary" type="text" 
-                                class="form-control" 
+                                fullWidth
+                                formControlName="OrganizationName"
+                                status="primary"
+                                type="text"
+                                class="form-control"
                                 id="OrganizationName"
                                 placeholder="Organization Name"
-                                formControlName="OrganizationFormCtrl"
                                 required
                             >
-                            <div id="OrganizationNameWarning" *ngIf="OrganizationForm.get('OrganizationFormCtrl')?.touched && OrganizationForm.get('OrganizationFormCtrl')?.invalid" class="validationError"></div>
+                            <div id="OrganizationNameWarning" *ngIf="OrganizationForm.get('OrganizationName')?.touched && OrganizationForm.get('OrganizationName')?.invalid" class="validationError"></div>
                         </div>
                         <div class="col-md-12 p-1">
                             <button nbButton status="primary" class="float-right">next</button>
                         </div>
                     </form>
                 </nb-step>
-                <nb-step label="Register Admin User" #stepper>
+                <nb-step label="Register Admin User">
                     <ng-template #labelTwo>Admin User Step</ng-template>
                     <form [formGroup]="AdminUserForm" (ngSubmit)="addAdminUser(stepper)" class="step-container row">
                         <div class="col-md-6 p-1">
                             <label for="FirstName" class="mb-2">First Name</label>
                             <input
-                                name="userModel.FirstName"
+                                formControlName="FirstName"
                                 nbInput
                                 fullWidth
                                 status="primary"
@@ -42,14 +42,13 @@
                                 class="form-control"
                                 id="FirstName"
                                 placeholder="First Name"
-                                formControlName="AdminUserFormCtrl"
                             >
                         </div>
                         <div class="col-md-6 p-1">
                             <label for="LastName" class="mb-2">Last Name</label>
                             <div class="col-md-12">
                                 <input
-                                    name="userModel.LastName"
+                                    formControlName="LastName"
                                     nbInput
                                     fullWidth
                                     status="primary"
@@ -57,7 +56,6 @@
                                     class="form-control"
                                     id="LastName"
                                     placeholder="Last Name"
-                                    formControlName="AdminUserFormCtrl"
                                 >
                             </div>
                         </div>
@@ -65,7 +63,7 @@
                             <label for="UserName" class="mb-2">User Name</label>
                             <div class="col-md-12">
                                 <input
-                                    name="userModel.UserName"
+                                    formControlName="UserName"
                                     nbInput
                                     fullWidth
                                     status="primary"
@@ -73,17 +71,16 @@
                                     class="form-control"
                                     id="UserName"
                                     placeholder="User Name"
-                                    formControlName="AdminUserFormCtrl"
                                     required
                                 >
-                                <div *ngIf="AdminUserForm.get('AdminUserFormCtrl')?.touched && AdminUserForm.get('AdminUserFormCtrl')?.invalid" class="validationError"></div>
+                                <div *ngIf="AdminUserForm.get('UserName')?.touched && AdminUserForm.get('UserName')?.invalid" class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-6 p-1">
                             <label for="Email" class="mb-2">User Email</label>
                             <div class="col-md-12">
                                 <input
-                                    name="userModel.Email"
+                                    formControlName="Email"
                                     nbInput
                                     fullWidth
                                     status="primary"
@@ -91,28 +88,26 @@
                                     class="form-control"
                                     id="Email"
                                     placeholder="Email"
-                                    formControlName="AdminUserFormCtrl"
                                     required
                                 >
-                                <div *ngIf="AdminUserForm.get('AdminUserFormCtrl')?.touched && AdminUserForm.get('AdminUserFormCtrl')?.invalid" class="validationError"></div>
+                                <div *ngIf="AdminUserForm.get('Email')?.touched && AdminUserForm.get('Email')?.invalid" class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-12 p-1">
                             <label for="AccountBalance" class="mb-2">Initial Account Balance</label>
                             <div class="col-md-12">
                                 <input
-                                    name="userModel.AccountBalance"
+                                    formControlName="AccountBalance"
                                     nbInput
                                     fullWidth
                                     status="primary"
                                     type="number"
                                     class="form-control"
                                     id="AccountBalance"
-                                    placeholder="AccountBalance"
-                                    formControlName="AdminUserFormCtrl"
+                                    placeholder="Account Balance"
                                     required
                                 >
-                                <div *ngIf="AdminUserForm.get('AdminUserFormCtrl')?.touched && AdminUserForm.get('AdminUserFormCtrl')?.invalid" class="validationError"></div>
+                                <div *ngIf="AdminUserForm.get('AccountBalance')?.touched && AdminUserForm.get('AccountBalance')?.invalid" class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-12 p-1">
@@ -123,7 +118,7 @@
                 <nb-step [hidden]="true">
                     <div class="step-container">
                       <h3>Wizard completed!</h3>
-                      <button nbButton (click)="stepper.reset()">Add Another User</button>
+                      <button status="primary" nbButton (click)="resetAllForms(stepper)">Add Another User</button>
                     </div>
                   </nb-step>
               </nb-stepper>

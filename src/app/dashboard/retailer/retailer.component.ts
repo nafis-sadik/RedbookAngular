@@ -14,11 +14,10 @@ import { UserService } from '../services/user.service';
 export class RetailerComponent implements OnInit {
   orgModel: IOrganizationModel;
   userModel: IUserModel;
-  linearMode: boolean;
+  linearMode: boolean = true;
 
   OrganizationForm: FormGroup;
   AdminUserForm: FormGroup;
-  thirdForm: FormGroup;
 
   constructor(
     private organizationService: OrganizationService,
@@ -30,36 +29,44 @@ export class RetailerComponent implements OnInit {
       organizationId: 0,
       organizationName: '',
       address: []
-    };
+    }
 
     this.userModel = {
       AccountBalance: 0,
       Email: '',
       FirstName: '',
       LastName: '',
+      Password: '',
       OrganizationId: 0,
       OrganizationName: '',
-      Password: '',
       RoleId: 0,
       RoleName: '',
       UserId: '',
       UserName: ''
     }
-
-    this.linearMode = true;
-  }
+   }
 
   ngOnInit() {
     this.OrganizationForm = this.fb.group({
-      OrganizationFormCtrl: ['', Validators.required],
+      OrganizationName: ['', Validators.required],
     });
 
     this.AdminUserForm = this.fb.group({
-      AdminUserFormCtrl: ['', Validators.required],
+      FirstName: ['', Validators.required],
+      LastName: ['', Validators.required],
+      UserName: ['', Validators.required],
+      Email: ['', Validators.required],
+      AccountBalance: ['', Validators.required],
     });
 
-    this.thirdForm = this.fb.group({
-      thirdCtrl: ['', Validators.required],
+    // Organization model binding
+    this.OrganizationForm.get('OrganizationName')?.valueChanges.subscribe(value => {
+      this.orgModel.organizationName = value;
+    });
+
+    // Admin User model binding
+    this.AdminUserForm?.valueChanges.subscribe(value => {
+      this.userModel = value;
     });
   }
 
@@ -68,7 +75,7 @@ export class RetailerComponent implements OnInit {
       this.OrganizationForm.markAllAsTouched();
       return;
     }
-    
+
     this.organizationService.addNewOrganization(this.orgModel)
     .subscribe(
       (response) => {
@@ -76,6 +83,7 @@ export class RetailerComponent implements OnInit {
         this.orgModel = response;
       },
       (err) => {
+        console.log(err)
         let errRes = err.error.split(',');
         let mainMsg: string = '';
         let subMsg: string = '';
@@ -90,7 +98,7 @@ export class RetailerComponent implements OnInit {
         this.toasterService.danger(mainMsg, subMsg);
         console.log(err);
       });
-      
+
       stepper.next();
   }
 
@@ -99,16 +107,22 @@ export class RetailerComponent implements OnInit {
       this.AdminUserForm.markAllAsTouched();
       return;
     }
-    
+
     if(this.orgModel.organizationId <= 0){
       this.toasterService.danger('You must register an organization first', 'Organization not registered');
       return
     }
+
     this.userModel.OrganizationId = this.orgModel.organizationId;
     this.userService.registerNewUser(this.userModel).subscribe(response => {
       this.toasterService.success('Operation Successfull', 'User added successfully');
       this.userModel = response;
     });
+
     stepper.next();
+  }
+
+  resetAllForms(stepper: NbStepperComponent): void{
+    stepper.reset();
   }
 }
