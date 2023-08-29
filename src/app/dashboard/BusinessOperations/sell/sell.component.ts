@@ -5,7 +5,7 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
 import { SalesService } from './sell.service';
 import { IOrganizationModel } from '../../Models/IOrganizationModel';
 import { ISalesModel } from '../../Models/ISalesModel';
-import { DashboardService } from '../../dashboard.service';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-sell',

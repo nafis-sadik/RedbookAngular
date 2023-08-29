@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { IOrganizationModel } from '../../../Models/IOrganizationModel';
 import { ICategoryModel } from '../../../Models/ICategoryModel';
-import { DashboardService } from '../../../dashboard.service';
+import { DashboardService } from '../../../services/dashboard.service';
 import { AddDialogueComponent } from '../../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from '../../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 

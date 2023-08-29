@@ -4,7 +4,7 @@ import { SalesService } from '../sell.service';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { ISalesModel } from 'src/app/dashboard/Models/ISalesModel';
 import { IInvoiceProductModel } from 'src/app/dashboard/Models/IInvoiceProductModel';
-import { DashboardService } from 'src/app/dashboard/dashboard.service';
+import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 
 @Component({
   selector: 'app-add-sales',

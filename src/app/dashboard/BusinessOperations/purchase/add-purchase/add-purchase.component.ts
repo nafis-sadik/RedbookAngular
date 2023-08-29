@@ -7,7 +7,7 @@ import { IInvoicePaymentModel } from 'src/app/dashboard/Models/IInvoicePayment';
 import { IAddressModel } from 'src/app/dashboard/Models/IAddressModel';
 import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
 import { IInvoiceModel } from 'src/app/dashboard/Models/IInvoiceModel';
-import { DashboardService } from 'src/app/dashboard/dashboard.service';
+import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { IInvoiceProductModel } from 'src/app/dashboard/Models/IInvoiceProductModel';
 
 @Component({

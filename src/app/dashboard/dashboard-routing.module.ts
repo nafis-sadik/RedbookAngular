@@ -9,6 +9,7 @@ import { SellComponent } from './BusinessOperations/sell/sell.component';
 import { PurchaseComponent } from './BusinessOperations/purchase/purchase.component';
 import { ProductsComponent } from './settings/ProductManagement/products/products.component';
 import { RetailerComponent } from './retailer/retailer.component';
+import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
 
 const routes: Routes = [{
   path: '',
@@ -45,6 +46,10 @@ const routes: Routes = [{
     {
       path: 'retailer',
       component: RetailerComponent
+    },
+    {
+      path: 'platform-settings',
+      component: PlatformsettingsComponent
     }
   ]
 }]

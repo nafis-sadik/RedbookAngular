@@ -5,7 +5,7 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
 import { ProductService } from './products.service';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
-import { DashboardService } from 'src/app/dashboard/dashboard.service';
+import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 
 @Component({
   selector: 'app-products',

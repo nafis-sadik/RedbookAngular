@@ -1,0 +1,65 @@
+<nb-card>
+    <nb-card-header>
+        Platform Settings & Configurations
+    </nb-card-header>
+</nb-card>
+
+<nb-accordion>
+    <nb-accordion-item>
+     <nb-accordion-item-header>Routes</nb-accordion-item-header>
+     <nb-accordion-item-body class="container-fluid">
+        <form [formGroup]="routeForm"(ngSubmit)="saveRoute()" class="step-container row">
+            <div class="col-md-6 p-1">
+                <label class="mb-1">Route Name</label>                
+                <input
+                    nbInput
+                    fullWidth
+                    status="primary"
+                    type="text"
+                    formControlName="routeName"
+                    class="form-control"
+                    placeholder="Route Name"
+                    required
+                >
+                <div *ngIf="routeForm.get('routeName')?.touched && routeForm.get('routeName')?.invalid" class="validationError"></div>
+            </div>
+            <div class="col-md-6 p-1">
+                <label class="mb-1">Route Path</label>                
+                <input
+                    nbInput
+                    fullWidth
+                    status="primary"
+                    type="text"
+                    formControlName="routeValue"
+                    class="form-control"
+                    placeholder="Route Path"
+                    required
+                >
+                <div *ngIf="routeForm.get('routeValue')?.touched && routeForm.get('routeValue')?.invalid" class="validationError"></div>
+            </div>
+            <div class="col-md-12 p-1">
+                <label class="mb-1 d-block">Application</label>
+                <nb-select fullWidth placeholder="Select Showcase" formControlName="applicationId">
+                    <nb-option value="">Application</nb-option>
+                    <nb-option *ngFor="let appInfo of appList" value={{appInfo.id}}>{{ appInfo.applicationName }}</nb-option>
+                </nb-select>
+            </div>
+            <div class="col-md-12 p-1">
+                <label class="mb-1">Route Description</label>                
+                <textarea
+                    nbInput
+                    fullWidth
+                    status="primary"
+                    type="text"
+                    formControlName="routeDescription"
+                    class="form-control"
+                    placeholder="Route Description"
+                ></textarea>
+            </div>
+            <div class="col-md-12 p-1 mt-1">
+                <button nbButton status="primary" class="float-right">Save</button>
+            </div>
+        </form>
+     </nb-accordion-item-body>
+    </nb-accordion-item>
+</nb-accordion>

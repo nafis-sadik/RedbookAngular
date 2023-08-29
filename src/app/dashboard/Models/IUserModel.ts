@@ -3,55 +3,55 @@ export declare interface IUserModel{
    * Unique Identifier of specific user
    * @type {string}
    */
-  UserId: string;
+  userId: string;
   /**
    * Email address of user
    * @type {string}
    */
-  Email: string;
+  email: string;
   /**
    * User name of user
    * @type {string}
    */
-  UserName: string;
+  userName: string;
   /**
    * First name of user
    * @type {string}
    */
-  FirstName: string;
+  firstName: string;
   /**
    * User name of user
    * @type {string}
    */
-  LastName: string;
+  lastName: string;
   /**
    * User name of user
    * @type {string}
    */
-  Password: string;
+  password: string;
   /**
    * Identifier of user role
    * @type {number}
    */
-  RoleId: number;
+  roleId: number;
   /**
    * Name of user role
    * @type {string}
    */
-  RoleName: string;
+  roleName: string;
   /**
    * Identifier of user organization
    * @type {number}
    */
-  OrganizationId: number;
+  organizationId: number;
   /**
    * Name of user Organization
    * @type {string}
    */
-  OrganizationName: string;
+  organizationName: string;
   /**
    * Current account balance of user
    * @type {number}
    */
-  AccountBalance: number;
+  accountBalance: number;
 }

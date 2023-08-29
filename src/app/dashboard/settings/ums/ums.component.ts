@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { DashboardService } from '../../dashboard.service';
+import { DashboardService } from '../../services/dashboard.service';
 import { IOrganizationModel } from '../../Models/IOrganizationModel';
 import { IUserModel } from '../../Models/IUserModel';
 
@@ -41,43 +41,43 @@ export class UmsComponent {
     if(outletId == 1) {
       this.pagedUserModel.tableConfig.sourceData = [
         {
-          UserId: 'GUID',
-          FirstName: 'Nafis',
-          LastName: 'Sadik',
-          UserName: 'nafis_sadik',
-          Password: 'ABC123abc.',
-          RoleId: 1,
-          RoleName: 'Sales Admin',
-          AccountBalance: 999999,
-          Email: 'hemail@shemail.com',
-          OrganizationId: 0,
-          OrganizationName: 'Honululiu'
+          userId: 'GUID',
+          firstName: 'Nafis',
+          lastName: 'Sadik',
+          userName: 'nafis_sadik',
+          password: 'ABC123abc.',
+          roleId: 1,
+          roleName: 'Sales Admin',
+          accountBalance: 999999,
+          email: 'hemail@shemail.com',
+          organizationId: 0,
+          organizationName: 'Honululiu'
         },
         {
-          UserId: 'GUID',
-          FirstName: 'Farhan',
-          LastName: 'Masud',
-          UserName: 'farhan_masud',
-          Password: 'ABC123abc.',
-          RoleId: 1,
-          RoleName: 'Sales Admin',
-          AccountBalance: 999999,
-          Email: 'hemail@shemail.com',
-          OrganizationId: 0,
-          OrganizationName: 'Honululiu'
+          userId: 'GUID',
+          firstName: 'Farhan',
+          lastName: 'Masud',
+          userName: 'farhan_masud',
+          password: 'ABC123abc.',
+          roleId: 1,
+          roleName: 'Sales Admin',
+          accountBalance: 999999,
+          email: 'hemail@shemail.com',
+          organizationId: 0,
+          organizationName: 'Honululiu'
         },
         {
-          UserId: 'GUID',
-          FirstName: 'Fayham',
-          LastName: 'Masud',
-          UserName: 'fayham',
-          Password: 'ABC123abc.',
-          RoleId: 1,
-          RoleName: 'Sales Admin',
-          AccountBalance: 999999,
-          Email: 'hemail@shemail.com',
-          OrganizationId: 0,
-          OrganizationName: 'Honululiu'
+          userId: 'GUID',
+          firstName: 'Fayham',
+          lastName: 'Masud',
+          userName: 'fayham',
+          password: 'ABC123abc.',
+          roleId: 1,
+          roleName: 'Sales Admin',
+          accountBalance: 999999,
+          email: 'hemail@shemail.com',
+          organizationId: 0,
+          organizationName: 'Honululiu'
         }
       ]
     }

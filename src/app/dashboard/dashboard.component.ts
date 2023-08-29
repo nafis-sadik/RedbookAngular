@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NbAuthService } from '@nebular/auth';
 import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
-import { DashboardService } from './dashboard.service';
+import { DashboardService } from './services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',

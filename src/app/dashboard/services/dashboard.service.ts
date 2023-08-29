@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
-import { IVendorModel } from './Models/IVendorModel';
-import { IOrganizationModel } from './Models/IOrganizationModel';
+import { IVendorModel } from '../Models/IVendorModel';
+import { IOrganizationModel } from '../Models/IOrganizationModel';
 import { NbDialogService } from '@nebular/theme';
-import { IProductModel } from './Models/IProductModel';
-import { ICategoryModel } from './Models/ICategoryModel';
-import { IRoutePermissionModel } from './Models/IRoutePermissionModel';
+import { IProductModel } from '../Models/IProductModel';
+import { ICategoryModel } from '../Models/ICategoryModel';
+import { IRoutePermissionModel } from '../Models/IRoutePermissionModel';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment.development';
+import { AppConfigurationService } from './app-config.service';
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class DashboardService {
-  /**
-   * Primary key of selected outlet
-   * Needs to be passed to dialogue components
-   */
+  baseUrl = environment.baseUrl;
+  
   selectedOutletId: number = 0;
 
   backendDataCategories: ICategoryModel[] = [
@@ -115,7 +116,11 @@ export class DashboardService {
 
   public readonly ngDialogService: NbDialogService;
 
-  constructor(private dialogService: NbDialogService) {
+  constructor(
+    private dialogService: NbDialogService,
+    private appConfigService: AppConfigurationService,
+    private http: HttpClient
+  ) {
     this.ngDialogService = dialogService;
   }
 
@@ -365,6 +370,12 @@ export class DashboardService {
   }
 
   getMenuOptionsByUserId(userId: string){
+    console.log(this.appConfigService.UserModelData);
+    
+    // return this.http
+    // .get<any>(`${this.baseUrl}/api/Route/GetAll/${userId}`)
+    // .pipe(map((response) => response));
+    
     return [
       {
         title: 'Dashboards',
@@ -429,9 +440,14 @@ export class DashboardService {
         ]
       },
       {
-        title: 'Register New Business',
-        icon: 'briefcase',
+        title: 'Onboarding',
+        icon: 'person-add',
         link: '/dashboard/retailer'
+      },
+      {
+        title: 'Platform Settings',
+        icon: 'settings-2',
+        link: '/dashboard/platform-settings'
       }
     ];
   }

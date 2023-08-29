@@ -1,0 +1,31 @@
+export declare interface IRouteModel{
+    /**
+     * Route Unique Identifier
+     * @type {Number}
+     */ 
+    id: number;
+
+    /**
+     * Display Name of route
+     * @type {string}
+     */
+    routeName: string;
+
+    /**
+     * Routing path
+     * @type {string}
+     */
+    routeValue: string;
+
+    /**
+     * Description on the route path or page that the route redirects to
+     * @type {string}
+     */
+    description: string;
+
+    /**
+     * Unique Identifier of the application that the route belongs to
+     * @type {string}
+     */
+    applicationId: number;
+}

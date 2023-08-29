@@ -39,6 +39,7 @@ import { AddSalesComponent } from './BusinessOperations/sell/add-sales/add-sales
 import { ProductsComponent } from './settings/ProductManagement/products/products.component';
 import { ProductsDetailsFormComponent } from './settings/ProductManagement/products/products-details-form/products-details-form.component';
 import { RetailerComponent } from './retailer/retailer.component';
+import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { RetailerComponent } from './retailer/retailer.component';
     UmsComponent,
     UserFormComponent,
     CustomersComponent,
-    RetailerComponent
+    RetailerComponent,
+    PlatformsettingsComponent
   ],
   imports: [
     CommonModule,

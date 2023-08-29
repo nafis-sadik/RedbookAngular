@@ -5,6 +5,7 @@ import { NbStepperComponent, NbToastrService } from '@nebular/theme';
 import { IUserModel } from '../Models/IUserModel';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { AppConfigurationService } from '../services/app-config.service';
 
 @Component({
   selector: 'app-retailer',
@@ -14,54 +15,38 @@ import { UserService } from '../services/user.service';
 export class RetailerComponent implements OnInit {
   orgModel: IOrganizationModel;
   userModel: IUserModel;
-  linearMode: boolean = true;
+  linearMode: boolean;
+  isMobile: boolean;
 
   OrganizationForm: FormGroup;
   AdminUserForm: FormGroup;
 
   constructor(
+    private appConfigService: AppConfigurationService,
     private organizationService: OrganizationService,
     private toasterService: NbToastrService,
     private userService: UserService,
     private fb: FormBuilder
-  ){
-    this.orgModel = {
-      organizationId: 0,
-      organizationName: '',
-      address: []
-    }
-
-    this.userModel = {
-      AccountBalance: 0,
-      Email: '',
-      FirstName: '',
-      LastName: '',
-      Password: '',
-      OrganizationId: 0,
-      OrganizationName: '',
-      RoleId: 0,
-      RoleName: '',
-      UserId: '',
-      UserName: ''
-    }
-   }
+  ){ this.linearMode = true; }
 
   ngOnInit() {
+    this.isMobile = this.appConfigService.isMobilePhone();
+
     this.OrganizationForm = this.fb.group({
-      OrganizationName: ['', Validators.required],
+      organizationName: ['', Validators.required],
     });
 
     this.AdminUserForm = this.fb.group({
-      FirstName: ['', Validators.required],
-      LastName: ['', Validators.required],
-      UserName: ['', Validators.required],
-      Email: ['', Validators.required],
-      AccountBalance: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      userName: ['', Validators.required],
+      email: ['', Validators.required],
+      accountBalance: ['', Validators.required],
     });
 
     // Organization model binding
-    this.OrganizationForm.get('OrganizationName')?.valueChanges.subscribe(value => {
-      this.orgModel.organizationName = value;
+    this.OrganizationForm?.valueChanges.subscribe(value => {
+      this.orgModel = value;
     });
 
     // Admin User model binding
@@ -113,7 +98,7 @@ export class RetailerComponent implements OnInit {
       return
     }
 
-    this.userModel.OrganizationId = this.orgModel.organizationId;
+    this.userModel.organizationId = this.orgModel.organizationId;
     this.userService.registerNewUser(this.userModel).subscribe(response => {
       this.toasterService.success('Operation Successfull', 'User added successfully');
       this.userModel = response;
@@ -122,7 +107,27 @@ export class RetailerComponent implements OnInit {
     stepper.next();
   }
 
-  resetAllForms(stepper: NbStepperComponent): void{
+  resetAllForms(stepper: NbStepperComponent): void{    
+    this.orgModel = {
+      organizationId: 0,
+      organizationName: '',
+      address: []
+    }
+
+    this.userModel = {
+      accountBalance: 0,
+      email: '',
+      firstName: '',
+      lastName: '',
+      password: '',
+      organizationId: 0,
+      organizationName: '',
+      roleId: 0,
+      roleName: '',
+      userId: '',
+      userName: ''
+    }
+   
     stepper.reset();
   }
 }

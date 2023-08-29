@@ -2,7 +2,7 @@
     <nb-card>
         <nb-card-header>Retail Form</nb-card-header>
         <nb-card-body>
-            <nb-stepper orientation="vertical" class="container-fluid" [linear]="linearMode" #stepper>
+            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]="linearMode" #stepper>
                 <nb-step label="Register Client Organization">
                     <ng-template #labelOne>Organization step</ng-template>
                     <form [formGroup]="OrganizationForm" (ngSubmit)="addNewOrganization(stepper)" class="step-container row">
@@ -13,7 +13,7 @@
                             <input
                                 nbInput
                                 fullWidth
-                                formControlName="OrganizationName"
+                                formControlName="organizationName"
                                 status="primary"
                                 type="text"
                                 class="form-control"
@@ -21,7 +21,7 @@
                                 placeholder="Organization Name"
                                 required
                             >
-                            <div id="OrganizationNameWarning" *ngIf="OrganizationForm.get('OrganizationName')?.touched && OrganizationForm.get('OrganizationName')?.invalid" class="validationError"></div>
+                            <div id="OrganizationNameWarning" *ngIf="OrganizationForm.get('organizationName')?.touched && OrganizationForm.get('organizationName')?.invalid" class="validationError"></div>
                         </div>
                         <div class="col-md-12 p-1">
                             <button nbButton status="primary" class="float-right">next</button>
@@ -34,7 +34,7 @@
                         <div class="col-md-6 p-1">
                             <label for="FirstName" class="mb-2">First Name</label>
                             <input
-                                formControlName="FirstName"
+                                formControlName="firstName"
                                 nbInput
                                 fullWidth
                                 status="primary"
@@ -48,7 +48,7 @@
                             <label for="LastName" class="mb-2">Last Name</label>
                             <div class="col-md-12">
                                 <input
-                                    formControlName="LastName"
+                                    formControlName="lastName"
                                     nbInput
                                     fullWidth
                                     status="primary"
@@ -63,7 +63,7 @@
                             <label for="UserName" class="mb-2">User Name</label>
                             <div class="col-md-12">
                                 <input
-                                    formControlName="UserName"
+                                    formControlName="userName"
                                     nbInput
                                     fullWidth
                                     status="primary"
@@ -73,14 +73,14 @@
                                     placeholder="User Name"
                                     required
                                 >
-                                <div *ngIf="AdminUserForm.get('UserName')?.touched && AdminUserForm.get('UserName')?.invalid" class="validationError"></div>
+                                <div *ngIf="AdminUserForm.get('userName')?.touched && AdminUserForm.get('userName')?.invalid" class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-6 p-1">
                             <label for="Email" class="mb-2">User Email</label>
                             <div class="col-md-12">
                                 <input
-                                    formControlName="Email"
+                                    formControlName="email"
                                     nbInput
                                     fullWidth
                                     status="primary"
@@ -90,14 +90,14 @@
                                     placeholder="Email"
                                     required
                                 >
-                                <div *ngIf="AdminUserForm.get('Email')?.touched && AdminUserForm.get('Email')?.invalid" class="validationError"></div>
+                                <div *ngIf="AdminUserForm.get('email')?.touched && AdminUserForm.get('email')?.invalid" class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-12 p-1">
-                            <label for="AccountBalance" class="mb-2">Initial Account Balance</label>
+                            <label for="accountBalance" class="mb-2">Initial Account Balance</label>
                             <div class="col-md-12">
                                 <input
-                                    formControlName="AccountBalance"
+                                    formControlName="accountBalance"
                                     nbInput
                                     fullWidth
                                     status="primary"
@@ -107,7 +107,7 @@
                                     placeholder="Account Balance"
                                     required
                                 >
-                                <div *ngIf="AdminUserForm.get('AccountBalance')?.touched && AdminUserForm.get('AccountBalance')?.invalid" class="validationError"></div>
+                                <div *ngIf="AdminUserForm.get('accountBalance')?.touched && AdminUserForm.get('accountBalance')?.invalid" class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-12 p-1">
