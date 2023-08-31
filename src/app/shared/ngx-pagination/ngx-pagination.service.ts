@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IPaginationModel } from './Models/IPaginationModel';
 
@@ -20,5 +20,6 @@ export class NGXPaginationService<T> {
 
   set(newModel: IPaginationModel<T>) {
     this.subject.next(newModel);
+    
   }
 }

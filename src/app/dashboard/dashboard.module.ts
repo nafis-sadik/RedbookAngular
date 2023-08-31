@@ -40,6 +40,7 @@ import { ProductsComponent } from './settings/ProductManagement/products/product
 import { ProductsDetailsFormComponent } from './settings/ProductManagement/products/products-details-form/products-details-form.component';
 import { RetailerComponent } from './retailer/retailer.component';
 import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
+import { RouteFormComponent } from './platformsettings/route-form/route-form.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { PlatformsettingsComponent } from './platformsettings/platformsettings.c
     UserFormComponent,
     CustomersComponent,
     RetailerComponent,
-    PlatformsettingsComponent
+    PlatformsettingsComponent,
+    RouteFormComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
 import { IPagingModel } from './Models/IPagingModel';
@@ -135,6 +135,6 @@ export class NgxPaginationComponent<T> {
         onClick: this.paginationModel.addNewElementButtonConfig.onClick,
       };
 
-
+      // this.changeDetector.detectChanges();
   }
 }

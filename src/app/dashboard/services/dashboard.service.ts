@@ -159,7 +159,6 @@ export class DashboardService {
   getPagingConfig(DialogueComponent: any, TableCardHeader: string, AddButtonLabel: string='Add', SearchButtonLabel: string='Search', SearchFieldPlaceholder: string='Search') {
     return {
       tableCardHeader: TableCardHeader,
-      sourceData: [],
       allowAdd: true,
       tableConfig: {
         onEdit: null,

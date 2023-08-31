@@ -28,4 +28,10 @@ export declare interface IRouteModel{
      * @type {string}
      */
     applicationId: number;
+
+    /**
+     * Name of the application that this route belongs to
+     * @type {string}
+     */
+    applicationName: number;
 }
