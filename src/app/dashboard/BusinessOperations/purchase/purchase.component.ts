@@ -60,7 +60,7 @@ export class PurchaseComponent {
     }
 
     if(this.pagedPurchaseModel.addNewElementButtonConfig){
-      this.pagedPurchaseModel.addNewElementButtonConfig.onClick = () => {
+      this.pagedPurchaseModel.addNewElementButtonConfig.onAdd = () => {
         this.isUpdateOperation = false;
 
         dashboardService.ngDialogService.open(AddPurchaseComponent, {

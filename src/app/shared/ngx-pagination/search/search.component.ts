@@ -9,16 +9,6 @@ import { ISearchModel } from '../Models/ISearchModel';
 export class SearchComponent {
   @Input() searchModel: ISearchModel;
 
-  constructor() {
-    this.searchModel = {
-      inputFieldPlaceholder: '',
-      searchString: null,
-      searchButtonLabel: null,
-      showSearchIcon: true,
-      onClick: null,
-    };
-  }
-
   search(): void {
     if (
       this.searchModel.onClick != null &&

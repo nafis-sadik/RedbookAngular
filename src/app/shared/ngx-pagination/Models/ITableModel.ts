@@ -5,11 +5,6 @@ export declare interface ITableModel {
    */
   columnNames: Array<string>;
   /**
-   * Defines if table is editable table or not
-   * @type {boolean}
-   */
-  isEditableTable: boolean;
-  /**
    * Data source for table to render
    * @type {Array<Array<anyh>>}
    */

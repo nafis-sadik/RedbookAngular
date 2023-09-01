@@ -8,6 +8,7 @@ import { IRoutePermissionModel } from '../Models/IRoutePermissionModel';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { AppConfigurationService } from './app-config.service';
+import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 
 @Injectable({
     providedIn: 'root',
@@ -15,7 +16,7 @@ import { AppConfigurationService } from './app-config.service';
 
 export class DashboardService {
   baseUrl = environment.baseUrl;
-  
+
   selectedOutletId: number = 0;
 
   backendDataCategories: ICategoryModel[] = [
@@ -156,15 +157,19 @@ export class DashboardService {
     ];
   }
 
-  getPagingConfig(DialogueComponent: any, TableCardHeader: string, AddButtonLabel: string='Add', SearchButtonLabel: string='Search', SearchFieldPlaceholder: string='Search') {
+  getPagingConfig<T>(
+    dialogueComponent: any,
+    cardHeader: string,
+    addButtonLabel: string | null = null,
+    searchButtonLabel: string | null = null,
+    searchFieldPlaceholder: string | null = null
+  ): IPaginationModel<T> {
     return {
-      tableCardHeader: TableCardHeader,
-      allowAdd: true,
+      tableCardHeader: cardHeader,
       tableConfig: {
         onEdit: null,
         onDelete: null,
         onView: null,
-        isEditableTable: false,
         actionColWidth: '100px',
         tableMaping: {
           "Invoice Number": "InvoiceNo",
@@ -180,26 +185,25 @@ export class DashboardService {
         pageNumber: 1,
         totalItems: 268,
         pageLength: 5,
-        pageLengthOptions: [ 5, 10, 100 ],
-        onChange: (data: any) => {
+        onUpdate: (data: any) => {
           console.log('Page length change callback', data);
         }
       },
       searchingConfig:{
         searchString: '',
-        inputFieldPlaceholder: SearchFieldPlaceholder,
-        buttonLabel: SearchButtonLabel,
+        inputFieldPlaceholder: searchFieldPlaceholder,
+        buttonLabel: searchButtonLabel,
         showIcon: true,
-        onClick: () => {
+        onSearch: () => {
           console.log('Search Callback')
         }
       },
       addNewElementButtonConfig: {
-        buttonLabel: AddButtonLabel,
+        buttonLabel: addButtonLabel,
         showIcon: true,
-        onClick: () => {
-          if(DialogueComponent)
-            this.dialogService.open(DialogueComponent);
+        onAdd: () => {
+          if(dialogueComponent)
+            this.dialogService.open(dialogueComponent);
         }
       },
     };
@@ -370,11 +374,11 @@ export class DashboardService {
 
   getMenuOptionsByUserId(userId: string){
     console.log(this.appConfigService.UserModelData);
-    
+
     // return this.http
     // .get<any>(`${this.baseUrl}/api/Route/GetAll/${userId}`)
     // .pipe(map((response) => response));
-    
+
     return [
       {
         title: 'Dashboards',

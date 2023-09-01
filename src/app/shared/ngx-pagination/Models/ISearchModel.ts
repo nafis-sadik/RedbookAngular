@@ -28,5 +28,5 @@ export declare interface ISearchModel {
    * Description: Callback method for onClick event
    * @type {Function}
    */
-  onClick: Function | null;
+  onClick: Function;
 }

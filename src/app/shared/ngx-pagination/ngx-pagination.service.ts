@@ -20,6 +20,5 @@ export class NGXPaginationService<T> {
 
   set(newModel: IPaginationModel<T>) {
     this.subject.next(newModel);
-    
   }
 }

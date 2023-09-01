@@ -4,13 +4,13 @@
       <tr class="align-bottom row-color-2">
         <th
           scope="col"
-          *ngIf="config?.onEdit || config?.onDelete"
+          *ngIf="config?.onEdit || config?.onView || config?.onDelete"
           class="table-actions"
         >
           <span><b>Actions</b></span>
         </th>
         <th
-          *ngFor="let item of this.config.columnNames"
+          *ngFor="let item of this.config.columnNames | slice: 1"
           class="ng-star-inserted"
         >
           {{ item }}
@@ -21,22 +21,23 @@
       <tr *ngFor="let row of config.sourceData">
         <td
           scope="col"
-          *ngIf="config?.onEdit || config?.onDelete"
+          *ngIf="config.onEdit || config.onView || config.onDelete"
           class="table-actions"
+          [style.width]="config.actionColWidth"
         >
           <div class="d-block">
-            <span *ngIf="config.onEdit" (click)="edit()">
+            <span *ngIf="config.onEdit" (click)="config.onEdit(row[0])">
               <nb-icon icon="edit-2-outline" class="edit"></nb-icon>
             </span>
-            <span *ngIf="config.onView" (click)="onView()">
+            <span *ngIf="config.onView" (click)="config.onView(row[0])">
               <nb-icon icon="file-text-outline" class="delete"></nb-icon>
             </span>
-            <span *ngIf="config.onDelete" (click)="onDelete()">
+            <span *ngIf="config.onDelete" (click)="config.onDelete(row[0])">
               <nb-icon icon="trash-2-outline" class="delete"></nb-icon>
             </span>
           </div>
         </td>
-        <td *ngFor="let col of row">
+        <td *ngFor="let col of row | slice: 1">
           {{ col }}
         </td>
       </tr>

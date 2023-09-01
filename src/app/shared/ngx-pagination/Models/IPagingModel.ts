@@ -1,17 +1,11 @@
 export declare interface IPagingModel {
+  totalPageCount: number;
   /**
    * Default value:
    * Description: Selected page number
    * @type {Number}
    */
   pageNumber: number;
-  /**
-   * Nullable field:
-   * Default value:
-   * Description: This array shall be visible as a dropdown at the UI to let users select the number of items they wish to see in a single page in the table
-   * @type {Array<number>}
-   */
-  pageLengthOptions: Array<number>;
   /**
    * Nullable field: Yes
    * Default value: 0
@@ -22,15 +16,15 @@ export declare interface IPagingModel {
   /**
    * Nullable field: Yes
    * Default value: 0
-   * Description: Number of total pages based on currently selected page length
+   * Description: Number of total items based on currently selected page config
    * @type {Number}
    */
-  totalPageCount: number;
+  totalItems: number;
   /**
    * Nullable field: Yes
    * Default value: 0
    * Description: Number of total pages based on currently selected page length
    * @type {Function}
    */
-  updateList: Function;
+  onUpdate: Function;
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { IPagingModel } from '../Models/IPagingModel';
 
 @Component({
@@ -7,25 +7,27 @@ import { IPagingModel } from '../Models/IPagingModel';
   styleUrls: ['./pagination.component.scss'],
 })
 export class PaginationComponent implements OnInit {
-  @Input() pagingModel: IPagingModel | null;
+  @Input() pagingModel: IPagingModel;
 
-  pageNumbersToPrint: number[];
+  pageNumbersToPrint: number[] = [];
   maxNumberOfPagesToRender: number = 5;
-  selectedPageLength: string = '';
+  selectedPageLength: string;
 
-  constructor(private renderer: Renderer2) {
-    // Preparing page numbers to print
-    // When we are creating the pagination for the first time, the pagination shall always start from 1
-    this.pageNumbersToPrint = [1, 2, 3, 4, 5];
-  }
+  constructor(private renderer: Renderer2) { }
 
   // implement OnInit's `ngOnInit` method
   ngOnInit(): void {
     if (!this.pagingModel)
       throw 'Failed to initialize: Object of IPagingModel can not be undefined';
 
+    // Preparing page numbers to print
+    // When we are creating the pagination for the first time, the pagination shall always start from 1
+    for (let i = 1; i <= this.pagingModel.totalPageCount; i++) {
+      this.pageNumbersToPrint.push(i);
+    }
+
     this.selectedPageLength = this.pagingModel.pageLength.toString();
-    
+
     this.loadFirst();
   }
 
@@ -49,7 +51,8 @@ export class PaginationComponent implements OnInit {
     // Selected page must be updated in view model
     this.pagingModel.pageNumber = pageNumber;
 
-    this.pagingModel.updateList(this.pagingModel);
+    if (this.pagingModel?.onUpdate != null && typeof(this.pagingModel?.onUpdate) == 'function')
+      this.pagingModel.onUpdate(this.pagingModel);
   }
 
   loadNext(): void {
@@ -67,7 +70,7 @@ export class PaginationComponent implements OnInit {
       ) {
         let newPaging: number[] = [];
         this.pageNumbersToPrint.forEach((pageNum) => {
-          if (this.pagingModel && pageNum < this.pagingModel?.totalPageCount) newPaging.push(pageNum + 1);
+          if (this.pagingModel && pageNum < this.pagingModel.totalPageCount) newPaging.push(pageNum + 1);
         });
         this.pageNumbersToPrint = newPaging;
       }
@@ -78,7 +81,7 @@ export class PaginationComponent implements OnInit {
   loadPrevious(): void {
     if (this.pagingModel == undefined || this.pagingModel == null)
       throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
-    
+
       let selectedPageNumber = this.pagingModel.pageNumber - 1;
       // <= 0
       if (selectedPageNumber <= 0) return;
@@ -127,7 +130,7 @@ export class PaginationComponent implements OnInit {
   }
 
   onPageLengthChange(): void {
-    if (this.pagingModel?.updateList != null)
-      this.pagingModel.updateList(this.pagingModel);
+    if (this.pagingModel?.onUpdate != null && typeof(this.pagingModel?.onUpdate) == 'function')
+      this.pagingModel.onUpdate(this.pagingModel);
   }
 }
