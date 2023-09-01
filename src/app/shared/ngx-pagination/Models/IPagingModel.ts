@@ -32,5 +32,5 @@ export declare interface IPagingModel {
    * Description: Number of total pages based on currently selected page length
    * @type {Function}
    */
-  onPageLengthChange: Function | null;
+  updateList: Function;
 }

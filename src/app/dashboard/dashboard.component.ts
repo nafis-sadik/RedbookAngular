@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NbAuthService } from '@nebular/auth';
 import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './services/dashboard.service';
 
@@ -11,36 +10,32 @@ import { DashboardService } from './services/dashboard.service';
 })
 
 export class DashboardComponent {
-  selectedTheme: string | undefined;
+  selectedTheme: string;
   isButtonVisible: boolean;
   themes: string[] = [
     'Default',
-    'Dark',
+    'Evening',
     'Cosmic',
-    'Corporate'
+    'Corporate',
+    'Midnight',
+    'Aquamarine'
   ];
 
   menuOptions: NbMenuItem[];
 
   constructor(
-    private dashboardService: DashboardService,
+    dashboardService: DashboardService,
     private sidebarService: NbSidebarService,
     private themeService: NbThemeService,
-    private authService: NbAuthService
   ) {
     // If no theme has been cached, select default theme
-    if (localStorage.getItem('theme') == null && this.themes.length > 0) {
-      this.setTheme(this.themes[0]);
+    let preselectedTheme: string | null = localStorage.getItem('theme');
+    if(preselectedTheme)
+      this.selectedTheme = preselectedTheme;
+    else
       this.selectedTheme = this.themes[0];
-    } else {
-      this.themes.forEach(themeName => {
-        if (themeName == localStorage.getItem('theme'))
-        {
-          this.selectedTheme = themeName;
-          this.setTheme(themeName);
-        }
-      });
-    }
+
+    this.setTheme(this.selectedTheme);
 
     this.menuOptions = dashboardService.getMenuOptionsByUserId("GUID");
     this.isButtonVisible = false;
@@ -51,8 +46,17 @@ export class DashboardComponent {
   }
 
   setTheme(theme: string) {
-    this.themeService.changeTheme(theme.toLowerCase());
     localStorage.setItem('theme', theme);
+
+    if(theme == 'Midnight'){
+      this.themeService.changeTheme('mid-night');
+    }else if(theme == 'Evening'){
+      this.themeService.changeTheme('Dark'.toLowerCase());
+    } else if (theme == 'Aquamarine') {
+      this.themeService.changeTheme('aqua-marine');
+    }else {
+      this.themeService.changeTheme(theme.toLowerCase());
+    }
   }
 
   flipProfilePanelVisibility() :void{ this.isButtonVisible = !this.isButtonVisible; }

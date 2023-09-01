@@ -181,8 +181,8 @@ export class DashboardService {
         totalItems: 268,
         pageLength: 5,
         pageLengthOptions: [ 5, 10, 100 ],
-        onChange: () => {
-          console.log('Page length change callback');
+        onChange: (data: any) => {
+          console.log('Page length change callback', data);
         }
       },
       searchingConfig:{

@@ -16,6 +16,7 @@ export class RouteService{
     ) { }
     
     addNewRoute(routeModel: IRouteModel): Observable<IRouteModel>{
+        console.log(`${this.baseUrl}/api/Route`)
         return this.http
             .post<IRouteModel>(`${this.baseUrl}/api/Route`, routeModel)
             .pipe(map((response) => response));

@@ -106,13 +106,14 @@ export class NgxPaginationComponent<T> {
       totalPageCount = totalPageCount <= 0 ? 1 : totalPageCount;
 
       // Load paging config to render
-      this.pagingModel = {
-        pageNumber: this.paginationModel.pagingConfig.pageNumber,
-        pageLength: this.paginationModel.pagingConfig.pageLength,
-        pageLengthOptions: this.paginationModel.pagingConfig.pageLengthOptions,
-        totalPageCount: totalPageCount,
-        onPageLengthChange: this.paginationModel.pagingConfig.onChange,
-      };
+      if(this.paginationModel.pagingConfig && this.paginationModel.pagingConfig.onChange)
+        this.pagingModel = {
+          pageNumber: this.paginationModel.pagingConfig.pageNumber,
+          pageLength: this.paginationModel.pagingConfig.pageLength,
+          pageLengthOptions: this.paginationModel.pagingConfig.pageLengthOptions,
+          totalPageCount: totalPageCount,
+          updateList: this.paginationModel.pagingConfig.onChange,
+        };
     }
 
     // Load search field config to render

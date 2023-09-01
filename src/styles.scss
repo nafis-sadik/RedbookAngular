@@ -22,38 +22,6 @@ $nb-enable-css-custom-properties: true; // <-- enable css custom properties
   float: right;
 }
 
-.nb-theme-cosmic nb-card, .nb-theme-dark nb-card, .nb-theme-default nb-card {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-
-.nb-theme-default nb-sidebar{
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-
-.nb-theme-default nb-layout-footer{
-  width: 100vw!important;
-  position: fixed;
-  left: 0!important;
-  bottom: 0;
-  box-shadow: 0px -5px 20px -15px rgba(0, 0, 0, 0.75) !important;
-  -webkit-box-shadow: 0px -5px 20px -15px rgba(0, 0, 0, 0.75) !important;
-  -moz-box-shadow: 0px -5px 20px -15px rgba(0, 0, 0, 0.75) !important;
-}
-
-.nb-theme-default nb-layout-header{
-  box-shadow: 0px 10px 10px -15px rgba(0, 0, 0, 0.75) !important;
-  -webkit-box-shadow: 0px 10px 10px -15px rgba(0, 0, 0, 0.75) !important;
-  -moz-box-shadow: 0px 10px 10px -15px rgba(0, 0, 0, 0.75) !important;
-}
-
-body.nb-theme-corporate nb-card, body.nb-theme-corporate nb-sidebar, body.nb-theme-corporate nb-layout-footer{
-  box-shadow: 0!important;
-  -webkit-box-shadow: 0!important;
-  -moz-box-shadow: 0!important;
-}
-
 #InvoiceForm nb-stepper .header{
   padding-left: 20px!important;
   padding-right: 20px!important;

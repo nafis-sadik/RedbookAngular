@@ -4,6 +4,7 @@ import { AppService } from '../../services/app.service';
 import { RouteService } from '../../services/route.service';
 import { IRouteModel } from '../../Models/IRouteModel';
 import { IApplicationModel } from '../../Models/IApplicationModel';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-route-form',
@@ -18,7 +19,8 @@ export class RouteFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private appService: AppService,
-    private routeService: RouteService
+    private routeService: RouteService,
+    private toasterService: NbToastrService
   ){}
 
   ngOnInit(): void {
@@ -26,7 +28,7 @@ export class RouteFormComponent implements OnInit {
       routeName: ['', Validators.required],
       routeValue: ['', Validators.required],
       applicationId: ['', Validators.required],
-      routeDescription: ['', Validators.required]
+      description: ['', Validators.required]
     });
 
     this.routeForm.valueChanges.subscribe(value => {
@@ -43,11 +45,29 @@ export class RouteFormComponent implements OnInit {
   saveRoute(): void{
     if(this.routeModel == undefined)
       return
-
+    
+    let loaderContainer: HTMLElement| null = document.getElementById('LoadingScreen');
+    if(loaderContainer){
+      loaderContainer.classList.add('d-block');
+      loaderContainer.classList.remove('d-none');
+    }
+    
     if(this.routeModel.id == undefined || this.routeModel.id == null || this.routeModel.id <= 0){
       this.routeService.addNewRoute(this.routeModel)
+      .subscribe(
+        (response) => {
+          window.location.reload();
+        },
+        (err) => {
+          this.toasterService.danger(err.error, 'Failed to execute operation');
+          
+          if(loaderContainer){
+            loaderContainer.classList.remove('d-block');
+            loaderContainer.classList.add('d-none');
+          }
+        })
     } else {
-      this.routeService.updateNewRoute(this.routeModel)
+      this.routeService.updateNewRoute(this.routeModel);
     }
   }
 }

@@ -21,11 +21,9 @@
     </nb-card-body>
     <nb-card-footer *ngIf="pagingModel">
       <ngx-pagination-pages [pagingModel]="pagingModel"></ngx-pagination-pages>
-      <span class="pagindDetails"
-        >Showing {{ pagingModel.pageNumber }} of
+      <span class="pagindDetails">Showing {{ pagingModel.pageNumber }} of
         {{ pagingModel.totalPageCount }} pages of
-        {{ paginationModel?.pagingConfig?.totalItems }} entries</span
-      >
+        {{ paginationModel?.pagingConfig?.totalItems }} entries</span>
     </nb-card-footer>
   </nb-card>
 </section>
