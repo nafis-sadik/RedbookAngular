@@ -9,11 +9,13 @@ import { IPagingModel } from '../Models/IPagingModel';
 export class PaginationComponent implements OnInit {
   @Input() pagingModel: IPagingModel;
 
+  pageLengthArray: number[] = [];
   pageNumbersToPrint: number[] = [];
   maxNumberOfPagesToRender: number = 5;
-  selectedPageLength: string;
 
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2) {
+    this.pageLengthArray = [5, 10, 50, 100];
+  }
 
   // implement OnInit's `ngOnInit` method
   ngOnInit(): void {
@@ -25,8 +27,6 @@ export class PaginationComponent implements OnInit {
     for (let i = 1; i <= this.pagingModel.totalPageCount; i++) {
       this.pageNumbersToPrint.push(i);
     }
-
-    this.selectedPageLength = this.pagingModel.pageLength.toString();
 
     this.loadFirst();
   }

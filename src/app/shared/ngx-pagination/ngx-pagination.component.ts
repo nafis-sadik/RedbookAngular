@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
 import { IPagingModel } from './Models/IPagingModel';
@@ -14,7 +14,6 @@ import { NGXPaginationService } from './ngx-pagination.service';
 export class NgxPaginationComponent<T> {
   @Input() paginationModel: IPaginationModel<T>;
 
-  cardHeader: string;
   tableConfig: ITableModel;
   pagingModel: IPagingModel;
   searchModel: ISearchModel;
@@ -71,6 +70,8 @@ export class NgxPaginationComponent<T> {
         onView: this.paginationModel.tableConfig.onView,
         actionColWidth: this.paginationModel.tableConfig.actionColWidth == null? '100px': this.paginationModel.tableConfig.actionColWidth
       };
+
+      console.log(this.tableConfig);
     }
 
     // Load pagination config to render
@@ -95,7 +96,7 @@ export class NgxPaginationComponent<T> {
       };
 
     // Load add new button config to render
-    if (this.paginationModel.addNewElementButtonConfig != null)
+    if (this.paginationModel.addNewElementButtonConfig)
       this.addNewButtonConfig = {
         addNewButtonLabel: this.paginationModel.addNewElementButtonConfig.buttonLabel,
         showIcon: this.paginationModel.addNewElementButtonConfig.showIcon,

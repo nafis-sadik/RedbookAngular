@@ -32,8 +32,8 @@
       <section id="PageItemCountDropdown" class="col-md-6" *ngIf="pagingModel">
         <div class="float-right text-right">
           <span><b>Items per page</b></span>
-          <nb-select placeholder="{{selectedPageLength}}" [(ngModel)]="selectedPageLength" (selectedChange)="onPageLengthChange()">
-            <nb-option *ngFor="let pageNumber of pageNumbersToPrint" value="{{ pageNumber }}">
+          <nb-select [(selected)]="pagingModel.pageLength" (selectedChange)="onPageLengthChange()">
+            <nb-option *ngFor="let pageNumber of pageLengthArray" [value]="pageNumber">
               {{ pageNumber }}
             </nb-option>
           </nb-select>

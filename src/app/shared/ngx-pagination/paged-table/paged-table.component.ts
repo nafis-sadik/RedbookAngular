@@ -9,9 +9,12 @@ import { ITableModel } from '../Models/ITableModel';
 export class PagedTableComponent implements OnInit{
   @Input() config: ITableModel;
 
-  constructor(private renderer:Renderer2) { }
+  constructor(private renderer:Renderer2) {
+    debugger;
+   }
 
   ngOnInit(): void {
+    debugger
     let column = Array.from(document.getElementsByClassName('table-actions'));
 
     // Use Renderer2 to set the CSS style dynamically

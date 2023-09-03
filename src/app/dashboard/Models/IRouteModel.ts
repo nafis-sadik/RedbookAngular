@@ -2,7 +2,7 @@ export declare interface IRouteModel{
     /**
      * Route Unique Identifier
      * @type {Number}
-     */ 
+     */
     id: number;
 
     /**
@@ -33,5 +33,5 @@ export declare interface IRouteModel{
      * Name of the application that this route belongs to
      * @type {string}
      */
-    applicationName: number;
+    applicationName: string;
 }

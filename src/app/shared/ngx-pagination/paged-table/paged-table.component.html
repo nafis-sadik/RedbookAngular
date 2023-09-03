@@ -26,10 +26,10 @@
           [style.width]="config.actionColWidth"
         >
           <div class="d-block">
-            <span *ngIf="config.onEdit" (click)="config.onEdit(row[0])">
+            <span *ngIf="config.onEdit" (click)="config.onEdit(row)">
               <nb-icon icon="edit-2-outline" class="edit"></nb-icon>
             </span>
-            <span *ngIf="config.onView" (click)="config.onView(row[0])">
+            <span *ngIf="config.onView" (click)="config.onView(row)">
               <nb-icon icon="file-text-outline" class="delete"></nb-icon>
             </span>
             <span *ngIf="config.onDelete" (click)="config.onDelete(row[0])">

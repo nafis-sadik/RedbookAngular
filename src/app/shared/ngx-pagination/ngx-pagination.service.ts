@@ -1,4 +1,4 @@
-import { ApplicationRef, ChangeDetectorRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IPaginationModel } from './Models/IPaginationModel';
 
