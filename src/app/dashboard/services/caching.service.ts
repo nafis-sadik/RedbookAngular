@@ -20,7 +20,6 @@ export class CachingService{
 
     get(key: string): any{
         let keys = Object.keys(this.cachedData);
-        debugger
         if(keys.includes(key))
             return this.cachedData[key];
 

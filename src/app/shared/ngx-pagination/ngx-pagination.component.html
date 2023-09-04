@@ -17,55 +17,8 @@
           [addNewModel]="addNewButtonConfig"
         ></ngx-paged-add-new>
       </div>
-      <!-- <ngx-paged-table [config]="tableConfig"></ngx-paged-table> -->
       <!-- Table rendering begins -->
-      <section id="PagedTable" class="table-responsive">
-        <table class="table table-bordered align-middle">
-          <thead>
-            <tr class="align-bottom row-color-2">
-              <th
-                scope="col"
-                *ngIf="tableConfig?.onEdit || tableConfig?.onView || tableConfig?.onDelete"
-                class="table-actions"
-              >
-                <span><b>Actions</b></span>
-              </th>
-              <th
-                *ngFor="let item of this.tableConfig.columnNames | slice: 1"
-                class="ng-star-inserted"
-              >
-                {{ item }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of tableConfig.sourceData">
-              <td
-                scope="col"
-                *ngIf="tableConfig.onEdit || tableConfig.onView || tableConfig.onDelete"
-                class="table-actions"
-                [style.width]="tableConfig.actionColWidth"
-              >
-                <div class="d-block">
-                  <span *ngIf="tableConfig.onEdit" (click)="tableConfig.onEdit(row)">
-                    <nb-icon icon="edit-2-outline" class="edit"></nb-icon>
-                  </span>
-                  <span *ngIf="tableConfig.onView" (click)="tableConfig.onView(row)">
-                    <nb-icon icon="file-text-outline" class="delete"></nb-icon>
-                  </span>
-                  <span *ngIf="tableConfig.onDelete" (click)="tableConfig.onDelete(row[0])">
-                    <nb-icon icon="trash-2-outline" class="delete"></nb-icon>
-                  </span>
-                </div>
-              </td>
-              <td *ngFor="let col of row | slice: 1">
-                {{ col }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
+      <ngx-paged-table [config]="tableConfig"></ngx-paged-table>
       <!-- Table rendering ends -->
     </nb-card-body>
     <nb-card-footer *ngIf="pagingModel">

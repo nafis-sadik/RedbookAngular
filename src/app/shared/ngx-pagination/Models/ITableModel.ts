@@ -5,10 +5,15 @@ export declare interface ITableModel {
    */
   columnNames: Array<string>;
   /**
-   * Data source for table to render
-   * @type {Array<Array<anyh>>}
+   * Source data object array
+   * @type {Array<any>}
    */
-  sourceData: Array<Array<any>>;
+  sourceData: Array<any>;
+  /**
+   * Mapped data to render on table UI
+   * @type {Array<Array<any>>}
+   */
+  mappedData: Array<Array<any>>;
   /**
    * Default value: null
    * Description: Callback method for onClick event on edit button

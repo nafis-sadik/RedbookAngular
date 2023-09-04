@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IRouteModel } from '../Models/IRouteModel';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { DashboardService } from '../services/dashboard.service';
@@ -19,31 +19,22 @@ export class PlatformsettingsComponent implements OnInit{
     dashboardService: DashboardService,
     private routeService: RouteService,
     public dialogService: NbDialogService,
-    private changeDetector: ChangeDetectorRef,
     private ngxPaginationService: NGXPaginationService<IRouteModel>
   ){
     this.pagedRouteModel = dashboardService.getPagingConfig<IRouteModel>(RouteFormComponent, 'Routes', 'Add Route');
 
     if(this.pagedRouteModel.tableConfig){
       this.pagedRouteModel.tableConfig.tableMaping = {
-        "Route Id": "id",
         "Route Name": "routeName",
         "Route": "routeValue",
         "Description": "description",
         "Application": "applicationName"
       };
 
-      this.pagedRouteModel.tableConfig.onEdit = (routeData: any) => {
+      this.pagedRouteModel.tableConfig.onEdit = (routeData: IRouteModel) => {
         this.dialogService.open(RouteFormComponent, {
           context: {
-            inputModel: {
-              id: routeData[0],
-              routeName: routeData[1],
-              routeValue: routeData[2],
-              description: routeData[3],
-              applicationName: routeData[4],
-              applicationId: 0
-            }
+            inputModel: routeData
           },
         });
       }
@@ -119,7 +110,6 @@ export class PlatformsettingsComponent implements OnInit{
         }
 
         this.ngxPaginationService.set(this.pagedRouteModel);
-        this.changeDetector.detectChanges();
         setTimeout(() => {
           if(loaderContainer){
             loaderContainer.classList.remove('d-block');

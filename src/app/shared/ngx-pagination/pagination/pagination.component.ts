@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { IPagingModel } from '../Models/IPagingModel';
 
 @Component({
@@ -13,8 +13,8 @@ export class PaginationComponent implements OnInit {
   pageNumbersToPrint: number[] = [];
   maxNumberOfPagesToRender: number = 5;
 
-  constructor(private renderer: Renderer2) {
-    this.pageLengthArray = [5, 10, 50, 100];
+  constructor(private renderer: Renderer2, private changeDetector: ChangeDetectorRef) {
+    this.pageLengthArray = [5, 10, 100]
   }
 
   // implement OnInit's `ngOnInit` method
@@ -29,6 +29,8 @@ export class PaginationComponent implements OnInit {
     }
 
     this.loadFirst();
+
+    this.changeDetector.detectChanges();
   }
 
   onPageSelect(pageNumber: number): void {

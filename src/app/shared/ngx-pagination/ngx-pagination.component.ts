@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
 import { IPagingModel } from './Models/IPagingModel';
@@ -19,8 +19,10 @@ export class NgxPaginationComponent<T> {
   searchModel: ISearchModel;
   addNewButtonConfig: IAddNewModel;
 
-  constructor(ngxPaginationService: NGXPaginationService<T>) {
-    ngxPaginationService.get().subscribe(updatedModel => {
+  constructor(private ngxPaginationService: NGXPaginationService<T>, private changeDetector: ChangeDetectorRef) { }
+
+  ngOnInit(){    
+    this.ngxPaginationService.get().subscribe(updatedModel => {
       this.paginationModel = updatedModel;
       this.loadData();
     });
@@ -64,14 +66,13 @@ export class NgxPaginationComponent<T> {
       // Load table config to render
       this.tableConfig = {
         columnNames: collumnLabels,
-        sourceData: sourceData,
+        mappedData: sourceData,
+        sourceData: this.paginationModel.tableConfig.sourceData,
         onDelete: this.paginationModel.tableConfig.onDelete,
         onEdit: this.paginationModel.tableConfig.onEdit,
         onView: this.paginationModel.tableConfig.onView,
         actionColWidth: this.paginationModel.tableConfig.actionColWidth == null? '100px': this.paginationModel.tableConfig.actionColWidth
       };
-
-      console.log(this.tableConfig);
     }
 
     // Load pagination config to render
@@ -102,5 +103,7 @@ export class NgxPaginationComponent<T> {
         showIcon: this.paginationModel.addNewElementButtonConfig.showIcon,
         onClick: this.paginationModel.addNewElementButtonConfig.onAdd,
       };
+    
+    this.changeDetector.detectChanges();
   }
 }

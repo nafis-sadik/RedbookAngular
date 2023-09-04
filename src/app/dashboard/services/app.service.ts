@@ -1,7 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs";
+import { Observable, map, of } from "rxjs";
 import { environment } from "src/environments/environment.development";
+import { CachingService } from "./caching.service";
+import { IApplicationModel } from "../Models/IApplicationModel";
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +11,24 @@ import { environment } from "src/environments/environment.development";
 export class AppService{
     baseUrl = environment.baseUrl;
     
-    constructor(private http: HttpClient) { }
+    constructor(
+      private http: HttpClient,
+      private cacheingService: CachingService
+    ) { }
 
-    getAllApplications(){
+    getAllApplications(): Observable<Array<IApplicationModel>>{
+      let cachedData: Array<IApplicationModel> = this.cacheingService.get(`${this.baseUrl}/api/Application/GetAll`);
+
+      if(!cachedData){
         return this.http
-            .get<any>(`${this.baseUrl}/api/Application/GetAll`)
-            .pipe(map((response) => response));
+          .get<Array<IApplicationModel>>(`${this.baseUrl}/api/Application/GetAll`)
+          .pipe(map((response) => {
+            this.cacheingService.set(`${this.baseUrl}/api/Application/GetAll`, response)
+            return response
+          }));
+
+      }
+
+      return of(cachedData);
     }
 }

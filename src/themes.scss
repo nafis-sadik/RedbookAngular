@@ -36,9 +36,7 @@ $nb-themes: nb-register-theme((
   color-basic-1000: #151515,
   color-basic-1100: #121a2b,
 
-  shadow: 0 0.5rem 1rem 0 #1a1f33,
-  // and color-basic-600 as instead of color-basic-500
-  // text-disabled-color: color-basic-600
+  shadow: 0 0.5rem 1rem 0 #1c1c1c,
 ), mid-night, dark);
 
 $nb-themes: nb-register-theme((

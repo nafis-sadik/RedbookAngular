@@ -1,4 +1,4 @@
-import { ApplicationRef, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppService } from '../../services/app.service';
 import { RouteService } from '../../services/route.service';
@@ -23,54 +23,32 @@ export class RouteFormComponent implements OnInit {
     private appService: AppService,
     private routeService: RouteService,
     private toasterService: NbToastrService,
-    private changeDetector: ChangeDetectorRef,
-    private appRef: ApplicationRef,
     private paginationService: NGXPaginationService<IRouteModel>,
     private dialogRef: NbDialogRef<RouteFormComponent>
   ){ }
 
   ngOnInit(): void {
-    // Generate form group, 2 way model binding
+    // Generate form group
+    // 2 way model binding - Load data to form and add validation
     this.routeForm = this.fb.group({
       routeName: [this.inputModel.routeName, Validators.required],
-      routeValue: [this.inputModel.routeValue, Validators.required],
+      routeValue: [this.inputModel.routeValue],
       applicationId: [this.inputModel.applicationId, Validators.required],
-      description: [this.inputModel.description, Validators.required]
+      description: [this.inputModel.description]
     });
 
-    // View Model binding with reactive form
-    this.routeForm.valueChanges.subscribe(value => {
-      this.inputModel.routeName = value.routeName;
-      this.inputModel.routeValue = value.routeValue;
+    // 2 way model binding - Load data from form to view model
+    this.routeForm.valueChanges.subscribe((value) => {
       this.inputModel.applicationId = value.applicationId;
       this.inputModel.description = value.description;
+      this.inputModel.routeName = value.routeName;
+      this.inputModel.routeValue = value.routeValue;
     });
 
-    // Handle application selection
+    // Load data for dropdown
     this.appService.getAllApplications().subscribe(value => {
-      // Load data for dropdown
       this.appList = value;
-
-      // For update operation
-      if(this.inputModel !== undefined){
-        // Load data into the model
-        // returned to break loop, this part is here for app id
-        this.appList.forEach(app => {
-          if(app.applicationName ===  this.inputModel.applicationName){
-            this.inputModel.applicationId = app.id
-            return;
-          }
-        });
-      }
     })
-  }
-
-  callApi(): Observable<IRouteModel>{
-    if(this.inputModel.id == undefined || this.inputModel.id == null || this.inputModel.id <= 0){
-      return this.routeService.addNewRoute(this.inputModel);
-    } else {
-      return this.routeService.updateNewRoute(this.inputModel);
-    }
   }
 
   saveRoute(): void{
@@ -79,47 +57,54 @@ export class RouteFormComponent implements OnInit {
       loaderContainer.classList.add('d-block');
       loaderContainer.classList.remove('d-none');
     }
-
-    this.callApi()
-    .subscribe(
-      (response) => {
-        let paginationData: any;
-        this.paginationService.get().subscribe((paginationModel) => {
-          if(paginationModel.tableConfig?.sourceData.length){
-            for(let i = 0; i < paginationModel.tableConfig.sourceData.length; i++){
-              if(paginationModel.tableConfig.sourceData[i].id == response.id){
-                paginationModel.tableConfig.sourceData[i].routeName = response.routeName;
-                paginationModel.tableConfig.sourceData[i].routeValue = response.routeValue;
-                paginationModel.tableConfig.sourceData[i].applicationId = response.applicationId;
-                paginationModel.tableConfig.sourceData[i].description = response.description;
-
-                break;
+    
+    if(this.inputModel.id == undefined || this.inputModel.id == null || this.inputModel.id <= 0){
+      this.routeService.addNewRoute(this.inputModel)
+        .subscribe(() => {
+          window.location.reload()
+        })
+    } else {
+      this.routeService.updateNewRoute(this.inputModel)
+        .subscribe(
+          (response) => {
+            // Get pagination data to update table
+            this.paginationService.get().subscribe((paginationModel) => {
+              if(paginationModel.tableConfig?.sourceData.length){
+                // Pick row from table data and update from response data
+                for(let i = 0; i < paginationModel.tableConfig.sourceData.length; i++){
+                  if(paginationModel.tableConfig.sourceData[i].id == response.id){
+                    paginationModel.tableConfig.sourceData[i].routeName = response.routeName;
+                    paginationModel.tableConfig.sourceData[i].routeValue = response.routeValue;
+                    paginationModel.tableConfig.sourceData[i].applicationId = response.applicationId;
+                    paginationModel.tableConfig.sourceData[i].description = response.description;
+    
+                    // Break the loop as we don't allow multiple update from UI
+                    // So, after data is found, no further interation is necessary
+                    break;
+                  }
+                }
+    
+                this.paginationService.set(paginationModel);
               }
+              });
+    
+              if(loaderContainer){            
+                loaderContainer.classList.remove('d-block');
+                loaderContainer.classList.add('d-none');
+    
+                this.dialogRef.close();
+    
+                this.toasterService.success('Success', 'Saved Successfully')
+              }
+            },
+          (err) => {
+            this.toasterService.danger(err.error, 'Failed to execute operation');
+    
+            if(loaderContainer){
+              loaderContainer.classList.remove('d-block');
+              loaderContainer.classList.add('d-none');
             }
-
-            paginationData = paginationModel;
-          }
           });
-
-          if(loaderContainer){
-            loaderContainer.classList.remove('d-block');
-            loaderContainer.classList.add('d-none');
-
-            paginationData.tableCardHeader = 'chutiya';
-            this.paginationService.set(paginationData);
-            this.paginationService.set(paginationData);
-            this.appRef.tick();
-            this.changeDetector.detectChanges();
-            this.dialogRef.close();
-          }
-        },
-      (err) => {
-        this.toasterService.danger(err.error, 'Failed to execute operation');
-
-        if(loaderContainer){
-          loaderContainer.classList.remove('d-block');
-          loaderContainer.classList.add('d-none');
-        }
-      });
+    }
   }
 }
