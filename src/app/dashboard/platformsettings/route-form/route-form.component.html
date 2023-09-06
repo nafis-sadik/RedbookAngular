@@ -38,6 +38,12 @@
                     </nb-select>
                 </div>
                 <div class="col-md-12 p-1">
+                    <label class="mb-1 d-block">Parent Route</label>
+                    <nb-select fullWidth placeholder="Select Parent Route" status="primary" formControlName="parentRouteId" [selected]=inputModel.parentRouteId>
+                        <nb-option *ngFor="let route of routeList" [value]=route.id>{{ route.routeName }}</nb-option>
+                    </nb-select>
+                </div>
+                <div class="col-md-12 p-1">
                     <label class="mb-1">Route Description</label>
                     <textarea
                         nbInput

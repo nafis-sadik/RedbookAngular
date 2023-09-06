@@ -34,4 +34,10 @@ export declare interface IRouteModel{
      * @type {string}
      */
     applicationName: string;
+
+    /**
+     * Parent route Id
+     * @type {number | null}
+     */
+    parentRouteId: number | null;
 }

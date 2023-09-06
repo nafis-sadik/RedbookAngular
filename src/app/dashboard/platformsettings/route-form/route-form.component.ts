@@ -6,7 +6,7 @@ import { IRouteModel } from '../../Models/IRouteModel';
 import { IApplicationModel } from '../../Models/IApplicationModel';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { Observable } from 'rxjs';
+import { AppConfigurationService } from '../../services/app-config.service';
 
 @Component({
   selector: 'app-route-form',
@@ -17,14 +17,15 @@ export class RouteFormComponent implements OnInit {
   routeForm: FormGroup;
   inputModel: IRouteModel;
   appList: Array<IApplicationModel>;
+  routeList: Array<IRouteModel>;
 
   constructor(
     private fb: FormBuilder,
     private appService: AppService,
     private routeService: RouteService,
     private toasterService: NbToastrService,
+    private dialogRef: NbDialogRef<RouteFormComponent>,
     private paginationService: NGXPaginationService<IRouteModel>,
-    private dialogRef: NbDialogRef<RouteFormComponent>
   ){ }
 
   ngOnInit(): void {
@@ -34,7 +35,8 @@ export class RouteFormComponent implements OnInit {
       routeName: [this.inputModel.routeName, Validators.required],
       routeValue: [this.inputModel.routeValue],
       applicationId: [this.inputModel.applicationId, Validators.required],
-      description: [this.inputModel.description]
+      description: [this.inputModel.description],
+      parentRouteId: [this.inputModel.parentRouteId]
     });
 
     // 2 way model binding - Load data from form to view model
@@ -43,12 +45,17 @@ export class RouteFormComponent implements OnInit {
       this.inputModel.description = value.description;
       this.inputModel.routeName = value.routeName;
       this.inputModel.routeValue = value.routeValue;
+      this.inputModel.parentRouteId = value.parentRouteId;
     });
 
     // Load data for dropdown
     this.appService.getAllApplications().subscribe(value => {
       this.appList = value;
-    })
+    });
+
+    this.routeService.getAllRoute().subscribe(routeListResponse => {
+      this.routeList = routeListResponse;
+    });
   }
 
   saveRoute(): void{
@@ -57,7 +64,7 @@ export class RouteFormComponent implements OnInit {
       loaderContainer.classList.add('d-block');
       loaderContainer.classList.remove('d-none');
     }
-    
+
     if(this.inputModel.id == undefined || this.inputModel.id == null || this.inputModel.id <= 0){
       this.routeService.addNewRoute(this.inputModel)
         .subscribe(() => {
@@ -77,29 +84,29 @@ export class RouteFormComponent implements OnInit {
                     paginationModel.tableConfig.sourceData[i].routeValue = response.routeValue;
                     paginationModel.tableConfig.sourceData[i].applicationId = response.applicationId;
                     paginationModel.tableConfig.sourceData[i].description = response.description;
-    
+
                     // Break the loop as we don't allow multiple update from UI
                     // So, after data is found, no further interation is necessary
                     break;
                   }
                 }
-    
+
                 this.paginationService.set(paginationModel);
               }
               });
-    
-              if(loaderContainer){            
+
+              if(loaderContainer){
                 loaderContainer.classList.remove('d-block');
                 loaderContainer.classList.add('d-none');
-    
+
                 this.dialogRef.close();
-    
+
                 this.toasterService.success('Success', 'Saved Successfully')
               }
             },
           (err) => {
             this.toasterService.danger(err.error, 'Failed to execute operation');
-    
+
             if(loaderContainer){
               loaderContainer.classList.remove('d-block');
               loaderContainer.classList.add('d-none');

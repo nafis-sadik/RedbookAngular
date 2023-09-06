@@ -60,7 +60,8 @@ export class PlatformsettingsComponent implements OnInit{
               routeValue: '',
               description: '',
               applicationId: 0,
-              applicationName: ''
+              applicationName: '',
+              parentRouteId: 0
             },
           }
         });
