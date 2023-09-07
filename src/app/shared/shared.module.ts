@@ -10,8 +10,8 @@ import {
 } from '@nebular/theme';
 import { NgxPaginationComponent } from './ngx-pagination/ngx-pagination.component';
 import { PagedTableComponent } from './ngx-pagination/paged-table/paged-table.component';
-import { PaginationComponent } from './ngx-pagination/pagination/pagination.component';
-import { SearchComponent } from './ngx-pagination/search/search.component';
+// import { PaginationComponent } from './ngx-pagination/pagination/pagination.component';
+// import { SearchComponent } from './ngx-pagination/search/search.component';
 import { AddNewComponent } from './ngx-pagination/add-new/add-new.component';
 import { AddDialogueComponent } from './ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from './ngx-dialogues/remove-dialogue/remove-dialogue.component';
@@ -19,10 +19,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
-    PaginationComponent,
+    // PaginationComponent,
     PagedTableComponent,
     NgxPaginationComponent,
-    SearchComponent,
+    // SearchComponent,
     AddNewComponent,
     AddDialogueComponent,
     RemoveDialogueComponent,

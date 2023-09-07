@@ -6,6 +6,7 @@ import { RouteFormComponent } from './route-form/route-form.component';
 import { RouteService } from '../services/route.service';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { NbDialogService } from '@nebular/theme';
+import { IParamModel } from 'src/app/shared/ngx-pagination/Models/IParamModel';
 
 @Component({
   selector: 'app-platformsettings',
@@ -79,6 +80,25 @@ export class PlatformsettingsComponent implements OnInit{
         }
 
         this.loadData();
+      }      
+
+      if(this.pagedRouteModel.searchingConfig){
+        this.pagedRouteModel.searchingConfig.onSearch = (tableParameters: IParamModel) => { 
+          if(this.pagedRouteModel.searchingConfig){
+            if(tableParameters){
+              if(tableParameters.searchString)
+                this.pagedRouteModel.searchingConfig.searchString = tableParameters.searchString;
+              if(this.pagedRouteModel.pagingConfig){
+                this.pagedRouteModel.pagingConfig.pageNumber = tableParameters.pageNumber;
+                this.pagedRouteModel.pagingConfig.pageLength = tableParameters.pageLength;
+              }
+              
+              this.routeService.getPagedRoute(this.pagedRouteModel);
+            }
+
+            this.loadData();
+          }
+        }
       }
     }
   }

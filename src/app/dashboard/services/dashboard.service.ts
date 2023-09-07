@@ -194,8 +194,8 @@ export class DashboardService {
         inputFieldPlaceholder: searchFieldPlaceholder,
         buttonLabel: searchButtonLabel,
         showIcon: true,
-        onSearch: () => {
-          console.log('Search Callback')
+        onSearch: (data: any) => {
+          console.log('Search Callback', data)
         }
       },
       addNewElementButtonConfig: {

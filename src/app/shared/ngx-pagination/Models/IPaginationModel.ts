@@ -82,7 +82,7 @@ export declare interface IPaginationModel<T> {
     /**
      * Default value: null
      * Description: Text to search in database
-     * @type {string | null}
+     * @type {string}
      */
     searchString: string;
     /**
