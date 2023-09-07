@@ -33,7 +33,7 @@ export class NgxPaginationComponent<T> {
       throw new Error('Object of type IPaginationModel is expected for paginationModel.');
 
     // Load table config to render
-    if (this.paginationModel.tableConfig != null) {
+    if (this.paginationModel.tableConfig) {
       // Works for the table
       // Get column labels for table UI
       let collumnLabels: string[] = Object.keys(
@@ -74,15 +74,15 @@ export class NgxPaginationComponent<T> {
         actionColWidth: this.paginationModel.tableConfig.actionColWidth == null? '100px': this.paginationModel.tableConfig.actionColWidth
       };
     }
-
+    
     // Load pagination config to render
-    if (this.paginationModel.pagingConfig) {
+    if (this.paginationModel.pagingConfig) {      
       this.pagingModel = {
         pageLength: this.paginationModel.pagingConfig.pageLength,
         pageNumber: this.paginationModel.pagingConfig.pageNumber,
         totalItems: this.paginationModel.pagingConfig.totalItems,
         onUpdate: this.paginationModel.pagingConfig.onUpdate,
-        totalPageCount:  Math.ceil(this.paginationModel.pagingConfig.totalItems/this.paginationModel.pagingConfig.pageLength)
+        totalPageCount: Math.ceil(this.paginationModel.pagingConfig.totalItems/this.paginationModel.pagingConfig.pageLength)
       }
     }
 
