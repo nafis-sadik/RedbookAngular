@@ -445,7 +445,7 @@ export class DashboardService {
       {
         title: 'Onboarding',
         icon: 'person-add',
-        link: '/dashboard/retailer'
+        link: '/dashboard/onboarding'
       },
       {
         title: 'Platform Settings',

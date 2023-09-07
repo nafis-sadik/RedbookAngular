@@ -8,8 +8,8 @@ import { CustomersComponent } from './CRM/customers/customers.component';
 import { SellComponent } from './BusinessOperations/sell/sell.component';
 import { PurchaseComponent } from './BusinessOperations/purchase/purchase.component';
 import { ProductsComponent } from './settings/ProductManagement/products/products.component';
-import { RetailerComponent } from './retailer/retailer.component';
 import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
+import { OnboardingComponent } from './onboarding/onboarding.component';
 
 const routes: Routes = [{
   path: '',
@@ -44,8 +44,8 @@ const routes: Routes = [{
       component: CustomersComponent
     },
     {
-      path: 'retailer',
-      component: RetailerComponent
+      path: 'onboarding',
+      component: OnboardingComponent
     },
     {
       path: 'platform-settings',

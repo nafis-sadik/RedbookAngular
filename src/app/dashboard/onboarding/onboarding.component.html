@@ -2,8 +2,8 @@
     <nb-card>
         <nb-card-header>Retail Form</nb-card-header>
         <nb-card-body>
-            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]="linearMode" #stepper>
-                <nb-step label="Register Client Organization">
+            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]=linearMode #stepper>
+                <nb-step [stepControl]="OrganizationForm" label="Register Client Organization">
                     <ng-template #labelOne>Organization step</ng-template>
                     <form [formGroup]="OrganizationForm" (ngSubmit)="addNewOrganization(stepper)" class="step-container row">
                         <div class="col-md-12 p-1">
@@ -28,7 +28,7 @@
                         </div>
                     </form>
                 </nb-step>
-                <nb-step label="Register Admin User">
+                <nb-step [stepControl]="AdminUserForm" label="Register Admin User">
                     <ng-template #labelTwo>Admin User Step</ng-template>
                     <form [formGroup]="AdminUserForm" (ngSubmit)="addAdminUser(stepper)" class="step-container row">
                         <div class="col-md-6 p-1">

@@ -38,9 +38,9 @@ import { SellComponent } from './BusinessOperations/sell/sell.component';
 import { AddSalesComponent } from './BusinessOperations/sell/add-sales/add-sales.component';
 import { ProductsComponent } from './settings/ProductManagement/products/products.component';
 import { ProductsDetailsFormComponent } from './settings/ProductManagement/products/products-details-form/products-details-form.component';
-import { RetailerComponent } from './retailer/retailer.component';
 import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
 import { RouteFormComponent } from './platformsettings/route-form/route-form.component';
+import { OnboardingComponent } from './onboarding/onboarding.component';
 
 
 @NgModule({
@@ -59,9 +59,9 @@ import { RouteFormComponent } from './platformsettings/route-form/route-form.com
     UmsComponent,
     UserFormComponent,
     CustomersComponent,
-    RetailerComponent,
     PlatformsettingsComponent,
-    RouteFormComponent
+    RouteFormComponent,
+    OnboardingComponent
   ],
   imports: [
     CommonModule,

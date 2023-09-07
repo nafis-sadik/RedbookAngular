@@ -1,33 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { IOrganizationModel } from '../Models/IOrganizationModel';
-import { OrganizationService } from '../services/organization.service';
-import { NbStepperComponent, NbToastrService } from '@nebular/theme';
-import { IUserModel } from '../Models/IUserModel';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../services/user.service';
+import { Component } from '@angular/core';
 import { AppConfigurationService } from '../services/app-config.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NbStepperComponent, NbToastrService } from '@nebular/theme';
+import { OrganizationService } from '../services/organization.service';
+import { UserService } from '../services/user.service';
+import { IOrganizationModel } from '../Models/IOrganizationModel';
+import { IUserModel } from '../Models/IUserModel';
 
 @Component({
-  selector: 'app-retailer',
-  templateUrl: './retailer.component.html',
-  styleUrls: ['./retailer.component.scss']
+  selector: 'app-onboarding',
+  templateUrl: './onboarding.component.html',
+  styleUrls: ['./onboarding.component.scss']
 })
-export class RetailerComponent implements OnInit {
-  orgModel: IOrganizationModel;
-  userModel: IUserModel;
-  linearMode: boolean;
-  isMobile: boolean;
-
-  OrganizationForm: FormGroup;
+export class OnboardingComponent {
   AdminUserForm: FormGroup;
+  OrganizationForm: FormGroup;
+  loaderContainer: HTMLElement| null;
 
+  isMobile: boolean;
+  linearMode: boolean = true;
+  
+  userModel: IUserModel;
+  orgModel: IOrganizationModel;
+  
   constructor(
-    private appConfigService: AppConfigurationService,
-    private organizationService: OrganizationService,
-    private toasterService: NbToastrService,
+    private fb: FormBuilder,
     private userService: UserService,
-    private fb: FormBuilder
-  ){ this.linearMode = true; }
+    private toasterService: NbToastrService,
+    private organizationService: OrganizationService,
+    private appConfigService: AppConfigurationService,
+  ) { this.loaderContainer = document.getElementById('LoadingScreen'); }
 
   ngOnInit() {
     this.isMobile = this.appConfigService.isMobilePhone();
@@ -53,6 +55,13 @@ export class RetailerComponent implements OnInit {
     this.AdminUserForm?.valueChanges.subscribe(value => {
       this.userModel = value;
     });
+    
+    setTimeout(() => {
+      if(this.loaderContainer){
+        this.loaderContainer.classList.remove('d-block');
+        this.loaderContainer.classList.add('d-none');
+      }
+    }, 1.5 * 1000);
   }
 
   addNewOrganization(stepper: NbStepperComponent): void{
