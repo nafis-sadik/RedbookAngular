@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { IRouteModel } from '../Models/IRouteModel';
-import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { DashboardService } from '../services/dashboard.service';
 import { RouteFormComponent } from './route-form/route-form.component';
+import { NbDialogService } from '@nebular/theme';
 import { RouteService } from '../services/route.service';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { NbDialogService } from '@nebular/theme';
+import { IRouteModel } from '../Models/IRouteModel';
 import { IParamModel } from 'src/app/shared/ngx-pagination/Models/IParamModel';
+import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 
 @Component({
   selector: 'app-platformsettings',
@@ -40,15 +40,17 @@ export class PlatformsettingsComponent implements OnInit{
         });
       }
 
-      this.pagedRouteModel.tableConfig.onView = (routeModel: IRouteModel) => {
-        console.log(routeModel);
-      }
+      this.pagedRouteModel.tableConfig.onView = null;
+      // this.pagedRouteModel.tableConfig.onView = (routeModel: IRouteModel) => {
+      //   console.log(routeModel);
+      // }
 
-      this.pagedRouteModel.tableConfig.onDelete = (routeId: number) => {
-        console.log(routeId);
-      }
+      this.pagedRouteModel.tableConfig.onDelete = null;
+      // this.pagedRouteModel.tableConfig.onDelete = (routeId: number) => {
+      //   console.log(routeId);
+      // }
 
-      this.pagedRouteModel.tableConfig.actionColWidth = '150px';
+      this.pagedRouteModel.tableConfig.actionColWidth = '50px';
     }
 
     if(this.pagedRouteModel.addNewElementButtonConfig){
@@ -89,7 +91,7 @@ export class PlatformsettingsComponent implements OnInit{
               if(tableParameters.searchString)
                 this.pagedRouteModel.searchingConfig.searchString = tableParameters.searchString;
               if(this.pagedRouteModel.pagingConfig){
-                this.pagedRouteModel.pagingConfig.pageNumber = tableParameters.pageNumber;
+                this.pagedRouteModel.pagingConfig.pageNumber = 1;
                 this.pagedRouteModel.pagingConfig.pageLength = tableParameters.pageLength;
               }
               

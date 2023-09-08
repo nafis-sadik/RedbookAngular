@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { AppConfigurationService } from './app-config.service';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
+import { map } from 'rxjs';
+import { IRouteModel } from '../Models/IRouteModel';
 
 @Injectable({
     providedIn: 'root',
@@ -375,15 +377,55 @@ export class DashboardService {
   getMenuOptionsByUserId(userId: string){
     console.log(this.appConfigService.UserModelData);
 
-    // return this.http
-    // .get<any>(`${this.baseUrl}/api/Route/GetAll/${userId}`)
-    // .pipe(map((response) => response));
+    this.http
+    .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetAppRoutes/${environment.appId}`)
+    .pipe(map(response =>  response ))
+    .subscribe(menuList => {
+      let menu: { [key: string]: any } = {};
+      let menuItems: IRouteModel[] = menuList;
+      let menuDict: { [key: string]: any } =  {};
+      for(let menuItem of menuItems) {
+        menuDict[menuItem.id] = menuItem;
+      }
 
+      while(Object.keys(menuDict).length > 0){
+        // Get the root level
+        for(let key in menuDict){
+          if(!menuDict[key].parentRouteId){
+            menu[menuDict[key].id] = {
+              title: menuDict[key].routeName,
+              icon: menuDict[key].description,
+              link: menuDict[key].routeValue
+            };
+
+            delete menuDict[key];
+          }
+        }
+
+        // Build the tree
+        for(let key in menuDict){
+          if(menuDict[key].parentRouteId){
+            menu[menuDict[key].id] = {
+              title: menuDict[key].routeName,
+              icon: menuDict[key].description,
+              link: menuDict[key].routeValue
+            };
+
+            delete menuDict[key];
+          }
+        }
+        console.log(Object.keys(menuDict).length);
+        break;
+      }
+
+      console.log('menu', menu);
+    });
+    
     return [
       {
         title: 'Dashboards',
         icon: 'keypad',
-        link: '/dashboard/home'
+        link: '/dashboard/home',
       },
       {
         title: 'Business Operations',

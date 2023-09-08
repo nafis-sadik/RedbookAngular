@@ -6,7 +6,7 @@ import { IRouteModel } from '../../Models/IRouteModel';
 import { IApplicationModel } from '../../Models/IApplicationModel';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { AppConfigurationService } from '../../services/app-config.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-route-form',
@@ -53,13 +53,13 @@ export class RouteFormComponent implements OnInit {
       this.appList = value;
     });
 
-    this.routeService.getAllRoute().subscribe(routeListResponse => {
+    this.routeService.getAllRoute(environment.appId).subscribe(routeListResponse => {
       this.routeList = routeListResponse;
     });
   }
 
   saveRoute(): void{
-    let loaderContainer: HTMLElement| null = document.getElementById('LoadingScreen');
+    let loaderContainer: HTMLElement|null = document.getElementById('LoadingScreen');
     if(loaderContainer){
       loaderContainer.classList.add('d-block');
       loaderContainer.classList.remove('d-none');
