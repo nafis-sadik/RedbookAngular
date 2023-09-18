@@ -74,37 +74,53 @@ export class RouteFormComponent implements OnInit {
       this.routeService.updateNewRoute(this.inputModel)
         .subscribe(
           (response) => {
+            // Switched to reload as actions have method bindings which unbinds
+            // UI update works fine
+            // Multiple set not required anymore
+            if(loaderContainer){
+              loaderContainer.classList.remove('d-none');
+              loaderContainer.classList.add('d-block');
+
+              this.dialogRef.close();
+
+              this.toasterService.success('Success', 'Saved Successfully')
+            }
+            
+            window.location.reload();
+            return;
+
             // Get pagination data to update table
-            this.paginationService.get().subscribe((paginationModel) => {
-              if(paginationModel.tableConfig?.sourceData.length){
-                // Pick row from table data and update from response data
-                for(let i = 0; i < paginationModel.tableConfig.sourceData.length; i++){
-                  if(paginationModel.tableConfig.sourceData[i].id == response.id){
-                    paginationModel.tableConfig.sourceData[i].routeName = response.routeName;
-                    paginationModel.tableConfig.sourceData[i].routeValue = response.routeValue;
-                    paginationModel.tableConfig.sourceData[i].applicationId = response.applicationId;
-                    paginationModel.tableConfig.sourceData[i].description = response.description;
+            // this.paginationService.get().subscribe((paginationModel) => {
+            //   if(paginationModel.tableConfig?.sourceData.length){
+            //     // Pick row from table data and update from response data
+            //     for(let i = 0; i < paginationModel.tableConfig.sourceData.length; i++){
+            //       if(paginationModel.tableConfig.sourceData[i].id == response.id){
+            //         paginationModel.tableConfig.sourceData[i].routeName = response.routeName;
+            //         paginationModel.tableConfig.sourceData[i].routeValue = response.routeValue;
+            //         paginationModel.tableConfig.sourceData[i].applicationId = response.applicationId;
+            //         paginationModel.tableConfig.sourceData[i].description = response.description;
 
-                    // Break the loop as we don't allow multiple update from UI
-                    // So, after data is found, no further interation is necessary
-                    break;
-                  }
-                }
+            //         // Break the loop as we don't allow multiple update from UI
+            //         // So, after data is found, no further interation is necessary
+            //         break;
+            //       }
+            //     }
 
-                this.paginationService.set(paginationModel);
-              }
-              });
+            //     this.paginationService.set(paginationModel);
+            //   }
+            // });
 
-              if(loaderContainer){
-                loaderContainer.classList.remove('d-block');
-                loaderContainer.classList.add('d-none');
+            // if(loaderContainer){
+            //   loaderContainer.classList.remove('d-block');
+            //   loaderContainer.classList.add('d-none');
 
-                this.dialogRef.close();
+            //   this.dialogRef.close();
 
-                this.toasterService.success('Success', 'Saved Successfully')
-              }
-            },
+            //   this.toasterService.success('Success', 'Saved Successfully')
+            // }
+          },
           (err) => {
+            console.log(err)
             this.toasterService.danger(err.error, 'Failed to execute operation');
 
             if(loaderContainer){

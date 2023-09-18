@@ -121,7 +121,6 @@ export class DashboardService {
 
   constructor(
     private dialogService: NbDialogService,
-    private appConfigService: AppConfigurationService,
     private http: HttpClient
   ) {
     this.ngDialogService = dialogService;
@@ -374,127 +373,85 @@ export class DashboardService {
         ];
   }
 
-  getMenuOptionsByUserId(userId: string){
-    console.log(this.appConfigService.UserModelData);
-
-    this.http
-    .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetAppRoutes/${environment.appId}`)
-    .pipe(map(response =>  response ))
-    .subscribe(menuList => {
-      let menu: { [key: string]: any } = {};
-      let menuItems: IRouteModel[] = menuList;
-      let menuDict: { [key: string]: any } =  {};
-      for(let menuItem of menuItems) {
-        menuDict[menuItem.id] = menuItem;
-      }
-
-      while(Object.keys(menuDict).length > 0){
-        // Get the root level
-        for(let key in menuDict){
-          if(!menuDict[key].parentRouteId){
-            menu[menuDict[key].id] = {
-              title: menuDict[key].routeName,
-              icon: menuDict[key].description,
-              link: menuDict[key].routeValue
-            };
-
-            delete menuDict[key];
-          }
-        }
-
-        // Build the tree
-        for(let key in menuDict){
-          if(menuDict[key].parentRouteId){
-            menu[menuDict[key].id] = {
-              title: menuDict[key].routeName,
-              icon: menuDict[key].description,
-              link: menuDict[key].routeValue
-            };
-
-            delete menuDict[key];
-          }
-        }
-        console.log(Object.keys(menuDict).length);
-        break;
-      }
-
-      console.log('menu', menu);
-    });
-    
-    return [
-      {
-        title: 'Dashboards',
-        icon: 'keypad',
-        link: '/dashboard/home',
-      },
-      {
-        title: 'Business Operations',
-        icon: 'layers',
-        expanded: false,
-        children:[
-          {
-            title: 'Invoice/Purchase',
-            icon: 'shopping-bag',
-            link: '/dashboard/purchase'
-          },
-          {
-            title: 'Sales',
-            icon: 'shopping-cart',
-            link: '/dashboard/sales'
-          }
-        ]
-      },
-      {
-        title: 'CRM',
-        icon: 'people',
-        expanded: false,
-        children: [
-          {
-            title: 'Customers',
-            icon: 'person',
-            link: '/dashboard/customers'
-          }
-        ]
-      },
-      {
-        title: 'Settings',
-        icon: 'settings',
-        expanded: false,
-        children: [
-          {
-            title: 'Product Management',
-            icon: 'cube',
-            children: [
-              {
-                title: 'Categories',
-                icon: 'list',
-                link: '/dashboard/category'
-              },
-              {
-                title: 'Product List',
-                icon: 'list',
-                link: '/dashboard/products'
-              }
-            ]
-          },
-          {
-            title: 'System Settings',
-            icon: 'briefcase',
-            link: '/dashboard/settings'
-          }
-        ]
-      },
-      {
-        title: 'Onboarding',
-        icon: 'person-add',
-        link: '/dashboard/onboarding'
-      },
-      {
-        title: 'Platform Settings',
-        icon: 'settings-2',
-        link: '/dashboard/platform-settings'
-      }
-    ];
+  getMenuOptionsByUserId(){
+    return this.http
+      .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetAppRoutes/${environment.appId}`)
+      .pipe(map(response =>  response ))
+      
+    // return [
+    //   {
+    //     title: 'Dashboards',
+    //     icon: 'keypad',
+    //     link: '/dashboard/home',
+    //   },
+    //   {
+    //     title: 'Business Operations',
+    //     icon: 'layers',
+    //     expanded: false,
+    //     children:[
+    //       {
+    //         title: 'Invoice/Purchase',
+    //         icon: 'shopping-bag',
+    //         link: '/dashboard/purchase'
+    //       },
+    //       {
+    //         title: 'Sales',
+    //         icon: 'shopping-cart',
+    //         link: '/dashboard/sales'
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     title: 'CRM',
+    //     icon: 'people',
+    //     expanded: false,
+    //     children: [
+    //       {
+    //         title: 'Customers',
+    //         icon: 'person',
+    //         link: '/dashboard/customers'
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     title: 'Settings',
+    //     icon: 'settings',
+    //     expanded: false,
+    //     children: [
+    //       {
+    //         title: 'Product Management',
+    //         icon: 'cube',
+    //         children: [
+    //           {
+    //             title: 'Categories',
+    //             icon: 'list',
+    //             link: '/dashboard/category'
+    //           },
+    //           {
+    //             title: 'Product List',
+    //             icon: 'list',
+    //             link: '/dashboard/products'
+    //           }
+    //         ]
+    //       },
+    //       {
+    //         title: 'System Settings',
+    //         icon: 'briefcase',
+    //         link: '/dashboard/settings'
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     title: 'Onboarding',
+    //     icon: 'person-add',
+    //     link: '/dashboard/onboarding'
+    //   },
+    //   {
+    //     title: 'Platform Settings',
+    //     icon: 'settings-2',
+    //     link: '/dashboard/platform-settings'
+    //   }
+    // ];
   }
 
   loadCategories(selectedOutletId: number): ICategoryModel[] {

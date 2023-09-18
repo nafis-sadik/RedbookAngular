@@ -28,8 +28,9 @@ export class CachingService{
 
     remove(key: string): any{
         let keys = Object.keys(this.cachedData);
-        if(keys.includes(key))
-            return this.cachedData[key].remove();
+        if(keys.includes(key)){
+            delete this.cachedData[key];
+        }
 
         return null;
     }
