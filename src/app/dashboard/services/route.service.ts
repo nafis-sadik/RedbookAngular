@@ -62,4 +62,11 @@ export class RouteService{
 
     return of(cachedRoutes);
   }
+
+  deleteRoute(appId: number): Observable<any>{
+    this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes/${appId}`);
+    return this.http
+      .delete(`${this.baseUrl}/api/Route/${appId}`)
+      .pipe(map(response => response));
+  }
 }

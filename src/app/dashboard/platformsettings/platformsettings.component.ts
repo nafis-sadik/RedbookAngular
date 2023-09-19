@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../services/dashboard.service';
 import { RouteFormComponent } from './route-form/route-form.component';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogService, NbToastrService } from '@nebular/theme';
 import { RouteService } from '../services/route.service';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { IRouteModel } from '../Models/IRouteModel';
@@ -18,6 +18,7 @@ export class PlatformsettingsComponent implements OnInit{
 
   constructor(
     dashboardService: DashboardService,
+    toasterService: NbToastrService,
     private routeService: RouteService,
     public dialogService: NbDialogService,
     private ngxPaginationService: NGXPaginationService<IRouteModel>
@@ -45,10 +46,14 @@ export class PlatformsettingsComponent implements OnInit{
       //   console.log(routeModel);
       // }
 
-      this.pagedRouteModel.tableConfig.onDelete = null;
-      // this.pagedRouteModel.tableConfig.onDelete = (routeId: number) => {
-      //   console.log(routeId);
-      // }
+      // this.pagedRouteModel.tableConfig.onDelete = null;
+      this.pagedRouteModel.tableConfig.onDelete = (routeModel: IRouteModel) => {
+        this.routeService.deleteRoute(routeModel.id)
+          .subscribe(() => {
+            toasterService.success('operation successfull');
+            location.reload();
+          });
+      }
 
       this.pagedRouteModel.tableConfig.actionColWidth = '50px';
     }

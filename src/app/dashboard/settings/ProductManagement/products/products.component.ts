@@ -19,6 +19,8 @@ export class ProductsComponent {
 
   pagedProductModel: IPaginationModel<IProductModel>;
 
+  loaderContainer: HTMLElement| null;
+
   constructor(
     dashboardService: DashboardService,
     private productService: ProductService,
@@ -52,6 +54,17 @@ export class ProductsComponent {
         console.log('onDelete');
       };
     }
+  }
+  
+  ngOnInit(): void {
+    this.loaderContainer = document.getElementById('LoadingScreen');
+    
+    setTimeout(() => {
+      if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
+        this.loaderContainer.classList.remove('d-block');
+        this.loaderContainer.classList.add('d-none');
+      }
+    }, 1.5 * 1000);
   }
 
   selectOutlet(outletId: number, event: any): void{

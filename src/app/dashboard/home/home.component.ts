@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit{
       this.loaderContainer.classList.remove('d-none');
     }
   }
+  
   ngOnInit(): void {
     setTimeout(() => {
       if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){

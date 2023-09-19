@@ -32,6 +32,6 @@ export class PagedTableComponent implements OnInit{
 
   onDelete(index: number){
     if(this.config.onDelete && typeof(this.config.onDelete) == typeof(Function))
-      this.config.onDelete(this.config.mappedData[index][0]);
+      this.config.onDelete(this.config.sourceData[index]);
   }
 }

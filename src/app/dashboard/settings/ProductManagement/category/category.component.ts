@@ -119,12 +119,25 @@ export class CategoryComponent {
 
   ownedBusinesses: IOrganizationModel[] = [];
 
+  loaderContainer: HTMLElement| null;
+
   constructor(
     private dashboardService: DashboardService,
     private windowService: NbWindowService,
     private toastrService: NbToastrService
   ) {
     this.ownedBusinesses = this.dashboardService.getOutlets();
+  }
+  
+  ngOnInit(): void {
+    this.loaderContainer = document.getElementById('LoadingScreen');
+    
+    setTimeout(() => {
+      if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
+        this.loaderContainer.classList.remove('d-block');
+        this.loaderContainer.classList.add('d-none');
+      }
+    }, 1.5 * 1000);
   }
 
   loadCategories(selectedBusiness: number) {

@@ -1,11 +1,9 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
-// import { IPagingModel } from './Models/IPagingModel';
-// import { ISearchModel } from './Models/ISearchModel';
+// import { PaginationService } from './pagination/pagination.service';
 import { IAddNewModel } from './Models/IAddNewModel';
 import { NGXPaginationService } from './ngx-pagination.service';
-// import { PaginationService } from './pagination/pagination.service';
 import { IParamModel } from './Models/IParamModel';
 
 @Component({
@@ -23,8 +21,6 @@ export class NgxPaginationComponent<T> {
 
 
   tableConfig: ITableModel;
-  // pagingModel: IPagingModel;
-  // searchModel: ISearchModel;
   addNewButtonConfig: IAddNewModel;
 
   constructor(private ngxPaginationService: NGXPaginationService<T>, private changeDetector: ChangeDetectorRef) {
@@ -108,29 +104,6 @@ export class NgxPaginationComponent<T> {
         actionColWidth: this.paginationModel.tableConfig.actionColWidth == null? '100px': this.paginationModel.tableConfig.actionColWidth
       };
     }
-    
-    // Load pagination config to render
-    // if (this.paginationModel.pagingConfig) {      
-    //   this.pagingModel = {
-    //     pageLength: this.paginationModel.pagingConfig.pageLength,
-    //     pageNumber: this.paginationModel.pagingConfig.pageNumber,
-    //     totalItems: this.paginationModel.pagingConfig.totalItems,
-    //     onUpdate: this.paginationModel.pagingConfig.onUpdate,
-    //     totalPageCount: Math.ceil(this.paginationModel.pagingConfig.totalItems/this.paginationModel.pagingConfig.pageLength)
-    //   }
-
-    //   this.paginationService.set(this.pagingModel);
-    // }
-
-    // Load search field config to render
-    // if (this.paginationModel.searchingConfig)
-    //   this.searchModel = {
-    //     inputFieldPlaceholder: this.paginationModel.searchingConfig.inputFieldPlaceholder? this.paginationModel.searchingConfig.inputFieldPlaceholder: 'Search',
-    //     searchString: this.paginationModel.searchingConfig.searchString,
-    //     searchButtonLabel: this.paginationModel.searchingConfig.buttonLabel,
-    //     showSearchIcon: this.paginationModel.searchingConfig.showIcon,
-    //     onClick: this.paginationModel.searchingConfig.onSearch,
-    //   };
 
     // Load add new button config to render
     if (this.paginationModel.addNewElementButtonConfig)

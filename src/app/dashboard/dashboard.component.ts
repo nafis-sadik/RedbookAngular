@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './services/dashboard.service';
 import { IRouteModel } from './Models/IRouteModel';
@@ -26,6 +26,7 @@ export class DashboardComponent {
 
   constructor(
     dashboardService: DashboardService,
+    chageDetector: ChangeDetectorRef,
     private sidebarService: NbSidebarService,
     private themeService: NbThemeService,
   ) {
@@ -115,10 +116,11 @@ export class DashboardComponent {
         });
 
         this.menuOptions = secondLayerData;
+        chageDetector.detectChanges();
       });
 
-      this.isButtonVisible = false;
-    }
+    this.isButtonVisible = false;
+  }
 
   toggle(): void { this.sidebarService.toggle(false, 'left'); }
 
