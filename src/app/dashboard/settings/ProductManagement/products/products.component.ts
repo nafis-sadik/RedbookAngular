@@ -26,7 +26,10 @@ export class ProductsComponent {
     private productService: ProductService,
     private ngxPaginationService: NGXPaginationService<IProductModel>
   ) {
-    this.outlets = dashboardService.getOutlets();
+    dashboardService.getOutlets()
+      .subscribe(response => {
+        this.outlets = [];
+      });
 
     this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'New Product');
 

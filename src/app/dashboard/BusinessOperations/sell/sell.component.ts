@@ -27,7 +27,10 @@ export class SellComponent {
     private salesService: SalesService,
     private ngxPaginationService: NGXPaginationService<ISalesModel>
   ) {
-    this.outlets = dashboardService.getOutlets();
+    dashboardService.getOutlets()
+      .subscribe(response => {
+        this.outlets = [];
+      });
 
     this.pagedSalesModel = dashboardService.getPagingConfig(AddSalesComponent, 'New Sales');
 

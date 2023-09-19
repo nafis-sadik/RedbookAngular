@@ -21,10 +21,18 @@ export class RoleManagementComponent {
   selectedRoleId: number = 0;
   selectedBusinessId: number = 0;
 
-  constructor(private dashboardService: DashboardService, private windowService: NbWindowService, private toastrService: NbToastrService) {
+  constructor(
+    private dashboardService: DashboardService,
+    private windowService: NbWindowService,
+    private toastrService: NbToastrService
+  ) {
     this.rolesUnderThisBusiness = [];
     this.routesCollection = [];
-    this.ownedBusinesses = dashboardService.getOutlets();
+    dashboardService.getOutlets()
+      .subscribe(response => {
+        console.log(response)
+        this.ownedBusinesses = response;
+      })
   }
 
   loadRolesBusiness(businessId: number): void{

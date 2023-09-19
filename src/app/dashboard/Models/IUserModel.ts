@@ -54,4 +54,9 @@ export declare interface IUserModel{
    * @type {number}
    */
   accountBalance: number;
+  /**
+   * Primary Key of app the user is being registered to
+   * @type {number | undefined}
+   */
+  ApplicationId: number | undefined;
 }

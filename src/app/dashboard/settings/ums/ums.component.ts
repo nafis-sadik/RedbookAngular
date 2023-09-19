@@ -17,7 +17,10 @@ export class UmsComponent {
     dashboardService: DashboardService,
     private ngxPaginationService: NGXPaginationService<IUserModel>
   ) {
-    this.ownedBusinesses = dashboardService.getOutlets();
+    dashboardService.getOutlets()
+      .subscribe(response  => {
+        this.ownedBusinesses = [];
+      });
     this.pagedUserModel = dashboardService.getPagingConfig(null, 'User Management', 'Add User', 'Search User');
     if(this.pagedUserModel.tableConfig){
       this.pagedUserModel.tableConfig.tableMaping = {
@@ -51,7 +54,8 @@ export class UmsComponent {
           accountBalance: 999999,
           email: 'hemail@shemail.com',
           organizationId: 0,
-          organizationName: 'Honululiu'
+          organizationName: 'Honululiu',
+          ApplicationId: 1
         },
         {
           userId: 'GUID',
@@ -64,7 +68,8 @@ export class UmsComponent {
           accountBalance: 999999,
           email: 'hemail@shemail.com',
           organizationId: 0,
-          organizationName: 'Honululiu'
+          organizationName: 'Honululiu',
+          ApplicationId: 1
         },
         {
           userId: 'GUID',
@@ -77,7 +82,8 @@ export class UmsComponent {
           accountBalance: 999999,
           email: 'hemail@shemail.com',
           organizationId: 0,
-          organizationName: 'Honululiu'
+          organizationName: 'Honululiu',
+          ApplicationId: 1
         }
       ]
     }

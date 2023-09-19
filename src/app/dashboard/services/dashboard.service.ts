@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { AppConfigurationService } from './app-config.service';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { IRouteModel } from '../Models/IRouteModel';
 
 @Injectable({
@@ -143,19 +143,22 @@ export class DashboardService {
     ];
   }
 
-  getOutlets(): IOrganizationModel[]{
-    return [
-      {
-        organizationId: 1,
-        organizationName: 'Krishi Ghor',
-        address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
-      },
-      {
-        organizationId: 2,
-        organizationName: 'FM Sky Vision',
-        address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
-      }
-    ];
+  getOutlets(): Observable<IOrganizationModel[]>{
+    return this.http
+      .get<Array<IOrganizationModel>>(`${this.baseUrl}/api/Organization/`)
+      .pipe(map(response => response));
+    // return [
+    //   {
+    //     organizationId: 1,
+    //     organizationName: 'Krishi Ghor',
+    //     address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
+    //   },
+    //   {
+    //     organizationId: 2,
+    //     organizationName: 'FM Sky Vision',
+    //     address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
+    //   }
+    // ];
   }
 
   getPagingConfig<T>(

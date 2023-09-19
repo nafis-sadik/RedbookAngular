@@ -30,7 +30,10 @@ export class PurchaseComponent {
     private ngxPaginationService: NGXPaginationService<IInvoiceModel>
   )
   {
-    this.outlets = dashboardService.getOutlets();
+    dashboardService.getOutlets()
+      .subscribe(response => {
+        this.outlets = [];
+      });
 
     this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent, 'New Purchase');
 

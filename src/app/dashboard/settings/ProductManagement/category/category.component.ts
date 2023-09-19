@@ -126,7 +126,10 @@ export class CategoryComponent {
     private windowService: NbWindowService,
     private toastrService: NbToastrService
   ) {
-    this.ownedBusinesses = this.dashboardService.getOutlets();
+    this.dashboardService.getOutlets()
+      .subscribe(response => {
+        this.ownedBusinesses = [];
+      });
   }
   
   ngOnInit(): void {

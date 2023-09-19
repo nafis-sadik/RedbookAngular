@@ -108,6 +108,7 @@ export class OnboardingComponent {
     }
 
     this.userModel.organizationId = this.orgModel.organizationId;
+    this.userModel.ApplicationId = 2;
     this.userService.registerNewUser(this.userModel).subscribe(response => {
       this.toasterService.success('Operation Successfull', 'User added successfully');
       this.userModel = response;
@@ -134,7 +135,8 @@ export class OnboardingComponent {
       roleId: 0,
       roleName: '',
       userId: '',
-      userName: ''
+      userName: '',
+      ApplicationId: 0
     }
    
     stepper.reset();
