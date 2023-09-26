@@ -39,7 +39,7 @@ export class DashboardComponent {
 
     this.setTheme(this.selectedTheme);
     
-    dashboardService.getMenuOptionsByUserId()
+    dashboardService.getMenuOptions()
       .subscribe((menuList: any) => {
         let menu: { [key: number]: any } = {};
         

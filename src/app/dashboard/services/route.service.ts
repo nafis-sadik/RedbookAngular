@@ -22,7 +22,7 @@ export class RouteService{
       return this.http
           .post<IRouteModel>(`${this.baseUrl}/api/Route`, routeModel)
           .pipe(map(response => {
-            this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes/${this.appId}`);
+            this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes`);
             return response
           }));
   }
@@ -31,7 +31,7 @@ export class RouteService{
       return this.http
           .put<IRouteModel>(`${this.baseUrl}/api/Route`, routeModel)
           .pipe(map(response => {
-            this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes/${this.appId}`);
+            this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes`);
             return response
           }));
   }
@@ -49,13 +49,13 @@ export class RouteService{
   }
 
   getAllRoute(appId: number): Observable<Array<IRouteModel>>{
-    let cachedRoutes: Array<IRouteModel> = this.cachingService.get(`${this.baseUrl}/api/Route/GetAppRoutes/${appId}`);
+    let cachedRoutes: Array<IRouteModel> = this.cachingService.get(`${this.baseUrl}/api/Route/GetAppRoutes`);
     if(!cachedRoutes){
       return this.http
-        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/GetAppRoutes/${appId}`)
+        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/GetAppRoutes`)
         .pipe(map((response) => {
           if(response && response.length > 0)
-            this.cachingService.set(`${this.baseUrl}/api/Route/GetAppRoutes/${appId}`, response);
+            this.cachingService.set(`${this.baseUrl}/api/Route/GetAppRoutes`, response);
           return response;
         }));
     }
@@ -64,7 +64,7 @@ export class RouteService{
   }
 
   deleteRoute(appId: number): Observable<any>{
-    this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes/${appId}`);
+    this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes`);
     return this.http
       .delete(`${this.baseUrl}/api/Route/${appId}`)
       .pipe(map(response => response));

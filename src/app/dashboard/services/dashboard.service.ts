@@ -145,7 +145,7 @@ export class DashboardService {
 
   getOutlets(): Observable<IOrganizationModel[]>{
     return this.http
-      .get<Array<IOrganizationModel>>(`${this.baseUrl}/api/Organization/`)
+      .get<Array<IOrganizationModel>>(`${this.baseUrl}/api/Organization/GetAll`)
       .pipe(map(response => response));
     // return [
     //   {
@@ -376,10 +376,10 @@ export class DashboardService {
         ];
   }
 
-  getMenuOptionsByUserId(){
+  getMenuOptions(){
     return this.http
-      .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetAppRoutes/${environment.appId}`)
-      .pipe(map(response =>  response ))
+      .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetMenuRoutes`)
+      .pipe(map(response =>  response))
       
     // return [
     //   {
