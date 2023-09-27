@@ -7,10 +7,10 @@ import { ICategoryModel } from '../Models/ICategoryModel';
 import { IRoutePermissionModel } from '../Models/IRoutePermissionModel';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
-import { AppConfigurationService } from './app-config.service';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { IRouteModel } from '../Models/IRouteModel';
+import { CachingService } from './caching.service';
 
 @Injectable({
     providedIn: 'root',
@@ -120,8 +120,9 @@ export class DashboardService {
   public readonly ngDialogService: NbDialogService;
 
   constructor(
+    private http: HttpClient,
     private dialogService: NbDialogService,
-    private http: HttpClient
+    private cachingService: CachingService
   ) {
     this.ngDialogService = dialogService;
   }
@@ -144,21 +145,17 @@ export class DashboardService {
   }
 
   getOutlets(): Observable<IOrganizationModel[]>{
-    return this.http
-      .get<Array<IOrganizationModel>>(`${this.baseUrl}/api/Organization/GetAll`)
-      .pipe(map(response => response));
-    // return [
-    //   {
-    //     organizationId: 1,
-    //     organizationName: 'Krishi Ghor',
-    //     address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
-    //   },
-    //   {
-    //     organizationId: 2,
-    //     organizationName: 'FM Sky Vision',
-    //     address: [ 'Grand Hotel Mor, Shallow Market, Near of Sub-Post Office, Shapla Road, Station Road, Rangpur 5400, Bangladesh Rangpur City, Rangpur Division, 5400' ]
-    //   }
-    // ];
+    let cachedData = this.cachingService.get(`${this.baseUrl}/api/Organization/GetAll`);
+    if(!cachedData){      
+      return this.http
+        .get<Array<IOrganizationModel>>(`${this.baseUrl}/api/Organization/GetAll`)
+        .pipe(map(response => { 
+          this.cachingService.set(`${this.baseUrl}/api/Organization/GetAll`, response);
+          return response;
+        }));
+    } else {
+      return of(cachedData);
+    }
   }
 
   getPagingConfig<T>(

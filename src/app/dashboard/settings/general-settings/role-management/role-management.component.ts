@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { DashboardService } from '../../services/dashboard.service';
-import { IOrganizationModel } from '../../Models/IOrganizationModel';
-import { IRoleModel } from '../../Models/IRoleModel';
-import { IRoutePermissionModel } from '../../Models/IRoutePermissionModel';
-import { AddDialogueComponent } from '../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
-import { RemoveDialogueComponent } from '../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
+import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
+import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
+import { IRoutePermissionModel } from 'src/app/dashboard/Models/IRoutePermissionModel';
+import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
+import { AddDialogueComponent } from 'src/app/shared/ngx-dialogues/add-dialogue/add-dialogue.component';
+import { RemoveDialogueComponent } from 'src/app/shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 
 @Component({
   selector: 'app-role-management',
@@ -26,12 +26,20 @@ export class RoleManagementComponent {
     private windowService: NbWindowService,
     private toastrService: NbToastrService
   ) {
-    this.rolesUnderThisBusiness = [];
+    this.ownedBusinesses = [];
     this.routesCollection = [];
+    this.rolesUnderThisBusiness = [];
     dashboardService.getOutlets()
       .subscribe(response => {
-        console.log(response)
-        this.ownedBusinesses = response;
+        console.log('response', response);
+        for(let i = 0; i < response.length; i++){
+          this.ownedBusinesses.push({
+            organizationId: response[i].organizationId,
+            organizationName: response[i].organizationName,
+            address: []
+          });
+        }
+        console.log('ownedBusinesses', this.ownedBusinesses);
       })
   }
 

@@ -27,10 +27,6 @@ import { RouterModule } from '@angular/router';
 import { CategoryComponent } from './settings/ProductManagement/category/category.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SettingsComponent } from './settings/settings.component';
-import { RoleManagementComponent } from './settings/role-management/role-management.component';
-import { UmsComponent } from './settings/ums/ums.component';
-import { UserFormComponent } from './settings/ums/user-form/user-form.component';
 import { CustomersComponent } from './CRM/customers/customers.component';
 import { AddPurchaseComponent } from './BusinessOperations/purchase/add-purchase/add-purchase.component';
 import { PurchaseComponent } from './BusinessOperations/purchase/purchase.component';
@@ -41,6 +37,10 @@ import { ProductsDetailsFormComponent } from './settings/ProductManagement/produ
 import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
 import { RouteFormComponent } from './platformsettings/route-form/route-form.component';
 import { OnboardingComponent } from './onboarding/onboarding.component';
+import { GeneralSettingsComponent } from './settings/general-settings/general-settings.component';
+import { RoleManagementComponent } from './settings/general-settings/role-management/role-management.component';
+import { UmsComponent } from './settings/general-settings/ums/ums.component';
+import { UserFormComponent } from './settings/general-settings/ums/user-form/user-form.component';
 
 
 @NgModule({
@@ -54,14 +54,15 @@ import { OnboardingComponent } from './onboarding/onboarding.component';
     AddPurchaseComponent,
     SellComponent,
     AddSalesComponent,
-    SettingsComponent,
+    GeneralSettingsComponent,
     RoleManagementComponent,
     UmsComponent,
     UserFormComponent,
     CustomersComponent,
     PlatformsettingsComponent,
     RouteFormComponent,
-    OnboardingComponent
+    OnboardingComponent,
+    GeneralSettingsComponent
   ],
   imports: [
     CommonModule,

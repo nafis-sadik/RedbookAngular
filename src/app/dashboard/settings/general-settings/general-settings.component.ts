@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  selector: 'app-general-settings',
+  templateUrl: './general-settings.component.html',
+  styleUrls: ['./general-settings.component.scss']
 })
-export class SettingsComponent {
+export class GeneralSettingsComponent {
   loaderContainer: HTMLElement| null;
 
   constructor() { }

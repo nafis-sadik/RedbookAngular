@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
+import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
+import { IUserModel } from 'src/app/dashboard/Models/IUserModel';
+import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { DashboardService } from '../../services/dashboard.service';
-import { IOrganizationModel } from '../../Models/IOrganizationModel';
-import { IUserModel } from '../../Models/IUserModel';
 
 @Component({
   selector: 'app-ums',

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { IOrganizationModel } from '../../../Models/IOrganizationModel';
 import { ICategoryModel } from '../../../Models/ICategoryModel';
@@ -110,37 +110,47 @@ export class CategoryComponent {
   ];
 
   selectedBusinessId: number | undefined = undefined;
-
   selectedCategoryId: number | undefined = undefined;
 
   categories: ICategoryModel[] = [];
 
   subcategories: ICategoryModel[] = [];
 
-  ownedBusinesses: IOrganizationModel[] = [];
-
   loaderContainer: HTMLElement| null;
+  ownedBusinesses: IOrganizationModel[];
+
 
   constructor(
     private dashboardService: DashboardService,
     private windowService: NbWindowService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private chageDetectorRef: ChangeDetectorRef
   ) {
-    this.dashboardService.getOutlets()
-      .subscribe(response => {
-        this.ownedBusinesses = [];
-      });
+    this.ownedBusinesses = [];
+    this.loaderContainer = document.getElementById('LoadingScreen');   
+    if(this.loaderContainer && this.loaderContainer.classList.contains('d-none')){
+      this.loaderContainer.classList.remove('d-none');
+      this.loaderContainer.classList.add('d-block');
+    }
   }
   
-  ngOnInit(): void {
-    this.loaderContainer = document.getElementById('LoadingScreen');
-    
-    setTimeout(() => {
-      if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
-        this.loaderContainer.classList.remove('d-block');
-        this.loaderContainer.classList.add('d-none');
-      }
-    }, 1.5 * 1000);
+  ngOnInit(): void { 
+    this.dashboardService.getOutlets()
+      .subscribe(response => {
+        for(let i = 0; i < response.length; i++){
+          this.ownedBusinesses.push({
+            organizationId: response[i].organizationId,
+            organizationName: response[i].organizationName,
+            address: []
+          });
+        }
+
+        if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
+          this.loaderContainer.classList.remove('d-block');
+          this.loaderContainer.classList.add('d-none');
+        }
+        this.chageDetectorRef.detectChanges();
+      });
   }
 
   loadCategories(selectedBusiness: number) {

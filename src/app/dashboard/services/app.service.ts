@@ -18,7 +18,6 @@ export class AppService{
 
     getAllApplications(): Observable<Array<IApplicationModel>>{
       let cachedData: Array<IApplicationModel> = this.cacheingService.get(`${this.baseUrl}/api/Application/GetAll`);
-
       if(!cachedData){
         return this.http
           .get<Array<IApplicationModel>>(`${this.baseUrl}/api/Application/GetAll`)
@@ -26,9 +25,7 @@ export class AppService{
             this.cacheingService.set(`${this.baseUrl}/api/Application/GetAll`, response)
             return response
           }));
-
       }
-
       return of(cachedData);
     }
 }
