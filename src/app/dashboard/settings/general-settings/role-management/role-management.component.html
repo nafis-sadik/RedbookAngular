@@ -6,27 +6,25 @@
               Your Business Outlets
           </nb-card-header>
           <nb-card-body>
-            <nb-list class="container-fluid">
-              <nb-list-item *ngFor="let business of ownedBusinesses">
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <nb-radio name="BusinessOutlet" (click)="loadRolesBusiness(business.organizationId)">
-                        {{ business.organizationName }}
-                      </nb-radio>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="row">
-                        <div class="col-6">
-                          <button nbButton type="button" status="primary" (click)="openSaveBusinessWindow('Update Business Title', business)">
-                            <nb-icon icon="copy"></nb-icon>
-                          </button>
-                        </div>
-                        <div class="col-6">
-                          <button nbButton type="button" status="danger" (click)="openDeleteBusinessWindow('Delete Category', business.organizationId)">
-                            <nb-icon icon="close-square"></nb-icon>
-                          </button>
-                        </div>
+            <nb-list>
+              <nb-list-item class="container-fluid" *ngFor="let business of ownedBusinesses">
+                <div class="row w-100">
+                  <div class="col-lg-8">
+                    <nb-radio name="BusinessOutlet" (click)="loadRolesBusiness(business.organizationId)">
+                      {{ business.organizationName }}
+                    </nb-radio>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="row">
+                      <div class="col-6 p-0 pe-1">
+                        <button class="w-100" nbButton type="button" status="primary" (click)="openSaveBusinessWindow('Update Business Title', business)">
+                          <nb-icon icon="copy"></nb-icon>
+                        </button>
+                      </div>
+                      <div class="col-6 p-0 ps-1">
+                        <button class="w-100" nbButton type="button" status="danger" (click)="openDeleteBusinessWindow('Delete Category', business.organizationId)">
+                          <nb-icon icon="close-square"></nb-icon>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -35,9 +33,10 @@
             </nb-list>
           </nb-card-body>
           <nb-card-footer>
-            <button nbButton status="primary" class="btn-save" (click)="openSaveBusinessWindow('Update Business Title', null)">
+            <button nbButton status="primary" class="btn-save" (click)="openSaveBusinessWindow('Add New Business', null)">
               <nb-icon icon="plus-square"></nb-icon>
-              Add New Business Outlet
+              <span class="d-lg-block d-none">Add New Business Outlet</span>
+              <span class="d-sm-block d-lg-none">Add Business</span>
             </button>
           </nb-card-footer>
         </nb-card>

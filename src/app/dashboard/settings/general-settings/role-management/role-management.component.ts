@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
 import { IRoutePermissionModel } from 'src/app/dashboard/Models/IRoutePermissionModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
+import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { AddDialogueComponent } from 'src/app/shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from 'src/app/shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 
@@ -22,16 +23,17 @@ export class RoleManagementComponent {
   selectedBusinessId: number = 0;
 
   constructor(
-    private dashboardService: DashboardService,
+    private chageDetector: ChangeDetectorRef,
+    private toastrService: NbToastrService,
     private windowService: NbWindowService,
-    private toastrService: NbToastrService
+    private dashboardService: DashboardService,
+    private businessService: OrganizationService,
   ) {
     this.ownedBusinesses = [];
     this.routesCollection = [];
     this.rolesUnderThisBusiness = [];
     dashboardService.getOutlets()
       .subscribe(response => {
-        console.log('response', response);
         for(let i = 0; i < response.length; i++){
           this.ownedBusinesses.push({
             organizationId: response[i].organizationId,
@@ -39,7 +41,6 @@ export class RoleManagementComponent {
             address: []
           });
         }
-        console.log('ownedBusinesses', this.ownedBusinesses);
       })
   }
 
@@ -92,44 +93,39 @@ export class RoleManagementComponent {
   }
 
   openSaveBusinessWindow(windowMessage: string, businessModel: IOrganizationModel | null) {
-    let url: string;
-    let method: string;
-    let toasterMsg: string = '';
-
-    // If UI sent an object, it's an update operation
-    // Otherwise it's an incertion operation
-    let windowRef = this.windowService.open(AddDialogueComponent, {
+    let toasterMsg = 'Saved Successfully';
+    this.windowService.open(AddDialogueComponent, {
       title: windowMessage,
       buttons: {
         close: false,
         fullScreen: true,
         maximize: true,
         minimize: true
-      }
-    });
-
-    windowRef.onClose.subscribe((businessTitle) => {
-      // If user closes the window without saving anything, we do not need to process anything
-      // First if shields against that
-      if (businessTitle != undefined && businessTitle != null) {
-        // If user used update button, businessModel brought the stock object for us
-        // If the user used create button, businessModel shall remain null
-        if (businessModel == null) {
-          method = 'POST';
-          toasterMsg = 'Saved Successfully';
-          businessModel = { organizationName: businessTitle, organizationId: 0, address: null };
-        } else {
-          method = 'PUT';
-          toasterMsg = 'Updated Successfully';
-          businessModel.organizationName = businessTitle;
-        }
-
-        // Replace the console logs with http request bellow
-        // Calling the backend API when pre processing is ready
-        console.log('URL', url);
-        console.log('Method', method);
-        console.log('Body', businessModel);
-        this.toastrService.success(toasterMsg, 'Success');
+      },
+      context: {
+        saveMethod: (businessTitle: string) => {
+          let observableObj;
+          if(businessModel) {
+            businessModel.organizationName = businessTitle;
+            observableObj = this.businessService.updateOrganization(businessModel);
+          } else {
+            observableObj = this.businessService.addNewOrganization({
+              organizationId: 0,
+              organizationName: businessTitle,
+              address: []
+            });
+          }
+          observableObj.subscribe((response) => {
+            for(let i = 0; i < this.ownedBusinesses.length; i++){
+              if(this.ownedBusinesses[i].organizationId == response.organizationId){
+                this.ownedBusinesses[i] = response;
+              }
+            }
+            this.chageDetector.detectChanges();
+            this.toastrService.success(toasterMsg, 'Success');
+          })
+        },
+        businessTitle: businessModel?.organizationName
       }
     });
   }

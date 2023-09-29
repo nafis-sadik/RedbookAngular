@@ -14,9 +14,15 @@ export class OrganizationService{
       private http: HttpClient,
     ) {}
 
-    addNewOrganization(orgModel: IOrganizationModel):Observable<IOrganizationModel> {
+    addNewOrganization(orgModel: IOrganizationModel): Observable<IOrganizationModel> {
         return this.http
             .post<IOrganizationModel>(`${this.baseUrl}/api/Organization`, orgModel)
             .pipe(map((response) => response));
+    }
+
+    updateOrganization(orgModel: IOrganizationModel): Observable<IOrganizationModel> {
+        return this.http
+            .put<IOrganizationModel>(`${this.baseUrl}/api/Organization`, orgModel)
+            .pipe(map(response => response));
     }
 }

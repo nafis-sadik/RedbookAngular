@@ -1,4 +1,4 @@
-import { Component, Optional } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { NbToastrService, NbWindowRef } from '@nebular/theme';
 
 @Component({
@@ -8,6 +8,7 @@ import { NbToastrService, NbWindowRef } from '@nebular/theme';
       <div class="row">
         <input
           nbInput
+          [(ngModel)]="businessTitle"
           type="text"
           placeholder="Title"
           class="col-md-7"
@@ -45,11 +46,18 @@ import { NbToastrService, NbWindowRef } from '@nebular/theme';
     `,
   ],
 })
-export class AddDialogueComponent {
+export class AddDialogueComponent implements OnInit{
+  saveMethod: (businessTitle: string) => void;
+  businessTitle: string;
+
   constructor(
     @Optional() private ref: NbWindowRef<AddDialogueComponent>,
     private toastrService: NbToastrService,
-  ) {}
+  ) { }
+
+  ngOnInit() {   
+    this.saveMethod = (this.ref.config.context as any)['saveMethod'];
+  }
 
   cancel() {
     this.ref.close();
@@ -60,6 +68,7 @@ export class AddDialogueComponent {
       this.toastrService.warning('Can not save empty title', 'Warning');
       return;
     }
+    this.saveMethod(this.businessTitle);
     this.ref.close(title);
   }
 }

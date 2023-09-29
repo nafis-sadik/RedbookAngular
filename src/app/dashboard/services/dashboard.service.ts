@@ -8,7 +8,7 @@ import { IRoutePermissionModel } from '../Models/IRoutePermissionModel';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
-import { Observable, map, of } from 'rxjs';
+import { Observable, Subject, map, of } from 'rxjs';
 import { IRouteModel } from '../Models/IRouteModel';
 import { CachingService } from './caching.service';
 
@@ -154,7 +154,8 @@ export class DashboardService {
           return response;
         }));
     } else {
-      return of(cachedData);
+      return new Observable().pipe(map(res => { return cachedData; }))
+      // return of(cachedData);
     }
   }
 
