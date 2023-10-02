@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./general-settings.component.scss']
 })
 export class GeneralSettingsComponent {
-  loaderContainer: HTMLElement| null;
+  loaderContainer: HTMLElement | null;
 
   constructor() { }
 

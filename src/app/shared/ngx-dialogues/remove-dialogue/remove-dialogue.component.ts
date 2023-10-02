@@ -37,13 +37,14 @@ import { NbToastrService, NbWindowRef } from '@nebular/theme';
     </section>
   `,
 })
-export class RemoveDialogueComponent {
-  constructor(
-    @Optional() private ref: NbWindowRef<RemoveDialogueComponent>,
-    private toastrService: NbToastrService,
-  ) {}
+export class RemoveDialogueComponent {  
+  deleteMethod: () => void;
+
+  constructor(@Optional() private ref: NbWindowRef<RemoveDialogueComponent>) {}
 
   submit(deleteEntry: boolean) {
+    if(deleteEntry)
+      this.deleteMethod();
     this.ref.close(deleteEntry);
   }
 }

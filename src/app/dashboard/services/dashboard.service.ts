@@ -154,8 +154,7 @@ export class DashboardService {
           return response;
         }));
     } else {
-      return new Observable().pipe(map(res => { return cachedData; }))
-      // return of(cachedData);
+      return of(cachedData);
     }
   }
 

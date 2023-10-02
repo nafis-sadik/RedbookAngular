@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { IOrganizationModel } from '../../../Models/IOrganizationModel';
 import { ICategoryModel } from '../../../Models/ICategoryModel';
@@ -12,7 +12,7 @@ import { RemoveDialogueComponent } from '../../../../shared/ngx-dialogues/remove
   styleUrls: ['./category.component.scss']
 })
 
-export class CategoryComponent {
+export class CategoryComponent implements OnInit {
   backendDataCategories: ICategoryModel[] = [
     {
       categoryId: 1,
@@ -116,7 +116,7 @@ export class CategoryComponent {
 
   subcategories: ICategoryModel[] = [];
 
-  loaderContainer: HTMLElement| null;
+  loaderContainer: HTMLElement | null;
   ownedBusinesses: IOrganizationModel[];
 
 
@@ -134,7 +134,7 @@ export class CategoryComponent {
     }
   }
   
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.dashboardService.getOutlets()
       .subscribe(response => {
         for(let i = 0; i < response.length; i++){
@@ -149,6 +149,7 @@ export class CategoryComponent {
           this.loaderContainer.classList.remove('d-block');
           this.loaderContainer.classList.add('d-none');
         }
+        
         this.chageDetectorRef.detectChanges();
       });
   }

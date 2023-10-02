@@ -115,16 +115,24 @@ export class RoleManagementComponent {
               address: []
             });
           }
+
           observableObj.subscribe((response) => {
+            let isNewlyAdded = true;
             for(let i = 0; i < this.ownedBusinesses.length; i++){
               if(this.ownedBusinesses[i].organizationId == response.organizationId){
+                isNewlyAdded = false;
                 this.ownedBusinesses[i] = response;
               }
+            }
+
+            if(isNewlyAdded){
+              this.ownedBusinesses.push(response);
             }
             this.chageDetector.detectChanges();
             this.toastrService.success(toasterMsg, 'Success');
           })
         },
+
         businessTitle: businessModel?.organizationName
       }
     });
@@ -140,6 +148,16 @@ export class RoleManagementComponent {
         maximize: true,
         minimize: true
       },
+      context: {
+        deleteMethod: () => {
+          this.businessService.deleteOrganization(businessId)
+            .subscribe(() => {
+              let filteredList = this.ownedBusinesses.filter(x => x.organizationId != businessId);
+              this.ownedBusinesses = filteredList;
+              this.chageDetector.detectChanges();
+            });
+        }
+      }
     });
 
     // Remove element
