@@ -5,6 +5,8 @@ import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
 import { IRoutePermissionModel } from 'src/app/dashboard/Models/IRoutePermissionModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
+import { RoleService } from 'src/app/dashboard/services/role.service';
+import { RouteService } from 'src/app/dashboard/services/route.service';
 import { AddDialogueComponent } from 'src/app/shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from 'src/app/shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 
@@ -28,6 +30,8 @@ export class RoleManagementComponent {
     private windowService: NbWindowService,
     private dashboardService: DashboardService,
     private businessService: OrganizationService,
+    private routeService: RouteService,
+    private roleService: RoleService
   ) {
     this.ownedBusinesses = [];
     this.routesCollection = [];
@@ -44,54 +48,7 @@ export class RoleManagementComponent {
       })
   }
 
-  loadRolesBusiness(businessId: number): void{
-    if(businessId == 1){
-      this.rolesUnderThisBusiness = [
-        {
-          RoleId: 1,
-          RoleName: 'Sales Admin',
-          BusinessId: 1
-        },
-        {
-          RoleId: 2,
-          RoleName: 'CRM Admin',
-          BusinessId: 1
-        },
-        {
-          RoleId: 4,
-          RoleName: 'Inventory Admin',
-          BusinessId: 1
-        },
-        {
-          RoleId: 5,
-          RoleName: 'System Admin',
-          BusinessId: 1
-        },
-      ];
-    }
-    else
-    {
-      this.rolesUnderThisBusiness = [
-        {
-          RoleId: 5,
-          RoleName: 'System Admin',
-          BusinessId: 2
-        }
-      ]
-    }
-
-    this.selectedBusinessId = businessId;
-  }
-
-  loadPermissionsAgainstRole(roleId: number): void{
-    this.selectedRoleId = roleId;
-    this.routesCollection = this.dashboardService.getRoutePermissions(roleId);
-  }
-
-  allowRouteToRole(routeId: number): void{
-    console.log('Business Id: ' + this.selectedBusinessId + ' Role Id: ' + this.selectedRoleId + ' Selected Route Id ' + routeId);
-  }
-
+  // Organization / Business management
   openSaveBusinessWindow(windowMessage: string, businessModel: IOrganizationModel | null) {
     let toasterMsg = 'Saved Successfully';
     this.windowService.open(AddDialogueComponent, {
@@ -161,16 +118,92 @@ export class RoleManagementComponent {
     });
 
     // Remove element
-    windowRef.onClose.subscribe((deleteEntry) => {
-      if (deleteEntry) {
-        this.ownedBusinesses.filter(element => {
-          if (element.organizationId == businessId) {
-            let index = this.ownedBusinesses.indexOf(element);
-            this.ownedBusinesses.splice(index);
-            return;
-          }
+    // windowRef.onClose.subscribe((deleteEntry) => {
+    //   if (deleteEntry) {
+    //     this.ownedBusinesses.filter(element => {
+    //       if (element.organizationId == businessId) {
+    //         let index = this.ownedBusinesses.indexOf(element);
+    //         this.ownedBusinesses.splice(index);
+    //         return;
+    //       }
+    //     });
+    //   }
+    // });
+  }
+
+  // Role Management
+  loadBusinessRoles(businessId: number): void{
+    this.selectedBusinessId = businessId;
+    this.roleService.getOrganizationRoles(businessId)
+      .subscribe((response) => {
+        this.rolesUnderThisBusiness = [];              
+        response.forEach(element => {
+          this.rolesUnderThisBusiness.push({
+                BusinessId: element.organizationId,
+                RoleId: element.id,
+                RoleName: element.roleName
+            });
         });
+        this.chageDetector.detectChanges();
+      });
+  }
+
+  openSaveRoleWindow(windowMessage: string, roleModel: IRoleModel | null) {
+    let toasterMsg = 'Saved Successfully';
+    this.windowService.open(AddDialogueComponent, {
+      title: windowMessage,
+      buttons: {
+        close: false,
+        fullScreen: true,
+        maximize: true,
+        minimize: true
+      },
+      context: {
+        saveMethod: (roleTitle: string) => {
+          let observableObj;
+          if(roleModel) {
+            roleModel.RoleName = roleTitle;
+            observableObj = this.roleService.updateRole(roleModel);
+          } else {
+            observableObj = this.roleService.addRole({
+              RoleId: 0,
+              BusinessId: this.selectedBusinessId,
+              RoleName: roleTitle
+            });
+          }
+
+          observableObj.subscribe((response) => {
+            let isNewlyAdded = true;
+            for(let i = 0; i < this.ownedBusinesses.length; i++){
+              if(this.rolesUnderThisBusiness[i].RoleId == response.RoleId){
+                isNewlyAdded = false;
+                this.rolesUnderThisBusiness[i] = response;
+              }
+            }
+            
+            if(isNewlyAdded){
+              this.rolesUnderThisBusiness.push(response);
+            }
+            this.chageDetector.detectChanges();
+            this.toastrService.success(toasterMsg, 'Success');
+          })
+        },
+
+        // businessTitle: businessModel?.organizationName
       }
     });
+  }
+
+  loadRoleRoutes(roleId: any): void{
+    this.selectedRoleId = roleId;
+    this.routesCollection = this.dashboardService.getRoutePermissions(roleId);
+    this.routeService.getRoutesByRole(roleId)
+      .subscribe((response) => {
+        console.log(response)
+      });
+  }
+
+  allowRouteToRole(routeId: number): void{
+    console.log('Business Id: ' + this.selectedBusinessId + ' Role Id: ' + this.selectedRoleId + ' Selected Route Id ' + routeId);
   }
 }

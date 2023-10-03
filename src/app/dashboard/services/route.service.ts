@@ -37,7 +37,7 @@ export class RouteService{
   }
 
   getPagedRoute(pagedRouteModel: IPaginationModel<IRouteModel>): Observable<any>{
-    if(pagedRouteModel.searchingConfig?.searchString){        
+    if(pagedRouteModel.searchingConfig?.searchString){
       return this.http
           .get<IPaginationModel<IRouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.pageNumber}&PageSize=${pagedRouteModel.pagingConfig?.pageLength}&SearchString=${pagedRouteModel.searchingConfig?.searchString}`)
           .pipe(map(response => response ));
@@ -48,7 +48,13 @@ export class RouteService{
     }
   }
 
-  getAllRoute(appId: number): Observable<Array<IRouteModel>>{
+  getRoutesByRole(roleId: number): Observable<Array<IRouteModel>>{   
+    return this.http
+        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/GetRoutesByRoleId/${roleId}`)
+        .pipe(map(response => response ));
+  }
+
+  getAllRoute(): Observable<Array<IRouteModel>>{
     let cachedRoutes: Array<IRouteModel> = this.cachingService.get(`${this.baseUrl}/api/Route/GetAppRoutes`);
     if(!cachedRoutes){
       return this.http

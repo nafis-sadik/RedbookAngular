@@ -53,7 +53,7 @@ export class RouteFormComponent implements OnInit {
       this.appList = value;
     });
 
-    this.routeService.getAllRoute(environment.appId).subscribe(routeListResponse => {
+    this.routeService.getAllRoute().subscribe(routeListResponse => {
       this.routeList = routeListResponse;
     });
   }

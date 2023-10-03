@@ -8,7 +8,7 @@ import { NbToastrService, NbWindowRef } from '@nebular/theme';
       <div class="row">
         <input
           nbInput
-          [(ngModel)]="businessTitle"
+          [(ngModel)]="textValue"
           type="text"
           placeholder="Title"
           class="col-md-7"
@@ -47,8 +47,8 @@ import { NbToastrService, NbWindowRef } from '@nebular/theme';
   ],
 })
 export class AddDialogueComponent implements OnInit{
-  saveMethod: (businessTitle: string) => void;
-  businessTitle: string;
+  saveMethod: (textValue: string) => void;
+  textValue: string;
 
   constructor(
     @Optional() private ref: NbWindowRef<AddDialogueComponent>,
@@ -68,7 +68,7 @@ export class AddDialogueComponent implements OnInit{
       this.toastrService.warning('Can not save empty title', 'Warning');
       return;
     }
-    this.saveMethod(this.businessTitle);
+    this.saveMethod(this.textValue);
     this.ref.close(title);
   }
 }

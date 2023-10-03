@@ -10,7 +10,7 @@
               <nb-list-item class="container-fluid" *ngFor="let business of ownedBusinesses">
                 <div class="row w-100">
                   <div class="col-lg-8">
-                    <nb-radio name="BusinessOutlet" (click)="loadRolesBusiness(business.organizationId)">
+                    <nb-radio name="BusinessOutlet" (click)="loadBusinessRoles(business.organizationId)">
                       {{ business.organizationName }}
                     </nb-radio>
                   </div>
@@ -52,7 +52,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <nb-radio class="col-xxl-8" name="Role"
-                                      (valueChange)="loadPermissionsAgainstRole(role.RoleId)">
+                                      (valueChange)="loadRoleRoutes(role.RoleId)">
                                 {{ role.RoleName }}
                             </nb-radio>
                         </div>
@@ -61,7 +61,7 @@
               </nb-list>
             </nb-card-body>
             <nb-card-footer>
-              <button nbButton status="primary">
+              <button nbButton status="primary" (click)="openSaveRoleWindow('Add New Role', null)">
                 <nb-icon icon="plus-square"></nb-icon>
                 Add Role
               </button>
