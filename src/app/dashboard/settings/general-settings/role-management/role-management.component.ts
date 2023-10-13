@@ -139,11 +139,12 @@ export class RoleManagementComponent {
         this.rolesUnderThisBusiness = [];              
         response.forEach(element => {
           this.rolesUnderThisBusiness.push({
-                BusinessId: element.organizationId,
-                RoleId: element.id,
+                OrganizationId: element.organizationId,
+                RoleId: element.roleId,
                 RoleName: element.roleName
             });
         });
+        
         this.chageDetector.detectChanges();
       });
   }
@@ -167,29 +168,36 @@ export class RoleManagementComponent {
           } else {
             observableObj = this.roleService.addRole({
               RoleId: 0,
-              BusinessId: this.selectedBusinessId,
+              OrganizationId: this.selectedBusinessId,
               RoleName: roleTitle
             });
           }
 
           observableObj.subscribe((response) => {
             let isNewlyAdded = true;
-            for(let i = 0; i < this.ownedBusinesses.length; i++){
+            for(let i = 0; i < this.rolesUnderThisBusiness.length; i++){
               if(this.rolesUnderThisBusiness[i].RoleId == response.RoleId){
                 isNewlyAdded = false;
-                this.rolesUnderThisBusiness[i] = response;
+                this.rolesUnderThisBusiness[i] = {
+                  RoleId : response.roleId,
+                  RoleName: response.roleName,
+                  OrganizationId: response.organizationId
+                };
               }
             }
             
             if(isNewlyAdded){
-              this.rolesUnderThisBusiness.push(response);
+              this.rolesUnderThisBusiness.push({
+                RoleId : response.roleId,
+                RoleName: response.roleName,
+                OrganizationId: response.organizationId
+              });
             }
+
             this.chageDetector.detectChanges();
             this.toastrService.success(toasterMsg, 'Success');
-          })
-        },
-
-        // businessTitle: businessModel?.organizationName
+          });
+        }
       }
     });
   }

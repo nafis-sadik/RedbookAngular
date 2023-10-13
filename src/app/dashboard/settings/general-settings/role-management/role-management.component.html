@@ -48,8 +48,29 @@
             </nb-card-header>
             <nb-card-body>
               <nb-list>
-                <nb-list-item *ngFor="let role of rolesUnderThisBusiness">
-                    <div class="container-fluid">
+                <nb-list-item class="container-fluid" *ngFor="let role of rolesUnderThisBusiness">
+                  <div class="row w-100">
+                    <div class="col-lg-8">
+                      <nb-radio name="BusinessOutlet" (click)="openSaveRoleWindow('Update Role', role)">
+                        {{ role.RoleName }}
+                      </nb-radio>  
+                    </div>
+                    <!-- <div class="col-lg-4">
+                      <div class="row">
+                        <div class="col-6 p-0 pe-1">
+                          <button class="w-100" nbButton type="button" status="primary" (click)="openSaveBusinessWindow('Update Business Title', business)">
+                            <nb-icon icon="copy"></nb-icon>
+                          </button>
+                        </div>
+                        <div class="col-6 p-0 ps-1">
+                          <button class="w-100" nbButton type="button" status="danger" (click)="openDeleteBusinessWindow('Delete Category', business.organizationId)">
+                            <nb-icon icon="close-square"></nb-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                    <div >
                         <div class="row">
                             <nb-radio class="col-xxl-8" name="Role"
                                       (valueChange)="loadRoleRoutes(role.RoleId)">

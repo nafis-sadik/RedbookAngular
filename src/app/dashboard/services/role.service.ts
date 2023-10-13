@@ -20,13 +20,13 @@ export class RoleService{
             .pipe(map((response) => response));
     }
 
-    addRole(role: IRoleModel): Observable<IRoleModel> {
+    addRole(role: IRoleModel): Observable<any> {
         return this.http
             .post<IRoleModel>(`${this.baseUrl}/api/Role`, role)
             .pipe(map((response) => response));
     }
 
-    updateRole(role: IRoleModel): Observable<IRoleModel> {
+    updateRole(role: IRoleModel): Observable<any> {
         return this.http
             .put<IRoleModel>(`${this.baseUrl}/api/Role`, role)
             .pipe(map((response) => response));

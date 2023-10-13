@@ -14,5 +14,5 @@ export declare interface IRoleModel {
    * Unique Id of the business that contains this role
    * @type {Number}
    */
-  BusinessId: number;
+  OrganizationId: number;
 }
