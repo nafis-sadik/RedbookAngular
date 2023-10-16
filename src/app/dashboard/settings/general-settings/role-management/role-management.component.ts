@@ -160,6 +160,7 @@ export class RoleManagementComponent {
         minimize: true
       },
       context: {
+        textValue: roleModel?.RoleName,
         saveMethod: (roleTitle: string) => {
           let observableObj;
           if(roleModel) {
@@ -179,18 +180,18 @@ export class RoleManagementComponent {
               if(this.rolesUnderThisBusiness[i].RoleId == response.RoleId){
                 isNewlyAdded = false;
                 this.rolesUnderThisBusiness[i] = {
-                  RoleId : response.roleId,
-                  RoleName: response.roleName,
-                  OrganizationId: response.organizationId
+                  RoleId : response.RoleId,
+                  RoleName: response.RoleName,
+                  OrganizationId: response.OrganizationId
                 };
               }
             }
             
             if(isNewlyAdded){
               this.rolesUnderThisBusiness.push({
-                RoleId : response.roleId,
-                RoleName: response.roleName,
-                OrganizationId: response.organizationId
+                RoleId : response.RoleId,
+                RoleName: response.RoleName,
+                OrganizationId: response.OrganizationId
               });
             }
 
@@ -200,6 +201,43 @@ export class RoleManagementComponent {
         }
       }
     });
+  }
+
+  openDeleteRoleWindow(windowMessage: string, roleId: number) {
+    // Load pop up dialogue
+    let windowRef = this.windowService.open(RemoveDialogueComponent, {
+      title: windowMessage,
+      buttons: {
+        close: false,
+        fullScreen: true,
+        maximize: true,
+        minimize: true
+      },
+      context: {
+        deleteMethod: () => {
+          this.roleService.deleteRole(roleId)
+            .subscribe((data) => {
+              console.log(data);
+              let filteredList = this.rolesUnderThisBusiness.filter(x => x.RoleId != roleId);
+              this.rolesUnderThisBusiness = filteredList;
+              this.chageDetector.detectChanges();
+            });
+        }
+      }
+    });
+
+    // Remove element
+    // windowRef.onClose.subscribe((deleteEntry) => {
+    //   if (deleteEntry) {
+    //     this.ownedBusinesses.filter(element => {
+    //       if (element.organizationId == businessId) {
+    //         let index = this.ownedBusinesses.indexOf(element);
+    //         this.ownedBusinesses.splice(index);
+    //         return;
+    //       }
+    //     });
+    //   }
+    // });
   }
 
   loadRoleRoutes(roleId: any): void{

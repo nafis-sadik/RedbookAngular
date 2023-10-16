@@ -20,15 +20,21 @@ export class RoleService{
             .pipe(map((response) => response));
     }
 
-    addRole(role: IRoleModel): Observable<any> {
+    addRole(role: IRoleModel): Observable<IRoleModel> {
         return this.http
             .post<IRoleModel>(`${this.baseUrl}/api/Role`, role)
             .pipe(map((response) => response));
     }
 
-    updateRole(role: IRoleModel): Observable<any> {
+    updateRole(role: IRoleModel): Observable<IRoleModel> {
         return this.http
             .put<IRoleModel>(`${this.baseUrl}/api/Role`, role)
+            .pipe(map((response) => response));
+    }
+
+    deleteRole(roleId: number): Observable<any> {
+        return this.http
+            .delete(`${this.baseUrl}/api/Role/${roleId}`)
             .pipe(map((response) => response));
     }
 }
