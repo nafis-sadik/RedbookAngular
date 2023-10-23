@@ -36,14 +36,43 @@
   margin-left: 5px;
 }
 
-#DashboardLayout .collapsed, #DashboardLayout .collapsed nb-menu {
-  animation-duration: 1s;
-  animation-name: sidebar-collapse-animation;
+#DashboardLayout nb-sidebar{
+  position: relative;
+  overflow: hidden;
 }
 
-#DashboardLayout .expanded, #DashboardLayout .expanded nb-menu {
-  animation-duration: 1s;
+#SideBar{
+  position: absolute;
+  left: calc(var(--sidebar-width) * -1);
+  top: var(--header-height);
+  width: var(--sidebar-width);
+  height: calc(var(--sidebar-height) - var(--header-height));
+  box-shadow: var(--sidebar-shadow);
+  background-color: var(--sidebar-background-color);
+}
+
+#SideBar.collapsed{
+  animation-duration: 0.5s;
+  animation-name: sidebar-collapse-animation;
+  animation-fill-mode: forwards; /* Add this line */
+}
+
+#SideBar.expanded{
+  animation-duration: 0.5s;
   animation-name: sidebar-expansion-animation;
+  animation-fill-mode: forwards; /* Add this line */
+}
+
+.overlay{
+  content: " ";
+  animation-duration: 0.5s;
+  display: block;
+  position: absolute;
+  top: var(--header-height);
+  width: 100%;
+  height: calc(100vh - var(--header-height));
+  background-color: black;
+  opacity: 0.5;
 }
 
 #LoadingScreen{
@@ -129,23 +158,19 @@
 
 @keyframes sidebar-expansion-animation {
   from {
-    width: 0px;
-    opacity: 0;
+    left: calc(var(--sidebar-width) * -1);
   }
   to {
-    opacity: 1;
-    width: var(--sidebar-width);
+    left: 0;
   }
 }
 
 @keyframes sidebar-collapse-animation {
   from {
-    opacity: 1;
-    width: var(--sidebar-width);
+    left: 0;
   }
   to {
-    opacity: 0;
-    width: 0px;
+    left: calc(var(--sidebar-width) * -1);
   }
 }
 

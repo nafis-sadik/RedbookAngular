@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/
 import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './services/dashboard.service';
 import { IRouteModel } from './Models/IRouteModel';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -122,7 +123,33 @@ export class DashboardComponent {
     this.isButtonVisible = false;
   }
 
-  toggle(): void { this.sidebarService.toggle(false, 'left'); }
+  toggle(): void {
+    // this.sidebarService.toggle(false, 'left');
+    let tempSide = document.getElementById('SideBar');
+    let appContainer = document.getElementsByTagName('nb-layout-column')[0];
+    let sidebarElement: HTMLElement;
+    if(tempSide == null)
+      return;
+    
+    sidebarElement = tempSide;
+    
+    if(sidebarElement.classList.contains('expanded')){
+      sidebarElement.classList.remove('expanded');
+      sidebarElement.classList.add('collapsed');
+      appContainer.classList.remove('overlay');
+    } else {
+      sidebarElement.classList.remove('collapsed');
+      sidebarElement.classList.add('expanded');
+      appContainer.classList.add('overlay');
+    }
+  }
+
+  overlayClick(){
+    let appContainer = document.getElementsByTagName('nb-layout-column')[0];
+    if(appContainer.classList.contains('overlay'))
+      this.toggle();
+    return;
+  }
 
   setTheme(theme: string): void {
     localStorage.setItem('theme', theme);

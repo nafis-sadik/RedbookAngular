@@ -205,7 +205,8 @@ export class RoleManagementComponent {
 
   openDeleteRoleWindow(windowMessage: string, roleId: number) {
     // Load pop up dialogue
-    let windowRef = this.windowService.open(RemoveDialogueComponent, {
+    // let windowRef = this.windowService.open(RemoveDialogueComponent, {
+    this.windowService.open(RemoveDialogueComponent, {
       title: windowMessage,
       buttons: {
         close: false,
