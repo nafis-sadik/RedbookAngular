@@ -141,8 +141,8 @@ export class DashboardComponent {
     } else {
       sidebarElement.classList.remove('collapsed');
       sidebarElement.classList.add('expanded');
-      overlay.classList.remove('d-none');
       overlay.classList.add('d-block');
+      overlay.classList.remove('d-none');
     }
   }
 
