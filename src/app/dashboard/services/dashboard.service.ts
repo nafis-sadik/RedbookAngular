@@ -4,11 +4,10 @@ import { IOrganizationModel } from '../Models/IOrganizationModel';
 import { NbDialogService } from '@nebular/theme';
 import { IProductModel } from '../Models/IProductModel';
 import { ICategoryModel } from '../Models/ICategoryModel';
-import { IRoutePermissionModel } from '../Models/IRoutePermissionModel';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
-import { Observable, Subject, map, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { IRouteModel } from '../Models/IRouteModel';
 import { CachingService } from './caching.service';
 
@@ -474,72 +473,72 @@ export class DashboardService {
     return subcategories;
   }
 
-  getRoutePermissions(roleId: number): IRoutePermissionModel[]{
-    if(roleId == 5)
-      return [
-        {
-          RouteId: 1,
-          RouteName: 'Category',
-          IsPermitted: false
-        },
-        {
-          RouteId: 2,
-          RouteName: 'Products',
-          IsPermitted: false
-        },
-        {
-          RouteId: 3,
-          RouteName: 'Purchase',
-          IsPermitted: false
-        },
-        {
-          RouteId: 4,
-          RouteName: 'Sales',
-          IsPermitted: false
-        },
-        {
-          RouteId: 5,
-          RouteName: 'UMS',
-          IsPermitted: true
-        },
-        {
-          RouteId: 6,
-          RouteName: 'Settings',
-          IsPermitted: true
-        }
-      ]
-    else
-      return [
-        {
-          RouteId: 1,
-          RouteName: 'Category',
-          IsPermitted: true
-        },
-        {
-          RouteId: 2,
-          RouteName: 'Products',
-          IsPermitted: true
-        },
-        {
-          RouteId: 3,
-          RouteName: 'Purchase',
-          IsPermitted: true
-        },
-        {
-          RouteId: 4,
-          RouteName: 'Sales',
-          IsPermitted: true
-        },
-        {
-          RouteId: 5,
-          RouteName: 'UMS',
-          IsPermitted: false
-        },
-        {
-          RouteId: 6,
-          RouteName: 'Settings',
-          IsPermitted: false
-        }
-      ]
-  }
+  // getRoutePermissions(roleId: number): IRoutePermissionModel[]{
+  //   if(roleId == 5)
+  //     return [
+  //       {
+  //         RouteId: 1,
+  //         RouteName: 'Category',
+  //         IsPermitted: false
+  //       },
+  //       {
+  //         RouteId: 2,
+  //         RouteName: 'Products',
+  //         IsPermitted: false
+  //       },
+  //       {
+  //         RouteId: 3,
+  //         RouteName: 'Purchase',
+  //         IsPermitted: false
+  //       },
+  //       {
+  //         RouteId: 4,
+  //         RouteName: 'Sales',
+  //         IsPermitted: false
+  //       },
+  //       {
+  //         RouteId: 5,
+  //         RouteName: 'UMS',
+  //         IsPermitted: true
+  //       },
+  //       {
+  //         RouteId: 6,
+  //         RouteName: 'Settings',
+  //         IsPermitted: true
+  //       }
+  //     ]
+  //   else
+  //     return [
+  //       {
+  //         RouteId: 1,
+  //         RouteName: 'Category',
+  //         IsPermitted: true
+  //       },
+  //       {
+  //         RouteId: 2,
+  //         RouteName: 'Products',
+  //         IsPermitted: true
+  //       },
+  //       {
+  //         RouteId: 3,
+  //         RouteName: 'Purchase',
+  //         IsPermitted: true
+  //       },
+  //       {
+  //         RouteId: 4,
+  //         RouteName: 'Sales',
+  //         IsPermitted: true
+  //       },
+  //       {
+  //         RouteId: 5,
+  //         RouteName: 'UMS',
+  //         IsPermitted: false
+  //       },
+  //       {
+  //         RouteId: 6,
+  //         RouteName: 'Settings',
+  //         IsPermitted: false
+  //       }
+  //     ]
+  // }
 }

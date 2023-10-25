@@ -48,7 +48,7 @@ export class PlatformsettingsComponent implements OnInit{
 
       // this.pagedRouteModel.tableConfig.onDelete = null;
       this.pagedRouteModel.tableConfig.onDelete = (routeModel: IRouteModel) => {
-        this.routeService.deleteRoute(routeModel.id)
+        this.routeService.deleteRoute(routeModel.routeId)
           .subscribe(() => {
             toasterService.success('operation successfull');
             location.reload();
@@ -63,7 +63,7 @@ export class PlatformsettingsComponent implements OnInit{
         this.dialogService.open(RouteFormComponent, {
           context: {
             inputModel: {
-              id: 0,
+              routeId: 0,
               routeName: '',
               routeValue: '',
               description: '',

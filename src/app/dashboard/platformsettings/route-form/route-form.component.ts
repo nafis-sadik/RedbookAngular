@@ -5,8 +5,6 @@ import { RouteService } from '../../services/route.service';
 import { IRouteModel } from '../../Models/IRouteModel';
 import { IApplicationModel } from '../../Models/IApplicationModel';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
-import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-route-form',
@@ -25,7 +23,6 @@ export class RouteFormComponent implements OnInit {
     private routeService: RouteService,
     private toasterService: NbToastrService,
     private dialogRef: NbDialogRef<RouteFormComponent>,
-    private paginationService: NGXPaginationService<IRouteModel>,
   ){ }
 
   ngOnInit(): void {
@@ -65,7 +62,7 @@ export class RouteFormComponent implements OnInit {
       loaderContainer.classList.remove('d-none');
     }
 
-    if(this.inputModel.id == undefined || this.inputModel.id == null || this.inputModel.id <= 0){
+    if(this.inputModel.routeId == undefined || this.inputModel.routeId == null || this.inputModel.routeId <= 0){
       this.routeService.addNewRoute(this.inputModel)
         .subscribe(() => {
           window.location.reload()

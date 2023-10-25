@@ -51,19 +51,19 @@
                 <nb-list-item class="container-fluid" *ngFor="let role of rolesUnderThisBusiness">
                   <div class="row w-100">
                     <div class="col-lg-8">
-                      <nb-radio name="BusinessOutlet">
-                        {{ role.RoleName }}
+                      <nb-radio name="BusinessRoles" (click)="loadRoleRoutes(role.roleId)">
+                        {{ role.roleName }}
                       </nb-radio>  
                     </div>
                     <div class="col-lg-4">
                       <div class="row">
                         <div class="col-6 p-0 pe-1">
-                          <button class="w-100" nbButton type="button" status="primary" (click)="openSaveRoleWindow('Update Role - ' + role.RoleName, role)">
+                          <button class="w-100" nbButton type="button" status="primary" (click)="openSaveRoleWindow('Update Role - ' + role.roleName, role)">
                             <nb-icon icon="copy"></nb-icon>
                           </button>
                         </div>
                         <div class="col-6 p-0 ps-1">
-                          <button class="w-100" nbButton type="button" status="danger" (click)="openDeleteRoleWindow('Delete Role - ' + role.RoleName, role.RoleId)">
+                          <button class="w-100" nbButton type="button" status="danger" (click)="openDeleteRoleWindow('Delete Role - ' + role.roleName, role.roleId)">
                             <nb-icon icon="close-square"></nb-icon>
                           </button>
                         </div>
@@ -88,10 +88,10 @@
             </nb-card-header>
             <nb-card-body>
               <nb-list>
-                <nb-list-item *ngFor="let route of routesCollection">
+                <nb-list-item *ngFor="let route of roleRouteMapping">
                     <div class="container-fluid">
                         <div class="row">
-                          <nb-checkbox (checkedChange)="allowRouteToRole(route.RouteId)" [checked]="route.IsPermitted" status="primary"> {{ route.RouteName }} </nb-checkbox>
+                          <nb-checkbox (checkedChange)="allowRouteToRole(route.routeId)" [checked]="route.isPermitted" status="primary"> {{ route.routeName }} </nb-checkbox>
                         </div>
                     </div>
                 </nb-list-item>

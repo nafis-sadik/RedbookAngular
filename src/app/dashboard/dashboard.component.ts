@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
-import { NbMenuItem, NbSidebarService, NbThemeService } from '@nebular/theme';
+import { NbMenuItem, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './services/dashboard.service';
 import { IRouteModel } from './Models/IRouteModel';
-import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +27,6 @@ export class DashboardComponent {
   constructor(
     dashboardService: DashboardService,
     chageDetector: ChangeDetectorRef,
-    private sidebarService: NbSidebarService,
     private themeService: NbThemeService,
   ) {
     // If no theme has been cached, select default theme
@@ -47,7 +45,7 @@ export class DashboardComponent {
         // Get the root level
         let rootElements: IRouteModel[] = menuList.filter((menuItem: any) => !menuItem.parentRouteId);
         rootElements.forEach(menuItem => {
-          menu[menuItem.id] = {
+          menu[menuItem.routeId] = {
             title: menuItem.routeName,
             icon: menuItem.description,
             link: menuItem.routeValue
@@ -126,29 +124,26 @@ export class DashboardComponent {
   toggle(): void {
     // this.sidebarService.toggle(false, 'left');
     let tempSide = document.getElementById('SideBar');
-    let appContainer = document.getElementsByTagName('nb-layout-column')[0];
+    let overlay = document.getElementById('Overlay');
     let sidebarElement: HTMLElement;
-    if(tempSide == null)
+    let overlayElement: HTMLElement;
+    if(tempSide == null || overlay == null)
       return;
     
     sidebarElement = tempSide;
+    overlayElement = overlay;
     
     if(sidebarElement.classList.contains('expanded')){
       sidebarElement.classList.remove('expanded');
       sidebarElement.classList.add('collapsed');
-      appContainer.classList.remove('overlay');
+      overlay.classList.add('d-none');
+      overlay.classList.remove('d-block');
     } else {
       sidebarElement.classList.remove('collapsed');
       sidebarElement.classList.add('expanded');
-      appContainer.classList.add('overlay');
+      overlay.classList.remove('d-none');
+      overlay.classList.add('d-block');
     }
-  }
-
-  overlayClick(){
-    let appContainer = document.getElementsByTagName('nb-layout-column')[0];
-    if(appContainer.classList.contains('overlay'))
-      this.toggle();
-    return;
   }
 
   setTheme(theme: string): void {

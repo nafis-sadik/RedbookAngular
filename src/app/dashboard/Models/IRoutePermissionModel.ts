@@ -3,15 +3,15 @@ export declare interface IRoutePermissionModel {
    * Route Unique Id
    * @type {Number}
    */
-  RouteId: number;
+  routeId: number;
   /**
    * Name of Route
    * @type {string}
    */
-  RouteName: string;
+  routeName: string;
   /**
    * Route Permission
    * @type {boolean}
    */
-  IsPermitted: boolean;
+  isPermitted: boolean;
 }

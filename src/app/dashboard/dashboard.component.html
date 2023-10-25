@@ -39,15 +39,16 @@
           </nb-card>
         </section>
     </nb-layout-header>
-    <nb-layout-column (click)="overlayClick()">
+    <nb-layout-column>
         <router-outlet></router-outlet>
     </nb-layout-column>
     <nb-layout-footer class="footer">All rights reserved by <a href="#">Blume Digital Corporation</a></nb-layout-footer>
 </nb-layout>
 <section id="SideBar">
-    <nb-menu [items]="menuOptions" autoCollapse="true">
-    </nb-menu>
+  <nb-menu [items]="menuOptions" autoCollapse="true">
+  </nb-menu>
 </section>
+<div id="Overlay" (click)="toggle()" class="d-none"></div>
 <div id="LoadingScreen" class="d-block collapsed">
   <div class="loader"></div>
   <div class="loading-text">Loading</div>

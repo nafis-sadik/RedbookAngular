@@ -42,13 +42,14 @@
 }
 
 #SideBar{
-  position: absolute;
+  position: fixed;
   left: calc(var(--sidebar-width) * -1);
   top: var(--header-height);
   width: var(--sidebar-width);
   height: calc(var(--sidebar-height) - var(--header-height));
   box-shadow: var(--sidebar-shadow);
   background-color: var(--sidebar-background-color);
+  z-index: 2;
 }
 
 #SideBar.collapsed{
@@ -63,16 +64,16 @@
   animation-fill-mode: forwards; /* Add this line */
 }
 
-.overlay{
-  content: " ";
-  animation-duration: 0.5s;
-  display: block;
+#Overlay{
+// #SideBar.expanded::after{
+  content: ""; /* This is necessary for the pseudo-element to work */
+  // animation-name: sidebar-expansion-animation;
   position: absolute;
-  top: var(--header-height);
-  width: 100%;
-  height: calc(100vh - var(--header-height));
-  background-color: black;
-  opacity: 0.5;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
 }
 
 #LoadingScreen{

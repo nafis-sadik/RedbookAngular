@@ -14,7 +14,7 @@ export class RoleService{
       private http: HttpClient,
     ) {}
 
-    getOrganizationRoles(orgId: number): Observable<any[]> {
+    getOrganizationRoles(orgId: number): Observable<IRoleModel[]> {
         return this.http
             .get<Array<any>>(`${this.baseUrl}/api/Role/OrganizationRoles/${orgId}`)
             .pipe(map((response) => response));
@@ -36,5 +36,11 @@ export class RoleService{
         return this.http
             .delete(`${this.baseUrl}/api/Role/${roleId}`)
             .pipe(map((response) => response));
+    }
+
+    mapRolesWithRoute(roleId: number, routeId: number): Observable<any>{ 
+      return this.http
+          .get<Array<any>>(`${this.baseUrl}/AllowRouteForRole/${roleId}/${routeId}`)
+          .pipe(map(response => response));
     }
 }

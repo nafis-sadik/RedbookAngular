@@ -3,7 +3,7 @@ export declare interface IRouteModel{
      * Route Unique Identifier
      * @type {Number}
      */
-    id: number;
+    routeId: number;
 
     /**
      * Display Name of route
