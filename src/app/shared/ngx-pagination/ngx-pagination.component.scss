@@ -52,5 +52,7 @@
   margin-right: 10px;
 }
 
-
+#PagingSection .active .page-link{
+  z-index: 1 !important;
+}
 // paging css end

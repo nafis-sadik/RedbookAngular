@@ -6,6 +6,7 @@ import { SalesService } from './sell.service';
 import { IOrganizationModel } from '../../Models/IOrganizationModel';
 import { ISalesModel } from '../../Models/ISalesModel';
 import { DashboardService } from '../../services/dashboard.service';
+import { OrganizationService } from '../../services/organization.service';
 
 @Component({
   selector: 'app-sell',
@@ -23,14 +24,15 @@ export class SellComponent {
   pagedSalesModel: IPaginationModel<ISalesModel>;
 
   constructor(
+    private orgService: OrganizationService,
     private dashboardService: DashboardService,
     private salesService: SalesService,
     private ngxPaginationService: NGXPaginationService<ISalesModel>
   ) {
-    dashboardService.getOutlets()
-      .subscribe(response => {
-        this.outlets = [];
-      });
+    // orgService.getAllOrganizations()
+    //   .subscribe(response => {
+    //     this.outlets = response;
+    //   });
 
     this.pagedSalesModel = dashboardService.getPagingConfig(AddSalesComponent, 'New Sales');
 

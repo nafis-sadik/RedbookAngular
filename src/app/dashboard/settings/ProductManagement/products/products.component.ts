@@ -6,6 +6,7 @@ import { ProductService } from './products.service';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
+import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 
 @Component({
   selector: 'app-products',
@@ -22,14 +23,15 @@ export class ProductsComponent {
   loaderContainer: HTMLElement| null;
 
   constructor(
+    orgService: OrganizationService,
     dashboardService: DashboardService,
     private productService: ProductService,
     private ngxPaginationService: NGXPaginationService<IProductModel>
   ) {
-    dashboardService.getOutlets()
-      .subscribe(response => {
-        this.outlets = [];
-      });
+    // orgService.getAllOrganizations()
+    //   .subscribe(response => {
+    //     this.outlets = response;
+    //   });
 
     this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'New Product');
 
@@ -58,10 +60,10 @@ export class ProductsComponent {
       };
     }
   }
-  
+
   ngOnInit(): void {
     this.loaderContainer = document.getElementById('LoadingScreen');
-    
+
     setTimeout(() => {
       if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
         this.loaderContainer.classList.remove('d-block');

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IUserModel } from 'src/app/dashboard/Models/IUserModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
@@ -12,15 +12,12 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
 })
 export class UmsComponent {
   pagedUserModel: IPaginationModel<IUserModel>;
-  ownedBusinesses: IOrganizationModel[];
+  @Input() ownedBusinesses: IOrganizationModel[];
+
   constructor(
     dashboardService: DashboardService,
     private ngxPaginationService: NGXPaginationService<IUserModel>
   ) {
-    dashboardService.getOutlets()
-      .subscribe(response  => {
-        this.ownedBusinesses = [];
-      });
     this.pagedUserModel = dashboardService.getPagingConfig(null, 'User Management', 'Add User', 'Search User');
     if(this.pagedUserModel.tableConfig){
       this.pagedUserModel.tableConfig.tableMaping = {

@@ -5,6 +5,7 @@ import { ICategoryModel } from '../../../Models/ICategoryModel';
 import { DashboardService } from '../../../services/dashboard.service';
 import { AddDialogueComponent } from '../../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from '../../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
+import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 
 @Component({
   selector: 'app-category',
@@ -121,35 +122,36 @@ export class CategoryComponent implements OnInit {
 
 
   constructor(
-    private dashboardService: DashboardService,
+    private orgService: OrganizationService,
     private windowService: NbWindowService,
     private toastrService: NbToastrService,
     private chageDetectorRef: ChangeDetectorRef
   ) {
     this.ownedBusinesses = [];
-    this.loaderContainer = document.getElementById('LoadingScreen');   
+    this.loaderContainer = document.getElementById('LoadingScreen');
     if(this.loaderContainer && this.loaderContainer.classList.contains('d-none')){
       this.loaderContainer.classList.remove('d-none');
       this.loaderContainer.classList.add('d-block');
     }
   }
-  
+
   ngOnInit(): void {
-    this.dashboardService.getOutlets()
+    this.orgService.getAllOrganizations()
       .subscribe(response => {
-        for(let i = 0; i < response.length; i++){
-          this.ownedBusinesses.push({
-            organizationId: response[i].organizationId,
-            organizationName: response[i].organizationName,
-            address: []
-          });
-        }
+        // for(let i = 0; i < response.length; i++){
+        //   this.ownedBusinesses.push({
+        //     organizationId: response[i].organizationId,
+        //     organizationName: response[i].organizationName,
+        //     address: []
+        //   });
+        // }
+        this.ownedBusinesses = response;
 
         if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
           this.loaderContainer.classList.remove('d-block');
           this.loaderContainer.classList.add('d-none');
         }
-        
+
         this.chageDetectorRef.detectChanges();
       });
   }

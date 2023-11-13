@@ -143,20 +143,6 @@ export class DashboardService {
     ];
   }
 
-  getOutlets(): Observable<IOrganizationModel[]>{
-    let cachedData = this.cachingService.get(`${this.baseUrl}/api/Organization/GetAll`);
-    if(!cachedData){      
-      return this.http
-        .get<Array<IOrganizationModel>>(`${this.baseUrl}/api/Organization/GetAll`)
-        .pipe(map(response => { 
-          this.cachingService.set(`${this.baseUrl}/api/Organization/GetAll`, response);
-          return response;
-        }));
-    } else {
-      return of(cachedData);
-    }
-  }
-
   getPagingConfig<T>(
     dialogueComponent: any,
     cardHeader: string,
@@ -376,7 +362,7 @@ export class DashboardService {
     return this.http
       .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetMenuRoutes`)
       .pipe(map(response =>  response))
-      
+
     // return [
     //   {
     //     title: 'Dashboards',

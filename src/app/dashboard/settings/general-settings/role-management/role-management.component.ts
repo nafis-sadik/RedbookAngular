@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
@@ -18,7 +18,7 @@ import { RemoveDialogueComponent } from 'src/app/shared/ngx-dialogues/remove-dia
 })
 
 export class RoleManagementComponent {
-  ownedBusinesses: IOrganizationModel[];
+  @Input() ownedBusinesses: IOrganizationModel[];
   rolesUnderThisBusiness: IRoleModel[];
   roleRouteMapping: IRoutePermissionModel[];
 
@@ -34,19 +34,8 @@ export class RoleManagementComponent {
     private routeService: RouteService,
     private roleService: RoleService
   ) {
-    this.ownedBusinesses = [];
     this.roleRouteMapping = [];
     this.rolesUnderThisBusiness = [];
-    dashboardService.getOutlets()
-      .subscribe(response => {
-        for(let i = 0; i < response.length; i++){
-          this.ownedBusinesses.push({
-            organizationId: response[i].organizationId,
-            organizationName: response[i].organizationName,
-            address: []
-          });
-        }
-      });
   }
 
   // Organization / Business management
@@ -137,7 +126,7 @@ export class RoleManagementComponent {
     this.selectedBusinessId = businessId;
     this.roleService.getOrganizationRoles(businessId)
       .subscribe((response) => {
-        this.rolesUnderThisBusiness = [];              
+        this.rolesUnderThisBusiness = [];
         response.forEach(element => {
           this.rolesUnderThisBusiness.push({
                 organizationId: element.organizationId,
@@ -145,7 +134,7 @@ export class RoleManagementComponent {
                 roleName: element.roleName
             });
         });
-        
+
         this.chageDetector.detectChanges();
       });
   }
@@ -187,7 +176,7 @@ export class RoleManagementComponent {
                 };
               }
             }
-            
+
             // Append newly added record
             if(isNewlyAdded){
               this.rolesUnderThisBusiness.push({
@@ -253,9 +242,9 @@ export class RoleManagementComponent {
     this.routeService.getAllRoute()
       .subscribe((appRoutes) => {
         this.routeService.getRoutesByRole(roleId)
-          .subscribe((allowedRoutes) => {      
+          .subscribe((allowedRoutes) => {
             let allowedRouteIds: number[] = allowedRoutes.map(x => x.routeId);
-            
+
             appRoutes = this.findLeafNodes(appRoutes);
 
             appRoutes.forEach(route => {

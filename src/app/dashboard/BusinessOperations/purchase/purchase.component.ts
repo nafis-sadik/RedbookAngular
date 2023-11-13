@@ -6,6 +6,7 @@ import { PurchaseService } from './purchase.service';
 import { IOrganizationModel } from '../../Models/IOrganizationModel';
 import { IInvoiceModel } from '../../Models/IInvoiceModel';
 import { DashboardService } from '../../services/dashboard.service';
+import { OrganizationService } from '../../services/organization.service';
 
 @Component({
   selector: 'app-purchase',
@@ -25,15 +26,16 @@ export class PurchaseComponent {
   pagedPurchaseModel: IPaginationModel<IInvoiceModel>;
 
   constructor(
+    private orgService: OrganizationService,
     private dashboardService: DashboardService,
     private purchaseService: PurchaseService,
     private ngxPaginationService: NGXPaginationService<IInvoiceModel>
   )
   {
-    dashboardService.getOutlets()
-      .subscribe(response => {
-        this.outlets = [];
-      });
+    // orgService.getAllOrganizations()
+    //   .subscribe(response => {
+    //     this.outlets = response;
+    //   });
 
     this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent, 'New Purchase');
 
