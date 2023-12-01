@@ -49,7 +49,7 @@ import { AuthInterceptorService } from './shared/auth/api-Interceptor.service';
           },
           baseEndpoint: 'http://localhost:5062',
           login: {
-            endpoint: '/api/User/LogIn',
+            endpoint: '/api/Auth/LogIn',
             redirect: {
               success: '/dashboard',
             },

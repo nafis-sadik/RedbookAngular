@@ -80,7 +80,7 @@ export class RoleManagementComponent {
           })
         },
 
-        businessTitle: businessModel?.organizationName
+        textValue: businessModel?.organizationName
       }
     });
   }

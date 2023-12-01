@@ -4,6 +4,8 @@ import { IUserModel } from 'src/app/dashboard/Models/IUserModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
+import { UserFormComponent } from './user-form/user-form.component';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'app-ums',
@@ -11,34 +13,55 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
   styleUrls: ['./ums.component.scss']
 })
 export class UmsComponent {
+  selectedBusinessId: number;
   pagedUserModel: IPaginationModel<IUserModel>;
   @Input() ownedBusinesses: IOrganizationModel[];
 
   constructor(
     dashboardService: DashboardService,
+    private dialogService: NbDialogService,
     private ngxPaginationService: NGXPaginationService<IUserModel>
   ) {
-    this.pagedUserModel = dashboardService.getPagingConfig(null, 'User Management', 'Add User', 'Search User');
+    this.pagedUserModel = dashboardService.getPagingConfig(UserFormComponent, 'User Management', 'Add User', 'Search User');
+
+    if(this.pagedUserModel.addNewElementButtonConfig){
+      this.pagedUserModel.addNewElementButtonConfig.onAdd = () => {
+        this.dialogService.open(UserFormComponent, {
+          context: {
+            selectedBusinessId: this.selectedBusinessId
+          },
+        });
+      };
+    }
+
     if(this.pagedUserModel.tableConfig){
       this.pagedUserModel.tableConfig.tableMaping = {
-        "First Name": "FirstName",
-        "Last Name": "LastName",
-        "User Name": "UserName",
-        "Role": "RoleName"
+        "First Name": "firstName",
+        "Last Name": "lastName",
+        "User Name": "userName",
+        "Role": "roleName"
       };
 
-      this.pagedUserModel.tableConfig.onEdit = () => {}
+      this.pagedUserModel.tableConfig.onEdit = () => {
+        console.log('selectedBusinessId ss', this.selectedBusinessId);
+        this.dialogService.open(UserFormComponent, {
+          context: {
+            selectedBusinessId: this.selectedBusinessId
+          },
+        });
+      }
       this.pagedUserModel.tableConfig.onDelete = () => {}
     }
   }
 
-  loadUsersUnderBusiness(outletId: number): void{
+  loadUsersUnderBusiness(businessId: number): void{
+    this.selectedBusinessId = businessId;
     let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
     if(dataTableCard && dataTableCard.classList.contains('d-none'))
       dataTableCard.classList.remove('d-none');
 
     if(this.pagedUserModel.tableConfig == null) return;
-    if(outletId == 1) {
+    if(businessId == 1) {
       this.pagedUserModel.tableConfig.sourceData = [
         {
           userId: 'GUID',
@@ -87,7 +110,7 @@ export class UmsComponent {
     else{
       this.pagedUserModel.tableConfig.sourceData = [];
     }
-    this.ngxPaginationService.set(this.pagedUserModel)
+    this.ngxPaginationService.set(this.pagedUserModel);
   }
 
   removeOutlet(windowLabel: string, businessId: number): void{ }

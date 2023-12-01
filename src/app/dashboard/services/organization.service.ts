@@ -4,6 +4,7 @@ import { environment } from "src/environments/environment.development";
 import { IOrganizationModel } from "../Models/IOrganizationModel";
 import { Observable, ObservableLike, map, of } from "rxjs";
 import { CachingService } from "./caching.service";
+import { IUserModel } from "../Models/IUserModel";
 
 @Injectable({
     providedIn: 'root',
@@ -46,5 +47,11 @@ export class OrganizationService{
       } else {
         return of(cachedData);
       }
+    }
+
+    addUserToBusiness(userModel: IUserModel): Observable<any>{
+      return this.http
+          .post<IOrganizationModel>(`${this.baseUrl}/api/Organization`, userModel)
+          .pipe(map((response) => response));
     }
 }

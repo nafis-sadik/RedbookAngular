@@ -1,14 +1,64 @@
 <section id="UserForm">
   <nb-card>
-    <nb-card-header>
+    <nb-card-header>User Form</nb-card-header>
+    <nb-card-body>      
       <div class="container-fluid">
-        <div class="row">
-          <span>
-            User Form
-          </span>
-        </div>
+        <form [formGroup]="userForm" (ngSubmit)="saveUser()" class="step-container row">
+          <div class="col-md-6 p-1">
+              <label class="mb-1">First Name</label>
+              <input
+                  nbInput
+                  fullWidth
+                  status="primary"
+                  type="text"
+                  formControlName="firstName"
+                  class="form-control"
+                  placeholder="First Name"
+                  [value]="userModel.firstName"
+                  required
+              >
+          </div>
+          <div class="col-md-6 p-1">
+            <label class="mb-1">Last Name</label>
+            <input
+                nbInput
+                fullWidth
+                status="primary"
+                type="text"
+                formControlName="lastName"
+                class="form-control"
+                placeholder="Last Name"
+                [value]="userModel.lastName"
+                required
+            >
+          </div>
+          <div class="col-md-6 p-1">
+            <label class="mb-1">Email</label>
+            <input
+                nbInput
+                fullWidth
+                status="primary"
+                type="email"
+                formControlName="email"
+                class="form-control"
+                placeholder="Email"
+                [value]="userModel.email"
+                required
+            >
+            <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid" class="validationError"></div>
+          </div>
+          <div class="col-md-6 p-1">
+            <label class="mb-1">Roles</label>
+            <nb-select fullWidth placeholder="Select User Role" status="primary" formControlName="roleId" [selected]=userModel.roleId>
+                <nb-option *ngFor="let roleInfo of roleList" [value]=roleInfo.roleId>{{ roleInfo.roleName }}</nb-option>
+            </nb-select>
+            <div *ngIf="userForm.get('roleId')?.touched && userForm.get('roleId')?.invalid" class="validationError"></div>
+          </div>
+          <div class="col-md-12 p-1">
+            <button nbButton fullWidth status="primary" type="submit">Save</button>
+          </div>
+        </form>
       </div>
-    </nb-card-header>
-    <nb-card-body></nb-card-body>
+    </nb-card-body>
   </nb-card>
 </section>
