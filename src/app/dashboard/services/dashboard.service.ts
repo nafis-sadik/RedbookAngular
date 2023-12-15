@@ -168,7 +168,7 @@ export class DashboardService {
         sourceData: []
       },
       pagingConfig:{
-        pageNumber: 1,
+        PageNumber: 1,
         totalItems: 268,
         pageLength: 5,
         onUpdate: (data: any) => {

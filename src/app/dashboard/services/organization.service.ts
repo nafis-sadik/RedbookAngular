@@ -5,6 +5,7 @@ import { IOrganizationModel } from "../Models/IOrganizationModel";
 import { Observable, ObservableLike, map, of } from "rxjs";
 import { CachingService } from "./caching.service";
 import { IUserModel } from "../Models/IUserModel";
+import { IPaginationModel } from "src/app/shared/ngx-pagination/Models/IPaginationModel";
 
 @Injectable({
     providedIn: 'root',
@@ -53,5 +54,11 @@ export class OrganizationService{
       return this.http
           .post<IOrganizationModel>(`${this.baseUrl}/api/Organization`, userModel)
           .pipe(map((response) => response));
+    }
+
+    getUserByBusinessId(pagedUserModel: IPaginationModel<IUserModel>, businessId: number): Observable<any>{
+        return this.http
+            .post<any>(`${this.baseUrl}/api/Organization/Users/${businessId}`, pagedUserModel)
+            .pipe(map(response => response))
     }
 }

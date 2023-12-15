@@ -55,7 +55,7 @@
                 <li
                   class="page-item page-number-container"
                   *ngFor="let pageNumber of pageNumbersToPrint"
-                  [ngClass]="{ active: pageNumber == this.paginationModel.pagingConfig.pageNumber }"
+                  [ngClass]="{ active: pageNumber == this.paginationModel.pagingConfig.PageNumber }"
                   (click)="onPageSelect(pageNumber)"
                 >
                   <a class="page-link page-number">{{ pageNumber }}</a>
@@ -88,7 +88,7 @@
       https://github.com/akveo/nebular/issues/2145 -->
       <!-- Pagination page numbers & page length section starts here -->
       
-      <span *ngIf="this.paginationModel.pagingConfig" class="pagindDetails">Showing {{ this.paginationModel.pagingConfig.pageNumber }} of
+      <span *ngIf="this.paginationModel.pagingConfig" class="pagindDetails">Showing {{ this.paginationModel.pagingConfig.PageNumber }} of
         {{ this.totalPageCount }} pages of
         {{ this.paginationModel.pagingConfig.totalItems }} entries</span>
     </nb-card-footer>

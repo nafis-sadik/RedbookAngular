@@ -39,11 +39,11 @@ export class RouteService{
   getPagedRoute(pagedRouteModel: IPaginationModel<IRouteModel>): Observable<any>{
     if(pagedRouteModel.searchingConfig?.searchString){
       return this.http
-          .get<IPaginationModel<IRouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.pageNumber}&PageSize=${pagedRouteModel.pagingConfig?.pageLength}&SearchString=${pagedRouteModel.searchingConfig?.searchString}`)
+          .get<IPaginationModel<IRouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.PageNumber}&PageSize=${pagedRouteModel.pagingConfig?.pageLength}&SearchString=${pagedRouteModel.searchingConfig?.searchString}`)
           .pipe(map(response => response ));
     } else {
       return this.http
-        .get<IPaginationModel<IRouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.pageNumber}&PageSize=${pagedRouteModel.pagingConfig?.pageLength}`)
+        .get<IPaginationModel<IRouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.PageNumber}&PageSize=${pagedRouteModel.pagingConfig?.pageLength}`)
         .pipe(map(response => response ));
     }
   }

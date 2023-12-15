@@ -6,6 +6,7 @@ import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginati
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { UserFormComponent } from './user-form/user-form.component';
 import { NbDialogService } from '@nebular/theme';
+import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 
 @Component({
   selector: 'app-ums',
@@ -19,6 +20,7 @@ export class UmsComponent {
 
   constructor(
     dashboardService: DashboardService,
+    private orgService: OrganizationService,
     private dialogService: NbDialogService,
     private ngxPaginationService: NGXPaginationService<IUserModel>
   ) {
@@ -50,6 +52,7 @@ export class UmsComponent {
           },
         });
       }
+      
       this.pagedUserModel.tableConfig.onDelete = () => {}
     }
   }
@@ -61,56 +64,13 @@ export class UmsComponent {
       dataTableCard.classList.remove('d-none');
 
     if(this.pagedUserModel.tableConfig == null) return;
-    if(businessId == 1) {
-      this.pagedUserModel.tableConfig.sourceData = [
-        {
-          userId: 'GUID',
-          firstName: 'Nafis',
-          lastName: 'Sadik',
-          userName: 'nafis_sadik',
-          password: 'ABC123abc.',
-          roleId: 1,
-          roleName: 'Sales Admin',
-          accountBalance: 999999,
-          email: 'hemail@shemail.com',
-          organizationId: 0,
-          organizationName: 'Honululiu',
-          ApplicationId: 1
-        },
-        {
-          userId: 'GUID',
-          firstName: 'Farhan',
-          lastName: 'Masud',
-          userName: 'farhan_masud',
-          password: 'ABC123abc.',
-          roleId: 1,
-          roleName: 'Sales Admin',
-          accountBalance: 999999,
-          email: 'hemail@shemail.com',
-          organizationId: 0,
-          organizationName: 'Honululiu',
-          ApplicationId: 1
-        },
-        {
-          userId: 'GUID',
-          firstName: 'Fayham',
-          lastName: 'Masud',
-          userName: 'fayham',
-          password: 'ABC123abc.',
-          roleId: 1,
-          roleName: 'Sales Admin',
-          accountBalance: 999999,
-          email: 'hemail@shemail.com',
-          organizationId: 0,
-          organizationName: 'Honululiu',
-          ApplicationId: 1
-        }
-      ]
-    }
-    else{
-      this.pagedUserModel.tableConfig.sourceData = [];
-    }
-    this.ngxPaginationService.set(this.pagedUserModel);
+    console.log(this.pagedUserModel)
+    this.orgService.getUserByBusinessId(this.pagedUserModel, businessId)
+      .subscribe((response) => {
+        if(this.pagedUserModel.tableConfig == null) return;
+        this.pagedUserModel.tableConfig.sourceData = response;
+        this.ngxPaginationService.set(this.pagedUserModel);
+      });
   }
 
   removeOutlet(windowLabel: string, businessId: number): void{ }

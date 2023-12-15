@@ -37,13 +37,13 @@ export class NgxPaginationComponent<T> {
         // Preparing page numbers to print
         // Starting from the pivot, going all the way to the bottom    
         this.pageNumbersToPrint = [];
-        for (let i = this.paginationModel.pagingConfig.pageNumber; i > 0 && this.pageNumbersToPrint.length <= this.maxNumberOfPagesToRender; i--) {
+        for (let i = this.paginationModel.pagingConfig.PageNumber; i > 0 && this.pageNumbersToPrint.length <= this.maxNumberOfPagesToRender; i--) {
           this.pageNumbersToPrint.push(i);
         }
         this.pageNumbersToPrint = this.pageNumbersToPrint.sort();
 
         // If there was anything above the pivot
-        let indexer: number = this.paginationModel.pagingConfig.pageNumber;
+        let indexer: number = this.paginationModel.pagingConfig.PageNumber;
         // this.pageNumbersToPrint[this.pageNumbersToPrint.length-1] < this.totalPageCount shall cut the loop off when the max page number is bellow the max allowed page to render
         // this.pageNumbersToPrint.length-1 < this.maxNumberOfPagesToRender shall cut the loop off then the max page number is above the max alloed page to render
         while(this.pageNumbersToPrint[this.pageNumbersToPrint.length-1] < this.totalPageCount && this.pageNumbersToPrint.length-1 < this.maxNumberOfPagesToRender){
@@ -120,7 +120,7 @@ export class NgxPaginationComponent<T> {
     if (this.paginationModel.pagingConfig && this.paginationModel.searchingConfig && typeof(this.paginationModel.searchingConfig.onSearch) == typeof Function){
       let searchParams: IParamModel = {
         pageLength: this.paginationModel.pagingConfig.pageLength,
-        pageNumber: this.paginationModel.pagingConfig.pageNumber,
+        pageNumber: this.paginationModel.pagingConfig.PageNumber,
         searchString: this.paginationModel.searchingConfig?.searchString
       };
 
@@ -138,12 +138,12 @@ export class NgxPaginationComponent<T> {
     if (pageNumber > this.totalPageCount) return;
 
     // Selected page must be updated in view model
-    this.paginationModel.pagingConfig.pageNumber = pageNumber;
+    this.paginationModel.pagingConfig.PageNumber = pageNumber;
 
     if (this.paginationModel.pagingConfig.onUpdate && typeof(this.paginationModel.pagingConfig.onUpdate) == 'function'){
       let searchParams: IParamModel = {
         pageLength: this.paginationModel.pagingConfig.pageLength,
-        pageNumber: this.paginationModel.pagingConfig.pageNumber,
+        pageNumber: this.paginationModel.pagingConfig.PageNumber,
         searchString: this.paginationModel.searchingConfig == undefined? null : this.paginationModel.searchingConfig.searchString
       };
       
@@ -155,7 +155,7 @@ export class NgxPaginationComponent<T> {
     if (!this.paginationModel.pagingConfig)
       throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
     
-    let selectedPageNumber = this.paginationModel.pagingConfig.pageNumber + 1;
+    let selectedPageNumber = this.paginationModel.pagingConfig.PageNumber + 1;
     
     // Limit page number generation beyond max number of pages
     if (selectedPageNumber > this.totalPageCount) return;
@@ -168,7 +168,7 @@ export class NgxPaginationComponent<T> {
       }
     }
 
-    this.paginationModel.pagingConfig.pageNumber = selectedPageNumber;
+    this.paginationModel.pagingConfig.PageNumber = selectedPageNumber;
     this.onPageSelect(selectedPageNumber);
   }
 
@@ -176,7 +176,7 @@ export class NgxPaginationComponent<T> {
     if (!this.paginationModel.pagingConfig)
       throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
     
-    let selectedPageNumber = this.paginationModel.pagingConfig.pageNumber - 1;
+    let selectedPageNumber = this.paginationModel.pagingConfig.PageNumber - 1;
 
     if (selectedPageNumber <= 0) return;
   
@@ -186,7 +186,7 @@ export class NgxPaginationComponent<T> {
       }
     }
     
-    this.paginationModel.pagingConfig.pageNumber = selectedPageNumber;
+    this.paginationModel.pagingConfig.PageNumber = selectedPageNumber;
     this.onPageSelect(selectedPageNumber);
   }
 
@@ -194,7 +194,7 @@ export class NgxPaginationComponent<T> {
     if (!this.paginationModel.pagingConfig)
       throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
       
-    if(this.paginationModel.pagingConfig.pageNumber == 1) return;
+    if(this.paginationModel.pagingConfig.PageNumber == 1) return;
 
     // Beyond display - high
     // If next page number is not presented as a clickable button in UI
@@ -210,7 +210,7 @@ export class NgxPaginationComponent<T> {
     if (!this.paginationModel.pagingConfig)
       throw 'Failed to execute operation: Object of IPagingModel can not be undefined';
       
-      if(this.paginationModel.pagingConfig.pageNumber == this.totalPageCount) return;
+      if(this.paginationModel.pagingConfig.PageNumber == this.totalPageCount) return;
 
       let counter = this.maxNumberOfPagesToRender;
       this.pageNumbersToPrint = [];
@@ -227,7 +227,7 @@ export class NgxPaginationComponent<T> {
 
   onPageLengthChange(): void {
     if (this.paginationModel.pagingConfig?.onUpdate != null && typeof(this.paginationModel.pagingConfig?.onUpdate) == 'function'){
-      this.paginationModel.pagingConfig.pageNumber = 1;
+      this.paginationModel.pagingConfig.PageNumber = 1;
       this.paginationModel.pagingConfig.onUpdate(this.paginationModel.pagingConfig);
       
       this.totalPageCount = Math.ceil(this.paginationModel.pagingConfig.totalItems/this.paginationModel.pagingConfig.pageLength);

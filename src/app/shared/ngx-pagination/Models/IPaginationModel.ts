@@ -55,7 +55,7 @@ export declare interface IPaginationModel<T> {
      * Description: Selected page number
      * @type {Number}
      */
-    pageNumber: number;
+    PageNumber: number;
     /**
      * Default value: 0
      * Description: Default value for pagination options, Must be and index number of 'pageLengthOptions'.
