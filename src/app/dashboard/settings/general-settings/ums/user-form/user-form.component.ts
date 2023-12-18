@@ -14,33 +14,15 @@ export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   roleList: IRoleModel[];
   @Input() userModel: IUserModel;
-  @Input() selectedBusinessId: number;
 
   constructor(
     private fb: FormBuilder,
     private roleService: RoleService,
     private orgService: OrganizationService
-  ) {
-    if(this.userModel == undefined || this.userModel == null){
-      this.userModel = {
-        firstName: '',
-        lastName: '',
-        accountBalance: 0,
-        ApplicationId: 0,
-        email: '',
-        organizationId: 0,
-        organizationName: '',
-        password: '',
-        roleId: 0,
-        roleName: '',
-        userId: '',
-        userName: ''
-      }
-    }
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.roleService.getOrganizationRoles(this.selectedBusinessId)
+    this.roleService.getOrganizationRoles(this.userModel.organizationId)
       .subscribe((roles) => {
         this.roleList = roles;
       });
@@ -48,6 +30,7 @@ export class UserFormComponent implements OnInit {
     this.userForm = this.fb.group({
       firstName: [this.userModel.firstName],
       lastName: [this.userModel.lastName],
+      userName: [this.userModel.userName, Validators.required],
       email: [this.userModel.email, Validators.required],
       roleId: [this.userModel.roleId, Validators.required]
     });
@@ -55,12 +38,16 @@ export class UserFormComponent implements OnInit {
     this.userForm.valueChanges.subscribe((value) => {
       this.userModel.firstName = value.firstName;
       this.userModel.lastName = value.lastName;
+      this.userModel.userName = value.userName;
       this.userModel.email = value.email;
       this.userModel.roleId = value.roleId;
     });
   }
 
-  saveUser(): void {
-    this.orgService.addUserToBusiness(this.userModel);
+  saveUser(): any {
+    return this.orgService.addUserToBusiness(this.userModel)
+      .subscribe((response) => {
+        console.log(response);
+      })
   }
 }

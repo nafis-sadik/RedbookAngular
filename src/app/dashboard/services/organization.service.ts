@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "src/environments/environment.development";
 import { IOrganizationModel } from "../Models/IOrganizationModel";
 import { Observable, ObservableLike, map, of } from "rxjs";
@@ -52,13 +52,13 @@ export class OrganizationService{
 
     addUserToBusiness(userModel: IUserModel): Observable<any>{
       return this.http
-          .post<IOrganizationModel>(`${this.baseUrl}/api/Organization`, userModel)
+          .post<IOrganizationModel>(`${this.baseUrl}/api/Organization/Users`, userModel)
           .pipe(map((response) => response));
     }
 
     getUserByBusinessId(pagedUserModel: IPaginationModel<IUserModel>, businessId: number): Observable<any>{
-        return this.http
-            .post<any>(`${this.baseUrl}/api/Organization/Users/${businessId}`, pagedUserModel)
-            .pipe(map(response => response))
+      return this.http
+            .get<IPaginationModel<IUserModel>>(`${this.baseUrl}/api/Organization/Users?SearchString=${pagedUserModel.searchingConfig?.searchString}&PageNumber=${pagedUserModel.pagingConfig?.PageNumber}&PageSize=${pagedUserModel.pagingConfig?.pageLength}&businessId=${businessId}`)
+            .pipe(map(response => response));
     }
 }
