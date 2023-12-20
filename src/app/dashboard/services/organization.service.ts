@@ -58,7 +58,7 @@ export class OrganizationService{
 
     getUserByBusinessId(pagedUserModel: IPaginationModel<IUserModel>, businessId: number): Observable<any>{
       return this.http
-            .get<IPaginationModel<IUserModel>>(`${this.baseUrl}/api/Organization/Users?SearchString=${pagedUserModel.searchingConfig?.searchString}&PageNumber=${pagedUserModel.pagingConfig?.PageNumber}&PageSize=${pagedUserModel.pagingConfig?.pageLength}&businessId=${businessId}`)
+            .get<IPaginationModel<IUserModel>>(`${this.baseUrl}/api/Organization/Users?SearchString=${pagedUserModel.searchingConfig?.searchString}&PageNumber=${pagedUserModel.pagingConfig?.pageNumber}&PageLength=${pagedUserModel.pagingConfig?.pageLength}&businessId=${businessId}`)
             .pipe(map(response => response));
     }
 }

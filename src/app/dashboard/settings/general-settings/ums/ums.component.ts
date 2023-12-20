@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IUserModel } from 'src/app/dashboard/Models/IUserModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
@@ -13,7 +13,7 @@ import { OrganizationService } from 'src/app/dashboard/services/organization.ser
   templateUrl: './ums.component.html',
   styleUrls: ['./ums.component.scss']
 })
-export class UmsComponent {
+export class UmsComponent  implements OnInit{
   selectedBusinessId: number;
   pagedUserModel: IPaginationModel<IUserModel>;
   @Input() ownedBusinesses: IOrganizationModel[];
@@ -26,19 +26,8 @@ export class UmsComponent {
   ) {
     this.pagedUserModel = dashboardService.getPagingConfig(UserFormComponent, 'User Management', 'Add User', 'Search User');
 
+    // Dropdown change event binding
     if(this.pagedUserModel.pagingConfig){
-      // To be called manually for updating UI 
-      this.pagedUserModel.pagingConfig.onUpdate = (pagingInfo: any) => {
-        if(this.pagedUserModel.pagingConfig){
-          this.pagedUserModel.pagingConfig.pageLength = pagingInfo.pageLength;
-          this.pagedUserModel.pagingConfig.PageNumber = pagingInfo.pageNumber;
-          this.pagedUserModel.pagingConfig.totalItems = pagingInfo.totalItems;
-
-          this.ngxPaginationService.set(this.pagedUserModel);
-        }
-      }
-
-      // Dropdown change event binding
       this.pagedUserModel.pagingConfig.onUpdate = () => {
         this.orgService.getUserByBusinessId(this.pagedUserModel, this.selectedBusinessId)
           .subscribe((response) => {
@@ -50,8 +39,8 @@ export class UmsComponent {
             this.pagedUserModel.tableConfig.sourceData = response.sourceData;
 
             if(this.pagedUserModel.pagingConfig){
-              this.pagedUserModel.pagingConfig.pageLength = response.pageSize;
-              this.pagedUserModel.pagingConfig.PageNumber = response.pageNumber;
+              this.pagedUserModel.pagingConfig.pageLength = response.pageLength;
+              this.pagedUserModel.pagingConfig.pageNumber = response.pageNumber;
               this.pagedUserModel.pagingConfig.totalItems = response.totalItems;
             }
 
@@ -64,20 +53,8 @@ export class UmsComponent {
       this.pagedUserModel.addNewElementButtonConfig.onAdd = () => {
         this.dialogService.open(UserFormComponent, {
           context: {
-            userModel: {
-              firstName: '',
-              lastName: '',
-              accountBalance: 0,
-              ApplicationId: 0,
-              email: '',
-              organizationId: this.selectedBusinessId,
-              organizationName: '',
-              password: '',
-              roleId: 0,
-              roleName: '',
-              userId: '',
-              userName: ''
-            }
+            userModel: null,
+            selectedBusinessId: this.selectedBusinessId
           },
         });
       };
@@ -105,7 +82,7 @@ export class UmsComponent {
               password: '',
               roleId: userModel.roleId,
               roleName: '',
-              userId: '',
+              userId: userModel.userId,
               userName: userModel.userName
             }
           },
@@ -116,11 +93,25 @@ export class UmsComponent {
     }
   }
 
+  ngOnInit(): void {
+    let loaderContainer: HTMLElement| null = document.getElementById('LoadingScreen');
+
+    if(loaderContainer){
+      loaderContainer.classList.add('d-block');
+      loaderContainer.classList.remove('d-none');
+    }
+  }
+
+  // Load user data on business selection from radio button click
   loadUsersUnderBusiness(businessId: number): void{
     this.selectedBusinessId = businessId;
+
     let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
     if(dataTableCard && dataTableCard.classList.contains('d-none'))
       dataTableCard.classList.remove('d-none');
+
+    if(this.pagedUserModel.searchingConfig)
+      this.pagedUserModel.searchingConfig.searchString = "";
 
     this.orgService.getUserByBusinessId(this.pagedUserModel, businessId)
       .subscribe((response) => {
@@ -132,13 +123,12 @@ export class UmsComponent {
           this.pagedUserModel.searchingConfig.searchString = response.searchString;
         else
           this.pagedUserModel.searchingConfig.searchString = '';
-        this.pagedUserModel.tableConfig.sourceData = response.sourceData;
 
-        this.pagedUserModel.pagingConfig.onUpdate({
-          pageLength: response.pageLength,
-          pageNumber: response.pageNumber,
-          totalItems: response.totalItems
-        });
+        this.pagedUserModel.tableConfig.sourceData = response.sourceData;
+        
+        this.pagedUserModel.pagingConfig.pageLength = response.pageLength;
+        this.pagedUserModel.pagingConfig.pageNumber = response.pageNumber;
+        this.pagedUserModel.pagingConfig.totalItems = response.totalItems;
 
         this.ngxPaginationService.set(this.pagedUserModel);
       });

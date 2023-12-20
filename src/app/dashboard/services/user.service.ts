@@ -15,10 +15,16 @@ export class UserService{
       private http: HttpClient,
       private cachingService: CachingService
     ) {}
-
-    registerNewUser(orgModel: IUserModel):Observable<IUserModel> {
+    
+    registerNewUser(userModel: IUserModel):Observable<IUserModel> {
         return this.http
-            .post<IUserModel>(`${this.baseUrl}/api/User`, orgModel)
+            .post<IUserModel>(`${this.baseUrl}/api/User`, userModel)
+            .pipe(map((response) => response));
+    }
+    
+    updateUser(userModel: IUserModel):Observable<IUserModel> {
+        return this.http
+            .put<IUserModel>(`${this.baseUrl}/api/User`, userModel)
             .pipe(map((response) => response));
     }
 }

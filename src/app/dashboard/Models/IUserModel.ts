@@ -30,10 +30,10 @@ export declare interface IUserModel{
    */
   password: string;
   /**
-   * Identifier of user role
-   * @type {number}
+   * Identifier of user roles
+   * @type {number[]}
    */
-  roleId: number;
+  roleId: number[];
   /**
    * Name of user role
    * @type {string}

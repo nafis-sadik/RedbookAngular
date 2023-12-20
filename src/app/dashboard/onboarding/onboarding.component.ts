@@ -132,7 +132,7 @@ export class OnboardingComponent {
       password: '',
       organizationId: 0,
       organizationName: '',
-      roleId: 0,
+      roleId: [],
       roleName: '',
       userId: '',
       userName: '',

@@ -83,7 +83,7 @@ export class PlatformsettingsComponent implements OnInit{
         // This shall be executed during event triggers
         if(this.pagedRouteModel.pagingConfig){
           this.pagedRouteModel.pagingConfig.pageLength = pagingInfo.pageLength;
-          this.pagedRouteModel.pagingConfig.PageNumber = pagingInfo.pageNumber;
+          this.pagedRouteModel.pagingConfig.pageNumber = pagingInfo.pageNumber;
         }
 
         this.loadData();
@@ -96,7 +96,7 @@ export class PlatformsettingsComponent implements OnInit{
               if(tableParameters.searchString)
                 this.pagedRouteModel.searchingConfig.searchString = tableParameters.searchString;
               if(this.pagedRouteModel.pagingConfig){
-                this.pagedRouteModel.pagingConfig.PageNumber = 1;
+                this.pagedRouteModel.pagingConfig.pageNumber = 1;
                 this.pagedRouteModel.pagingConfig.pageLength = tableParameters.pageLength;
               }
               
@@ -128,8 +128,8 @@ export class PlatformsettingsComponent implements OnInit{
         }
 
         if(this.pagedRouteModel.pagingConfig){
-          this.pagedRouteModel.pagingConfig.PageNumber = response.pageNumber;
-          this.pagedRouteModel.pagingConfig.pageLength = response.pageSize;
+          this.pagedRouteModel.pagingConfig.pageNumber = response.pageNumber;
+          this.pagedRouteModel.pagingConfig.pageLength = response.pageLength;
           this.pagedRouteModel.pagingConfig.totalItems = response.totalItems;
         }
 
