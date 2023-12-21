@@ -62,10 +62,10 @@
           </div>
           <div class="col-md-6 p-1">
             <label class="mb-1">Roles</label>
-            <nb-select fullWidth placeholder="Select User Role" status="primary" formControlName="roleId" [selected]=userModel?.roleId>
+            <nb-select multiple fullWidth placeholder="Select User Role" status="primary" formControlName="roles" [selected]=userModel?.roleIds>
                 <nb-option *ngFor="let roleInfo of roleList" [value]=roleInfo.roleId>{{ roleInfo.roleName }}</nb-option>
             </nb-select>
-            <div *ngIf="userForm.get('roleId')?.touched && userForm.get('roleId')?.invalid" class="validationError"></div>
+            <div *ngIf="userForm.get('roles')?.touched && userForm.get('roles')?.invalid" class="validationError"></div>
           </div>
           <div class="col-md-12 p-1">
             <button nbButton fullWidth status="primary" type="submit">Save</button>

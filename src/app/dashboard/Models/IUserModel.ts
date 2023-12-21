@@ -1,3 +1,5 @@
+import { IRoleModel } from "./IRoleModel";
+
 export declare interface IUserModel{
   /**
    * Unique Identifier of specific user
@@ -30,15 +32,20 @@ export declare interface IUserModel{
    */
   password: string;
   /**
-   * Identifier of user roles
+   * User roles
+   * @type {IRoleModel[]}
+   */
+  roles: IRoleModel[];
+  /**
+   * User role identifiers
    * @type {number[]}
    */
-  roleId: number[];
+  roleIds: number[];
   /**
-   * Name of user role
+   * User role names for display purpose only
    * @type {string}
    */
-  roleName: string;
+  roleNames: string;
   /**
    * Identifier of user organization
    * @type {number}

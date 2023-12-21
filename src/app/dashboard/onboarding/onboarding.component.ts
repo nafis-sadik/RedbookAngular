@@ -18,7 +18,7 @@ export class OnboardingComponent {
   loaderContainer: HTMLElement| null;
 
   isMobile: boolean;
-  linearMode: boolean = true;
+  linearMode: boolean;
   
   userModel: IUserModel;
   orgModel: IOrganizationModel;
@@ -33,6 +33,7 @@ export class OnboardingComponent {
 
   ngOnInit() {
     this.isMobile = this.appConfigService.isMobilePhone();
+    this.linearMode = true;
 
     this.OrganizationForm = this.fb.group({
       organizationName: ['', Validators.required],
@@ -132,8 +133,9 @@ export class OnboardingComponent {
       password: '',
       organizationId: 0,
       organizationName: '',
-      roleId: [],
-      roleName: '',
+      roles: [],
+      roleIds: [],
+      roleNames: "",
       userId: '',
       userName: '',
       ApplicationId: 0

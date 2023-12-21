@@ -29,7 +29,6 @@ export class UserFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('bunjhor', this.userModel);
     // If null was passed, it's a creatge operation, otherwise it's an update operation
     this.isUpdateOperation = !(this.userModel == null);
     if(this.userModel == null){
@@ -42,10 +41,11 @@ export class UserFormComponent implements OnInit {
         organizationId: this.selectedBusinessId,
         organizationName: '',
         password: '',
-        roleId: [],
-        roleName: '',
+        roles: [],
+        roleIds: [],
+        roleNames: "",
         userId: '',
-        userName: ''
+        userName: '' 
       }
     }
 
@@ -59,7 +59,7 @@ export class UserFormComponent implements OnInit {
       lastName: [this.userModel.lastName],
       userName: [this.userModel.userName, Validators.required],
       email: [this.userModel.email, Validators.required],
-      roleId: [this.userModel.roleId, Validators.required]
+      roles: [this.userModel.roleIds, Validators.required]
     });
 
     this.userForm.valueChanges.subscribe((value) => {
@@ -68,13 +68,21 @@ export class UserFormComponent implements OnInit {
         this.userModel.lastName = value.lastName;
         this.userModel.userName = value.userName;
         this.userModel.email = value.email;
-        this.userModel.roleId = value.roleId;
+        this.userModel.roleIds = value.roles;
+        this.userModel.roles = this.roleList.filter(role => this.userModel?.roleIds.some(r => r === role.roleId));
+        
+        this.userModel.roleNames = "";
+        this.userModel.roles.forEach(role => {
+          if(this.userModel)
+            this.userModel.roleNames += (role.roleName + " ");
+        })
       }
     });
   }
 
   saveUser(): any {
     if(this.userModel){
+      this.userModel.organizationId = this.selectedBusinessId;
       if(this.isUpdateOperation){
         return this.userService.updateUser(this.userModel)
           .subscribe(() => {
