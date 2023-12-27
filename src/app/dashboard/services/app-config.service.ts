@@ -26,9 +26,12 @@ export class AppConfigurationService{
     let token = tokenJson.value;
     console.log('jwt', token);
     this._userRawData = jwt_decode(token);
+    console.log('decoded', this._userRawData);
     this.UserModelData = {
       userId: this._userRawData.UserId,
-      roleId: this._userRawData['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
+      userName: this._userRawData.UserName,
+      userRoles: this._userRawData.UserRoles,
+      userRoleIds: this._userRawData.UserRoleIds,
       organizationId: this._userRawData.OrganizationId
     }
   }

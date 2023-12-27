@@ -22,7 +22,7 @@ import { AuthInterceptorService } from './shared/auth/api-Interceptor.service';
     NbEvaIconsModule,
     NbThemeModule.forRoot({ name: 'mid-night' }),
     NbToastrModule.forRoot({
-      preventDuplicates: true,
+      preventDuplicates: false,
       destroyByClick: true,
       position: NbGlobalPhysicalPosition.TOP_RIGHT,
     }),

@@ -61,4 +61,10 @@ export class OrganizationService{
             .get<IPaginationModel<IUserModel>>(`${this.baseUrl}/api/Organization/Users?SearchString=${pagedUserModel.searchingConfig?.searchString}&PageNumber=${pagedUserModel.pagingConfig?.pageNumber}&PageLength=${pagedUserModel.pagingConfig?.pageLength}&businessId=${businessId}`)
             .pipe(map(response => response));
     }
+
+    removeUserFromBusiness(userId: number, orgId: number): Observable<any>{      
+      return this.http
+          .delete(`${this.baseUrl}/api/Organization/RemoveUser/${userId}/${orgId}`)
+          .pipe(map((response) => response));
+    }
 }

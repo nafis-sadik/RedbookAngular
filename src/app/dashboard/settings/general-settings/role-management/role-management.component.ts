@@ -263,6 +263,8 @@ export class RoleManagementComponent {
 
   allowRouteToRole(routeId: number): void{
     this.roleService.mapRolesWithRoute(this.selectedRoleId, routeId)
-    .subscribe(() => {});
+    .subscribe(() => {
+      this.toastrService.success('Route mapped successfully', 'Success');
+    });
   }
 }

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/
 import { NbMenuItem, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './services/dashboard.service';
 import { IRouteModel } from './Models/IRouteModel';
+import { AppConfigurationService } from './services/app-config.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,14 +22,21 @@ export class DashboardComponent {
     'Midnight',
     'Aquamarine'
   ];
+  displayName: string;
+  displayRoles: string;
 
   menuOptions: NbMenuItem[];
 
   constructor(
-    dashboardService: DashboardService,
     chageDetector: ChangeDetectorRef,
+    dashboardService: DashboardService,
     private themeService: NbThemeService,
+    appConfigService: AppConfigurationService,
   ) {
+    this.displayName = appConfigService.UserModelData.userName;
+    this.displayRoles = appConfigService.UserModelData.userRoles;
+    console.log(appConfigService.UserModelData.userRoleIds);
+
     // If no theme has been cached, select default theme
     let preselectedTheme: string | null = localStorage.getItem('theme');
     if(preselectedTheme)

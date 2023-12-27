@@ -103,7 +103,13 @@ export class UmsComponent  implements OnInit{
         });
       }
       
-      this.pagedUserModel.tableConfig.onDelete = () => {}
+      this.pagedUserModel.tableConfig.onDelete = (data: any) => {
+        this.orgService.removeUserFromBusiness(data.userId, this.selectedBusinessId)
+        .subscribe((data) => {
+          console.log("User removed from business", data);
+          location.reload();
+        });
+      }
     }
 
     if(this.pagedUserModel.searchingConfig){
@@ -138,7 +144,6 @@ export class UmsComponent  implements OnInit{
     if(dataTableCard && dataTableCard.classList.contains('d-none'))
       dataTableCard.classList.remove('d-none');
     
-    console.log('this.pagedUserModel', this.pagedUserModel);
     this.orgService.getUserByBusinessId(this.pagedUserModel, businessId)
       .subscribe((response) => {
         if(this.pagedUserModel.tableConfig == null) return;
