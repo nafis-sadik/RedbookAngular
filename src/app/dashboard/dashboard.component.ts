@@ -48,81 +48,47 @@ export class DashboardComponent {
     
     dashboardService.getMenuOptions()
       .subscribe((menuList: any) => {
-        let menu: { [key: number]: any } = {};
+        let rootElements: {[key: number]: NbMenuItem} = {};
+
+        menuList.forEach((menuItem: IRouteModel) => {
+          if(menuItem.parentRouteId == null || menuItem.parentRouteId == undefined){
+            rootElements[menuItem.routeId] = {
+              title: menuItem.routeName,
+              icon: menuItem.description,
+              link: menuItem.routeValue
+            };
+          }
+        });
+
+        menuList = menuList.filter((menuItem: any) => menuItem.parentRouteId != null && menuItem.parentRouteId != undefined);
         
-        // Get the root level
-        let rootElements: IRouteModel[] = menuList.filter((menuItem: any) => !menuItem.parentRouteId);
-        rootElements.forEach(menuItem => {
-          menu[menuItem.routeId] = {
+        let itemsToRemove: number[] = [];
+        menuList.forEach((menuItem: IRouteModel) => {
+          if(menuItem.parentRouteId != null && rootElements.hasOwnProperty(menuItem.parentRouteId)){
+            if(!rootElements[menuItem.parentRouteId].children)
+              rootElements[menuItem.parentRouteId].children = [];
+
+            rootElements[menuItem.parentRouteId].children?.push({
+              title: menuItem.routeName,
+              icon: menuItem.description,
+              link: menuItem.routeValue
+            });
+
+            itemsToRemove.push(menuItem.routeId);
+          }
+        });
+
+        menuList = menuList.filter((menuItem: any) => !itemsToRemove.includes(menuItem.routeId));
+
+        menuList.forEach((menuItem: any) => {
+          rootElements[menuItem.routeId] = {
             title: menuItem.routeName,
             icon: menuItem.description,
             link: menuItem.routeValue
           };
-        });
-
-        // Remove root level from source
-        rootElements.forEach(elem => {
-          let index: number = menuList.indexOf(elem, 0);
-          menuList.splice(index, 1);
-        });
-
-        // Get first layer children
-        let registeredChildrenElements: IRouteModel[] = [];
-        for(let menuItem of menuList) {
-          if(menuItem.parentRouteId && menu[menuItem.parentRouteId]) {
-            if('children' in menu[menuItem.parentRouteId] == false) {
-              menu[menuItem.parentRouteId].expanded = false,
-              menu[menuItem.parentRouteId].children = [];
-            }
-
-            menu[menuItem.parentRouteId].children.push({
-              title: menuItem.routeName,
-              icon: menuItem.description,
-              link: menuItem.routeValue,
-              id: menuItem.id
-            });
-
-            registeredChildrenElements.push(menuItem);
-          }
-        }
-
-        // Remove first layer children from source
-        registeredChildrenElements.forEach(elem => {
-          let index: number = menuList.indexOf(elem, 0);
-          menuList.splice(index, 1);
-        });
+        });        
         
-        let secondLayerData = [];
-        for(let item in menu) {
-          secondLayerData.push(menu[item]);
-        }
-        
-        // Procesing third layer data
-        secondLayerData.forEach(elem => {
-          if(elem.children){
-            elem.children.forEach((element: any) => {
-              menuList.forEach((leftOverItem: any) => {
-                if(leftOverItem.parentRouteId == element.id){
-                  if('children' in element == false){
-                    element.expanded = true;
-                    element.children = [];
-                  }
-                  element.children.push({
-                    title: leftOverItem.routeName,
-                    icon: leftOverItem.description,
-                    link: leftOverItem.routeValue
-                  });
-                }
-              });
-
-              if('id' in element){
-                delete element['id'];
-              }
-            });
-          }
-        });
-
-        this.menuOptions = secondLayerData;
+        this.menuOptions = Object.values(rootElements);
         chageDetector.detectChanges();
       });
 
