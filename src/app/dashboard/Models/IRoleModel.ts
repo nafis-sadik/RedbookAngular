@@ -15,4 +15,9 @@ export declare interface IRoleModel {
    * @type {Number}
    */
   organizationId: number;
+  /**
+   * If the role is an admin role or not
+   * @type {boolean}
+   */
+  isAdmin: boolean;
 }

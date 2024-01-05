@@ -10,6 +10,7 @@ import { RoleService } from 'src/app/dashboard/services/role.service';
 import { RouteService } from 'src/app/dashboard/services/route.service';
 import { AddDialogueComponent } from 'src/app/shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from 'src/app/shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
+import { RoleFormComponent } from './role-form/role-form.component';
 
 @Component({
   selector: 'app-role-management',
@@ -26,7 +27,6 @@ export class RoleManagementComponent {
   selectedBusinessId: number = 0;
 
   constructor(
-    dashboardService: DashboardService,
     private chageDetector: ChangeDetectorRef,
     private toastrService: NbToastrService,
     private windowService: NbWindowService,
@@ -131,7 +131,8 @@ export class RoleManagementComponent {
           this.rolesUnderThisBusiness.push({
                 organizationId: element.organizationId,
                 roleId: element.roleId,
-                roleName: element.roleName
+                roleName: element.roleName,
+                isAdmin: element.isAdmin
             });
         });
 
@@ -140,7 +141,7 @@ export class RoleManagementComponent {
   }
 
   openSaveRoleWindow(windowMessage: string, roleModel: IRoleModel | null) {
-    this.windowService.open(AddDialogueComponent, {
+    this.windowService.open(RoleFormComponent, {
       title: windowMessage,
       buttons: {
         close: false,
@@ -149,8 +150,9 @@ export class RoleManagementComponent {
         minimize: true
       },
       context: {
-        textValue: roleModel?.roleName,
-        saveMethod: (roleTitle: string) => {
+        roleName: roleModel?.roleName,
+        isAdminRole: roleModel?.isAdmin,
+        saveMethod: (roleTitle: string, isAdminRole: boolean) => {
           let observableObj;
           if(roleModel) {
             roleModel.roleName = roleTitle;
@@ -159,7 +161,8 @@ export class RoleManagementComponent {
             observableObj = this.roleService.addRole({
               roleId: 0,
               organizationId: this.selectedBusinessId,
-              roleName: roleTitle
+              roleName: roleTitle,
+              isAdmin: isAdminRole
             });
           }
 
@@ -173,6 +176,7 @@ export class RoleManagementComponent {
                   organizationId: response.organizationId,
                   roleId : response.roleId,
                   roleName: response.roleName,
+                  isAdmin: response.isAdmin
                 };
               }
             }
@@ -182,7 +186,8 @@ export class RoleManagementComponent {
               this.rolesUnderThisBusiness.push({
                 roleId : response.roleId,
                 roleName: response.roleName,
-                organizationId: response.organizationId
+                organizationId: response.organizationId,
+                isAdmin: response.isAdmin
               });
             }
 

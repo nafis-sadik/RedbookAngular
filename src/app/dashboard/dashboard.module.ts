@@ -21,7 +21,8 @@ import {
   NbSidebarModule,
   NbStepperModule,
   NbTabsetModule,
-  NbUserModule
+  NbUserModule,
+  NbToggleModule
 } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
 import { CategoryComponent } from './settings/ProductManagement/category/category.component';
@@ -41,6 +42,7 @@ import { GeneralSettingsComponent } from './settings/general-settings/general-se
 import { RoleManagementComponent } from './settings/general-settings/role-management/role-management.component';
 import { UmsComponent } from './settings/general-settings/ums/ums.component';
 import { UserFormComponent } from './settings/general-settings/ums/user-form/user-form.component';
+import { RoleFormComponent } from './settings/general-settings/role-management/role-form/role-form.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { UserFormComponent } from './settings/general-settings/ums/user-form/use
     PlatformsettingsComponent,
     RouteFormComponent,
     OnboardingComponent,
-    GeneralSettingsComponent
+    GeneralSettingsComponent,
+    RoleFormComponent
   ],
   imports: [
     CommonModule,
@@ -86,6 +89,7 @@ import { UserFormComponent } from './settings/general-settings/ums/user-form/use
     NbCheckboxModule,
     NbAccordionModule,
     NbUserModule,
+    NbToggleModule,
     ReactiveFormsModule,
     FormsModule // <--- import into the NgModule
   ],
