@@ -52,19 +52,19 @@ export class OrganizationService{
 
     addUserToBusiness(userModel: IUserModel): Observable<any>{
       return this.http
-          .post<IOrganizationModel>(`${this.baseUrl}/api/Organization/Users`, userModel)
+          .post<IOrganizationModel>(`${this.baseUrl}/api/Organization/User`, userModel)
           .pipe(map((response) => response));
     }
 
     getUserByBusinessId(pagedUserModel: IPaginationModel<IUserModel>, businessId: number): Observable<any>{
       return this.http
-            .get<IPaginationModel<IUserModel>>(`${this.baseUrl}/api/Organization/Users?SearchString=${pagedUserModel.searchingConfig?.searchString}&PageNumber=${pagedUserModel.pagingConfig?.pageNumber}&PageLength=${pagedUserModel.pagingConfig?.pageLength}&businessId=${businessId}`)
+            .get<IPaginationModel<IUserModel>>(`${this.baseUrl}/api/Organization/User?SearchString=${pagedUserModel.searchingConfig?.searchString}&PageNumber=${pagedUserModel.pagingConfig?.pageNumber}&PageLength=${pagedUserModel.pagingConfig?.pageLength}&businessId=${businessId}`)
             .pipe(map(response => response));
     }
 
     removeUserFromBusiness(userId: number, orgId: number): Observable<any>{      
       return this.http
-          .delete(`${this.baseUrl}/api/Organization/RemoveUser/${userId}/${orgId}`)
+          .delete(`${this.baseUrl}/api/Organization/User/${userId}/${orgId}`)
           .pipe(map((response) => response));
     }
 }
