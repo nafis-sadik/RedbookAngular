@@ -35,7 +35,6 @@ export class DashboardComponent {
   ) {
     this.displayName = appConfigService.UserModelData.userName;
     this.displayRoles = appConfigService.UserModelData.userRoles;
-    console.log(appConfigService.UserModelData.userRoleIds);
 
     // If no theme has been cached, select default theme
     let preselectedTheme: string | null = localStorage.getItem('theme');

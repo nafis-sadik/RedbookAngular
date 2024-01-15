@@ -156,6 +156,7 @@ export class RoleManagementComponent {
           let observableObj;
           if(roleModel) {
             roleModel.roleName = roleTitle;
+            roleModel.isAdmin = isAdminRole;
             observableObj = this.roleService.updateRole(roleModel);
           } else {
             observableObj = this.roleService.addRole({
