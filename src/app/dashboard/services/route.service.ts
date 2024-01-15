@@ -58,7 +58,7 @@ export class RouteService{
     let cachedRoutes: Array<IRouteModel> = this.cachingService.get(`${this.baseUrl}/api/Route/GetAppRoutes`);
     if(!cachedRoutes){
       return this.http
-        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/GetAppRoutes`)
+        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/GetAppRoutes/${environment.appId}`)
         .pipe(map((response) => {
           if(response && response.length > 0)
             this.cachingService.set(`${this.baseUrl}/api/Route/GetAppRoutes`, response);
