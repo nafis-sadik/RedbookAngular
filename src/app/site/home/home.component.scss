@@ -61,6 +61,7 @@
     color: transparent;
     -webkit-text-stroke: 1px var(--text-stroke-color);
 }
+
 /* this is the text, when you hover on button */
 .hover-text {
     position: absolute;
@@ -74,16 +75,14 @@
     transition: 0.5s;
     -webkit-text-stroke: 1px var(--animation-color);
 }
+
 /* hover */
 .button:hover .hover-text {
     width: 100%;
     filter: drop-shadow(0 0 23px var(--animation-color))
 }
 
-
-
 /*  */
-
 .square {
     position: relative;
     margin: 0 10px;
@@ -101,7 +100,6 @@
     border-radius: 32% 58% 69% 43% / 48% 32% 59% 55%;
     transition: 0.5s;
     animation: animate 6s linear infinite;
-
 }
 
 .twitch:hover .one {
@@ -126,9 +124,6 @@
     background: rgb(20, 36, 50);
 }
 
-
-
-
 .square .three {
     position: absolute;
     top: 0;
@@ -140,6 +135,7 @@
     transition: 0.5s;
     animation: animate2 10s linear infinite;
 }
+
 .twitch:hover .three {
     border: none;
     background:rgb(20, 36, 50);;
@@ -184,7 +180,6 @@
     100% {
         transform: rotate(0deg);
     }
-
 }
 
 .DrugRadar{
