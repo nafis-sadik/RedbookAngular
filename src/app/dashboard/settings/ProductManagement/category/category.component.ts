@@ -2,10 +2,10 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { IOrganizationModel } from '../../../Models/IOrganizationModel';
 import { ICategoryModel } from '../../../Models/ICategoryModel';
-import { DashboardService } from '../../../services/dashboard.service';
 import { AddDialogueComponent } from '../../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from '../../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
+import { CategoryService } from 'src/app/dashboard/services/category.service';
 
 @Component({
   selector: 'app-category',
@@ -125,6 +125,7 @@ export class CategoryComponent implements OnInit {
     private orgService: OrganizationService,
     private windowService: NbWindowService,
     private toastrService: NbToastrService,
+    private categoryService: CategoryService,
     private chageDetectorRef: ChangeDetectorRef
   ) {
     this.ownedBusinesses = [];
@@ -218,7 +219,16 @@ export class CategoryComponent implements OnInit {
         // If user used update button, categoryObj brought the stock object for us
         // If the user used create button, categoryObj shall remain null
         if (categoryObj == null) {
-          method = 'POST';
+          if(this.selectedBusinessId){
+            this.categoryService.addNewCategory({
+              categoryId: 0,
+              title: categoryTitle,
+              businessId: this.selectedBusinessId,
+              parentCategoryId: this.selectedCategoryId
+            });
+          } else {
+            this.toastrService.warning('msg 1', 'msg 2');
+          }
           toasterMsg = 'Saved Successfully';
           if(this.selectedBusinessId != null || this.selectedBusinessId != undefined)
             categoryObj = { title: categoryTitle, categoryId: 0, parentCategoryId: undefined, businessId: this.selectedBusinessId };
