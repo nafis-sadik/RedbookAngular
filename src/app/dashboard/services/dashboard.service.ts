@@ -16,7 +16,7 @@ import { CachingService } from './caching.service';
 })
 
 export class DashboardService {
-  baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrlUMS;
 
   selectedOutletId: number = 0;
 

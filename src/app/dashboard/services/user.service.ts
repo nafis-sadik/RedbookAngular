@@ -9,7 +9,7 @@ import { CachingService } from "./caching.service";
     providedIn: 'root',
 })
 export class UserService{
-    baseUrl = environment.baseUrl;
+    baseUrl = environment.baseUrlUMS;
 
     constructor(
       private http: HttpClient,

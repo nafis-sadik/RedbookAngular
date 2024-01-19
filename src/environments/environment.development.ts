@@ -1,5 +1,6 @@
 export const environment = {
-    baseUrl: 'http://localhost:5062',
+    baseUrlUMS: 'http://localhost:5062',
+    baseUrlInventory: 'http://localhost:7238',
     cacheStorageLength: 20,
     appId: 3,
 };

@@ -11,7 +11,7 @@ import { IPaginationModel } from "src/app/shared/ngx-pagination/Models/IPaginati
     providedIn: 'root',
 })
 export class OrganizationService{
-    baseUrl = environment.baseUrl;
+    baseUrl = environment.baseUrlUMS;
 
     constructor(
       private cachingService: CachingService,

@@ -9,7 +9,7 @@ import { ICategoryModel } from "../Models/ICategoryModel";
     providedIn: 'root',
 })
 export class CategoryService{
-    baseUrl = environment.baseUrl;
+    baseUrl = environment.baseUrlInventory;
     
     constructor(
       private http: HttpClient,
@@ -38,11 +38,12 @@ export class CategoryService{
         let cachedData: Array<ICategoryModel> = this.cacheingService.get(`${this.baseUrl}/api/Category/${orgId}`);
         if(!cachedData){
             return this.http
-                .get<Array<ICategoryModel>>(`${this.baseUrl}/api/Category/${orgId}`)
-                .pipe(map((response) => {
-                    this.cacheingService.set(`${this.baseUrl}/api/Category/${orgId}`, response);
-                    return response;
-                }));
+            .get<any>(`${this.baseUrl}/api/Category/${orgId}`)
+            .pipe(map((response) => {
+                console.log('response', response);
+                this.cacheingService.set(`${this.baseUrl}/api/Category/${orgId}`, response);
+                return response;
+            }));
         }
         
         return of(cachedData);

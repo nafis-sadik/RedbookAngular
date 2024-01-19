@@ -139,13 +139,6 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
     this.orgService.getAllOrganizations()
       .subscribe(response => {
-        // for(let i = 0; i < response.length; i++){
-        //   this.ownedBusinesses.push({
-        //     organizationId: response[i].organizationId,
-        //     organizationName: response[i].organizationName,
-        //     address: []
-        //   });
-        // }
         this.ownedBusinesses = response;
 
         if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
@@ -158,6 +151,11 @@ export class CategoryComponent implements OnInit {
   }
 
   loadCategories(selectedBusiness: number) {
+    this.selectedBusinessId = selectedBusiness;
+    this.categoryService.getCategoriesUnderOrganization(selectedBusiness)
+      .subscribe((categories: any) => {
+        console.log(categories);
+      });
     this.categories.splice(0);
     for (let index = 0; index < this.backendDataCategories.length; index++) {
       if(this.backendDataCategories[index].businessId == selectedBusiness)

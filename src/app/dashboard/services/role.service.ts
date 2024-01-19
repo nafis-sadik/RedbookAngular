@@ -8,7 +8,7 @@ import { IRoleModel } from "../Models/IRoleModel";
     providedIn: 'root',
 })
 export class RoleService{
-    baseUrl = environment.baseUrl;
+    baseUrl = environment.baseUrlUMS;
 
     constructor(
       private http: HttpClient,

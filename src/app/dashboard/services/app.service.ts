@@ -9,7 +9,7 @@ import { IApplicationModel } from "../Models/IApplicationModel";
   providedIn: 'root',
 })
 export class AppService{
-    baseUrl = environment.baseUrl;
+    baseUrl = environment.baseUrlUMS;
     
     constructor(
       private http: HttpClient,

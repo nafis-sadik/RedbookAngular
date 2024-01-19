@@ -10,7 +10,7 @@ import { CachingService } from "./caching.service";
     providedIn: 'root',
 })
 export class RouteService{
-  baseUrl = environment.baseUrl;
+  baseUrl = environment.baseUrlUMS;
   appId = environment.appId
 
   constructor(
