@@ -157,6 +157,7 @@ export class CategoryComponent implements OnInit {
                   break;
                 };
               }
+
               this.chageDetectorRef.detectChanges();
             });
           }
@@ -174,6 +175,7 @@ export class CategoryComponent implements OnInit {
                   break;
                 }
               }
+
               this.chageDetectorRef.detectChanges();
             });
           }
