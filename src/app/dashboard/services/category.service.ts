@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment.development";
-import { CachingService } from "./caching.service";
 import { Observable, map, of } from "rxjs";
 import { ICategoryModel } from "../Models/ICategoryModel";
 
@@ -10,11 +9,8 @@ import { ICategoryModel } from "../Models/ICategoryModel";
 })
 export class CategoryService{
     baseUrl = environment.baseUrlInventory;
-    
-    constructor(
-      private http: HttpClient,
-      private cacheingService: CachingService
-    ) { }
+
+    constructor(private http: HttpClient) { }
 
     addNewCategory(categoryModel: ICategoryModel): Observable<ICategoryModel>{
         return this.http
@@ -35,17 +31,8 @@ export class CategoryService{
     }
 
     getCategoriesUnderOrganization(orgId: number): Observable<Array<ICategoryModel>>{
-        let cachedData: Array<ICategoryModel> = this.cacheingService.get(`${this.baseUrl}/api/Category/${orgId}`);
-        if(!cachedData){
-            return this.http
-            .get<any>(`${this.baseUrl}/api/Category/${orgId}`)
-            .pipe(map((response) => {
-                console.log('response', response);
-                this.cacheingService.set(`${this.baseUrl}/api/Category/${orgId}`, response);
-                return response;
-            }));
-        }
-        
-        return of(cachedData);
+      return this.http
+        .get<Array<ICategoryModel>>(`${this.baseUrl}/api/Category/${orgId}`)
+        .pipe(map(response => response));
     }
 }

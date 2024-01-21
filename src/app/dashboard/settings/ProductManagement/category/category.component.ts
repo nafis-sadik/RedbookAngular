@@ -6,6 +6,7 @@ import { AddDialogueComponent } from '../../../../shared/ngx-dialogues/add-dialo
 import { RemoveDialogueComponent } from '../../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { CategoryService } from 'src/app/dashboard/services/category.service';
+import { SubcategoryService } from 'src/app/dashboard/services/subcategory.service';
 
 @Component({
   selector: 'app-category',
@@ -14,102 +15,6 @@ import { CategoryService } from 'src/app/dashboard/services/category.service';
 })
 
 export class CategoryComponent implements OnInit {
-  backendDataCategories: ICategoryModel[] = [
-    {
-      categoryId: 1,
-      parentCategoryId: undefined,
-      title: 'Oil',
-      businessId: 2
-    },
-    {
-      categoryId: 2,
-      parentCategoryId: undefined,
-      title: 'Motors',
-      businessId: 1
-    },
-    {
-      categoryId: 3,
-      parentCategoryId: undefined,
-      title: 'Engines',
-      businessId: 1
-    }
-  ];
-
-  backendDataSubCategories: ICategoryModel[] = [
-    {
-      categoryId: 3,
-      parentCategoryId: 1,
-      title: 'Gear Oil',
-      businessId: 1
-    },
-    {
-      categoryId: 4,
-      parentCategoryId: 1,
-      title: 'Engine Oil Oil',
-      businessId: 2
-    },
-    {
-      categoryId: 5,
-      parentCategoryId: 3,
-      title: 'EFI',
-      businessId: 1
-    },
-    {
-      categoryId: 6,
-      parentCategoryId: 2,
-      title: 'Deep Tubewell Motor',
-      businessId: 2
-    },
-    {
-      categoryId: 7,
-      parentCategoryId: 3,
-      title: 'VVTi',
-      businessId: 1
-    },
-    {
-      categoryId: 8,
-      parentCategoryId: 2,
-      title: 'DC Motor',
-      businessId: 2
-    },
-    {
-      categoryId: 9,
-      parentCategoryId: 2,
-      title: 'Stepper Motor',
-      businessId: 1
-    },
-    {
-      categoryId: 10,
-      parentCategoryId: 1,
-      title: 'Synthetic Oil',
-      businessId: 2
-    },
-    {
-      categoryId: 11,
-      parentCategoryId: 1,
-      title: 'High-Mileage Oil',
-      businessId: 1
-    },
-    {
-      categoryId: 12,
-      parentCategoryId: 1,
-      title: 'Synthetic Blend Oil',
-      businessId: 2
-    },
-    {
-      categoryId: 13,
-      parentCategoryId: 1,
-      title: 'Conventional Oil',
-      businessId: 1
-    },
-    {
-      categoryId: 14,
-      parentCategoryId: 3,
-      title: 'Classic Engines',
-      businessId: 2
-    }
-  ];
-
   selectedBusinessId: number | undefined = undefined;
   selectedCategoryId: number | undefined = undefined;
 
@@ -126,6 +31,7 @@ export class CategoryComponent implements OnInit {
     private windowService: NbWindowService,
     private toastrService: NbToastrService,
     private categoryService: CategoryService,
+    private subcategoryService: SubcategoryService,
     private chageDetectorRef: ChangeDetectorRef
   ) {
     this.ownedBusinesses = [];
@@ -152,50 +58,38 @@ export class CategoryComponent implements OnInit {
 
   loadCategories(selectedBusiness: number) {
     this.selectedBusinessId = selectedBusiness;
+    this.selectedCategoryId = undefined;
     this.categoryService.getCategoriesUnderOrganization(selectedBusiness)
       .subscribe((categories: any) => {
-        console.log(categories);
-      });
-    this.categories.splice(0);
-    for (let index = 0; index < this.backendDataCategories.length; index++) {
-      if(this.backendDataCategories[index].businessId == selectedBusiness)
-        this.categories.push(this.backendDataCategories[index]);
-
-      this.selectedBusinessId = selectedBusiness;
-    }
-    this.subcategories = [];
-    this.selectedCategoryId = undefined;
+        this.categories = categories;
+        this.subcategories = [];
+        this.chageDetectorRef.detectChanges();
+      },
+      (error) => {console.log(error)}
+    );
   }
 
   loadSubcategories(categoryId: number) {
-    this.subcategories.splice(0);
-    for (let index = 0; index < this.backendDataSubCategories.length; index++) {
-      if(this.backendDataSubCategories[index].parentCategoryId == categoryId)
-        this.subcategories.push(this.backendDataSubCategories[index]);
-
-      this.selectedCategoryId = categoryId;
-    }
+    this.selectedCategoryId = categoryId;
+    this.subcategoryService.getSubcategoriesUnderCategoryId(categoryId)
+      .subscribe((subcategories) => {
+        this.subcategories = subcategories;
+      });
   }
 
   openSaveCategoryWindow(windowMessage: string, isSubcategory: boolean, categoryObj: ICategoryModel | null) {
-    let url: string;
-    let method: string;
-    let toasterMsg: string = '';
+    // You can not add/update a category without having a business selected
+    if(this.selectedBusinessId == null || this.selectedBusinessId == undefined){
+      this.toastrService.warning('Please select a business', 'Warning');
+      return;
+    }
 
-    // You can not add a subcategory without having a category selected
+    // You can not add/update a subcategory without having a category selected
     if (isSubcategory) {
       if (this.selectedCategoryId == null || this.selectedCategoryId == undefined) {
         this.toastrService.warning('Please select a category first', 'Warning');
         return;
       }
-      url = '/api/Subcategory'
-    }
-    else {
-      if (this.selectedBusinessId == null || this.selectedBusinessId == undefined) {
-        this.toastrService.warning('Please select a business first', 'Warning');
-        return;
-      }
-      url = '/api/Category';
     }
 
     // If UI sent an object, it's an update operation
@@ -207,46 +101,85 @@ export class CategoryComponent implements OnInit {
         fullScreen: true,
         maximize: true,
         minimize: true
+      },
+      context: {
+        saveMethod: (categoryTitle: string) => {
+          this.saveCategoryAndSubcategory(categoryTitle, categoryObj, isSubcategory);
+        },
+        categoryObj: categoryObj,
+        textValue: categoryObj?.catagoryName
       }
     });
+  }
 
-    windowRef.onClose.subscribe((categoryTitle) => {
-      // If user closes the window without saving anything, we do not need to process anything
-      // First if shields against that
-      if (categoryTitle != undefined && categoryTitle != null) {
-        // If user used update button, categoryObj brought the stock object for us
-        // If the user used create button, categoryObj shall remain null
-        if (categoryObj == null) {
+  saveCategoryAndSubcategory (categoryTitle: string, categoryObj: ICategoryModel | null, isSubcategory: boolean){
+    // If user closes the window without saving anything, we do not need to process anything
+    // First if shields against that
+    if (categoryTitle != undefined && categoryTitle != null) {
+      if (categoryObj == null) {                                        // If the user used create button, categoryObj shall remain null
+        if(isSubcategory) {                                             // If the user is working with a subcategory
+          if(this.selectedBusinessId){
+            this.subcategoryService.addNewSubcategory({
+              categoryId: 0,
+              catagoryName: categoryTitle,
+              businessId: this.selectedBusinessId,
+              parentCategoryId: this.selectedCategoryId
+            }).subscribe((category: ICategoryModel) => {
+              this.subcategories.push(category);
+              this.chageDetectorRef.detectChanges();
+            });
+          }
+        } else {                                                        // If the user is working with a category
           if(this.selectedBusinessId){
             this.categoryService.addNewCategory({
               categoryId: 0,
-              title: categoryTitle,
+              catagoryName: categoryTitle,
+              businessId: this.selectedBusinessId,
+              parentCategoryId: undefined
+            }).subscribe((category: ICategoryModel) => {
+              this.categories.push(category);
+              this.chageDetectorRef.detectChanges();
+            });
+          }
+        }
+      } else {                                                          // If user used update button, categoryObj brought the stock object for us
+        if(isSubcategory) {                                             // If the user is working with a subcategory
+          if(this.selectedBusinessId){
+            this.subcategoryService.updateSubcategory({
+              categoryId: categoryObj.categoryId,
+              catagoryName: categoryTitle,
               businessId: this.selectedBusinessId,
               parentCategoryId: this.selectedCategoryId
+            }).subscribe((category: ICategoryModel) => {
+              for(let i = 0; i < this.categories.length; i++){
+                if(this.categories[i].categoryId == categoryObj.categoryId){
+                  this.categories[i] = category;
+                  break;
+                };
+              }
+              this.chageDetectorRef.detectChanges();
             });
-          } else {
-            this.toastrService.warning('msg 1', 'msg 2');
           }
-          toasterMsg = 'Saved Successfully';
-          if(this.selectedBusinessId != null || this.selectedBusinessId != undefined)
-            categoryObj = { title: categoryTitle, categoryId: 0, parentCategoryId: undefined, businessId: this.selectedBusinessId };
-          else{
-            this.toastrService.warning(toasterMsg, 'Business not selected');
+        } else {                                                        // If the user is working with a category
+          if(this.selectedBusinessId){
+            this.categoryService.updateCategory({
+              categoryId: categoryObj.categoryId,
+              catagoryName: categoryTitle,
+              businessId: this.selectedBusinessId,
+              parentCategoryId: undefined
+            }).subscribe((category: ICategoryModel) => {
+              for(let i = 0; i < this.subcategories.length; i++){
+                if(this.subcategories[i].categoryId == categoryObj.categoryId){
+                  this.subcategories[i] = category;
+                  break;
+                }
+              }
+              this.chageDetectorRef.detectChanges();
+            });
           }
-        } else {
-          method = 'PUT';
-          toasterMsg = 'Updated Successfully';
-          categoryObj.title = categoryTitle;
         }
-
-        // Replace the console logs with http request bellow
-        // Calling the backend API when pre processing is ready
-        console.log('URL', url);
-        console.log('Method', method);
-        console.log('Body', categoryObj);
-        this.toastrService.success(toasterMsg, 'Success');
       }
-    });
+    }
   }
 
   openDeleteCategoryWindow(windowMessage: string, categoryId: number) {

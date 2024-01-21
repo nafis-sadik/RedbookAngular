@@ -18,5 +18,5 @@ export declare interface ICategoryModel{
    * Title of the Category element (Category Name)
    * @type {string}
    */
-  title: string;
+  catagoryName: string;
 }

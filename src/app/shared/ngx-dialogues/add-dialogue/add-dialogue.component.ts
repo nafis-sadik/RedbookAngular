@@ -55,7 +55,7 @@ export class AddDialogueComponent implements OnInit{
     private toastrService: NbToastrService,
   ) { }
 
-  ngOnInit() {   
+  ngOnInit() {
     this.saveMethod = (this.ref.config.context as any)['saveMethod'];
   }
 

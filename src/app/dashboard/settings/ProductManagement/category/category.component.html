@@ -35,7 +35,7 @@
                                         <div class="row">
                                             <nb-radio class="col-xxl-8" name="Category"
                                                       (valueChange)="loadSubcategories(category.categoryId)">
-                                                {{ category.title }}
+                                                {{ category.catagoryName }}
                                             </nb-radio>
                                             <div class="col-xxl-4">
                                                 <div class="row">
@@ -79,7 +79,7 @@
                                     <div class="container-fluid">
                                         <div class="row">
                                             <span class="col-xxl-8">
-                                                {{ subcategory.title }}
+                                                {{ subcategory.catagoryName }}
                                             </span>
                                             <div class="col-xxl-4">
                                                 <div class="row">
@@ -106,7 +106,7 @@
                         </nb-card-body>
                         <nb-card-footer>
                             <button nbButton shape="rectangle" status="primary"
-                                    (click)="openSaveCategoryWindow('Update Category Information', true, null)">
+                                    (click)="openSaveCategoryWindow('Add Subcategory Information', true, null)">
                                 <nb-icon icon="plus-square"></nb-icon> Add Subcategory
                             </button>
                         </nb-card-footer>

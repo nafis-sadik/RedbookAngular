@@ -24,19 +24,19 @@ export class DashboardService {
     {
       categoryId: 1,
       parentCategoryId: undefined,
-      title: 'Oil',
+      catagoryName: 'Oil',
       businessId: 2
     },
     {
       categoryId: 2,
       parentCategoryId: undefined,
-      title: 'Motors',
+      catagoryName: 'Motors',
       businessId: 1
     },
     {
       categoryId: 3,
       parentCategoryId: undefined,
-      title: 'Engines',
+      catagoryName: 'Engines',
       businessId: 1
     }
   ];
@@ -45,73 +45,73 @@ export class DashboardService {
     {
       categoryId: 3,
       parentCategoryId: 1,
-      title: 'Gear Oil',
+      catagoryName: 'Gear Oil',
       businessId: 1
     },
     {
       categoryId: 4,
       parentCategoryId: 1,
-      title: 'Engine Oil Oil',
+      catagoryName: 'Engine Oil Oil',
       businessId: 2
     },
     {
       categoryId: 5,
       parentCategoryId: 3,
-      title: 'EFI',
+      catagoryName: 'EFI',
       businessId: 1
     },
     {
       categoryId: 6,
       parentCategoryId: 2,
-      title: 'Deep Tubewell Motor',
+      catagoryName: 'Deep Tubewell Motor',
       businessId: 2
     },
     {
       categoryId: 7,
       parentCategoryId: 3,
-      title: 'VVTi',
+      catagoryName: 'VVTi',
       businessId: 1
     },
     {
       categoryId: 8,
       parentCategoryId: 2,
-      title: 'DC Motor',
+      catagoryName: 'DC Motor',
       businessId: 2
     },
     {
       categoryId: 9,
       parentCategoryId: 2,
-      title: 'Stepper Motor',
+      catagoryName: 'Stepper Motor',
       businessId: 1
     },
     {
       categoryId: 10,
       parentCategoryId: 1,
-      title: 'Synthetic Oil',
+      catagoryName: 'Synthetic Oil',
       businessId: 2
     },
     {
       categoryId: 11,
       parentCategoryId: 1,
-      title: 'High-Mileage Oil',
+      catagoryName: 'High-Mileage Oil',
       businessId: 1
     },
     {
       categoryId: 12,
       parentCategoryId: 1,
-      title: 'Synthetic Blend Oil',
+      catagoryName: 'Synthetic Blend Oil',
       businessId: 2
     },
     {
       categoryId: 13,
       parentCategoryId: 1,
-      title: 'Conventional Oil',
+      catagoryName: 'Conventional Oil',
       businessId: 1
     },
     {
       categoryId: 14,
       parentCategoryId: 3,
-      title: 'Classic Engines',
+      catagoryName: 'Classic Engines',
       businessId: 2
     }
   ];
