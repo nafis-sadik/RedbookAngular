@@ -3,7 +3,7 @@ export declare interface IProductModel{
      * Product Id
      * @type {Number}
      */
-    id: number;
+    productId: number;
     /**
      * Product Category or Subcategory Id
      * @type {Number}

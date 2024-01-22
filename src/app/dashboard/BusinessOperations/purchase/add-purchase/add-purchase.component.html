@@ -105,7 +105,7 @@
                              [(selected)]="invoiceProductIds"
                              [disabled]="isUpdateOperation"
                              (selectedChange)="selectProductForPurchase()">
-                    <nb-option *ngFor="let product of outletProductList" value={{product.id}}>
+                    <nb-option *ngFor="let product of outletProductList" value={{product.productId}}>
                       {{ product.productName }}</nb-option>
                   </nb-select>
                 </div>

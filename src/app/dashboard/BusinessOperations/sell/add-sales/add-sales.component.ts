@@ -96,9 +96,9 @@ export class AddSalesComponent {
     if(newlyAddedProductId.length > 0){
       newlyAddedProductId.forEach(productId => {
         this.outletProductList.forEach(product => {
-          if(productId == product.id)
+          if(productId == product.productId)
             this.selectedProductsForSale.push({
-              ProductId: product.id,
+              ProductId: product.productId,
               ProductName: product.productName,
               ProductNetTotalPrice: 0,
               PurchasePrice: product.purchasePrice,

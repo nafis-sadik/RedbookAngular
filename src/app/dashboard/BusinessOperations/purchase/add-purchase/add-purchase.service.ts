@@ -35,7 +35,7 @@ export class AddPurchaseService {
         if (businessId == 1)
             return [
                     {
-                        id: 4,
+                        productId: 4,
                         categoryId: 1,
                         categoryName: 'Motors',
                         subcategoryId: 2,
@@ -46,7 +46,7 @@ export class AddPurchaseService {
                         quantity: null
                     },
                     {
-                        id: 5,
+                        productId: 5,
                         categoryId: 1,
                         categoryName: 'Motors',
                         subcategoryId: 2,
@@ -60,7 +60,7 @@ export class AddPurchaseService {
         else
             return [
                     {
-                        id: 1,
+                        productId: 1,
                         categoryId: 1,
                         categoryName: 'Motors',
                         subcategoryId: 2,
@@ -71,7 +71,7 @@ export class AddPurchaseService {
                         quantity: null
                     },
                     {
-                        id: 2,
+                        productId: 2,
                         categoryId: 1,
                         categoryName: 'Motors',
                         subcategoryId: 2,
@@ -82,7 +82,7 @@ export class AddPurchaseService {
                         quantity: null
                     },
                     {
-                        id: 3,
+                        productId: 3,
                         categoryId: 1,
                         categoryName: 'Motors',
                         subcategoryId: 2,

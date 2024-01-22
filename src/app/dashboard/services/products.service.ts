@@ -1,23 +1,28 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { IProductModel } from "src/app/dashboard/Models/IProductModel";
+import { CachingService } from "./caching.service";
+import { environment } from "src/environments/environment.development";
+import { Observable, map } from "rxjs";
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class ProductService {
-  /**
-   * Primary key of selected outlet
-   * Needs to be passed to dialogue components
-   */
-  selectedOutletId: number = 0;
+  baseUrl = environment.baseUrlInventory;
 
+  constructor(
+    private http: HttpClient,
+    private cachingService: CachingService
+  ) { }
+  
   getProductList(outletId: number, pageNumber: number, pageLength: number, searchString: string): IProductModel[]{
     let sourceData: IProductModel[];
     if(outletId == 1){
       sourceData = [
         {
-          id: 1,
+          productId: 1,
           categoryId: 1,
           categoryName: 'Motors',
           subcategoryId: 2,
@@ -28,7 +33,7 @@ export class ProductService {
           quantity: null
         },
         {
-          id: 2,
+          productId: 2,
           categoryId: 1,
           categoryName: 'Motors',
           subcategoryId: 2,
@@ -39,7 +44,7 @@ export class ProductService {
           quantity: null
         },
         {
-          id: 3,
+          productId: 3,
           categoryId: 1,
           categoryName: 'Motors',
           subcategoryId: 2,
@@ -53,7 +58,7 @@ export class ProductService {
     } else if (outletId == 2) {
       sourceData = [
         {
-          id: 4,
+          productId: 4,
           categoryId: 1,
           categoryName: 'Motors',
           subcategoryId: 2,
@@ -64,7 +69,7 @@ export class ProductService {
           quantity: null
         },
         {
-          id: 5,
+          productId: 5,
           categoryId: 1,
           categoryName: 'Motors',
           subcategoryId: 2,
@@ -80,5 +85,17 @@ export class ProductService {
     }
 
     return sourceData;
+  }
+
+  addProduct(productModel: IProductModel): Observable<IProductModel> {
+    return this.http
+      .post<IProductModel>(`${this.baseUrl}/api/Product/AddProduct`, productModel)
+      .pipe(map((response: IProductModel) => response));
+  }
+
+  updateProduct(productModel: IProductModel): Observable<IProductModel> {
+    return this.http
+      .post<IProductModel>(`${this.baseUrl}/api/Product/UpdateProduct`, productModel)
+      .pipe(map((response: IProductModel) => response));
   }
 }

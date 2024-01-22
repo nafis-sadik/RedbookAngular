@@ -199,7 +199,7 @@ export class DashboardService {
     if (selectedOutletId == 1)
         return [
           {
-            id: 4,
+            productId: 4,
             categoryId: 1,
             categoryName: 'Motors',
             subcategoryId: 2,
@@ -210,7 +210,7 @@ export class DashboardService {
             quantity: null
           },
           {
-              id: 5,
+              productId: 5,
               categoryId: 1,
               categoryName: 'Motors',
               subcategoryId: 2,
@@ -221,7 +221,7 @@ export class DashboardService {
               quantity: null
           },
           {
-              id: 6,
+              productId: 6,
               categoryId: 1,
               categoryName: 'Motors',
               subcategoryId: 2,
@@ -232,7 +232,7 @@ export class DashboardService {
               quantity: null
           },
           {
-              id: 7,
+              productId: 7,
               categoryId: 1,
               categoryName: 'Motors',
               subcategoryId: 2,
@@ -243,7 +243,7 @@ export class DashboardService {
               quantity: null
           },
           {
-              id: 8,
+              productId: 8,
               categoryId: 1,
               categoryName: 'Motors',
               subcategoryId: 2,
@@ -254,7 +254,7 @@ export class DashboardService {
               quantity: null
           },
           {
-              id: 9,
+              productId: 9,
               categoryId: 1,
               categoryName: 'Motors',
               subcategoryId: 2,
@@ -265,7 +265,7 @@ export class DashboardService {
               quantity: null
           },
           {
-              id: 10,
+              productId: 10,
               categoryId: 1,
               categoryName: 'Motors',
               subcategoryId: 2,
@@ -276,7 +276,7 @@ export class DashboardService {
               quantity: null
           },
           {
-              id: 11,
+              productId: 11,
               categoryId: 1,
               categoryName: 'Motors',
               subcategoryId: 2,
@@ -290,7 +290,7 @@ export class DashboardService {
       else
         return [
           {
-            id: 1,
+            productId: 1,
             categoryId: 1,
             categoryName: 'Motors',
             subcategoryId: 2,
@@ -301,7 +301,7 @@ export class DashboardService {
             quantity: null
           },
           {
-            id: 2,
+            productId: 2,
             categoryId: 1,
             categoryName: 'Motors',
             subcategoryId: 2,
@@ -312,7 +312,7 @@ export class DashboardService {
             quantity: null
           },
           {
-            id: 3,
+            productId: 3,
             categoryId: 1,
             categoryName: 'Motors',
             subcategoryId: 2,
@@ -323,7 +323,7 @@ export class DashboardService {
             quantity: null
           },
           {
-            id: 11,
+            productId: 11,
             categoryId: 1,
             categoryName: 'Motors',
             subcategoryId: 2,
@@ -334,7 +334,7 @@ export class DashboardService {
             quantity: null
           },
           {
-            id: 12,
+            productId: 12,
             categoryId: 1,
             categoryName: 'Motors',
             subcategoryId: 2,
@@ -345,7 +345,7 @@ export class DashboardService {
             quantity: null
           },
           {
-            id: 13,
+            productId: 13,
             categoryId: 1,
             categoryName: 'Motors',
             subcategoryId: 2,

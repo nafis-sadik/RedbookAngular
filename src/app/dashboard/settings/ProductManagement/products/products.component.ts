@@ -1,39 +1,46 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { ProductsDetailsFormComponent } from './products-details-form/products-details-form.component';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { ProductService } from './products.service';
+import { ProductService } from '../../../services/products.service';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit{
+  selectedOutletId: number;
   isUpdateOperation: boolean = false;
 
-  outlets: IOrganizationModel[];
+  organizationList: IOrganizationModel[];
 
   pagedProductModel: IPaginationModel<IProductModel>;
 
   loaderContainer: HTMLElement| null;
 
   constructor(
-    orgService: OrganizationService,
     dashboardService: DashboardService,
+    private toastrService: NbToastrService,
     private productService: ProductService,
+    private orgService: OrganizationService,
+    private changeDetectorRef: ChangeDetectorRef,
     private ngxPaginationService: NGXPaginationService<IProductModel>
   ) {
-    // orgService.getAllOrganizations()
-    //   .subscribe(response => {
-    //     this.outlets = response;
-    //   });
+    // On Init shall remove this loading screen forcing to update the DOM. 
+    // Thus, change detector will work properly on page load
+    this.loaderContainer = document.getElementById('LoadingScreen');
+    if(this.loaderContainer && this.loaderContainer.classList.contains('d-none')){
+      this.loaderContainer.classList.remove('d-none');
+      this.loaderContainer.classList.add('d-block');
+    }
 
-    this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'New Product');
+    this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'Product List', 'Add New Product');
 
     if (this.pagedProductModel.tableConfig) {
       this.pagedProductModel.tableConfig.tableMaping = {
@@ -45,18 +52,58 @@ export class ProductsComponent {
         "MRP": "retailPrice"
       };
 
-      this.pagedProductModel.tableConfig.onEdit = () => {
-        this.isUpdateOperation = true;
+      this.pagedProductModel.tableConfig.onEdit = (product: IProductModel) => {
+        console.log(product);
 
         dashboardService.ngDialogService.open(ProductsDetailsFormComponent, {
           context: {
-            isUpdateOperation: this.isUpdateOperation
+            productModel: product,
+            selectedBusinessId: this.selectedOutletId,
+            saveMethod: (product: IProductModel) => {
+              this.productService.updateProduct(product)
+               .subscribe(response => {
+                  let productList = this.pagedProductModel.tableConfig?.sourceData;
+                  if(productList){
+                    for(let i = 0; i < productList.length; i++){
+                      if(productList[i].productId === response.productId){
+                        productList[i] = response;
+                        break;
+                      }
+                    }
+                    if(this.pagedProductModel.tableConfig)
+                      this.pagedProductModel.tableConfig.sourceData = productList;
+                  }
+                  this.toastrService.success('Product Updated Successfully', 'Success');
+                  this.changeDetectorRef.detectChanges();
+                });
+
+            }
           }
         });
       };
 
       this.pagedProductModel.tableConfig.onDelete = () => {
         console.log('onDelete');
+      };
+    }
+
+    if(this.pagedProductModel.addNewElementButtonConfig){
+      this.pagedProductModel.addNewElementButtonConfig.onAdd = () => {
+        dashboardService.ngDialogService.open(ProductsDetailsFormComponent, {
+          context: {
+            productModel: undefined,
+            selectedBusinessId: this.selectedOutletId,
+            saveMethod: (product: IProductModel) => {
+              this.productService.addProduct(product)
+               .subscribe(response => {
+                  this.pagedProductModel.tableConfig?.sourceData.push(response);
+                  this.toastrService.success('Product Added Successfully', 'Success');
+                  this.changeDetectorRef.detectChanges();
+                });
+
+            }
+          }
+        });
       };
     }
   }
@@ -68,12 +115,17 @@ export class ProductsComponent {
       if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
         this.loaderContainer.classList.remove('d-block');
         this.loaderContainer.classList.add('d-none');
+
+        this.orgService.getAllOrganizations().subscribe((orgList: IOrganizationModel[]) => {
+          this.organizationList = orgList;
+          this.changeDetectorRef.detectChanges();
+        })
       }
     }, 1.5 * 1000);
   }
 
   selectOutlet(outletId: number, event: any): void{
-    this.productService.selectedOutletId = outletId;
+    this.selectedOutletId = outletId;
 
     // Is display is hidden, make it visible
     let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];

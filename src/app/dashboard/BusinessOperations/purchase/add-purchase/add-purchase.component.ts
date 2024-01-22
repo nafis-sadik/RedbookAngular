@@ -118,9 +118,9 @@ export class AddPurchaseComponent {
       // Identify the id of newly added product
       if(!previousltSelectedItems[productId]){
         // filter out the newly selected item
-        let newlySelectedItems = this.outletProductList.filter(product => product.id == productId)[0];
+        let newlySelectedItems = this.outletProductList.filter(product => product.productId == productId)[0];
         productModel = {
-          ProductId: newlySelectedItems.id,
+          ProductId: newlySelectedItems.productId,
           ProductName: newlySelectedItems.productName,
           Quantity: 0,
           PurchasePrice: 0,

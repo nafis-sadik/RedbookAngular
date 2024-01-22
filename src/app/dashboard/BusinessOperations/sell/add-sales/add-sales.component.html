@@ -90,7 +90,7 @@
                              [(selected)]="memoProductIds"
                              [disabled]="isUpdateOperation"
                              (selectedChange)="selectProductToSell($event)">
-                    <nb-option *ngFor="let product of outletProductList" value={{product.id}}>
+                    <nb-option *ngFor="let product of outletProductList" value={{product.productId}}>
                       {{ product.productName }}</nb-option>
                   </nb-select>
                 </div>

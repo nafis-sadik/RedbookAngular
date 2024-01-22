@@ -9,7 +9,7 @@
           <div class="col-md-2">
             <div class="menu-container">
               <ul>
-                <li *ngFor="let menuItem of outlets" class="outletItems"
+                <li *ngFor="let menuItem of organizationList" class="outletItems"
                     (click)="selectOutlet(menuItem.organizationId, $event)">{{ menuItem.organizationName }}</li>
               </ul>
             </div>
