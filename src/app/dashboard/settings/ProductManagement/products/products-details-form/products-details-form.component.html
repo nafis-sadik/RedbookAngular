@@ -16,7 +16,7 @@
             <label class="mb-2 mt-4 p-0 col-md-6">Product Name</label>
             <input
              type="text"
-             status="primary" 
+             status="primary"
              placeholder="Product Name"
              aria-label="ProductName"
              nbInput fullWidth required
@@ -35,7 +35,7 @@
           </div>
           <div class="col-md-6">
             <label class="mb-2 mt-4 p-0 col-md-6">Product Subcategory</label>
-            <nb-select formControlName="subcategoryId" [selected]="productModel.subcategoryId" selected fullWidth status="primary" placeholder="Product Subcategory" aria-label="ProductSubcategory">
+            <nb-select (change)="loadSubCategories($event)" formControlName="subcategoryId" [selected]="productModel.subcategoryId" selected fullWidth status="primary" placeholder="Product Subcategory" aria-label="ProductSubcategory">
               <nb-option value>Select Product Subcategory</nb-option>
               <nb-option *ngFor="let category of subcategoryList" [value]="category.categoryId">{{ category.catagoryName }}</nb-option>
             </nb-select>
@@ -46,9 +46,9 @@
             <label class="mb-2 mt-4 p-0 col-md-6">Purchase Price</label>
             <input
              type="number"
-             nbInput fullWidth 
-             status="primary" 
-             placeholder="Purchase Price" 
+             nbInput fullWidth
+             status="primary"
+             placeholder="Purchase Price"
              aria-label="PurchasePrice"
              formControlName="purchasePrice">
           </div>
@@ -57,8 +57,8 @@
             <input
              type="number"
              nbInput fullWidth
-             status="primary" 
-             placeholder="Retail Price" 
+             status="primary"
+             placeholder="Retail Price"
              aria-label="RetailPrice"
              formControlName="retailPrice">
           </div>

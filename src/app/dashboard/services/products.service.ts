@@ -4,6 +4,7 @@ import { IProductModel } from "src/app/dashboard/Models/IProductModel";
 import { CachingService } from "./caching.service";
 import { environment } from "src/environments/environment.development";
 import { Observable, map } from "rxjs";
+import { IPaginationModel } from "src/app/shared/ngx-pagination/Models/IPaginationModel";
 
 @Injectable({
     providedIn: 'root',
@@ -16,75 +17,17 @@ export class ProductService {
     private http: HttpClient,
     private cachingService: CachingService
   ) { }
-  
-  getProductList(outletId: number, pageNumber: number, pageLength: number, searchString: string): IProductModel[]{
-    let sourceData: IProductModel[];
-    if(outletId == 1){
-      sourceData = [
-        {
-          productId: 1,
-          categoryId: 1,
-          categoryName: 'Motors',
-          subcategoryId: 2,
-          subcategoryName: 'EFI',
-          productName: '4E-FE',
-          purchasePrice: 80000,
-          retailPrice: 100000,
-          quantity: null
-        },
-        {
-          productId: 2,
-          categoryId: 1,
-          categoryName: 'Motors',
-          subcategoryId: 2,
-          subcategoryName: 'Classic',
-          productName: '2JZ-GTE',
-          purchasePrice: 80000,
-          retailPrice: 100000,
-          quantity: null
-        },
-        {
-          productId: 3,
-          categoryId: 1,
-          categoryName: 'Motors',
-          subcategoryId: 2,
-          subcategoryName: 'VVTi',
-          productName: '2ZR-FE',
-          purchasePrice: 80000,
-          retailPrice: 100000,
-          quantity: null
-        }
-      ];
-    } else if (outletId == 2) {
-      sourceData = [
-        {
-          productId: 4,
-          categoryId: 1,
-          categoryName: 'Motors',
-          subcategoryId: 2,
-          subcategoryName: 'VVTi',
-          productName: '2ZR-FE',
-          purchasePrice: 80000,
-          retailPrice: 100000,
-          quantity: null
-        },
-        {
-          productId: 5,
-          categoryId: 1,
-          categoryName: 'Motors',
-          subcategoryId: 2,
-          subcategoryName: 'VVTi',
-          productName: '2ZR-FE',
-          purchasePrice: 80000,
-          retailPrice: 100000,
-          quantity: null
-        }
-      ];
-    } else {
-      sourceData = []
-    }
 
-    return sourceData;
+  getProductList(outletId: number, pagedProductModel: IPaginationModel<IProductModel>): Observable<any>{
+    if(pagedProductModel.searchingConfig?.searchString){
+      return this.http
+          .get<any>(`${this.baseUrl}/api/Product/${outletId}?PageNumber=${pagedProductModel.pagingConfig?.pageNumber}&PageLength=${pagedProductModel.pagingConfig?.pageLength}&SearchString=${pagedProductModel.searchingConfig?.searchString}`)
+          .pipe(map(response => response ));
+    } else {
+      return this.http
+          .get<any>(`${this.baseUrl}/api/Product/${outletId}?PageNumber=${pagedProductModel.pagingConfig?.pageNumber}&PageLength=${pagedProductModel.pagingConfig?.pageLength}`)
+          .pipe(map(response => response ));
+    }
   }
 
   addProduct(productModel: IProductModel): Observable<IProductModel> {

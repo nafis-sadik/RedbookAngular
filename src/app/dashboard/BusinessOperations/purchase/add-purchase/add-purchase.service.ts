@@ -43,7 +43,8 @@ export class AddPurchaseService {
                         productName: '2ZR-FE',
                         purchasePrice: 80000,
                         retailPrice: 100000,
-                        quantity: null
+                        quantity: null,
+                        organizationId: 0
                     },
                     {
                         productId: 5,
@@ -54,7 +55,8 @@ export class AddPurchaseService {
                         productName: '2ZR-FE',
                         purchasePrice: 80000,
                         retailPrice: 100000,
-                        quantity: null
+                        quantity: null,
+                        organizationId: 0
                     }
                 ];
         else
@@ -68,7 +70,8 @@ export class AddPurchaseService {
                         productName: '4E-FE',
                         purchasePrice: 80000,
                         retailPrice: 100000,
-                        quantity: null
+                        quantity: null,
+                        organizationId: 0
                     },
                     {
                         productId: 2,
@@ -79,7 +82,8 @@ export class AddPurchaseService {
                         productName: '2JZ-GTE',
                         purchasePrice: 80000,
                         retailPrice: 100000,
-                        quantity: null
+                        quantity: null,
+                        organizationId: 0
                     },
                     {
                         productId: 3,
@@ -90,7 +94,8 @@ export class AddPurchaseService {
                         productName: '2ZR-FE',
                         purchasePrice: 80000,
                         retailPrice: 100000,
-                        quantity: null
+                        quantity: null,
+                        organizationId: 0
                     }
                 ];
     }

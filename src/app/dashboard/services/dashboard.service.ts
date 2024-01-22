@@ -207,7 +207,8 @@ export class DashboardService {
             productName: '1NZ-FE: 1.5L Inline-4',
             purchasePrice: 80000,
             retailPrice: 100000,
-            quantity: null
+            quantity: null,
+            organizationId: 0
           },
           {
               productId: 5,
@@ -218,7 +219,8 @@ export class DashboardService {
               productName: '2NZ-FE: 1.3L Inline-4',
               purchasePrice: 80000,
               retailPrice: 100000,
-              quantity: null
+              quantity: null,
+              organizationId: 0
           },
           {
               productId: 6,
@@ -229,7 +231,8 @@ export class DashboardService {
               productName: '2ZZ-GE: 1.8L Inline-4',
               purchasePrice: 80000,
               retailPrice: 100000,
-              quantity: null
+              quantity: null,
+              organizationId: 0
           },
           {
               productId: 7,
@@ -240,7 +243,8 @@ export class DashboardService {
               productName: '3S-GE: 2.0L Inline-4',
               purchasePrice: 80000,
               retailPrice: 100000,
-              quantity: null
+              quantity: null,
+              organizationId: 0
           },
           {
               productId: 8,
@@ -251,7 +255,8 @@ export class DashboardService {
               productName: '3S-GTE: 2.0L Inline-4',
               purchasePrice: 80000,
               retailPrice: 100000,
-              quantity: null
+              quantity: null,
+              organizationId: 0
           },
           {
               productId: 9,
@@ -262,7 +267,8 @@ export class DashboardService {
               productName: '1JZ-GTE: 2.5L Inline-6',
               purchasePrice: 80000,
               retailPrice: 100000,
-              quantity: null
+              quantity: null,
+              organizationId: 0
           },
           {
               productId: 10,
@@ -273,7 +279,8 @@ export class DashboardService {
               productName: '2JZ-GTE: 3.0L',
               purchasePrice: 80000,
               retailPrice: 100000,
-              quantity: null
+              quantity: null,
+              organizationId: 0
           },
           {
               productId: 11,
@@ -284,7 +291,8 @@ export class DashboardService {
               productName: '4A-GE: 1.6L Inline-4',
               purchasePrice: 80000,
               retailPrice: 100000,
-              quantity: null
+              quantity: null,
+              organizationId: 0
           }
         ];
       else
@@ -298,7 +306,8 @@ export class DashboardService {
             productName: '4E-FE 1.5L',
             purchasePrice: 80000,
             retailPrice: 100000,
-            quantity: null
+            quantity: null,
+            organizationId: 0
           },
           {
             productId: 2,
@@ -309,7 +318,8 @@ export class DashboardService {
             productName: '1ZZ-FE: 1.8L Inline-4',
             purchasePrice: 80000,
             retailPrice: 100000,
-            quantity: null
+            quantity: null,
+            organizationId: 0
           },
           {
             productId: 3,
@@ -320,7 +330,8 @@ export class DashboardService {
             productName: '2RZ-FE: 2.4L Inline-4',
             purchasePrice: 80000,
             retailPrice: 100000,
-            quantity: null
+            quantity: null,
+            organizationId: 0
           },
           {
             productId: 11,
@@ -331,7 +342,8 @@ export class DashboardService {
             productName: '2TZ-FE: 2.4L Inline-4',
             purchasePrice: 80000,
             retailPrice: 100000,
-            quantity: null
+            quantity: null,
+            organizationId: 0
           },
           {
             productId: 12,
@@ -342,7 +354,8 @@ export class DashboardService {
             productName: '2RZ-FE: 2.4L Inline-4',
             purchasePrice: 80000,
             retailPrice: 100000,
-            quantity: null
+            quantity: null,
+            organizationId: 0
           },
           {
             productId: 13,
@@ -353,7 +366,8 @@ export class DashboardService {
             productName: '3RZ-FE: 2.7L Inline-4',
             purchasePrice: 80000,
             retailPrice: 100000,
-            quantity: null
+            quantity: null,
+            organizationId: 0
           }
         ];
   }

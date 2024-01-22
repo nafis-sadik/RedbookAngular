@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit{
     private changeDetectorRef: ChangeDetectorRef,
     private ngxPaginationService: NGXPaginationService<IProductModel>
   ) {
-    // On Init shall remove this loading screen forcing to update the DOM. 
+    // On Init shall remove this loading screen forcing to update the DOM.
     // Thus, change detector will work properly on page load
     this.loaderContainer = document.getElementById('LoadingScreen');
     if(this.loaderContainer && this.loaderContainer.classList.contains('d-none')){
@@ -53,8 +53,6 @@ export class ProductsComponent implements OnInit{
       };
 
       this.pagedProductModel.tableConfig.onEdit = (product: IProductModel) => {
-        console.log(product);
-
         dashboardService.ngDialogService.open(ProductsDetailsFormComponent, {
           context: {
             productModel: product,
@@ -141,10 +139,25 @@ export class ProductsComponent implements OnInit{
         element.classList.add('active');
     });
 
-    let pageLength: number = this.pagedProductModel.pagingConfig? this.pagedProductModel.pagingConfig.pageLength : 5;
-    let searchString: string = this.pagedProductModel.searchingConfig? this.pagedProductModel.searchingConfig.searchString : "";
-    if(this.pagedProductModel.tableConfig)
-      this.pagedProductModel.tableConfig.sourceData = this.productService.getProductList(outletId, 1, pageLength, searchString);
+    // Fetch Products for selected outlet
+    this.productService.getProductList(outletId, this.pagedProductModel)
+      .subscribe((pagedProducts: any) => {
+        if(this.pagedProductModel.tableConfig){
+          console.log(pagedProducts);
+
+          if(this.pagedProductModel.pagingConfig){
+            this.pagedProductModel.pagingConfig.pageNumber = pagedProducts.pageNumber;
+            this.pagedProductModel.pagingConfig.pageLength = pagedProducts.pageLength;
+          }
+
+          if(this.pagedProductModel.searchingConfig){
+            this.pagedProductModel.searchingConfig.searchString = pagedProducts.searchString;
+          }
+
+          this.pagedProductModel.tableConfig.sourceData = pagedProducts.products;
+          this.changeDetectorRef.detectChanges();
+        }
+      })
     this.ngxPaginationService.set(this.pagedProductModel);
   }
 }

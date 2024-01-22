@@ -29,6 +29,23 @@ export class ProductsDetailsFormComponent {
   ) { }
 
   ngOnInit() {
+    if (this.productModelInput != undefined) {
+      this.productModel = this.productModelInput;
+    } else {
+      this.productModel = {
+        productId: 0,
+        productName: '',
+        categoryId: 0,
+        subcategoryId: 0,
+        purchasePrice: 0,
+        retailPrice: 0,
+        categoryName: '',
+        quantity: 0,
+        subcategoryName: '',
+        organizationId: 0
+      };
+    }
+
     this.productForm = this.fb.group({
       productName: [this.productModel.productName, Validators.required],
       categoryId: [this.productModel.categoryId, Validators.required],
@@ -56,27 +73,19 @@ export class ProductsDetailsFormComponent {
         this.subcategoryList = categories;
       });
 
-    if (this.productModelInput != undefined) {
-      this.productModel = this.productModelInput;
-    } else {
-      this.productModel = {
-        productId: 0,
-        productName: '',
-        categoryId: 0,
-        subcategoryId: 0,
-        purchasePrice: 0,
-        retailPrice: 0,
-        categoryName: '',
-        quantity: 0,
-        subcategoryName: ''
-      };
-    }
-
     this.changeDetectorRef.detectChanges();
   }
 
   save() {
     this.saveMethod(this.productModel);
+  }
+
+  loadSubCategories(event: any){
+    console.log('event', event);
+    this.subCategoryService.getSubcategoriesUnderCategoryId(this.productModel.categoryId)
+      .subscribe((categories) => {
+        this.subcategoryList = categories;
+      });
   }
 }
 

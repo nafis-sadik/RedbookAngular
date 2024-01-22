@@ -44,4 +44,9 @@ export declare interface IProductModel{
      * @type {Number | null}
      */
     quantity: number | null;
+    /**
+     * Organization Unique Identifier
+     * @type {Number | null}
+     */
+    organizationId: number | null;
 }
