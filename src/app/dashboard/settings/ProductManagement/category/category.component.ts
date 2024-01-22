@@ -74,6 +74,7 @@ export class CategoryComponent implements OnInit {
     this.subcategoryService.getSubcategoriesUnderCategoryId(categoryId)
       .subscribe((subcategories) => {
         this.subcategories = subcategories;
+        this.chageDetectorRef.detectChanges();
       });
   }
 
