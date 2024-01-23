@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
-import { IOrganizationModel } from '../../../Models/IOrganizationModel';
-import { ICategoryModel } from '../../../Models/ICategoryModel';
-import { AddDialogueComponent } from '../../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
-import { RemoveDialogueComponent } from '../../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
+import { IOrganizationModel } from '../../../../Models/IOrganizationModel';
+import { ICategoryModel } from '../../../../Models/ICategoryModel';
+import { AddDialogueComponent } from '../../../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
+import { RemoveDialogueComponent } from '../../../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { CategoryService } from 'src/app/dashboard/services/category.service';
 import { SubcategoryService } from 'src/app/dashboard/services/subcategory.service';

@@ -23,7 +23,7 @@
                       </div>
                       <div class="col-6 p-0 ps-1">
                         <button class="w-100" nbButton type="button" status="danger" (click)="openDeleteBusinessWindow('Delete Category - ' + business.organizationName, business.organizationId)">
-                          <nb-icon icon="close-square"></nb-icon>
+                          <nb-icon icon="trash-2"></nb-icon>
                         </button>
                       </div>
                     </div>
@@ -34,7 +34,7 @@
           </nb-card-body>
           <nb-card-footer>
             <button nbButton status="primary" class="btn-save" (click)="openSaveBusinessWindow('Add New Business', null)">
-              <nb-icon icon="plus-square"></nb-icon>
+              <nb-icon icon="trash-2"></nb-icon>
               <span class="d-lg-block d-none">Add New Business Outlet</span>
               <span class="d-sm-block d-lg-none">Add Business</span>
             </button>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-6 p-0 ps-1">
                           <button class="w-100" nbButton type="button" status="danger" (click)="openDeleteRoleWindow('Delete Role - ' + role.roleName, role.roleId)">
-                            <nb-icon icon="close-square"></nb-icon>
+                            <nb-icon icon="trash-2"></nb-icon>
                           </button>
                         </div>
                       </div>
@@ -75,7 +75,7 @@
             </nb-card-body>
             <nb-card-footer>
               <button nbButton status="primary" (click)="openSaveRoleWindow('Add New Role', null)">
-                <nb-icon icon="plus-square"></nb-icon>
+                <nb-icon icon="trash-2"></nb-icon>
                 Add Role
               </button>
             </nb-card-footer>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard.component';
@@ -22,10 +21,11 @@ import {
   NbStepperModule,
   NbTabsetModule,
   NbUserModule,
-  NbToggleModule
+  NbToggleModule,
+  NbTooltipModule
 } from '@nebular/theme';
 import { RouterModule } from '@angular/router';
-import { CategoryComponent } from './settings/ProductManagement/category/category.component';
+import { CategoryComponent } from './settings/ProductManagement/product-settings/category/category.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomersComponent } from './CRM/customers/customers.component';
@@ -43,29 +43,32 @@ import { RoleManagementComponent } from './settings/general-settings/role-manage
 import { UmsComponent } from './settings/general-settings/ums/ums.component';
 import { UserFormComponent } from './settings/general-settings/ums/user-form/user-form.component';
 import { RoleFormComponent } from './settings/general-settings/role-management/role-form/role-form.component';
-
+import { ProductSettingsComponent } from './settings/ProductManagement/product-settings/product-settings.component';
+import { QuantityUnitComponent } from './settings/ProductManagement/product-settings/quantity-unit/quantity-unit.component';
 
 @NgModule({
   declarations: [
+    UmsComponent,
+    SellComponent,
     HomeComponent,
-    DashboardComponent,
+    RoleFormComponent,
+    PurchaseComponent,
     ProductsComponent,
     CategoryComponent,
-    ProductsDetailsFormComponent,
-    PurchaseComponent,
-    AddPurchaseComponent,
-    SellComponent,
-    AddSalesComponent,
-    GeneralSettingsComponent,
-    RoleManagementComponent,
-    UmsComponent,
     UserFormComponent,
-    CustomersComponent,
-    PlatformsettingsComponent,
+    AddSalesComponent,
+    DashboardComponent,
     RouteFormComponent,
+    CustomersComponent,
     OnboardingComponent,
+    AddPurchaseComponent,
+    RoleManagementComponent,
     GeneralSettingsComponent,
-    RoleFormComponent
+    GeneralSettingsComponent,
+    ProductSettingsComponent,
+    PlatformsettingsComponent,
+    ProductsDetailsFormComponent,
+    QuantityUnitComponent,
   ],
   imports: [
     CommonModule,
@@ -91,6 +94,7 @@ import { RoleFormComponent } from './settings/general-settings/role-management/r
     NbUserModule,
     NbToggleModule,
     ReactiveFormsModule,
+    NbTooltipModule,
     FormsModule // <--- import into the NgModule
   ],
   bootstrap: [DashboardComponent]

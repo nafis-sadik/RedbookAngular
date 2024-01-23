@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CategoryComponent } from './settings/ProductManagement/category/category.component';
-import { DashboardComponent } from './dashboard.component';
 import { HomeComponent } from './home/home.component';
+import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './dashboard.component';
+import { OnboardingComponent } from './onboarding/onboarding.component';
 import { CustomersComponent } from './CRM/customers/customers.component';
 import { SellComponent } from './BusinessOperations/sell/sell.component';
 import { PurchaseComponent } from './BusinessOperations/purchase/purchase.component';
 import { ProductsComponent } from './settings/ProductManagement/products/products.component';
 import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
-import { OnboardingComponent } from './onboarding/onboarding.component';
 import { GeneralSettingsComponent } from './settings/general-settings/general-settings.component';
+import { ProductSettingsComponent } from './settings/ProductManagement/product-settings/product-settings.component';
 
 const routes: Routes = [{
   path: '',
@@ -28,8 +28,8 @@ const routes: Routes = [{
       component: ProductsComponent
     },
     {
-      path: 'category',
-      component: CategoryComponent
+      path: 'product-settings',
+      component: ProductSettingsComponent
     },
     {
       path: 'sales',
