@@ -80,8 +80,8 @@ export class ProductsDetailsFormComponent {
     this.saveMethod(this.productModel);
   }
 
-  loadSubCategories(event: any){
-    console.log('event', event);
+  loadSubCategories(selectedCategoryId: number){
+    this.productModel.categoryId = selectedCategoryId;
     this.subCategoryService.getSubcategoriesUnderCategoryId(this.productModel.categoryId)
       .subscribe((categories) => {
         this.subcategoryList = categories;

@@ -32,13 +32,13 @@ export class ProductService {
 
   addProduct(productModel: IProductModel): Observable<IProductModel> {
     return this.http
-      .post<IProductModel>(`${this.baseUrl}/api/Product/AddProduct`, productModel)
+      .post<IProductModel>(`${this.baseUrl}/api/Product`, productModel)
       .pipe(map((response: IProductModel) => response));
   }
 
   updateProduct(productModel: IProductModel): Observable<IProductModel> {
     return this.http
-      .post<IProductModel>(`${this.baseUrl}/api/Product/UpdateProduct`, productModel)
+      .post<IProductModel>(`${this.baseUrl}/api/Product`, productModel)
       .pipe(map((response: IProductModel) => response));
   }
 }

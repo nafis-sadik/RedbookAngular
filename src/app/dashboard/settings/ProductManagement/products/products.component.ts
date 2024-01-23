@@ -92,6 +92,7 @@ export class ProductsComponent implements OnInit{
             productModel: undefined,
             selectedBusinessId: this.selectedOutletId,
             saveMethod: (product: IProductModel) => {
+              product.organizationId = this.selectedOutletId;
               this.productService.addProduct(product)
                .subscribe(response => {
                   this.pagedProductModel.tableConfig?.sourceData.push(response);

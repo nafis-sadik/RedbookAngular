@@ -28,14 +28,14 @@
         <div class="row">
           <div class="col-md-6">
             <label class="mb-2 mt-4 p-0 col-md-6">Product Category</label>
-            <nb-select formControlName="categoryId" [selected]="productModel.categoryId" selected fullWidth status="primary" placeholder="Product Category" aria-label="ProductCategory">
+            <nb-select formControlName="categoryId" [selected]="productModel.categoryId" (selectedChange)="loadSubCategories($event)" selected fullWidth status="primary" placeholder="Product Category" aria-label="ProductCategory">
               <nb-option value>Select Product Category</nb-option>
               <nb-option *ngFor="let category of categoryList" [value]="category.categoryId">{{ category.catagoryName }}</nb-option>
             </nb-select>
           </div>
           <div class="col-md-6">
             <label class="mb-2 mt-4 p-0 col-md-6">Product Subcategory</label>
-            <nb-select (change)="loadSubCategories($event)" formControlName="subcategoryId" [selected]="productModel.subcategoryId" selected fullWidth status="primary" placeholder="Product Subcategory" aria-label="ProductSubcategory">
+            <nb-select formControlName="subcategoryId" [selected]="productModel.subcategoryId" selected fullWidth status="primary" placeholder="Product Subcategory" aria-label="ProductSubcategory">
               <nb-option value>Select Product Subcategory</nb-option>
               <nb-option *ngFor="let category of subcategoryList" [value]="category.categoryId">{{ category.catagoryName }}</nb-option>
             </nb-select>
