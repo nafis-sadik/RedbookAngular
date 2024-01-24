@@ -3,4 +3,8 @@ export const environment = {
     baseUrlInventory: 'https://localhost:7238',
     cacheStorageLength: 20,
     appId: 3,
+    attributeTypes: {
+        quantity: 'Quantity',
+        brands: 'Brands'
+    }
 };

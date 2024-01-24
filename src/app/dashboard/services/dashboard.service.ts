@@ -120,9 +120,7 @@ export class DashboardService {
 
   constructor(
     private http: HttpClient,
-    private dialogService: NbDialogService,
-    private cachingService: CachingService
-  ) {
+    private dialogService: NbDialogService  ) {
     this.ngDialogService = dialogService;
   }
 

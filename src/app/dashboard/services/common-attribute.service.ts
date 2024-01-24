@@ -7,32 +7,32 @@ import { ICommonAttribute } from "../Models/ICommonAttribute";
 @Injectable({
     providedIn: 'root',
 })
-export class CategoryService{
+export class CommonAttributeService{
     baseUrl = environment.baseUrlInventory;
 
     constructor(private http: HttpClient) { }
 
     addNewAttribute(commonAttributeModel: ICommonAttribute): Observable<ICommonAttribute>{
         return this.http
-           .post<ICommonAttribute>(`${this.baseUrl}/api/Category`, commonAttributeModel)
+           .post<ICommonAttribute>(`${this.baseUrl}/api/CommonAttributes`, commonAttributeModel)
            .pipe(map((response) => response));
     }
 
     updateExistingAttribute(commonAttributeModel: ICommonAttribute): Observable<ICommonAttribute>{
         return this.http
-           .patch<ICommonAttribute>(`${this.baseUrl}/api/Category/`, commonAttributeModel)
+           .patch<ICommonAttribute>(`${this.baseUrl}/api/CommonAttributes/`, commonAttributeModel)
            .pipe(map((response) => response));
     }
 
-    getAttributes(): Observable<Array<ICommonAttribute>>{
+    getAttributes(attrType: string): Observable<Array<ICommonAttribute>>{
       return this.http
-       .get<Array<ICommonAttribute>>(`${this.baseUrl}/api/Category/Quantity`)
+       .get<Array<ICommonAttribute>>(`${this.baseUrl}/api/CommonAttributes/${attrType}`)
        .pipe(map(response => response));
     }
 
     deleteAttribute(attributeId: number): Observable<ICommonAttribute>{
         return this.http
-           .delete<ICommonAttribute>(`${this.baseUrl}/api/Category/${attributeId}`)
+           .delete<ICommonAttribute>(`${this.baseUrl}/api/CommonAttributes/${attributeId}`)
            .pipe(map((response) => response));
     }
 }

@@ -1,7 +1,7 @@
 <section id="BrandsNQuantities">
     <div class="container-fluid">
         <div class="row">            
-            <section id="QuantityUnit" class="col-md-6">
+            <section id="Quantity" class="col-md-6">
                 <nb-card size="large">
                     <nb-card-header>Quantity Units</nb-card-header>
                     <nb-card-body>
@@ -10,12 +10,12 @@
                                 <div class="container">
                                     <div class="row">                                        
                                         <div class="col-xxl-8">
-                                            <span class="align-middle">{{ unit.attributeName }}</span>
+                                            <span class="align-middle list-item-label">{{ unit.attributeName }}</span>
                                         </div>
                                         <div class="col-xxl-4">
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <button nbButton status="primary" nbTooltip="Update">
+                                                    <button nbButton status="primary" nbTooltip="Update" (click)="selectedAttribute(unit.attributeId, $event, 'Quantity')">
                                                         <nb-icon icon="file-text"></nb-icon>
                                                     </button>
                                                 </div>
@@ -34,21 +34,33 @@
                     <nb-card-footer>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-xxl-8 col-md-12 mb-1">
                                         <input
                                         nbInput
                                         fullWidth
                                         status="primary"
                                         type="text"
-                                        placeholder="Attribute Name"
+                                        placeholder="Quantity Attribute Name"
                                         fieldSize="medium"
                                         [value]="selectedUnit.attributeName"
                                     >
                                 </div>
-                                <div class="col-md-4">
-                                    <button nbButton fullWidth status="success" nbTooltip="Save">
-                                        <nb-icon icon="checkmark"></nb-icon>
-                                    </button>
+                                <div class="col-xxl-4 col-md-12">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-5 p-0">
+                                                <button nbButton fullWidth status="success" nbTooltip="Save" (click)="saveAttribute('Quantity')">
+                                                    <nb-icon icon="checkmark"></nb-icon>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-5 p-0">
+                                                <button nbButton fullWidth status="primary" nbTooltip="Reset" (click)="resetAttribute('Quantity')">
+                                                    <nb-icon icon="flip-2"></nb-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -60,16 +72,16 @@
                     <nb-card-header>Brands</nb-card-header>
                     <nb-card-body>
                         <nb-list>
-                            <nb-list-item *ngFor="let unit of quantityUnits">
+                            <nb-list-item *ngFor="let brand of brands">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-xxl-8">
-                                            <div class="align-middle">{{ unit.attributeName }}</div>
+                                            <div class="align-middle list-item-label">{{ brand.attributeName }}</div>
                                         </div>
                                         <div class="col-xxl-4">
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <button nbButton status="primary" nbTooltip="Update">
+                                                    <button nbButton status="primary" nbTooltip="Update" (click)="selectedAttribute(brand.attributeId, $event, 'Brands')">
                                                         <nb-icon icon="file-text"></nb-icon>
                                                     </button>
                                                 </div>
@@ -88,23 +100,33 @@
                     <nb-card-footer>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-8 p-0">
+                                <div class="col-xxl-8 col-md-12 mb-1">
                                     <input
                                         nbInput
                                         fullWidth
                                         status="primary"
                                         type="text"
-                                        placeholder="Attribute Name"
+                                        placeholder="Brand Name"
                                         fieldSize="medium"
-                                        [value]="selectedUnit.attributeName"
+                                        [value]="selectedBrand.attributeName"
                                     >
                                 </div>
-                                <!-- formControlName="attributeName"
-                                     -->
-                                <div class="col-md-4">
-                                    <button nbButton fullWidth status="success" nbTooltip="Save">
-                                        <nb-icon icon="checkmark"></nb-icon>
-                                    </button>
+                                <div class="col-xxl-4 col-md-12">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-5 p-0">
+                                                <button nbButton fullWidth status="success" nbTooltip="Save" (click)="saveAttribute('Brands')">
+                                                    <nb-icon icon="checkmark"></nb-icon>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-5 p-0">
+                                                <button nbButton fullWidth status="primary" nbTooltip="Reset" (click)="resetAttribute('Brands')">
+                                                    <nb-icon icon="flip-2"></nb-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>                        
