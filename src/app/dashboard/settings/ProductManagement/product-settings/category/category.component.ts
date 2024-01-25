@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { IOrganizationModel } from '../../../../Models/IOrganizationModel';
 import { ICategoryModel } from '../../../../Models/ICategoryModel';
@@ -14,20 +14,18 @@ import { SubcategoryService } from 'src/app/dashboard/services/subcategory.servi
   styleUrls: ['./category.component.scss']
 })
 
-export class CategoryComponent implements OnInit {
+export class CategoryComponent{
   selectedBusinessId: number | undefined = undefined;
   selectedCategoryId: number | undefined = undefined;
 
   categories: ICategoryModel[] = [];
 
   subcategories: ICategoryModel[] = [];
-
-  loaderContainer: HTMLElement | null;
-  ownedBusinesses: IOrganizationModel[];
+  
+  @Input() ownedBusinesses: IOrganizationModel[];
 
 
   constructor(
-    private orgService: OrganizationService,
     private windowService: NbWindowService,
     private toastrService: NbToastrService,
     private categoryService: CategoryService,
@@ -35,25 +33,6 @@ export class CategoryComponent implements OnInit {
     private chageDetectorRef: ChangeDetectorRef
   ) {
     this.ownedBusinesses = [];
-    this.loaderContainer = document.getElementById('LoadingScreen');
-    if(this.loaderContainer && this.loaderContainer.classList.contains('d-none')){
-      this.loaderContainer.classList.remove('d-none');
-      this.loaderContainer.classList.add('d-block');
-    }
-  }
-
-  ngOnInit(): void {
-    this.orgService.getAllOrganizations()
-      .subscribe(response => {
-        this.ownedBusinesses = response;
-
-        if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
-          this.loaderContainer.classList.remove('d-block');
-          this.loaderContainer.classList.add('d-none');
-        }
-
-        this.chageDetectorRef.detectChanges();
-      });
   }
 
   loadCategories(selectedBusiness: number) {

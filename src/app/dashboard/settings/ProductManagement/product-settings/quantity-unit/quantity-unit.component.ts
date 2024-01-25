@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NbToastrService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { ICommonAttribute } from 'src/app/dashboard/Models/ICommonAttribute';
 import { CommonAttributeService } from 'src/app/dashboard/services/common-attribute.service';
@@ -9,13 +10,23 @@ import { environment } from 'src/environments/environment.development';
   templateUrl: './quantity-unit.component.html',
   styleUrls: ['./quantity-unit.component.scss']
 })
+/**
+ * QuantityUnitComponent handles managing quantity units and brands.
+ * 
+ * It receives the list of quantity units and brands as inputs. 
+ * It has methods to select a unit/brand, save changes to the API,
+ * and reset the selection.
+ * 
+ * The component coordinates updating the selection, calling the API,
+ * and updating the UI list when data changes.
+ */
 export class QuantityUnitComponent {
-  quantityUnits: Array<ICommonAttribute>;
-  brands: Array<ICommonAttribute>;
+  @Input() quantityUnits: Array<ICommonAttribute>;
+  @Input() brands: Array<ICommonAttribute>;
   selectedUnit: ICommonAttribute;
   selectedBrand: ICommonAttribute;
 
-  constructor(private commonAttributeService: CommonAttributeService) {
+  constructor(private commonAttributeService: CommonAttributeService, private toasterService: NbToastrService) {
     this.selectedUnit = {
       attributeId: 0,
       attributeName: '',
@@ -26,48 +37,36 @@ export class QuantityUnitComponent {
       attributeName: '',
       attributeType: ''
     }
-    this.commonAttributeService.getAttributes(environment.attributeTypes.quantity)
-    .subscribe(
-      (response: Array<ICommonAttribute>) => {
-        this.quantityUnits = response;
-      }
-    );
-    this.commonAttributeService.getAttributes(environment.attributeTypes.brands)
-    .subscribe(
-      (response: Array<ICommonAttribute>) => {
-        this.brands = response;
-      }
-    );
   }
-  
+
   selectedAttribute(attrId: number, event: any, containerId: string): void {
     let listItems = document.querySelectorAll(`#${containerId} nb-list-item`);
 
     let currentNode = event.target;
     let targetListItem: Element;
-    
-    while (currentNode) {  
+
+    while (currentNode) {
       // Found section parent
       if (currentNode.tagName === 'NB-LIST-ITEM') {
         targetListItem = currentNode;
         break;
       }
-  
+
       // Go up to parent node
-      currentNode = currentNode.parentElement; 
+      currentNode = currentNode.parentElement;
     }
-    
+
     listItems.forEach(element => {
       // Remove active class from every list item
       element.classList.remove('active');
-      if(element == targetListItem) {
+      if (element == targetListItem) {
         // Add active class to selected list item
         element.classList.add('active');
         return;
       }
     });
 
-    if(containerId == environment.attributeTypes.brands) {
+    if (containerId == environment.attributeTypes.brands) {
       // Selects the clicked brand from the list
       for (let brand of this.brands) {
         if (brand.attributeId == attrId) {
@@ -87,9 +86,20 @@ export class QuantityUnitComponent {
   }
 
   saveAttribute(containerId: string): void {
-    if(containerId == environment.attributeTypes.quantity) {
+    if (this.selectedUnit.attributeName == ''){
+      this.toasterService.danger('Please enter a name for the attribute or select the one you want to update', 'Error');
+      return;
+    }
+
+    // Update UI & prepare object for request
+    let selectedAttr: ICommonAttribute;
+    let attrList: Array<ICommonAttribute>;
+    if (containerId == environment.attributeTypes.quantity) {
       // Save Quantity Unit
-      this.attrSaveAPIConsumer(this.selectedUnit, this.quantityUnits);
+      selectedAttr = this.selectedUnit;
+      selectedAttr.attributeType = environment.attributeTypes.quantity;
+
+      attrList = this.quantityUnits;
 
       // Reset the form
       this.selectedUnit = {
@@ -99,7 +109,10 @@ export class QuantityUnitComponent {
       };
     } else {
       // Save Brand
-      this.attrSaveAPIConsumer(this.selectedBrand, this.brands);
+      selectedAttr = this.selectedBrand;
+      selectedAttr.attributeType = environment.attributeTypes.brands;
+
+      attrList = this.quantityUnits;
 
       // Reset the form
       this.selectedBrand = {
@@ -108,22 +121,20 @@ export class QuantityUnitComponent {
         attributeType: ''
       };
     }
-  }
 
-  attrSaveAPIConsumer(selectedAttr: ICommonAttribute, attrList: ICommonAttribute[]): void {
+    // Send the HTTP request
     let event: Observable<ICommonAttribute>;
-    if(selectedAttr.attributeName == '') return;
-
-    if(this.selectedUnit.attributeId == 0){
-      event = this.commonAttributeService.addNewAttribute(this.selectedUnit);
+    if (this.selectedUnit.attributeId == 0) {
+      event = this.commonAttributeService.addNewAttribute(selectedAttr);
     } else {
-      event = this.commonAttributeService.updateExistingAttribute(this.selectedUnit);
+      event = this.commonAttributeService.updateExistingAttribute(selectedAttr);
     }
 
+    // Process HTTP response
     event.subscribe((quantity: ICommonAttribute) => {
       // Update the list in UI
       let targetQuantity = attrList.filter(unit => unit.attributeId == quantity.attributeId);
-      if(targetQuantity.length > 0){  // For update operation
+      if (targetQuantity.length > 0) {  // For update operation
         targetQuantity[0].attributeId = quantity.attributeId;
         targetQuantity[0].attributeName = quantity.attributeName;
         targetQuantity[0].attributeType = quantity.attributeType;
@@ -141,7 +152,7 @@ export class QuantityUnitComponent {
       element.classList.remove('active');
     });
 
-    if(containerId == environment.attributeTypes.brands) {
+    if (containerId == environment.attributeTypes.brands) {
       this.selectedUnit = {
         attributeId: 0,
         attributeName: '',
