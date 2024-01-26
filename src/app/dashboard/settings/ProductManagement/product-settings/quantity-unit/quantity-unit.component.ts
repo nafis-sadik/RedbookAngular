@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NbToastrService } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { ICommonAttribute } from 'src/app/dashboard/Models/ICommonAttribute';
@@ -26,7 +26,11 @@ export class QuantityUnitComponent {
   selectedUnit: ICommonAttribute;
   selectedBrand: ICommonAttribute;
 
-  constructor(private commonAttributeService: CommonAttributeService, private toasterService: NbToastrService) {
+  constructor(
+    private commonAttributeService: CommonAttributeService,
+    private toasterService: NbToastrService,
+    private changeDetectionRef: ChangeDetectorRef
+  ) {
     this.selectedUnit = {
       attributeId: 0,
       attributeName: '',
@@ -68,29 +72,14 @@ export class QuantityUnitComponent {
 
     if (containerId == environment.attributeTypes.brands) {
       // Selects the clicked brand from the list
-      for (let brand of this.brands) {
-        if (brand.attributeId == attrId) {
-          this.selectedBrand = brand;
-          break;
-        }
-      }
+      this.selectedBrand = this.brands.filter(x => x.attributeId == attrId)[0];
     } else {
       // Selects the clicked unit from the list
-      for (let unit of this.quantityUnits) {
-        if (unit.attributeId == attrId) {
-          this.selectedUnit = unit;
-          break;
-        }
-      }
+      this.selectedUnit = this.quantityUnits.filter(x => x.attributeId == attrId)[0];
     }
   }
 
   saveAttribute(containerId: string): void {
-    if (this.selectedUnit.attributeName == ''){
-      this.toasterService.danger('Please enter a name for the attribute or select the one you want to update', 'Error');
-      return;
-    }
-
     // Update UI & prepare object for request
     let selectedAttr: ICommonAttribute;
     let attrList: Array<ICommonAttribute>;
@@ -112,7 +101,7 @@ export class QuantityUnitComponent {
       selectedAttr = this.selectedBrand;
       selectedAttr.attributeType = environment.attributeTypes.brands;
 
-      attrList = this.quantityUnits;
+      attrList = this.brands;
 
       // Reset the form
       this.selectedBrand = {
@@ -122,25 +111,33 @@ export class QuantityUnitComponent {
       };
     }
 
+    if (selectedAttr.attributeName == ''){
+      this.toasterService.danger('Please enter a name for the attribute or select the one you want to update', 'Error');
+      return;
+    }
+
     // Send the HTTP request
     let event: Observable<ICommonAttribute>;
-    if (this.selectedUnit.attributeId == 0) {
+    if (selectedAttr.attributeId == 0) {
       event = this.commonAttributeService.addNewAttribute(selectedAttr);
     } else {
       event = this.commonAttributeService.updateExistingAttribute(selectedAttr);
     }
 
     // Process HTTP response
-    event.subscribe((quantity: ICommonAttribute) => {
+    event.subscribe((attr: ICommonAttribute) => {
       // Update the list in UI
-      let targetQuantity = attrList.filter(unit => unit.attributeId == quantity.attributeId);
-      if (targetQuantity.length > 0) {  // For update operation
-        targetQuantity[0].attributeId = quantity.attributeId;
-        targetQuantity[0].attributeName = quantity.attributeName;
-        targetQuantity[0].attributeType = quantity.attributeType;
+      let targetAttr = attrList.filter(unit => unit.attributeId == attr.attributeId);
+      if (targetAttr.length > 0) {  // For update operation
+        targetAttr[0].attributeId = attr.attributeId;
+        targetAttr[0].attributeName = attr.attributeName;
+        targetAttr[0].attributeType = attr.attributeType;
       } else {                         // For add operation
-        attrList.push(quantity);
+        attrList.push(attr);
       }
+      
+      this.resetAttribute(containerId);
+      this.toasterService.success('Attribute saved successfully', 'Success');
     });
   }
 
@@ -152,18 +149,38 @@ export class QuantityUnitComponent {
       element.classList.remove('active');
     });
 
-    if (containerId == environment.attributeTypes.brands) {
+    if (containerId == environment.attributeTypes.quantity) {
       this.selectedUnit = {
         attributeId: 0,
         attributeName: '',
         attributeType: ''
       }
-    } else {
+    } else if (containerId == environment.attributeTypes.brands) {
       this.selectedBrand = {
         attributeId: 0,
         attributeName: '',
         attributeType: ''
       }
+    } else {
+      console.log('Unknown container ID');
     }
+
+    this.changeDetectionRef.detectChanges();
+  }
+
+  removeAttribute(attrId: number, containerId: string): void{
+    this.commonAttributeService.removeExistingAttribute(attrId)
+      .subscribe(() => {
+        if (containerId == environment.attributeTypes.quantity) {
+          let index = this.quantityUnits.findIndex(x => x.attributeId == attrId);
+          this.quantityUnits.splice(index, 1);
+        } else if (containerId == environment.attributeTypes.brands) {
+          let index = this.brands.findIndex(x => x.attributeId == attrId);
+          this.brands.splice(index, 1);
+        } else {
+          console.log('Unknown container ID');
+        }
+        this.changeDetectionRef.detectChanges();
+      });
   }
 }

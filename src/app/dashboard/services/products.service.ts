@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { IProductModel } from "src/app/dashboard/Models/IProductModel";
-import { CachingService } from "./caching.service";
 import { environment } from "src/environments/environment.development";
 import { Observable, map } from "rxjs";
 import { IPaginationModel } from "src/app/shared/ngx-pagination/Models/IPaginationModel";
@@ -13,10 +12,7 @@ import { IPaginationModel } from "src/app/shared/ngx-pagination/Models/IPaginati
 export class ProductService {
   baseUrl = environment.baseUrlInventory;
 
-  constructor(
-    private http: HttpClient,
-    private cachingService: CachingService
-  ) { }
+  constructor(private http: HttpClient) { }
 
   getProductList(outletId: number, pagedProductModel: IPaginationModel<IProductModel>): Observable<any>{
     if(pagedProductModel.searchingConfig?.searchString){

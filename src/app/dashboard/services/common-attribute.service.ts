@@ -30,7 +30,7 @@ export class CommonAttributeService{
        .pipe(map(response => response));
     }
 
-    deleteAttribute(attributeId: number): Observable<ICommonAttribute>{
+    removeExistingAttribute(attributeId: number): Observable<ICommonAttribute>{
         return this.http
            .delete<ICommonAttribute>(`${this.baseUrl}/api/CommonAttributes/${attributeId}`)
            .pipe(map((response) => response));

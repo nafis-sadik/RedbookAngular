@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { IPaginationModel } from './Models/IPaginationModel';
 import { ITableModel } from './Models/ITableModel';
-// import { PaginationService } from './pagination/pagination.service';
 import { IAddNewModel } from './Models/IAddNewModel';
 import { NGXPaginationService } from './ngx-pagination.service';
 import { IParamModel } from './Models/IParamModel';
@@ -44,8 +43,6 @@ export class NgxPaginationComponent<T> {
 
         // If there was anything above the pivot
         let indexer: number = this.paginationModel.pagingConfig.pageNumber;
-        // this.pageNumbersToPrint[this.pageNumbersToPrint.length-1] < this.totalPageCount shall cut the loop off when the max page number is bellow the max allowed page to render
-        // this.pageNumbersToPrint.length-1 < this.maxNumberOfPagesToRender shall cut the loop off then the max page number is above the max alloed page to render
         while(this.pageNumbersToPrint[this.pageNumbersToPrint.length-1] < this.totalPageCount && this.pageNumbersToPrint.length-1 < this.maxNumberOfPagesToRender){
           indexer++;
           this.pageNumbersToPrint.push(indexer);

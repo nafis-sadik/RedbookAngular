@@ -5,6 +5,7 @@ import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { ISalesModel } from 'src/app/dashboard/Models/ISalesModel';
 import { IInvoiceProductModel } from 'src/app/dashboard/Models/IInvoiceProductModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
+import { ProductService } from 'src/app/dashboard/services/products.service';
 
 @Component({
   selector: 'app-add-sales',
@@ -24,7 +25,12 @@ export class AddSalesComponent {
 
   selectedProductsForSale: IInvoiceProductModel[];
 
-  constructor(private addSalesService: AddSalesService, private salesService: SalesService, private dashboardService: DashboardService) {
+  constructor(
+    private addSalesService: AddSalesService,
+    private salesService: SalesService,
+    private dashboardService: DashboardService,
+    private productService: ProductService
+  ) {
     this.selectedProductsForSale = [];
 
     this.salesModel = {
@@ -58,7 +64,7 @@ export class AddSalesComponent {
 
   initializeProductDetailsForm(): void {
     this.salesModel.ProductsSold = [];
-    this.outletProductList = this.dashboardService.getProductsByBusinessId(this.dashboardService.selectedOutletId);
+    // this.outletProductList = this.productService.getProductList(this.dashboardService.selectedOutletId);
   }
 
   selectProductToSell(selectedProductIds: number[]): void {

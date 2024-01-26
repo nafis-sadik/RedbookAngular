@@ -20,7 +20,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <button nbButton status="danger" nbTooltip="Delete">
+                                                    <button nbButton status="danger" nbTooltip="Delete" (click)="removeAttribute(unit.attributeId, 'Quantity')">
                                                         <nb-icon icon="trash-2"></nb-icon>
                                                     </button>
                                                 </div>
@@ -86,7 +86,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <button nbButton status="danger" nbTooltip="Delete">
+                                                    <button nbButton status="danger" nbTooltip="Delete" (click)="removeAttribute(brand.attributeId, 'Brands')">
                                                         <nb-icon icon="trash-2"></nb-icon>
                                                     </button>
                                                 </div>
@@ -108,7 +108,7 @@
                                         type="text"
                                         placeholder="Brand Name"
                                         fieldSize="medium"
-                                        [value]="selectedBrand.attributeName"
+                                        [(ngModel)]="selectedBrand.attributeName"
                                     >
                                 </div>
                                 <div class="col-xxl-4 col-md-12">

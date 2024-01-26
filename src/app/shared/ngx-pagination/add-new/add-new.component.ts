@@ -23,6 +23,7 @@ export class AddNewComponent {
       this.addNewModel.onClick != null &&
       typeof this.addNewModel.onClick == typeof Function
     )
-      this.addNewModel.onClick();
+    
+    this.addNewModel.onClick();
   }
 }

@@ -1,52 +1,62 @@
 export declare interface IProductModel{
     /**
      * Product Id
-     * @type {Number}
+     * @type {number}
      */
     productId: number;
-    /**
-     * Product Category or Subcategory Id
-     * @type {Number}
-     */
-    categoryId: number;
-    /**
-     * Product Category or Subcategory Name
-     * @type {string}
-     */
-    categoryName: string;
-    /**
-     * Product subcategory or Subcategory Id
-     * @type {Number}
-     */
-    subcategoryId: number;
-    /**
-     * Product subcategory or Subcategory Name
-     * @type {string}
-     */
-    subcategoryName: string;
     /**
      * Product Name
      * @type {string}
      */
     productName: string;
     /**
+     * Product Category or Subcategory Id
+     * @type {number}
+     */
+    categoryId: number;
+    /**
+     * Product subcategory or Subcategory Id
+     * @type {number}
+     */
+    subcategoryId: number;
+    /**
+     * Product category name
+     * @type {string}
+     */
+    categoryName: string;
+    /**
+     * Product subcategory name
+     * @type {string}
+     */
+    subcategoryName: string;
+    /**
      * Product purchase price
-     * @type {Number}
+     * @type {number}
      */
     purchasePrice: number;
     /**
      * Product retail price
-     * @type {Number}
+     * @type {number}
      */
     retailPrice: number;
     /**
-     * Purchase/Sales/Inventory Quantity
-     * @type {Number | null}
-     */
-    quantity: number | null;
-    /**
      * Organization Unique Identifier
-     * @type {Number | null}
+     * @type {number}
      */
-    organizationId: number | null;
+    organizationId: number;
+    /**
+     * Purchase/Sales/Inventory Quantity
+     * @type {number}
+     */
+    quantity: number;
+    /**
+     * Quantity Type Attribute (i.e. Kg, Bottle, Packets, Liter etc)
+     * @type {number}
+     */
+    quantityTypeId: number;
+    /**
+     * Brand id of product, (i.e. RFL, Beximco, GE etc)
+     * @type {number}
+     */
+    brandAttributeId: number;
 }

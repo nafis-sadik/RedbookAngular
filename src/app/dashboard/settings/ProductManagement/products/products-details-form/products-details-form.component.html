@@ -32,35 +32,33 @@
               <nb-option value>Select Product Category</nb-option>
               <nb-option *ngFor="let category of categoryList" [value]="category.categoryId">{{ category.catagoryName }}</nb-option>
             </nb-select>
+            <div *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid" class="validationError"></div>
           </div>
           <div class="col-md-6">
-            <label class="mb-2 mt-4 p-0 col-md-6">Product Subcategory</label>
+            <label class="mb-2 mt-4 p-0 col-md-6">Subcategory</label>
             <nb-select formControlName="subcategoryId" [selected]="productModel.subcategoryId" selected fullWidth status="primary" placeholder="Product Subcategory" aria-label="ProductSubcategory">
               <nb-option value>Select Product Subcategory</nb-option>
               <nb-option *ngFor="let category of subcategoryList" [value]="category.categoryId">{{ category.catagoryName }}</nb-option>
             </nb-select>
+            <div *ngIf="productForm.get('subcategoryId')?.touched && productForm.get('subcategoryId')?.invalid" class="validationError"></div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="mb-2 mt-4 p-0 col-md-6">Purchase Price</label>
-            <input
-             type="number"
-             nbInput fullWidth
-             status="primary"
-             placeholder="Purchase Price"
-             aria-label="PurchasePrice"
-             formControlName="purchasePrice">
+            <label class="mb-2 mt-4 p-0 col-md-6">Quantity Type</label>
+            <nb-select formControlName="quantityTypeId" [selected]="productModel.quantityTypeId" selected fullWidth status="primary" placeholder="Quantity Type" aria-label="ProductSubcategory">
+              <nb-option value>Select Quantity Type</nb-option>
+              <nb-option *ngFor="let quantityAttr of quantityAttributes" [value]="quantityAttr.attributeId">{{ quantityAttr.attributeName }}</nb-option>
+            </nb-select>
+            <div *ngIf="productForm.get('quantityTypeId')?.touched && productForm.get('quantityTypeId')?.invalid" class="validationError"></div>
           </div>
           <div class="col-md-6">
-            <label class="mb-2 mt-4 p-0 col-md-6">Retail Price</label>
-            <input
-             type="number"
-             nbInput fullWidth
-             status="primary"
-             placeholder="Retail Price"
-             aria-label="RetailPrice"
-             formControlName="retailPrice">
+            <label class="mb-2 mt-4 p-0 col-md-6">Brand</label>
+            <nb-select formControlName="brandAttributeId" [selected]="productModel.brandAttributeId" selected fullWidth status="primary" placeholder="Quantity Type" aria-label="ProductSubcategory">
+              <nb-option value>Select Brand</nb-option>
+              <nb-option *ngFor="let brand of brandAttributes" [value]="brand.attributeId">{{ brand.attributeName }}</nb-option>
+            </nb-select>
+            <div *ngIf="productForm.get('brandAttributeId')?.touched && productForm.get('brandAttributeId')?.invalid" class="validationError"></div>
           </div>
         </div>
       </form>
