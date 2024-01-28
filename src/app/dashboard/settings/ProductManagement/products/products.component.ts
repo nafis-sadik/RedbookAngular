@@ -30,8 +30,7 @@ export class ProductsComponent implements OnInit{
     private productService: ProductService,
     private orgService: OrganizationService,
     private changeDetectorRef: ChangeDetectorRef,
-    private ngxPaginationService: NGXPaginationService<IProductModel>,
-    private paginationService: NGXPaginationService<IPaginationModel<IProductModel>>
+    private ngxPaginationService: NGXPaginationService<IProductModel>
   ) {
     // On Init shall remove this loading screen forcing to update the DOM.
     // Thus, change detector will work properly on page load
@@ -45,7 +44,7 @@ export class ProductsComponent implements OnInit{
 
     if (this.pagedProductModel.tableConfig) {
       this.pagedProductModel.tableConfig.tableMaping = {
-        "Product Id": "id",
+        "Product Id": "productId",
         "Product Category": "categoryName",
         "Product Subcategory": "subcategoryName",
         "Product Name": "productName",
@@ -56,26 +55,21 @@ export class ProductsComponent implements OnInit{
       this.pagedProductModel.tableConfig.onEdit = (product: IProductModel) => {
         dashboardService.ngDialogService.open(ProductsDetailsFormComponent, {
           context: {
-            productModel: product,
+            productModelInput: product,
             selectedBusinessId: this.selectedOutletId,
             saveMethod: (product: IProductModel) => {
               this.productService.updateProduct(product)
                .subscribe(response => {
                   let productList = this.pagedProductModel.tableConfig?.sourceData;
-                  if(productList){
-                    for(let i = 0; i < productList.length; i++){
-                      if(productList[i].productId === response.productId){
-                        productList[i] = response;
-                        break;
-                      }
+                  this.pagedProductModel.tableConfig?.sourceData.forEach(product => {
+                    if(product.productId === response.productId) {
+                      Object.assign(product, response);
+                      this.toastrService.success('Product Updated Successfully', 'Success');
+                      return;
                     }
-
-                    if(this.pagedProductModel.tableConfig)
-                      this.pagedProductModel.tableConfig.sourceData = productList;
-                  }
-
-                  this.toastrService.success('Product Updated Successfully', 'Success');
-                  this.changeDetectorRef.detectChanges();
+                  });
+                  this.ngxPaginationService.set(this.pagedProductModel);
+                  return;
                 });
             }
           }
@@ -145,28 +139,22 @@ export class ProductsComponent implements OnInit{
 
     // Fetch Products for selected outlet
     this.productService.getProductList(outletId, this.pagedProductModel)
-      .subscribe((pagedProducts: any) => {    
+      .subscribe((pagedProducts: any) => {
         // Get pagination data to update table
-        this.paginationService.get()
-          .subscribe((paginationModel) => {
-            if(paginationModel.tableConfig?.sourceData.length){
-              paginationModel.tableConfig.sourceData = pagedProducts.sourceData;
-            }
-              
-            if(paginationModel.pagingConfig){
-              paginationModel.pagingConfig.pageNumber = pagedProducts.pageNumber;
-              paginationModel.pagingConfig.pageLength = pagedProducts.pageLength;
-            }
-    
-            if(paginationModel.searchingConfig){
-              paginationModel.searchingConfig.searchString = pagedProducts.searchString;
-            }
+        if(this.pagedProductModel.tableConfig){
+          this.pagedProductModel.tableConfig.sourceData = pagedProducts.sourceData;
+        }
 
-            this.paginationService.set(paginationModel);
-            this.changeDetectorRef.detectChanges();
-          });        
+        if(this.pagedProductModel.pagingConfig){
+          this.pagedProductModel.pagingConfig.pageNumber = pagedProducts.pageNumber;
+          this.pagedProductModel.pagingConfig.pageLength = pagedProducts.pageLength;
+        }
+
+        if(this.pagedProductModel.searchingConfig){
+          this.pagedProductModel.searchingConfig.searchString = pagedProducts.searchString;
+        }
+
+        this.ngxPaginationService.set(this.pagedProductModel);
       });
-
-    this.ngxPaginationService.set(this.pagedProductModel);
   }
 }

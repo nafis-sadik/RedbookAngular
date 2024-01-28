@@ -53,6 +53,4 @@ export class ProductSettingsComponent implements OnInit {
       }
     }, 1.5 * 1000);
   }
-
 }
-

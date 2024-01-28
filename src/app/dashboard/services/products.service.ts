@@ -34,7 +34,7 @@ export class ProductService {
 
   updateProduct(productModel: IProductModel): Observable<IProductModel> {
     return this.http
-      .post<IProductModel>(`${this.baseUrl}/api/Product`, productModel)
+      .patch<IProductModel>(`${this.baseUrl}/api/Product`, productModel)
       .pipe(map((response: IProductModel) => response));
   }
 }

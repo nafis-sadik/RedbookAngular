@@ -26,7 +26,7 @@ export class ProductsDetailsFormComponent {
   quantityAttributes: Array<ICommonAttribute>;
   brandAttributes: Array<ICommonAttribute>;
   loaderContainer: HTMLElement| null;
-  
+
   constructor(
     private fb: FormBuilder,
     private toasterService: NbToastrService,
@@ -46,6 +46,10 @@ export class ProductsDetailsFormComponent {
 
   ngOnInit() {
     if (this.productModelInput != undefined) {
+      this.subCategoryService.getSubcategoriesUnderCategoryId(this.productModelInput.categoryId)
+        .subscribe((subcategories: Array<ICategoryModel>) => {
+            this.subcategoryList = subcategories;
+          });
       this.productModel = this.productModelInput;
     } else {
       this.productModel = {
@@ -71,12 +75,12 @@ export class ProductsDetailsFormComponent {
         .subscribe((categories) => {
           this.categoryList = categories;
         });
-  
+
       this.commonAttributeService.getAttributes(environment.attributeTypes.quantity)
         .subscribe((attributes) => {
           this.quantityAttributes = attributes;
         });
-  
+
       this.commonAttributeService.getAttributes(environment.attributeTypes.brands)
         .subscribe((attributes) => {
           this.brandAttributes = attributes;
