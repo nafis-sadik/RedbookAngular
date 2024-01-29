@@ -60,7 +60,6 @@ export class ProductsComponent implements OnInit{
             saveMethod: (product: IProductModel) => {
               this.productService.updateProduct(product)
                .subscribe(response => {
-                  let productList = this.pagedProductModel.tableConfig?.sourceData;
                   this.pagedProductModel.tableConfig?.sourceData.forEach(product => {
                     if(product.productId === response.productId) {
                       Object.assign(product, response);
@@ -68,6 +67,7 @@ export class ProductsComponent implements OnInit{
                       return;
                     }
                   });
+
                   this.ngxPaginationService.set(this.pagedProductModel);
                   return;
                 });
@@ -106,16 +106,16 @@ export class ProductsComponent implements OnInit{
 
   ngOnInit(): void {
     this.loaderContainer = document.getElementById('LoadingScreen');
-
     setTimeout(() => {
       if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
         this.loaderContainer.classList.remove('d-block');
         this.loaderContainer.classList.add('d-none');
 
-        this.orgService.getAllOrganizations().subscribe((orgList: IOrganizationModel[]) => {
-          this.organizationList = orgList;
-          this.changeDetectorRef.detectChanges();
-        })
+        this.orgService.getAllOrganizations()
+          .subscribe((orgList: IOrganizationModel[]) => {
+            this.organizationList = orgList;
+            this.changeDetectorRef.detectChanges();
+          });
       }
     }, 1.5 * 1000);
   }
@@ -130,17 +130,19 @@ export class ProductsComponent implements OnInit{
 
     // Add active class to source element and remove from sibling elements
     let sourceElem = event.srcElement;
-    Array.from(sourceElem.parentNode.children).forEach((element: any) => {
-      if(element != sourceElem)
-        element.classList.remove('active');
-      else
-        element.classList.add('active');
-    });
+    Array.from(sourceElem.parentNode.children)
+      .forEach((element: any) => {
+        if(element != sourceElem)
+          element.classList.remove('active');
+        else
+          element.classList.add('active');
+      });
 
     // Fetch Products for selected outlet
     this.productService.getProductList(outletId, this.pagedProductModel)
       .subscribe((pagedProducts: any) => {
         // Get pagination data to update table
+        console.log(pagedProducts)
         if(this.pagedProductModel.tableConfig){
           this.pagedProductModel.tableConfig.sourceData = pagedProducts.sourceData;
         }
@@ -148,6 +150,7 @@ export class ProductsComponent implements OnInit{
         if(this.pagedProductModel.pagingConfig){
           this.pagedProductModel.pagingConfig.pageNumber = pagedProducts.pageNumber;
           this.pagedProductModel.pagingConfig.pageLength = pagedProducts.pageLength;
+          this.pagedProductModel.pagingConfig.totalItems = pagedProducts.totalItems;
         }
 
         if(this.pagedProductModel.searchingConfig){
