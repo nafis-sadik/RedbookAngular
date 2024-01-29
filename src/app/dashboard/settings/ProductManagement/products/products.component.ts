@@ -96,7 +96,6 @@ export class ProductsComponent implements OnInit{
                   this.toastrService.success('Product Added Successfully', 'Success');
                   this.changeDetectorRef.detectChanges();
                 });
-
             }
           }
         });
