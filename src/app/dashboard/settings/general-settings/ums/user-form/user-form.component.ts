@@ -17,6 +17,7 @@ export class UserFormComponent implements OnInit {
   roleList: IRoleModel[];
   @Input() userModel: IUserModel | null;
   @Input() selectedBusinessId: number;
+  @Input() addUser: Function;
 
   private isUpdateOperation: boolean;
 
@@ -94,11 +95,8 @@ export class UserFormComponent implements OnInit {
           });
       } else {
         return this.orgService.addUserToBusiness(this.userModel)
-          .subscribe(() => {
-            setTimeout(() => {
-              location.reload();
-            }, 500);
-
+          .subscribe((newUser) => {
+            this.addUser(newUser);
             this.toasterService.success('Operation Successfull', 'New user added successfully');
           });
       }

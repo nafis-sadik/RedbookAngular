@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { IUserModel } from 'src/app/dashboard/Models/IUserModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
@@ -7,6 +7,7 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
 import { UserFormComponent } from './user-form/user-form.component';
 import { NbDialogService } from '@nebular/theme';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
+import { Converter } from 'src/app/shared/helper-methods/helper-methods.component';
 
 @Component({
   selector: 'app-ums',
@@ -25,8 +26,9 @@ export class UmsComponent  implements OnInit{
 
   constructor(
     dashboardService: DashboardService,
-    private orgService: OrganizationService,
     private dialogService: NbDialogService,
+    private orgService: OrganizationService,
+    // private changeDetector: ChangeDetectorRef,
     private ngxPaginationService: NGXPaginationService<IUserModel>
   ) {
     this.pagedUserModel = dashboardService.getPagingConfig(UserFormComponent, 'User Management', 'Add User', 'Search User');
@@ -36,30 +38,37 @@ export class UmsComponent  implements OnInit{
       this.pagedUserModel.pagingConfig.onUpdate = () => {
         this.orgService.getUserByBusinessId(this.pagedUserModel, this.selectedBusinessId)
           .subscribe((response) => {
-            if(this.pagedUserModel.tableConfig == null) return;
-            if(this.pagedUserModel.pagingConfig == null) return;
-            if(this.pagedUserModel.searchingConfig == null) return;
-            
-            this.pagedUserModel.searchingConfig.searchString = response.searchString;
-            this.pagedUserModel.tableConfig.sourceData = response.sourceData;
-
-            if(this.pagedUserModel.pagingConfig){
-              this.pagedUserModel.pagingConfig.pageLength = response.pageLength;
-              this.pagedUserModel.pagingConfig.pageNumber = response.pageNumber;
-              this.pagedUserModel.pagingConfig.totalItems = response.totalItems;
-            }
-
-            this.ngxPaginationService.set(this.pagedUserModel);
+            this.loadDataOnUI(response);
           });
       }
     }
 
     if(this.pagedUserModel.addNewElementButtonConfig){
       this.pagedUserModel.addNewElementButtonConfig.onAdd = () => {
-        this.dialogService.open(UserFormComponent, {
+        let dialogueRef = this.dialogService.open(UserFormComponent, {
           context: {
             userModel: null,
-            selectedBusinessId: this.selectedBusinessId
+            selectedBusinessId: this.selectedBusinessId,
+            addUser: (userModel: IUserModel) => {
+              if(this.pagedUserModel.pagingConfig){
+                this.pagedUserModel.pagingConfig.totalItems += 1;
+                let lastPageNumber: number = Math.ceil(this.pagedUserModel.pagingConfig.totalItems / this.pagedUserModel.pagingConfig.pageLength);
+              
+                if(lastPageNumber == this.pagedUserModel.pagingConfig.pageNumber){
+                  this.pagedUserModel.pagingConfig.totalItems += 1;
+                  this.pagedUserModel.tableConfig?.sourceData.push(userModel);
+                  this.ngxPaginationService.set(this.pagedUserModel);
+                } else {
+                  this.pagedUserModel.pagingConfig.pageNumber = lastPageNumber;
+                  this.orgService.getUserByBusinessId(this.pagedUserModel, this.selectedBusinessId)
+                  .subscribe((response) => {
+                    this.loadDataOnUI(response);
+                  });
+                }
+
+                dialogueRef.close();
+              }
+            }
           },
         });
       };
@@ -105,8 +114,7 @@ export class UmsComponent  implements OnInit{
       
       this.pagedUserModel.tableConfig.onDelete = (data: any) => {
         this.orgService.removeUserFromBusiness(data.userId, this.selectedBusinessId)
-        .subscribe((data) => {
-          console.log("User removed from business", data);
+        .subscribe(() => {
           location.reload();
         });
       }
@@ -146,45 +154,44 @@ export class UmsComponent  implements OnInit{
     
     this.orgService.getUserByBusinessId(this.pagedUserModel, businessId)
       .subscribe((response) => {
-        if(this.pagedUserModel.tableConfig == null) return;
-        if(this.pagedUserModel.pagingConfig == null) return;
-        if(this.pagedUserModel.searchingConfig == null) return;
-        
-        if(response.searchString)
-          this.pagedUserModel.searchingConfig.searchString = response.searchString;
-        else
-          this.pagedUserModel.searchingConfig.searchString = '';
-        
-        // Preparing pagination data
-        this.pagedUserModel.pagingConfig.pageLength = response.pageLength;
-        this.pagedUserModel.pagingConfig.pageNumber = response.pageNumber;
-        this.pagedUserModel.pagingConfig.totalItems = response.totalItems;
-
-        // Preparing data table
-        this.pagedUserModel.tableConfig.sourceData = response.sourceData;
-        // Load the ids for multiple select on pop up form
-        this.pagedUserModel.tableConfig.sourceData.forEach(user => {
-          this.userRoleIds = [];
-          this.userRoleNames = '';
-          user.roles.forEach(x => {
-            this.userRoleIds.push(x.roleId);
-            if(!this.userRoleNames.includes(x.roleName)){
-              this.userRoleNames += (x.roleName + ", ");
-            }
-          });
-
-          user.roleIds = this.userRoleIds;
-          // slice last 2 characters from the string to remove the garbage from the tail that we needed to add during the loop two lines above
-          user.roleNames = this.userRoleNames.slice(0, -2);
-        })
-
-        this.ngxPaginationService.set(this.pagedUserModel);
+        this.loadDataOnUI(response);
       });
   }
 
-  removeOutlet(windowLabel: string, businessId: number): void{ }
+  loadDataOnUI(response: any){    
+    console.log('paged response', response);
+    if(this.pagedUserModel.tableConfig == null) return;
+    if(this.pagedUserModel.pagingConfig == null) return;
+    if(this.pagedUserModel.searchingConfig == null) return;
+    
+    if(response.searchString)
+      this.pagedUserModel.searchingConfig.searchString = response.searchString;
+    else
+      this.pagedUserModel.searchingConfig.searchString = '';
+    
+    // Preparing pagination data
+    this.pagedUserModel.pagingConfig.pageLength = response.pageLength;
+    this.pagedUserModel.pagingConfig.pageNumber = response.pageNumber;
+    this.pagedUserModel.pagingConfig.totalItems = response.totalItems;
 
-  saveUser(windowLabel: string, userModel: IUserModel | null){ }
+    // Preparing data table
+    this.pagedUserModel.tableConfig.sourceData = response.sourceData;
+    // Load the ids for multiple select on pop up form
+    this.pagedUserModel.tableConfig.sourceData.forEach(user => {
+      this.userRoleIds = [];
+      this.userRoleNames = '';
+      user.roles.forEach(x => {
+        this.userRoleIds.push(x.roleId);
+        if(!this.userRoleNames.includes(x.roleName)){
+          this.userRoleNames += (x.roleName + ", ");
+        }
+      });
 
-  removeUser(windowLabel: string, userId: string){ }
+      user.roleIds = this.userRoleIds;
+      // slice last 2 characters from the string to remove the garbage from the tail that we needed to add during the loop two lines above
+      user.roleNames = this.userRoleNames.slice(0, -2);
+    })
+
+    this.ngxPaginationService.set(this.pagedUserModel);
+  }
 }
