@@ -95,7 +95,7 @@ export class DashboardService {
 
   getMenuOptions(){
     return this.http
-      .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetMenuRoutes/${environment.appId}`)
+      .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetMenuRoutes/`)
       .pipe(map(response =>  response))
   }
 }

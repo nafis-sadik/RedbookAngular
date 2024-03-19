@@ -6,6 +6,7 @@ import { OrganizationService } from '../services/organization.service';
 import { UserService } from '../services/user.service';
 import { IOrganizationModel } from '../Models/IOrganizationModel';
 import { IUserModel } from '../Models/IUserModel';
+import { OnboardingModel } from '../Models/onboarding.model';
 
 @Component({
   selector: 'app-onboarding',
@@ -13,6 +14,9 @@ import { IUserModel } from '../Models/IUserModel';
   styleUrls: ['./onboarding.component.scss']
 })
 export class OnboardingComponent {
+  onboardignModel: OnboardingModel;
+  onboardingFormGroup: FormGroup;
+
   AdminUserForm: FormGroup;
   OrganizationForm: FormGroup;
   loaderContainer: HTMLElement| null;
@@ -33,7 +37,16 @@ export class OnboardingComponent {
 
   ngOnInit() {
     this.isMobile = this.appConfigService.isMobilePhone();
-    this.linearMode = true;
+    this.linearMode = false;
+
+    this.onboardingFormGroup = this.fb.group({
+      organizationName: [this.onboardignModel.organizationName, Validators.required],
+      firstName: [this.onboardignModel.firstName, Validators.required],
+      lastName: [this.onboardignModel.lastName, Validators.required],
+      userName: [this.onboardignModel.userName, Validators.required],
+      email: [this.onboardignModel.email, Validators.required],
+      accountBalance: [this.onboardignModel.accountBalance, Validators.required],
+    });
 
     this.OrganizationForm = this.fb.group({
       organizationName: ['', Validators.required],
