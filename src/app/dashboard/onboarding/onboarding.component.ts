@@ -5,7 +5,7 @@ import { NbStepperComponent, NbToastrService } from '@nebular/theme';
 import { OrganizationService } from '../services/organization.service';
 import { UserService } from '../services/user.service';
 import { IOrganizationModel } from '../Models/IOrganizationModel';
-import { IUserModel } from '../Models/IUserModel';
+import { UserModel } from '../Models/UserModel';
 import { OnboardingModel } from '../Models/onboarding.model';
 
 @Component({
@@ -24,7 +24,7 @@ export class OnboardingComponent {
   isMobile: boolean;
   linearMode: boolean;
   
-  userModel: IUserModel;
+  userModel: UserModel;
   orgModel: IOrganizationModel;
   
   constructor(
@@ -121,8 +121,7 @@ export class OnboardingComponent {
       return
     }
 
-    this.userModel.organizationId = this.orgModel.organizationId;
-    this.userModel.ApplicationId = 2;
+    // this.userModel.ApplicationId = 2;
     this.userService.registerNewUser(this.userModel).subscribe(response => {
       this.toasterService.success('Operation Successfull', 'User added successfully');
       this.userModel = response;
@@ -138,21 +137,7 @@ export class OnboardingComponent {
       address: []
     }
 
-    this.userModel = {
-      accountBalance: 0,
-      email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      organizationId: 0,
-      organizationName: '',
-      roles: [],
-      roleIds: [],
-      roleNames: "",
-      userId: '',
-      userName: '',
-      ApplicationId: 0
-    }
+    this.userModel = new UserModel();
    
     stepper.reset();
   }

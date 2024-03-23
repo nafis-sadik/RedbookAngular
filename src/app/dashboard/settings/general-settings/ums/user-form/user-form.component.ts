@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
 import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
-import { IUserModel } from 'src/app/dashboard/Models/IUserModel';
+import { UserModel } from 'src/app/dashboard/Models/UserModel';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { RoleService } from 'src/app/dashboard/services/role.service';
 import { UserService } from 'src/app/dashboard/services/user.service';
@@ -15,7 +15,7 @@ import { UserService } from 'src/app/dashboard/services/user.service';
 export class UserFormComponent implements OnInit {
   userForm: FormGroup;
   roleList: IRoleModel[];
-  @Input() userModel: IUserModel | null;
+  @Input() userModel: UserModel | null;
   @Input() selectedBusinessId: number;
   @Input() addUser: Function;
 
@@ -33,34 +33,20 @@ export class UserFormComponent implements OnInit {
     // If null was passed, it's a creatge operation, otherwise it's an update operation
     this.isUpdateOperation = !(this.userModel == null);
     if(this.userModel == null){
-      this.userModel = {
-        firstName: '',
-        lastName: '',
-        accountBalance: 0,
-        ApplicationId: 0,
-        email: '',
-        organizationId: this.selectedBusinessId,
-        organizationName: '',
-        password: '',
-        roles: [],
-        roleIds: [],
-        roleNames: "",
-        userId: '',
-        userName: '' 
-      }
+      this.userModel = new UserModel();
     }
 
-    this.roleService.getOrganizationRoles(this.userModel.organizationId)
-      .subscribe((roles) => {
-        this.roleList = roles;
-      });
+    // this.roleService.getOrganizationRoles(this.userModel.organizationId)
+    //   .subscribe((roles) => {
+    //     this.roleList = roles;
+    //   });
 
     this.userForm = this.fb.group({
       firstName: [this.userModel.firstName],
       lastName: [this.userModel.lastName],
       userName: [this.userModel.userName, Validators.required],
       email: [this.userModel.email, Validators.required],
-      roles: [this.userModel.roleIds, Validators.required]
+      // roles: [this.userModel.roleIds, Validators.required]
     });
 
     this.userForm.valueChanges.subscribe((value) => {
@@ -69,21 +55,12 @@ export class UserFormComponent implements OnInit {
         this.userModel.lastName = value.lastName;
         this.userModel.userName = value.userName;
         this.userModel.email = value.email;
-        this.userModel.roleIds = value.roles;
-        this.userModel.roles = this.roleList.filter(role => this.userModel?.roleIds.some(r => r === role.roleId));
-        
-        this.userModel.roleNames = "";
-        this.userModel.roles.forEach(role => {
-          if(this.userModel)
-            this.userModel.roleNames += (role.roleName + " ");
-        })
       }
     });
   }
 
   saveUser(): any {
     if(this.userModel){
-      this.userModel.organizationId = this.selectedBusinessId;
       if(this.isUpdateOperation){
         return this.userService.updateUser(this.userModel)
           .subscribe(() => {

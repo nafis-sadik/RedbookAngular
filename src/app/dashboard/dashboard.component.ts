@@ -34,7 +34,6 @@ export class DashboardComponent {
     appConfigService: AppConfigurationService,
   ) {
     this.displayName = appConfigService.UserModelData.userName;
-    this.displayRoles = appConfigService.UserModelData.userRoles;
 
     // If no theme has been cached, select default theme
     let preselectedTheme: string | null = localStorage.getItem('theme');
@@ -47,8 +46,8 @@ export class DashboardComponent {
     
     dashboardService.getMenuOptions()
       .subscribe((menuList: any) => {
-        let rootElements: {[key: number]: NbMenuItem} = {};
-
+        let rootElements: { [key: number]: NbMenuItem } = {};
+        
         menuList.forEach((menuItem: IRouteModel) => {
           if(menuItem.parentRouteId == null || menuItem.parentRouteId == undefined){
             rootElements[menuItem.routeId] = {
@@ -78,7 +77,7 @@ export class DashboardComponent {
         });
 
         menuList = menuList.filter((menuItem: any) => !itemsToRemove.includes(menuItem.routeId));
-
+        
         menuList.forEach((menuItem: any) => {
           rootElements[menuItem.routeId] = {
             title: menuItem.routeName,
@@ -125,7 +124,7 @@ export class DashboardComponent {
     if(theme == 'Midnight'){
       this.themeService.changeTheme('mid-night');
     }else if(theme == 'Evening'){
-      this.themeService.changeTheme('Dark'.toLowerCase());
+      this.themeService.changeTheme('dark');
     } else if (theme == 'Aquamarine') {
       this.themeService.changeTheme('aqua-marine');
     }else {

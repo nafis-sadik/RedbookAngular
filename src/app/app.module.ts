@@ -20,7 +20,7 @@ import { AuthInterceptorService } from './shared/auth/api-Interceptor.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     NbEvaIconsModule,
-    NbThemeModule.forRoot({ name: 'mid-night' }),
+    NbThemeModule.forRoot({ name: 'default' }),
     NbToastrModule.forRoot({
       preventDuplicates: false,
       destroyByClick: true,

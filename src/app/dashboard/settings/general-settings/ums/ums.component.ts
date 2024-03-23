@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
-import { IUserModel } from 'src/app/dashboard/Models/IUserModel';
+import { UserModel } from 'src/app/dashboard/Models/UserModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
@@ -16,7 +16,7 @@ import { Converter } from 'src/app/shared/helper-methods/helper-methods.componen
 })
 export class UmsComponent  implements OnInit{
   selectedBusinessId: number;
-  pagedUserModel: IPaginationModel<IUserModel>;
+  pagedUserModel: IPaginationModel<UserModel>;
   @Input() ownedBusinesses: IOrganizationModel[];
 
   // Need the role ids in a seperate array to preselect loaded data on the multiple select dropdown
@@ -29,7 +29,7 @@ export class UmsComponent  implements OnInit{
     private dialogService: NbDialogService,
     private orgService: OrganizationService,
     // private changeDetector: ChangeDetectorRef,
-    private ngxPaginationService: NGXPaginationService<IUserModel>
+    private ngxPaginationService: NGXPaginationService<UserModel>
   ) {
     this.pagedUserModel = dashboardService.getPagingConfig(UserFormComponent, 'User Management', 'Add User', 'Search User');
 
@@ -49,7 +49,7 @@ export class UmsComponent  implements OnInit{
           context: {
             userModel: null,
             selectedBusinessId: this.selectedBusinessId,
-            addUser: (userModel: IUserModel) => {
+            addUser: (userModel: UserModel) => {
               if(this.pagedUserModel.pagingConfig){
                 this.pagedUserModel.pagingConfig.totalItems += 1;
                 let lastPageNumber: number = Math.ceil(this.pagedUserModel.pagingConfig.totalItems / this.pagedUserModel.pagingConfig.pageLength);
@@ -82,12 +82,12 @@ export class UmsComponent  implements OnInit{
         "Role": "roleNames"
       };
 
-      this.pagedUserModel.tableConfig.onEdit = (userModel: IUserModel) => {
+      this.pagedUserModel.tableConfig.onEdit = (userModel: UserModel) => {
         // Freshly load the api data
         this.userRoleIds = [];
-        userModel.roles.forEach(role => {
-          this.userRoleIds.push(role.roleId);
-        })
+        // userModel.roles.forEach(role => {
+        //   this.userRoleIds.push(role.roleId);
+        // })
 
         // Send the data to the pop up to load the data from api on the form
         this.dialogService.open(UserFormComponent, {
@@ -96,14 +96,8 @@ export class UmsComponent  implements OnInit{
               firstName: userModel.firstName,
               lastName: userModel.lastName,
               accountBalance: 0,
-              ApplicationId: 0,
               email: userModel.email,
-              organizationId: this.selectedBusinessId,
-              organizationName: '',
               password: '',
-              roles: userModel.roles,
-              roleIds: this.userRoleIds,
-              roleNames: '',
               userId: userModel.userId,
               userName: userModel.userName
             },
@@ -180,16 +174,16 @@ export class UmsComponent  implements OnInit{
     this.pagedUserModel.tableConfig.sourceData.forEach(user => {
       this.userRoleIds = [];
       this.userRoleNames = '';
-      user.roles.forEach(x => {
-        this.userRoleIds.push(x.roleId);
-        if(!this.userRoleNames.includes(x.roleName)){
-          this.userRoleNames += (x.roleName + ", ");
-        }
-      });
+      // user.roles.forEach(x => {
+      //   this.userRoleIds.push(x.roleId);
+      //   if(!this.userRoleNames.includes(x.roleName)){
+      //     this.userRoleNames += (x.roleName + ", ");
+      //   }
+      // });
 
-      user.roleIds = this.userRoleIds;
-      // slice last 2 characters from the string to remove the garbage from the tail that we needed to add during the loop two lines above
-      user.roleNames = this.userRoleNames.slice(0, -2);
+      // user.roleIds = this.userRoleIds;
+      // // slice last 2 characters from the string to remove the garbage from the tail that we needed to add during the loop two lines above
+      // user.roleNames = this.userRoleNames.slice(0, -2);
     })
 
     this.ngxPaginationService.set(this.pagedUserModel);

@@ -1,5 +1,6 @@
 import jwt_decode from 'jwt-decode';
 import { Injectable } from "@angular/core";
+import { UserModel } from '../Models/UserModel';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +13,11 @@ export class AppConfigurationService{
   public set UserRawData(value: any) {
     this._userRawData = value;
   }
-  private _userModelData: any;
-  public get UserModelData(): any {
+  private _userModelData: UserModel;
+  public get UserModelData(): UserModel {
     return this._userModelData;
   }
-  public set UserModelData(value: any) {
+  public set UserModelData(value: UserModel) {
     this._userModelData = value;
   }
 
@@ -30,10 +31,13 @@ export class AppConfigurationService{
     this.UserModelData = {
       userId: this._userRawData.UserId,
       userName: this._userRawData.UserName,
-      userRoles: this._userRawData.UserRoles,
-      userRoleIds: this._userRawData.UserRoleIds,
-      organizationId: this._userRawData.OrganizationId
+      firstName: '',
+      lastName: '',
+      password: '',
+      email: '',
+      accountBalance: 0
     }
+    console.log('decoded', this.UserModelData);
   }
 
   isMobilePhone(): boolean {

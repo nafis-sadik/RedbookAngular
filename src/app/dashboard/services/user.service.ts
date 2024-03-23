@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { environment } from "src/environments/environment.development";
-import { IUserModel } from "../Models/IUserModel";
+import { UserModel } from "../Models/UserModel";
 import { CachingService } from "./caching.service";
 
 @Injectable({ 
@@ -16,15 +16,15 @@ export class UserService{
       private cachingService: CachingService
     ) {}
     
-    registerNewUser(userModel: IUserModel):Observable<IUserModel> {
+    registerNewUser(userModel: UserModel):Observable<UserModel> {
         return this.http
-            .post<IUserModel>(`${this.baseUrl}/api/User`, userModel)
+            .post<UserModel>(`${this.baseUrl}/api/User`, userModel)
             .pipe(map((response) => response));
     }
     
-    updateUser(userModel: IUserModel):Observable<IUserModel> {
+    updateUser(userModel: UserModel):Observable<UserModel> {
         return this.http
-            .put<IUserModel>(`${this.baseUrl}/api/User`, userModel)
+            .put<UserModel>(`${this.baseUrl}/api/User`, userModel)
             .pipe(map((response) => response));
     }
 }
