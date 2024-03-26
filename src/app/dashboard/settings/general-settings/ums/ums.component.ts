@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
 import { UserModel } from 'src/app/dashboard/Models/UserModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
@@ -7,7 +7,6 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
 import { UserFormComponent } from './user-form/user-form.component';
 import { NbDialogService } from '@nebular/theme';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
-import { Converter } from 'src/app/shared/helper-methods/helper-methods.component';
 
 @Component({
   selector: 'app-ums',
@@ -98,6 +97,8 @@ export class UmsComponent  implements OnInit{
               accountBalance: 0,
               email: userModel.email,
               password: '',
+              userRoleIds: [],
+              userRoles: [],
               userId: userModel.userId,
               userName: userModel.userName
             },
@@ -120,7 +121,6 @@ export class UmsComponent  implements OnInit{
           this.pagedUserModel.pagingConfig.pageLength = searchConfig.pageLength;
           this.pagedUserModel.searchingConfig.searchString = searchConfig.searchString;
           this.pagedUserModel.pagingConfig.pageNumber = searchConfig.pageNumber;
-
           this.loadUsersUnderBusiness(this.selectedBusinessId);
         } else {
           return;
@@ -152,8 +152,7 @@ export class UmsComponent  implements OnInit{
       });
   }
 
-  loadDataOnUI(response: any){    
-    console.log('paged response', response);
+  loadDataOnUI(response: any){
     if(this.pagedUserModel.tableConfig == null) return;
     if(this.pagedUserModel.pagingConfig == null) return;
     if(this.pagedUserModel.searchingConfig == null) return;
@@ -170,20 +169,21 @@ export class UmsComponent  implements OnInit{
 
     // Preparing data table
     this.pagedUserModel.tableConfig.sourceData = response.sourceData;
+    console.log('response', response);
     // Load the ids for multiple select on pop up form
-    this.pagedUserModel.tableConfig.sourceData.forEach(user => {
+    this.pagedUserModel.tableConfig.sourceData.forEach((user: any) => {
       this.userRoleIds = [];
       this.userRoleNames = '';
-      // user.roles.forEach(x => {
-      //   this.userRoleIds.push(x.roleId);
-      //   if(!this.userRoleNames.includes(x.roleName)){
-      //     this.userRoleNames += (x.roleName + ", ");
-      //   }
-      // });
+      user.roles.forEach((x: any) => {
+        this.userRoleIds.push(x.roleId);
+        if(!this.userRoleNames.includes(x.roleName)){
+          this.userRoleNames += (x.roleName + ", ");
+        }
+      });
 
-      // user.roleIds = this.userRoleIds;
-      // // slice last 2 characters from the string to remove the garbage from the tail that we needed to add during the loop two lines above
-      // user.roleNames = this.userRoleNames.slice(0, -2);
+      user.roleIds = this.userRoleIds;
+      // slice last 2 characters from the string to remove the garbage from the tail that we needed to add during the loop two lines above
+      user.roleNames = this.userRoleNames.slice(0, -2);
     })
 
     this.ngxPaginationService.set(this.pagedUserModel);

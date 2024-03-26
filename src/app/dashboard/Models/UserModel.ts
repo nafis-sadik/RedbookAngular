@@ -34,4 +34,14 @@ export class UserModel{
    * @type {number}
    */
   accountBalance: number;
+  /**
+   * User role ids in number array
+   * @type {Array<number>}
+   */
+  userRoleIds: Array<number>;
+  /**
+   * User role names in string array
+   * @type {Array<string>}
+   */
+  userRoles: Array<string>;
 }

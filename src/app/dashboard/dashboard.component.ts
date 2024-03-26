@@ -120,6 +120,8 @@ export class DashboardComponent {
 
   setTheme(theme: string): void {
     localStorage.setItem('theme', theme);
+    this.themeService.changeTheme('dark');
+    return;
 
     if(theme == 'Midnight'){
       this.themeService.changeTheme('mid-night');

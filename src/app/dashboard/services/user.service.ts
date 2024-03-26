@@ -12,8 +12,8 @@ export class UserService{
     baseUrl = environment.baseUrlUMS;
 
     constructor(
-      private http: HttpClient,
-      private cachingService: CachingService
+        private http: HttpClient,
+        private cachingService: CachingService
     ) {}
     
     registerNewUser(userModel: UserModel):Observable<UserModel> {

@@ -35,9 +35,27 @@ export class AppConfigurationService{
       lastName: '',
       password: '',
       email: '',
+      userRoles: [],
+      userRoleIds: [],
       accountBalance: 0
     }
-    console.log('decoded', this.UserModelData);
+    
+    if (!this._userRawData.UserRoleIds.includes(',')) {
+      this.UserModelData.userRoleIds = [Number.parseInt(this._userRawData.UserRoleIds)];
+    }
+    else {
+      let roleIdArrStr = this._userRawData.UserRoleIds.split(',');
+      this.UserModelData.userRoleIds = roleIdArrStr.map((role: any) => Number.parseInt(role));
+    }
+    
+    if (!this._userRawData.UserRoles.includes(',')) {
+      this.UserModelData.userRoles = [this._userRawData.UserRoleIds];
+    }
+    else {
+      this.UserModelData.userRoles = this._userRawData.UserRoles.split(',');
+    }
+    
+    console.log('local user model', this.UserModelData);
   }
 
   isMobilePhone(): boolean {
