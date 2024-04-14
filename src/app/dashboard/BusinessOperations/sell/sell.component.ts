@@ -3,7 +3,7 @@ import { AddSalesComponent } from './add-sales/add-sales.component';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { SalesService } from './sell.service';
-import { IOrganizationModel } from '../../Models/IOrganizationModel';
+import { OrganizationModel } from '../../Models/organization.model';
 import { ISalesModel } from '../../Models/ISalesModel';
 import { DashboardService } from '../../services/dashboard.service';
 import { OrganizationService } from '../../services/organization.service';
@@ -19,7 +19,7 @@ export class SellComponent {
 
   cardHeader: string = 'Product Sales';
 
-  outlets: IOrganizationModel[];
+  outlets: OrganizationModel[];
 
   pagedSalesModel: IPaginationModel<ISalesModel>;
 

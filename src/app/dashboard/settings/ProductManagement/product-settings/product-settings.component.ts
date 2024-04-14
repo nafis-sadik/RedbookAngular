@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ICommonAttribute } from 'src/app/dashboard/Models/ICommonAttribute';
-import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
+import { OrganizationModel } from 'src/app/dashboard/Models/organization.model';
 import { CommonAttributeService } from 'src/app/dashboard/services/common-attribute.service';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { environment } from 'src/environments/environment.development';
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment.development';
 export class ProductSettingsComponent implements OnInit {
 
   private loaderContainer: HTMLElement | null;
-  ownedBusinesses: Array<IOrganizationModel>;
+  ownedBusinesses: Array<OrganizationModel>;
   quantityUnits: Array<ICommonAttribute>;
   brands: Array<ICommonAttribute>;
 
@@ -42,8 +42,8 @@ export class ProductSettingsComponent implements OnInit {
           this.brands = response;
         });
 
-      this.orgService.getAllOrganizations()
-        .subscribe((orgList: IOrganizationModel[]) => {
+      this.orgService.getUserOrgs()
+        .subscribe((orgList: OrganizationModel[]) => {
           this.ownedBusinesses = orgList;
         });
 

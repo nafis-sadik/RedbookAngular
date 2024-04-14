@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { environment } from "src/environments/environment.development";
-import { UserModel } from "../Models/UserModel";
+import { UserModel } from "../Models/user.model";
 import { CachingService } from "./caching.service";
 
 @Injectable({ 

@@ -8,7 +8,7 @@ export declare interface ICategoryModel{
    * Id of the business that owns this category
    * @type {Number}
    */
-  businessId: number;
+  organizationId: number;
   /**
    * Id of parent category element
    * @type {Number}

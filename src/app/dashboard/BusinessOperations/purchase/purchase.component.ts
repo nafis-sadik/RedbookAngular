@@ -3,7 +3,7 @@ import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginati
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { PurchaseService } from './purchase.service';
-import { IOrganizationModel } from '../../Models/IOrganizationModel';
+import { OrganizationModel } from '../../Models/organization.model';
 import { IInvoiceModel } from '../../Models/IInvoiceModel';
 import { DashboardService } from '../../services/dashboard.service';
 import { OrganizationService } from '../../services/organization.service';
@@ -21,7 +21,7 @@ export class PurchaseComponent {
 
   selectedOutlet: number = 0;
 
-  outlets: IOrganizationModel[];
+  outlets: OrganizationModel[];
 
   pagedPurchaseModel: IPaginationModel<IInvoiceModel>;
 

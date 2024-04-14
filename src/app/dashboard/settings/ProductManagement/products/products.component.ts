@@ -3,7 +3,7 @@ import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginati
 import { ProductsDetailsFormComponent } from './products-details-form/products-details-form.component';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { ProductService } from '../../../services/products.service';
-import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
+import { OrganizationModel } from 'src/app/dashboard/Models/organization.model';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
@@ -18,7 +18,7 @@ export class ProductsComponent implements OnInit{
   selectedOutletId: number;
   isUpdateOperation: boolean = false;
 
-  organizationList: IOrganizationModel[];
+  organizationList: OrganizationModel[];
 
   pagedProductModel: IPaginationModel<IProductModel>;
 
@@ -110,8 +110,8 @@ export class ProductsComponent implements OnInit{
         this.loaderContainer.classList.remove('d-block');
         this.loaderContainer.classList.add('d-none');
 
-        this.orgService.getAllOrganizations()
-          .subscribe((orgList: IOrganizationModel[]) => {
+        this.orgService.getUserOrgs()
+          .subscribe((orgList: OrganizationModel[]) => {
             this.organizationList = orgList;
             this.changeDetectorRef.detectChanges();
           });

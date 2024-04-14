@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
 import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
-import { UserModel } from 'src/app/dashboard/Models/UserModel';
+import { UserModel } from 'src/app/dashboard/Models/user.model';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { RoleService } from 'src/app/dashboard/services/role.service';
 import { UserService } from 'src/app/dashboard/services/user.service';

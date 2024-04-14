@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbStepperComponent, NbToastrService } from '@nebular/theme';
 import { OrganizationService } from '../services/organization.service';
 import { UserService } from '../services/user.service';
-import { IOrganizationModel } from '../Models/IOrganizationModel';
-import { UserModel } from '../Models/UserModel';
+import { OrganizationModel } from '../Models/organization.model';
+import { UserModel } from '../Models/user.model';
 import { OnboardingModel } from '../Models/onboarding.model';
 
 @Component({
@@ -25,7 +25,7 @@ export class OnboardingComponent {
   linearMode: boolean;
   
   userModel: UserModel;
-  orgModel: IOrganizationModel;
+  orgModel: OrganizationModel;
   
   constructor(
     private fb: FormBuilder,

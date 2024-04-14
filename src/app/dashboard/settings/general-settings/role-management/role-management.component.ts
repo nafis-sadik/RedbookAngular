@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
-import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
+import { OrganizationModel } from 'src/app/dashboard/Models/organization.model';
 import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
 import { IRouteModel } from 'src/app/dashboard/Models/IRouteModel';
 import { IRoutePermissionModel } from 'src/app/dashboard/Models/IRoutePermissionModel';
@@ -19,7 +19,7 @@ import { RoleFormComponent } from './role-form/role-form.component';
 })
 
 export class RoleManagementComponent {
-  @Input() ownedBusinesses: IOrganizationModel[];
+  @Input() ownedBusinesses: OrganizationModel[];
   rolesUnderThisBusiness: IRoleModel[];
   roleRouteMapping: IRoutePermissionModel[];
 
@@ -39,7 +39,7 @@ export class RoleManagementComponent {
   }
 
   // Organization / Business management
-  openSaveBusinessWindow(windowMessage: string, businessModel: IOrganizationModel | null) {
+  openSaveBusinessWindow(windowMessage: string, businessModel: OrganizationModel | null) {
     let toasterMsg = 'Saved Successfully';
     this.windowService.open(AddDialogueComponent, {
       title: windowMessage,

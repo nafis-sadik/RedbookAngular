@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IOrganizationModel } from '../../Models/IOrganizationModel';
+import { OrganizationModel } from '../../Models/organization.model';
 import { OrganizationService } from '../../services/organization.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { OrganizationService } from '../../services/organization.service';
 })
 export class GeneralSettingsComponent implements OnInit {
   loaderContainer: HTMLElement | null;
-  organizationList: IOrganizationModel[];
+  organizationList: OrganizationModel[];
 
   constructor(private orgService: OrganizationService) { }
 
@@ -23,7 +23,7 @@ export class GeneralSettingsComponent implements OnInit {
       }
     }, 1.5 * 1000);
 
-    this.orgService.getAllOrganizations().subscribe((orgList: IOrganizationModel[]) => {
+    this.orgService.getUserOrgs().subscribe((orgList: OrganizationModel[]) => {
       this.organizationList = orgList;
     })
   }

@@ -1,10 +1,9 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
-import { IOrganizationModel } from '../../../../Models/IOrganizationModel';
+import { OrganizationModel } from '../../../../Models/organization.model';
 import { ICategoryModel } from '../../../../Models/ICategoryModel';
 import { AddDialogueComponent } from '../../../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from '../../../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
-import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { CategoryService } from 'src/app/dashboard/services/category.service';
 import { SubcategoryService } from 'src/app/dashboard/services/subcategory.service';
 
@@ -22,7 +21,7 @@ export class CategoryComponent{
 
   subcategories: ICategoryModel[] = [];
   
-  @Input() ownedBusinesses: IOrganizationModel[];
+  @Input() ownedBusinesses: OrganizationModel[];
 
 
   constructor(
@@ -92,9 +91,7 @@ export class CategoryComponent{
     });
   }
 
-  saveCategoryAndSubcategory (categoryTitle: string, categoryObj: ICategoryModel | null, isSubcategory: boolean){
-    // If user closes the window without saving anything, we do not need to process anything
-    // First if shields against that
+  saveCategoryAndSubcategory(categoryTitle: string, categoryObj: ICategoryModel | null, isSubcategory: boolean) {
     if (categoryTitle != undefined && categoryTitle != null) {
       if (categoryObj == null) {                                        // If the user used create button, categoryObj shall remain null
         if(isSubcategory) {                                             // If the user is working with a subcategory
@@ -102,7 +99,7 @@ export class CategoryComponent{
             this.subcategoryService.addNewSubcategory({
               categoryId: 0,
               catagoryName: categoryTitle,
-              businessId: this.selectedBusinessId,
+              organizationId: this.selectedBusinessId,
               parentCategoryId: this.selectedCategoryId
             }).subscribe((category: ICategoryModel) => {
               this.subcategories.push(category);
@@ -114,7 +111,7 @@ export class CategoryComponent{
             this.categoryService.addNewCategory({
               categoryId: 0,
               catagoryName: categoryTitle,
-              businessId: this.selectedBusinessId,
+              organizationId: this.selectedBusinessId,
               parentCategoryId: undefined
             }).subscribe((category: ICategoryModel) => {
               this.categories.push(category);
@@ -128,7 +125,7 @@ export class CategoryComponent{
             this.subcategoryService.updateSubcategory({
               categoryId: categoryObj.categoryId,
               catagoryName: categoryTitle,
-              businessId: this.selectedBusinessId,
+              organizationId: this.selectedBusinessId,
               parentCategoryId: this.selectedCategoryId
             }).subscribe((category: ICategoryModel) => {
               for(let i = 0; i < this.categories.length; i++){
@@ -146,7 +143,7 @@ export class CategoryComponent{
             this.categoryService.updateCategory({
               categoryId: categoryObj.categoryId,
               catagoryName: categoryTitle,
-              businessId: this.selectedBusinessId,
+              organizationId: this.selectedBusinessId,
               parentCategoryId: undefined
             }).subscribe((category: ICategoryModel) => {
               for(let i = 0; i < this.subcategories.length; i++){

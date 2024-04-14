@@ -1,6 +1,6 @@
 import jwt_decode from 'jwt-decode';
 import { Injectable } from "@angular/core";
-import { UserModel } from '../Models/UserModel';
+import { UserModel } from '../Models/user.model';
 
 @Injectable({
   providedIn: 'root',

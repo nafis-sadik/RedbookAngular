@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IOrganizationModel } from 'src/app/dashboard/Models/IOrganizationModel';
-import { UserModel } from 'src/app/dashboard/Models/UserModel';
+import { OrganizationModel } from 'src/app/dashboard/Models/organization.model';
+import { UserModel } from 'src/app/dashboard/Models/user.model';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
@@ -16,7 +16,7 @@ import { OrganizationService } from 'src/app/dashboard/services/organization.ser
 export class UmsComponent  implements OnInit{
   selectedBusinessId: number;
   pagedUserModel: IPaginationModel<UserModel>;
-  @Input() ownedBusinesses: IOrganizationModel[];
+  @Input() ownedBusinesses: OrganizationModel[];
 
   // Need the role ids in a seperate array to preselect loaded data on the multiple select dropdown
   private userRoleIds: number[] = [];
