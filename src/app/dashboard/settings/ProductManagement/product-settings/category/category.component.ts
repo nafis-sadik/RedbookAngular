@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { OrganizationModel } from '../../../../Models/organization.model';
-import { ICategoryModel } from '../../../../Models/ICategoryModel';
+import { CategoryModel } from '../../../../Models/category.model';
 import { AddDialogueComponent } from '../../../../../shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from '../../../../../shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { CategoryService } from 'src/app/dashboard/services/category.service';
@@ -17,9 +17,9 @@ export class CategoryComponent{
   selectedBusinessId: number | undefined = undefined;
   selectedCategoryId: number | undefined = undefined;
 
-  categories: ICategoryModel[] = [];
+  categories: CategoryModel[] = [];
 
-  subcategories: ICategoryModel[] = [];
+  subcategories: CategoryModel[] = [];
   
   @Input() ownedBusinesses: OrganizationModel[];
 
@@ -56,7 +56,7 @@ export class CategoryComponent{
       });
   }
 
-  openSaveCategoryWindow(windowMessage: string, isSubcategory: boolean, categoryObj: ICategoryModel | null) {
+  openSaveCategoryWindow(windowMessage: string, isSubcategory: boolean, categoryObj: CategoryModel | null) {
     // You can not add/update a category without having a business selected
     if(this.selectedBusinessId == null || this.selectedBusinessId == undefined){
       this.toastrService.warning('Please select a business', 'Warning');
@@ -91,7 +91,7 @@ export class CategoryComponent{
     });
   }
 
-  saveCategoryAndSubcategory(categoryTitle: string, categoryObj: ICategoryModel | null, isSubcategory: boolean) {
+  saveCategoryAndSubcategory(categoryTitle: string, categoryObj: CategoryModel | null, isSubcategory: boolean) {
     if (categoryTitle != undefined && categoryTitle != null) {
       if (categoryObj == null) {                                        // If the user used create button, categoryObj shall remain null
         if(isSubcategory) {                                             // If the user is working with a subcategory
@@ -101,7 +101,7 @@ export class CategoryComponent{
               catagoryName: categoryTitle,
               organizationId: this.selectedBusinessId,
               parentCategoryId: this.selectedCategoryId
-            }).subscribe((category: ICategoryModel) => {
+            }).subscribe((category: CategoryModel) => {
               this.subcategories.push(category);
               this.chageDetectorRef.detectChanges();
             });
@@ -113,7 +113,7 @@ export class CategoryComponent{
               catagoryName: categoryTitle,
               organizationId: this.selectedBusinessId,
               parentCategoryId: undefined
-            }).subscribe((category: ICategoryModel) => {
+            }).subscribe((category: CategoryModel) => {
               this.categories.push(category);
               this.chageDetectorRef.detectChanges();
             });
@@ -127,10 +127,10 @@ export class CategoryComponent{
               catagoryName: categoryTitle,
               organizationId: this.selectedBusinessId,
               parentCategoryId: this.selectedCategoryId
-            }).subscribe((category: ICategoryModel) => {
-              for(let i = 0; i < this.categories.length; i++){
-                if(this.categories[i].categoryId == categoryObj.categoryId){
-                  this.categories[i] = category;
+            }).subscribe((category: CategoryModel) => {
+              for(let i = 0; i < this.subcategories.length; i++){
+                if(this.subcategories[i].categoryId == categoryObj.categoryId){
+                  this.subcategories[i] = category;
                   break;
                 };
               }
@@ -145,8 +145,8 @@ export class CategoryComponent{
               catagoryName: categoryTitle,
               organizationId: this.selectedBusinessId,
               parentCategoryId: undefined
-            }).subscribe((category: ICategoryModel) => {
-              for(let i = 0; i < this.subcategories.length; i++){
+            }).subscribe((category: CategoryModel) => {
+              for (let i = 0; i < this.subcategories.length; i++){
                 if(this.subcategories[i].categoryId == categoryObj.categoryId){
                   this.subcategories[i] = category;
                   break;
@@ -171,6 +171,13 @@ export class CategoryComponent{
         maximize: true,
         minimize: true
       },
+      context: {
+        deleteMethod: () => { 
+          this.categoryService.deleteCategory(categoryId).subscribe(() => {
+            this.categories = this.categories.filter(category => category.categoryId != categoryId);
+          });
+        }
+      }
     });
 
     // Remove element

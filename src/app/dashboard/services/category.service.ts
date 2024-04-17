@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment.development";
 import { Observable, map, of } from "rxjs";
-import { ICategoryModel } from "../Models/ICategoryModel";
+import { CategoryModel } from "../Models/category.model";
 
 @Injectable({
     providedIn: 'root',
@@ -12,27 +12,27 @@ export class CategoryService{
 
     constructor(private http: HttpClient) { }
 
-    addNewCategory(categoryModel: ICategoryModel): Observable<ICategoryModel>{
+    addNewCategory(categoryModel: CategoryModel): Observable<CategoryModel>{
         return this.http
-            .post<ICategoryModel>(`${this.baseUrl}/api/Category`, categoryModel)
+            .post<CategoryModel>(`${this.baseUrl}/api/Category`, categoryModel)
             .pipe(map((response) => response));
     }
 
-    updateCategory(categoryModel: ICategoryModel): Observable<ICategoryModel>{
+    updateCategory(categoryModel: CategoryModel): Observable<CategoryModel>{
         return this.http
-            .patch<ICategoryModel>(`${this.baseUrl}/api/Category/`, categoryModel)
+            .patch<CategoryModel>(`${this.baseUrl}/api/Category/`, categoryModel)
             .pipe(map((response) => response));
     }
 
-    deleteCategory(categoryId: number): Observable<ICategoryModel>{
+    deleteCategory(categoryId: number): Observable<CategoryModel>{
         return this.http
-            .delete<ICategoryModel>(`${this.baseUrl}/api/Category/${categoryId}`)
+            .delete<CategoryModel>(`${this.baseUrl}/api/Category/${categoryId}`)
             .pipe(map((response) => response));
     }
 
-    getCategoriesUnderOrganization(orgId: number): Observable<Array<ICategoryModel>>{
+    getCategoriesUnderOrganization(orgId: number): Observable<Array<CategoryModel>>{
       return this.http
-        .get<Array<ICategoryModel>>(`${this.baseUrl}/api/Category/${orgId}`)
+        .get<Array<CategoryModel>>(`${this.baseUrl}/api/Category/${orgId}`)
         .pipe(map(response => response));
     }
 }

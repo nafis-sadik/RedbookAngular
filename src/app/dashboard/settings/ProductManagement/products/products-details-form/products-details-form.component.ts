@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
-import { ICategoryModel } from 'src/app/dashboard/Models/ICategoryModel';
+import { CategoryModel } from 'src/app/dashboard/Models/category.model';
 import { ICommonAttribute } from 'src/app/dashboard/Models/ICommonAttribute';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { CategoryService } from 'src/app/dashboard/services/category.service';
@@ -21,8 +21,8 @@ export class ProductsDetailsFormComponent {
 
   productForm: FormGroup;
   productModel: IProductModel;
-  categoryList: Array<ICategoryModel>;
-  subcategoryList: Array<ICategoryModel>;
+  categoryList: Array<CategoryModel>;
+  subcategoryList: Array<CategoryModel>;
   quantityAttributes: Array<ICommonAttribute>;
   brandAttributes: Array<ICommonAttribute>;
   loaderContainer: HTMLElement| null;
@@ -47,7 +47,7 @@ export class ProductsDetailsFormComponent {
   ngOnInit() {
     if (this.productModelInput != undefined) {
       this.subCategoryService.getSubcategoriesUnderCategoryId(this.productModelInput.categoryId)
-        .subscribe((subcategories: Array<ICategoryModel>) => {
+        .subscribe((subcategories: Array<CategoryModel>) => {
             this.subcategoryList = subcategories;
           });
       this.productModel = this.productModelInput;
