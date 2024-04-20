@@ -89,11 +89,18 @@ export class ProductsComponent implements OnInit{
             selectedBusinessId: this.selectedOutletId,
             saveMethod: (product: IProductModel) => {
               product.organizationId = this.selectedOutletId;
-              console.log(product);
+              
               this.productService.addProduct(product)
-               .subscribe(response => {
+                .subscribe(response => {
                   this.pagedProductModel.tableConfig?.sourceData.push(response);
                   this.toastrService.success('Product Added Successfully', 'Success');
+                  if (this.pagedProductModel.pagingConfig) {
+                    debugger
+                    let targetPageNumber = Math.ceil((this.pagedProductModel.pagingConfig?.totalItems + 1) / this.pagedProductModel.pagingConfig?.pageLength);
+                    console.log(`Navigating to page ${targetPageNumber}`);
+                    this.pagedProductModel.pagingConfig.pageNumber = targetPageNumber;
+                    this.fetchProductsOfOutlet(this.selectedOutletId);
+                  }
                   this.changeDetectorRef.detectChanges();
                 });
             }
@@ -119,24 +126,7 @@ export class ProductsComponent implements OnInit{
     }, 1.5 * 1000);
   }
 
-  selectOutlet(outletId: number, event: any): void{
-    this.selectedOutletId = outletId;
-
-    // Is display is hidden, make it visible
-    let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
-    if(dataTableCard && dataTableCard.classList.contains('d-none'))
-      dataTableCard.classList.remove('d-none');
-
-    // Add active class to source element and remove from sibling elements
-    let sourceElem = event.srcElement;
-    Array.from(sourceElem.parentNode.children)
-      .forEach((element: any) => {
-        if(element != sourceElem)
-          element.classList.remove('active');
-        else
-          element.classList.add('active');
-      });
-
+  fetchProductsOfOutlet(outletId: number){
     // Fetch Products for selected outlet
     this.productService.getProductList(outletId, this.pagedProductModel)
       .subscribe((pagedProducts: any) => {
@@ -158,5 +148,26 @@ export class ProductsComponent implements OnInit{
 
         this.ngxPaginationService.set(this.pagedProductModel);
       });
+  }
+
+  selectOutlet(outletId: number, event: any): void{
+    this.selectedOutletId = outletId;
+
+    // Is display is hidden, make it visible
+    let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
+    if(dataTableCard && dataTableCard.classList.contains('d-none'))
+      dataTableCard.classList.remove('d-none');
+
+    // Add active class to source element and remove from sibling elements
+    let sourceElem = event.srcElement;
+    Array.from(sourceElem.parentNode.children)
+      .forEach((element: any) => {
+        if(element != sourceElem)
+          element.classList.remove('active');
+        else
+          element.classList.add('active');
+      });
+    
+    this.fetchProductsOfOutlet(outletId);
   }
 }

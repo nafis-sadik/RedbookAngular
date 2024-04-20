@@ -146,9 +146,9 @@ export class CategoryComponent{
               organizationId: this.selectedBusinessId,
               parentCategoryId: undefined
             }).subscribe((category: CategoryModel) => {
-              for (let i = 0; i < this.subcategories.length; i++){
-                if(this.subcategories[i].categoryId == categoryObj.categoryId){
-                  this.subcategories[i] = category;
+              for (let i = 0; i < this.categories.length; i++){
+                if(this.categories[i].categoryId == categoryObj.categoryId){
+                  this.categories[i] = category;
                   break;
                 }
               }
