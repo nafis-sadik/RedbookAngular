@@ -136,8 +136,7 @@ export class NgxPaginationComponent<T> {
 
     // Selected page must be updated in view model
     this.paginationModel.pagingConfig.pageNumber = pageNumber;
-
-    if (this.paginationModel.pagingConfig.onUpdate && typeof(this.paginationModel.pagingConfig.onUpdate) == 'function'){
+    if (this.paginationModel.pagingConfig.onUpdate && typeof(this.paginationModel.pagingConfig.onUpdate) == 'function') {
       let searchParams: IParamModel = {
         pageLength: this.paginationModel.pagingConfig.pageLength,
         pageNumber: this.paginationModel.pagingConfig.pageNumber,
@@ -145,6 +144,9 @@ export class NgxPaginationComponent<T> {
       };
       
       this.paginationModel.pagingConfig.onUpdate(searchParams);
+    }
+    else {
+      console.log(`Unable to call method onUpdate. Method hook : ${this.paginationModel.pagingConfig.onUpdate}, type : ${typeof (this.paginationModel.pagingConfig.onUpdate)}`);
     }
   }
 

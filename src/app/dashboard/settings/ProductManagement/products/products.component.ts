@@ -42,6 +42,18 @@ export class ProductsComponent implements OnInit{
 
     this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'Product List', 'Add New Product');
 
+    if (this.pagedProductModel.pagingConfig) {
+      this.pagedProductModel.pagingConfig.onUpdate = (pagingConfigObj: any) => {
+        if (this.pagedProductModel.pagingConfig) {
+          this.pagedProductModel.pagingConfig.pageNumber = pagingConfigObj.pageNumber;
+          this.pagedProductModel.pagingConfig.pageLength = pagingConfigObj.pageLength;
+          if(this.pagedProductModel.searchingConfig)
+            this.pagedProductModel.searchingConfig.searchString = pagingConfigObj.searchString;
+          this.fetchProductsOfOutlet(this.selectedOutletId);
+        }
+      }
+    }
+
     if (this.pagedProductModel.tableConfig) {
       this.pagedProductModel.tableConfig.tableMaping = {
         "Product Id": "productId",
@@ -95,7 +107,6 @@ export class ProductsComponent implements OnInit{
                   this.pagedProductModel.tableConfig?.sourceData.push(response);
                   this.toastrService.success('Product Added Successfully', 'Success');
                   if (this.pagedProductModel.pagingConfig) {
-                    debugger
                     let targetPageNumber = Math.ceil((this.pagedProductModel.pagingConfig?.totalItems + 1) / this.pagedProductModel.pagingConfig?.pageLength);
                     console.log(`Navigating to page ${targetPageNumber}`);
                     this.pagedProductModel.pagingConfig.pageNumber = targetPageNumber;
@@ -131,7 +142,6 @@ export class ProductsComponent implements OnInit{
     this.productService.getProductList(outletId, this.pagedProductModel)
       .subscribe((pagedProducts: any) => {
         // Get pagination data to update table
-        console.log(pagedProducts)
         if(this.pagedProductModel.tableConfig){
           this.pagedProductModel.tableConfig.sourceData = pagedProducts.sourceData;
         }

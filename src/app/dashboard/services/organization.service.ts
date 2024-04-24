@@ -47,17 +47,17 @@ export class OrganizationService{
   /// </remarks>
   getUserOrgs(): Observable<OrganizationModel[]> {
     let cachedData = this.cachingService.get(
-      `${this.baseUrl}/api/Organization/GetAll`
+      `${this.baseUrl}/api/Organization/`
     );
     if (!cachedData) {
       return this.http
         .get<Array<OrganizationModel>>(
-          `${this.baseUrl}/api/Organization/GetAll`
+          `${this.baseUrl}/api/Organization/`
         )
         .pipe(
           map((response) => {
             this.cachingService.set(
-              `${this.baseUrl}/api/Organization/GetAll`,
+              `${this.baseUrl}/api/Organization/`,
               response
             );
             return response;

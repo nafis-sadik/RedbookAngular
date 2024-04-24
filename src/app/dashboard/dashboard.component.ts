@@ -119,17 +119,10 @@ export class DashboardComponent {
   }
 
   setTheme(theme: string): void {
-    localStorage.setItem('theme', theme);
-    this.themeService.changeTheme('dark');
-    return;
-
-    if(theme == 'Midnight'){
-      this.themeService.changeTheme('mid-night');
-    }else if(theme == 'Evening'){
+    if(theme == 'Evening'){
       this.themeService.changeTheme('dark');
-    } else if (theme == 'Aquamarine') {
-      this.themeService.changeTheme('aqua-marine');
-    }else {
+    }
+    else {
       this.themeService.changeTheme(theme.toLowerCase());
     }
   }
