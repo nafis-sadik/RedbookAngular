@@ -39,14 +39,14 @@ export class OnboardingComponent {
     this.isMobile = this.appConfigService.isMobilePhone();
     this.linearMode = false;
 
-    this.onboardingFormGroup = this.fb.group({
-      organizationName: [this.onboardignModel.organizationName, Validators.required],
-      firstName: [this.onboardignModel.firstName, Validators.required],
-      lastName: [this.onboardignModel.lastName, Validators.required],
-      userName: [this.onboardignModel.userName, Validators.required],
-      email: [this.onboardignModel.email, Validators.required],
-      accountBalance: [this.onboardignModel.accountBalance, Validators.required],
-    });
+    // this.onboardingFormGroup = this.fb.group({
+    //   organizationName: [this.onboardignModel.organizationName, Validators.required],
+    //   firstName: [this.onboardignModel.firstName, Validators.required],
+    //   lastName: [this.onboardignModel.lastName, Validators.required],
+    //   userName: [this.onboardignModel.userName, Validators.required],
+    //   email: [this.onboardignModel.email, Validators.required],
+    //   accountBalance: [this.onboardignModel.accountBalance, Validators.required],
+    // });
 
     this.OrganizationForm = this.fb.group({
       organizationName: ['', Validators.required],

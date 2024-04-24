@@ -2,26 +2,29 @@
     <nb-card>
         <nb-card-header>Retail Form</nb-card-header>
         <nb-card-body>
-            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]=linearMode #stepper>
+            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]=linearMode
+                        #stepper>
                 <nb-step [stepControl]="OrganizationForm" label="Register Client Organization">
                     <ng-template #labelOne>Organization step</ng-template>
-                    <form [formGroup]="OrganizationForm" (ngSubmit)="addNewOrganization(stepper)" class="step-container row">
+                    <form [formGroup]="OrganizationForm" (ngSubmit)="addNewOrganization(stepper)"
+                          class="step-container row">
                         <div class="col-md-12 p-1">
                             <label for="OrganizationName">Organization Name</label>
                         </div>
                         <div class="col-md-12 p-1">
                             <input
-                                nbInput
-                                fullWidth
-                                formControlName="organizationName"
-                                status="primary"
-                                type="text"
-                                class="form-control"
-                                id="OrganizationName"
-                                placeholder="Organization Name"
-                                required
-                            >
-                            <div id="OrganizationNameWarning" *ngIf="OrganizationForm.get('organizationName')?.touched && OrganizationForm.get('organizationName')?.invalid" class="validationError"></div>
+                                   nbInput
+                                   fullWidth
+                                   formControlName="organizationName"
+                                   status="primary"
+                                   type="text"
+                                   class="form-control"
+                                   id="OrganizationName"
+                                   placeholder="Organization Name"
+                                   required>
+                            <div id="OrganizationNameWarning"
+                                 *ngIf="OrganizationForm.get('organizationName')?.touched && OrganizationForm.get('organizationName')?.invalid"
+                                 class="validationError"></div>
                         </div>
                         <div class="col-md-12 p-1">
                             <button nbButton status="primary" class="float-right">next</button>
@@ -34,80 +37,78 @@
                         <div class="col-md-6 p-1">
                             <label for="FirstName" class="mb-2">First Name</label>
                             <input
-                                formControlName="firstName"
-                                nbInput
-                                fullWidth
-                                status="primary"
-                                type="text"
-                                class="form-control"
-                                id="FirstName"
-                                placeholder="First Name"
-                            >
+                                   formControlName="firstName"
+                                   nbInput
+                                   fullWidth
+                                   status="primary"
+                                   type="text"
+                                   class="form-control"
+                                   id="FirstName"
+                                   placeholder="First Name">
                         </div>
                         <div class="col-md-6 p-1">
                             <label for="LastName" class="mb-2">Last Name</label>
                             <div class="col-md-12">
                                 <input
-                                    formControlName="lastName"
-                                    nbInput
-                                    fullWidth
-                                    status="primary"
-                                    type="text"
-                                    class="form-control"
-                                    id="LastName"
-                                    placeholder="Last Name"
-                                >
+                                       formControlName="lastName"
+                                       nbInput
+                                       fullWidth
+                                       status="primary"
+                                       type="text"
+                                       class="form-control"
+                                       id="LastName"
+                                       placeholder="Last Name">
                             </div>
                         </div>
                         <div class="col-md-6 p-1">
                             <label for="UserName" class="mb-2">User Name</label>
                             <div class="col-md-12">
                                 <input
-                                    formControlName="userName"
-                                    nbInput
-                                    fullWidth
-                                    status="primary"
-                                    type="text"
-                                    class="form-control"
-                                    id="UserName"
-                                    placeholder="User Name"
-                                    required
-                                >
-                                <div *ngIf="AdminUserForm.get('userName')?.touched && AdminUserForm.get('userName')?.invalid" class="validationError"></div>
+                                       formControlName="userName"
+                                       nbInput
+                                       fullWidth
+                                       status="primary"
+                                       type="text"
+                                       class="form-control"
+                                       id="UserName"
+                                       placeholder="User Name"
+                                       required>
+                                <div *ngIf="AdminUserForm.get('userName')?.touched && AdminUserForm.get('userName')?.invalid"
+                                     class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-6 p-1">
                             <label for="Email" class="mb-2">User Email</label>
                             <div class="col-md-12">
                                 <input
-                                    formControlName="email"
-                                    nbInput
-                                    fullWidth
-                                    status="primary"
-                                    type="email"
-                                    class="form-control"
-                                    id="Email"
-                                    placeholder="Email"
-                                    required
-                                >
-                                <div *ngIf="AdminUserForm.get('email')?.touched && AdminUserForm.get('email')?.invalid" class="validationError"></div>
+                                       formControlName="email"
+                                       nbInput
+                                       fullWidth
+                                       status="primary"
+                                       type="email"
+                                       class="form-control"
+                                       id="Email"
+                                       placeholder="Email"
+                                       required>
+                                <div *ngIf="AdminUserForm.get('email')?.touched && AdminUserForm.get('email')?.invalid"
+                                     class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-12 p-1">
                             <label for="accountBalance" class="mb-2">Initial Account Balance</label>
                             <div class="col-md-12">
                                 <input
-                                    formControlName="accountBalance"
-                                    nbInput
-                                    fullWidth
-                                    status="primary"
-                                    type="number"
-                                    class="form-control"
-                                    id="AccountBalance"
-                                    placeholder="Account Balance"
-                                    required
-                                >
-                                <div *ngIf="AdminUserForm.get('accountBalance')?.touched && AdminUserForm.get('accountBalance')?.invalid" class="validationError"></div>
+                                       formControlName="accountBalance"
+                                       nbInput
+                                       fullWidth
+                                       status="primary"
+                                       type="number"
+                                       class="form-control"
+                                       id="AccountBalance"
+                                       placeholder="Account Balance"
+                                       required>
+                                <div *ngIf="AdminUserForm.get('accountBalance')?.touched && AdminUserForm.get('accountBalance')?.invalid"
+                                     class="validationError"></div>
                             </div>
                         </div>
                         <div class="col-md-12 p-1">
@@ -117,11 +118,11 @@
                 </nb-step>
                 <nb-step [hidden]="true">
                     <div class="step-container">
-                      <h3>Wizard completed!</h3>
-                      <button status="primary" nbButton (click)="resetAllForms(stepper)">Add Another User</button>
+                        <h3>Wizard completed!</h3>
+                        <button status="primary" nbButton (click)="resetAllForms(stepper)">Add Another User</button>
                     </div>
-                  </nb-step>
-              </nb-stepper>
+                </nb-step>
+            </nb-stepper>
         </nb-card-body>
     </nb-card>
 </section>
