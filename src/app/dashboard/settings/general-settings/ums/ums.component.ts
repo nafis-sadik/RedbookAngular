@@ -169,7 +169,7 @@ export class UmsComponent  implements OnInit{
 
     // Preparing data table
     this.pagedUserModel.tableConfig.sourceData = response.sourceData;
-    console.log('response', response);
+    // console.log('response', response);
     // Load the ids for multiple select on pop up form
     this.pagedUserModel.tableConfig.sourceData.forEach((user: any) => {
       this.userRoleIds = [];

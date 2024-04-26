@@ -7,7 +7,6 @@ import { UserService } from '../services/user.service';
 import { OrganizationModel } from '../Models/organization.model';
 import { UserModel } from '../Models/user.model';
 import { OnboardingModel } from '../Models/onboarding.model';
-import { BlumeDropDirective } from 'src/app/shared/blume-drop.directive';
 
 @Component({
   selector: 'app-onboarding',
@@ -31,7 +30,7 @@ export class OnboardingComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private blumeDrop: BlumeDropDirective,
+    // private blumeDrop: BlumeDropDirective,
     private toasterService: NbToastrService,
     private organizationService: OrganizationService,
     private appConfigService: AppConfigurationService,
@@ -124,8 +123,16 @@ export class OnboardingComponent {
     stepper.next();
   }
 
-  handleFiles(files: any) {
-    console.log('files', files);
+  imgRawData: string = '';
+  handleOutputFiles(event: any) {
+    console.log('files', event[0]);
+    if (document.getElementsByClassName('drop-label').length > 0) {
+      let elem = document.getElementsByClassName('drop-label')[0];
+      // elem.innerHTML = '';
+      this.imgRawData = event[0];
+      let data = document.getElementsByClassName('drop-view');
+      console.log('data', elem.innerHTML);
+    }
   }
 
   resetAllForms(stepper: NbStepperComponent): void{    
