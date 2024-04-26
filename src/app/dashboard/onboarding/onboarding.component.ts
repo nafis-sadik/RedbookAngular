@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import { OrganizationModel } from '../Models/organization.model';
 import { UserModel } from '../Models/user.model';
 import { OnboardingModel } from '../Models/onboarding.model';
+import { BlumeDropDirective } from 'src/app/shared/blume-drop.directive';
 
 @Component({
   selector: 'app-onboarding',
@@ -30,6 +31,7 @@ export class OnboardingComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private blumeDrop: BlumeDropDirective,
     private toasterService: NbToastrService,
     private organizationService: OrganizationService,
     private appConfigService: AppConfigurationService,
@@ -39,17 +41,9 @@ export class OnboardingComponent {
     this.isMobile = this.appConfigService.isMobilePhone();
     this.linearMode = false;
 
-    // this.onboardingFormGroup = this.fb.group({
-    //   organizationName: [this.onboardignModel.organizationName, Validators.required],
-    //   firstName: [this.onboardignModel.firstName, Validators.required],
-    //   lastName: [this.onboardignModel.lastName, Validators.required],
-    //   userName: [this.onboardignModel.userName, Validators.required],
-    //   email: [this.onboardignModel.email, Validators.required],
-    //   accountBalance: [this.onboardignModel.accountBalance, Validators.required],
-    // });
-
     this.OrganizationForm = this.fb.group({
       organizationName: ['', Validators.required],
+      organizationAddress: ['']
     });
 
     this.AdminUserForm = this.fb.group({
@@ -130,15 +124,13 @@ export class OnboardingComponent {
     stepper.next();
   }
 
-  resetAllForms(stepper: NbStepperComponent): void{    
-    this.orgModel = {
-      organizationId: 0,
-      organizationName: '',
-      address: []
-    }
+  handleFiles(files: any) {
+    console.log('files', files);
+  }
 
-    this.userModel = new UserModel();
-   
+  resetAllForms(stepper: NbStepperComponent): void{    
+    this.orgModel = new OrganizationModel();
+    this.userModel = new UserModel();   
     stepper.reset();
   }
 }

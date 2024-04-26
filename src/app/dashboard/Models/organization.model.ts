@@ -3,15 +3,20 @@ export class OrganizationModel{
      * Item Title
      * @type {Number}
      */
-    organizationId: number;
+    organizationId: number = 0;
     /**
      * Business Title
      * @type {string}
      */
-    organizationName: string;
+    organizationName: string = '';
     /**
-     * Collection of addresses of a business with corresponding Address Ids
-     * @type { { [ key: number ]: string }[] | null }
+     * Business Title
+     * @type {string}
      */
-    address: { [ key: number ]: string }[] | null;
+    organizationAddress: string | null = null;
+    /**
+     * Business Title
+     * @type {string}
+     */
+    businessLogo: string | null = null;
 }

@@ -56,11 +56,10 @@ export class RoleManagementComponent {
             businessModel.organizationName = businessTitle;
             observableObj = this.businessService.updateOrganization(businessModel);
           } else {
-            observableObj = this.businessService.addNewOrganization({
-              organizationId: 0,
-              organizationName: businessTitle,
-              address: []
-            });
+            let org: OrganizationModel = new OrganizationModel();
+            org.organizationId = 0;
+            org.organizationName = businessTitle;
+            observableObj = this.businessService.addNewOrganization(org);
           }
 
           observableObj.subscribe((response) => {
@@ -106,19 +105,6 @@ export class RoleManagementComponent {
         }
       }
     });
-
-    // Remove element
-    // windowRef.onClose.subscribe((deleteEntry) => {
-    //   if (deleteEntry) {
-    //     this.ownedBusinesses.filter(element => {
-    //       if (element.organizationId == businessId) {
-    //         let index = this.ownedBusinesses.indexOf(element);
-    //         this.ownedBusinesses.splice(index);
-    //         return;
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   // Role Management
@@ -222,19 +208,6 @@ export class RoleManagementComponent {
         }
       }
     });
-
-    // Remove element
-    // windowRef.onClose.subscribe((deleteEntry) => {
-    //   if (deleteEntry) {
-    //     this.ownedBusinesses.filter(element => {
-    //       if (element.organizationId == businessId) {
-    //         let index = this.ownedBusinesses.indexOf(element);
-    //         this.ownedBusinesses.splice(index);
-    //         return;
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   findLeafNodes(nodes: IRouteModel[]): IRouteModel[] {

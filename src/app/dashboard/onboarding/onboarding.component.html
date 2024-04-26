@@ -8,26 +8,55 @@
                     <ng-template #labelOne>Organization step</ng-template>
                     <form [formGroup]="OrganizationForm" (ngSubmit)="addNewOrganization(stepper)"
                           class="step-container row">
-                        <div class="col-md-12 p-1">
-                            <label for="OrganizationName">Organization Name</label>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12 p-1">
+                                    <label for="OrganizationName">Organization Name</label>
+                                </div>
+                                <div class="col-md-12 p-1">
+                                    <input
+                                           nbInput
+                                           fullWidth
+                                           formControlName="organizationName"
+                                           status="primary"
+                                           type="text"
+                                           class="form-control"
+                                           id="OrganizationName"
+                                           placeholder="Organization Name"
+                                           required>
+                                    <div id="OrganizationNameWarning"
+                                         *ngIf="OrganizationForm.get('organizationName')?.touched && OrganizationForm.get('organizationName')?.invalid"
+                                         class="validationError"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 p-1">
+                                    <label for="OrganizationName">Organization Address</label>
+                                </div>
+                                <div class="col-md-12 p-1">
+                                    <input
+                                           nbInput
+                                           fullWidth
+                                           formControlName="organizationAddress"
+                                           status="primary"
+                                           type="text"
+                                           class="form-control"
+                                           placeholder="Organization Address">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 p-1">
+                                    <button nbButton status="primary" class="float-right">next</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-12 p-1">
-                            <input
-                                   nbInput
-                                   fullWidth
-                                   formControlName="organizationName"
-                                   status="primary"
-                                   type="text"
-                                   class="form-control"
-                                   id="OrganizationName"
-                                   placeholder="Organization Name"
-                                   required>
-                            <div id="OrganizationNameWarning"
-                                 *ngIf="OrganizationForm.get('organizationName')?.touched && OrganizationForm.get('organizationName')?.invalid"
-                                 class="validationError"></div>
-                        </div>
-                        <div class="col-md-12 p-1">
-                            <button nbButton status="primary" class="float-right">next</button>
+                        <div class="col-md-6">
+                            <div class="blumeDrop" appDragDrop
+                                 allowedFileTypes="['image/png', 'image/jpeg']"
+                                 uploadUrl="'http://example.com/upload'"
+                                 (filesDropped)="handleFiles($event)">
+                                Drop files here
+                            </div>
                         </div>
                     </form>
                 </nb-step>

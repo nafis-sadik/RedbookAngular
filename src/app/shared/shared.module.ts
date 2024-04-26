@@ -10,23 +10,21 @@ import {
 } from '@nebular/theme';
 import { NgxPaginationComponent } from './ngx-pagination/ngx-pagination.component';
 import { PagedTableComponent } from './ngx-pagination/paged-table/paged-table.component';
-// import { PaginationComponent } from './ngx-pagination/pagination/pagination.component';
-// import { SearchComponent } from './ngx-pagination/search/search.component';
 import { AddNewComponent } from './ngx-pagination/add-new/add-new.component';
 import { AddDialogueComponent } from './ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from './ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { BlumeDropDirective } from './blume-drop.directive';
 
 @NgModule({
   declarations: [
-    // PaginationComponent,
     PagedTableComponent,
     NgxPaginationComponent,
-    // SearchComponent,
     AddNewComponent,
     AddDialogueComponent,
     RemoveDialogueComponent,
     NotFoundComponent,
+    BlumeDropDirective,
   ],
   imports: [
     NbCardModule,
@@ -35,8 +33,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     NbSelectModule,
     NbInputModule,
     NbButtonModule,
-    FormsModule,
+    FormsModule
   ],
-  exports: [NgxPaginationComponent, CommonModule, FormsModule],
+  exports: [ NgxPaginationComponent, CommonModule, FormsModule, BlumeDropDirective ],
 })
 export class SharedModule {}
