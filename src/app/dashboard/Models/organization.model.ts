@@ -13,10 +13,15 @@ export class OrganizationModel{
      * Business Title
      * @type {string}
      */
-    organizationAddress: string | null = null;
+    organizationAddress: string = '';
     /**
-     * Business Title
+     * Business Logo
      * @type {string}
      */
     businessLogo: string | null = null;
+    /**
+     * Subscription Monthly Fee
+     * @type {number}
+     */
+    subscriptionFee: number = 0;
 }

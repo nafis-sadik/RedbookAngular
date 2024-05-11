@@ -1,12 +1,12 @@
 <section id="RetailForm">
     <nb-card>
-        <nb-card-header>Retail Form</nb-card-header>
+        <nb-card-header>Onboarding</nb-card-header>
         <nb-card-body>
-            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]=linearMode
+            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]="linearMode"
                         #stepper>
-                <nb-step [stepControl]="OrganizationForm" label="Register Client Organization">
+                <nb-step label="Register Client Organization">
                     <ng-template #labelOne>Organization step</ng-template>
-                    <form [formGroup]="OrganizationForm" (ngSubmit)="addNewOrganization(stepper)"
+                    <form [formGroup]="OrganizationForm"
                           class="step-container row">
                         <div class="col-md-6">
                             <div class="row">
@@ -15,6 +15,7 @@
                                 </div>
                                 <div class="col-md-12 p-1">
                                     <input
+                                           id="OrganizationName"
                                            nbInput
                                            fullWidth
                                            formControlName="organizationName"
@@ -31,22 +32,42 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 p-1">
-                                    <label for="OrganizationName">Organization Address</label>
+                                    <label for="OrganizationAddress">Organization Address</label>
                                 </div>
                                 <div class="col-md-12 p-1">
                                     <input
+                                           id="OrganizationAddress"
                                            nbInput
                                            fullWidth
                                            formControlName="organizationAddress"
                                            status="primary"
                                            type="text"
                                            class="form-control"
-                                           placeholder="Organization Address">
+                                           placeholder="Organization Address"
+                                           required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 p-1">
-                                    <button nbButton status="primary" class="float-right">next</button>
+                                    <label for="SubscriptionFee">Monthly Subscription Fee (Prepaid)</label>
+                                </div>
+                                <div class="col-md-12 p-1">
+                                    <input
+                                           id="SubscriptionFee"
+                                           nbInput
+                                           fullWidth
+                                           formControlName="subscriptionFee"
+                                           status="primary"
+                                           type="number"
+                                           class="form-control"
+                                           placeholder="Subscription Fee"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 p-1">
+                                    <button nbButton status="primary" class="float-right"
+                                            (click)="validateOrgReg(stepper)">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +86,7 @@
                 </nb-step>
                 <nb-step [stepControl]="AdminUserForm" label="Register Admin User">
                     <ng-template #labelTwo>Admin User Step</ng-template>
-                    <form [formGroup]="AdminUserForm" (ngSubmit)="addAdminUser(stepper)" class="step-container row">
+                    <form [formGroup]="AdminUserForm" class="step-container row">
                         <div class="col-md-6 p-1">
                             <label for="FirstName" class="mb-2">First Name</label>
                             <input
@@ -144,7 +165,8 @@
                             </div>
                         </div>
                         <div class="col-md-12 p-1">
-                            <button nbButton status="primary" class="float-right">next</button>
+                            <button nbButton status="primary" class="float-right"
+                                    (click)="onboardUser(stepper)">Save</button>
                         </div>
                     </form>
                 </nb-step>

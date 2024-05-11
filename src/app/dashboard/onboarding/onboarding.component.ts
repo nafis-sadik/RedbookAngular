@@ -3,10 +3,10 @@ import { AppConfigurationService } from '../services/app-config.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbStepperComponent, NbToastrService } from '@nebular/theme';
 import { OrganizationService } from '../services/organization.service';
-import { UserService } from '../services/user.service';
 import { OrganizationModel } from '../Models/organization.model';
 import { UserModel } from '../Models/user.model';
 import { OnboardingModel } from '../Models/onboarding.model';
+import { OnboardingService } from '../services/onboarding.service';
 
 @Component({
   selector: 'app-onboarding',
@@ -22,14 +22,14 @@ export class OnboardingComponent {
   loaderContainer: HTMLElement| null;
 
   isMobile: boolean;
-  linearMode: boolean;
+  linearMode: boolean = true;
   
   userModel: UserModel;
   orgModel: OrganizationModel;
   
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private onboardingService: OnboardingService,
     // private blumeDrop: BlumeDropDirective,
     private toasterService: NbToastrService,
     private organizationService: OrganizationService,
@@ -38,11 +38,11 @@ export class OnboardingComponent {
 
   ngOnInit() {
     this.isMobile = this.appConfigService.isMobilePhone();
-    this.linearMode = false;
 
     this.OrganizationForm = this.fb.group({
       organizationName: ['', Validators.required],
-      organizationAddress: ['']
+      organizationAddress: ['', Validators.required],
+      subscriptionFee: [1500, Validators.required],
     });
 
     this.AdminUserForm = this.fb.group({
@@ -103,26 +103,6 @@ export class OnboardingComponent {
       stepper.next();
   }
 
-  addAdminUser(stepper: NbStepperComponent): void{
-    if(!this.AdminUserForm.valid){
-      this.AdminUserForm.markAllAsTouched();
-      return;
-    }
-
-    if(this.orgModel.organizationId <= 0){
-      this.toasterService.danger('You must register an organization first', 'Organization not registered');
-      return
-    }
-
-    // this.userModel.ApplicationId = 2;
-    this.userService.registerNewUser(this.userModel).subscribe(response => {
-      this.toasterService.success('Operation Successfull', 'User added successfully');
-      this.userModel = response;
-    });
-
-    stepper.next();
-  }
-
   imgRawData: string = '';
   handleOutputFiles(event: any) {
     console.log('files', event[0]);
@@ -135,9 +115,59 @@ export class OnboardingComponent {
     }
   }
 
-  resetAllForms(stepper: NbStepperComponent): void{    
+  /**
+   * Resets all forms and the stepper to their initial state.
+   * @param stepper - The NbStepperComponent instance to reset.
+   */
+  resetAllForms(stepper: NbStepperComponent): void {
     this.orgModel = new OrganizationModel();
-    this.userModel = new UserModel();   
+    this.userModel = new UserModel();
     stepper.reset();
+  }
+
+  /**
+   * Validates the organization registration details and moves to the next step in the stepper if the details are valid.
+   * @param stepper - The NbStepperComponent instance to move to the next step.
+   */
+  validateOrgReg(stepper: NbStepperComponent) {
+    if (
+      this.orgModel != undefined &&
+      this.orgModel.organizationName.length > 0 &&
+      this.orgModel.organizationAddress.length > 0 &&
+      this.orgModel.subscriptionFee > 999
+    )
+      stepper.next();
+    else {
+      if (
+        this.orgModel == undefined ||
+        this.orgModel.organizationName.length > 0 ||
+        this.orgModel.organizationAddress.length > 0
+      ) {
+        this.toasterService.danger(
+          'Please provide valid organization details',
+          'Invalid Organization Details'
+        );
+        return;
+      }
+      if (this.orgModel.subscriptionFee < 1000) {
+        this.toasterService.danger(
+          'Subscription fee can not be lower than 1000',
+          'Invalid Subscription Fee'
+        );
+        return;
+      }
+    }
+  }
+
+  /**
+   * Onboards the user with the provided user and organization models.
+   */
+  onboardUser(stepper: NbStepperComponent): void {
+    this.onboardingService.onboardUser(this.userModel, this.orgModel)
+      .subscribe((response) => {
+        console.log('response', response);
+        this.toasterService.success('Operation Successfull', 'User onboarded successfully');
+        this.resetAllForms(stepper);
+      });
   }
 }
