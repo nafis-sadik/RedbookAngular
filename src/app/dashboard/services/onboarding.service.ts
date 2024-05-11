@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
     providedIn: 'root',
 })
 export class OnboardingService {
-    baseUrl = environment.baseUrlUMS;1  
+    baseUrl = environment.baseUrlUMS;
 
     constructor(private http: HttpClient) {}
     
