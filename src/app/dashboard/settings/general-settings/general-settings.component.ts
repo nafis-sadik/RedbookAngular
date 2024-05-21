@@ -22,9 +22,14 @@ export class GeneralSettingsComponent implements OnInit {
         this.loaderContainer.classList.add('d-none');
       }
     }, 1.5 * 1000);
-
-    this.orgService.getUserOrgs().subscribe((orgList: OrganizationModel[]) => {
-      this.organizationList = orgList;
-    })
+    
+    this.orgService.getUserOrgs()
+      .subscribe((orgList: OrganizationModel[]) => {
+        console.log('orgList' + orgList);
+        this.organizationList = orgList;
+      },
+      (error) => {
+        console.log('error' + error);
+      });
   }
 }

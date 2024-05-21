@@ -46,18 +46,14 @@ export class OrganizationService{
   /// This method first checks the cache for the organization data. If the data is not cached, it makes a GET request to the server to retrieve the organization data, caches the response, and returns the data as an observable.
   /// </remarks>
   getUserOrgs(): Observable<OrganizationModel[]> {
-    let cachedData = this.cachingService.get(
-      `${this.baseUrl}/api/Organization/`
-    );
+    let cachedData = this.cachingService.get(`${this.baseUrl}/api/Organization/Owned`);
     if (!cachedData) {
       return this.http
-        .get<Array<OrganizationModel>>(
-          `${this.baseUrl}/api/Organization/`
-        )
+        .get<Array<OrganizationModel>>(`${this.baseUrl}/api/Organization/Owned`)
         .pipe(
           map((response) => {
             this.cachingService.set(
-              `${this.baseUrl}/api/Organization/`,
+              `${this.baseUrl}/api/Organization/Owned`,
               response
             );
             return response;
