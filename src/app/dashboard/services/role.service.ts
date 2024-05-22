@@ -16,7 +16,7 @@ export class RoleService{
 
     getOrganizationRoles(orgId: number): Observable<IRoleModel[]> {
         return this.http
-            .get<Array<any>>(`${this.baseUrl}/api/Role/OrganizationRoles/${orgId}`)
+            .get<Array<any>>(`${this.baseUrl}/api/Role/Organization/${orgId}`)
             .pipe(map((response) => response));
     }
 

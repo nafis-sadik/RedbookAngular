@@ -7,6 +7,7 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
 import { UserFormComponent } from './user-form/user-form.component';
 import { NbDialogService } from '@nebular/theme';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
+import { RoleService } from 'src/app/dashboard/services/role.service';
 
 @Component({
   selector: 'app-ums',
@@ -27,7 +28,6 @@ export class UmsComponent  implements OnInit{
     dashboardService: DashboardService,
     private dialogService: NbDialogService,
     private orgService: OrganizationService,
-    // private changeDetector: ChangeDetectorRef,
     private ngxPaginationService: NGXPaginationService<UserModel>
   ) {
     this.pagedUserModel = dashboardService.getPagingConfig(UserFormComponent, 'User Management', 'Add User', 'Search User');
@@ -89,19 +89,20 @@ export class UmsComponent  implements OnInit{
         // })
 
         // Send the data to the pop up to load the data from api on the form
+        let user = new UserModel();        
+        user.firstName = userModel.firstName;
+        user.lastName = userModel.lastName;
+        user.accountBalance = 0;
+        user.email = userModel.email;
+        user.password = '';
+        user.userRoleIds = [];
+        user.userRoles = [];
+        user.userId = userModel.userId;
+        user.userName = userModel.userName;
+        user.organizationId = this.selectedBusinessId;
         this.dialogService.open(UserFormComponent, {
           context: {
-            userModel: {
-              firstName: userModel.firstName,
-              lastName: userModel.lastName,
-              accountBalance: 0,
-              email: userModel.email,
-              password: '',
-              userRoleIds: [],
-              userRoles: [],
-              userId: userModel.userId,
-              userName: userModel.userName
-            },
+            userModel: user,
             selectedBusinessId: this.selectedBusinessId
           },
         });
@@ -138,15 +139,22 @@ export class UmsComponent  implements OnInit{
     }
   }
 
-  // Load user data on business selection from radio button click
-  loadUsersUnderBusiness(businessId: number): void{
+  /**
+   * Loads the users associated with the specified business ID.
+   *
+   * @param businessId - The ID of the business to load users for.
+   */
+  loadUsersUnderBusiness(businessId: number): void {
     this.selectedBusinessId = businessId;
 
-    let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
-    if(dataTableCard && dataTableCard.classList.contains('d-none'))
+    let dataTableCard = Array.from(
+      document.getElementsByTagName('ngx-pagination')
+    )[0];
+    if (dataTableCard && dataTableCard.classList.contains('d-none'))
       dataTableCard.classList.remove('d-none');
-    
-    this.orgService.getUserByBusinessId(this.pagedUserModel, businessId)
+
+    this.orgService
+      .getUserByBusinessId(this.pagedUserModel, businessId)
       .subscribe((response) => {
         this.loadDataOnUI(response);
       });

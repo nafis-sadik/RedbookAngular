@@ -7,6 +7,7 @@ import { OrganizationModel } from '../Models/organization.model';
 import { UserModel } from '../Models/user.model';
 import { OnboardingModel } from '../Models/onboarding.model';
 import { OnboardingService } from '../services/onboarding.service';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-onboarding',
@@ -42,7 +43,7 @@ export class OnboardingComponent {
     this.OrganizationForm = this.fb.group({
       organizationName: ['', Validators.required],
       organizationAddress: ['', Validators.required],
-      subscriptionFee: [1500, Validators.required],
+      subscriptionFee: [1000, Validators.required],
     });
 
     this.AdminUserForm = this.fb.group({
@@ -134,7 +135,7 @@ export class OnboardingComponent {
       this.orgModel != undefined &&
       this.orgModel.organizationName.length > 0 &&
       this.orgModel.organizationAddress.length > 0 &&
-      this.orgModel.subscriptionFee > 999
+      this.orgModel.subscriptionFee >= environment.minimumSubscriptionFee
     )
       stepper.next();
     else {
@@ -149,9 +150,9 @@ export class OnboardingComponent {
         );
         return;
       }
-      if (this.orgModel.subscriptionFee < 1000) {
+      if (this.orgModel.subscriptionFee < environment.minimumSubscriptionFee) {
         this.toasterService.danger(
-          'Subscription fee can not be lower than 1000',
+          'Subscription fee can not be lower than ' + environment.minimumSubscriptionFee,
           'Invalid Subscription Fee'
         );
         return;

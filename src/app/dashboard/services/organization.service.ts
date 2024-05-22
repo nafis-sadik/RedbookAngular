@@ -66,7 +66,7 @@ export class OrganizationService{
 
   addUserToBusiness(userModel: UserModel): Observable<any>{
     return this.http
-      .post<OrganizationModel>(`${this.baseUrl}/api/Organization/User`, userModel)
+      .post<OrganizationModel>(`${this.baseUrl}/api/User`, userModel)
         .pipe(map((response) => response));
   }
 

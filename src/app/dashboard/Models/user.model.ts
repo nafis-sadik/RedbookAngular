@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment.development";
+
 export class UserModel{
   /**
    * Unique Identifier of specific user
@@ -44,4 +46,14 @@ export class UserModel{
    * @type {Array<string>}
    */
   userRoles: Array<string>;
+  /**
+   * Application id of the application this user is making the request from
+   * @type {Array<string>}
+   */
+  applicationId: number = Number(environment.appId);
+  /**
+   * Id of the organization that the user is associated with and trying to run the operation upon
+   * @type {Array<string>}
+   */
+  organizationId: number = 0;
 }

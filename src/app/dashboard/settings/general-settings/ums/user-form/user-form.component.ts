@@ -36,17 +36,17 @@ export class UserFormComponent implements OnInit {
       this.userModel = new UserModel();
     }
 
-    // this.roleService.getOrganizationRoles(this.userModel.organizationId)
-    //   .subscribe((roles) => {
-    //     this.roleList = roles;
-    //   });
+    this.roleService.getOrganizationRoles(this.selectedBusinessId)
+      .subscribe((roles) => {
+        this.roleList = roles;
+      });
 
     this.userForm = this.fb.group({
       firstName: [this.userModel.firstName],
       lastName: [this.userModel.lastName],
       userName: [this.userModel.userName, Validators.required],
       email: [this.userModel.email, Validators.required],
-      // roles: [this.userModel.roleIds, Validators.required]
+      roles: [this.userModel.userRoleIds, Validators.required]
     });
 
     this.userForm.valueChanges.subscribe((value) => {
@@ -60,7 +60,8 @@ export class UserFormComponent implements OnInit {
   }
 
   saveUser(): any {
-    if(this.userModel){
+    if (this.userModel) {
+      this.userModel.organizationId = this.selectedBusinessId;
       if(this.isUpdateOperation){
         return this.userService.updateUser(this.userModel)
           .subscribe(() => {

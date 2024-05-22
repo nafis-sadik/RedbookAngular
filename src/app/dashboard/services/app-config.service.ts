@@ -1,6 +1,7 @@
 import jwt_decode from 'jwt-decode';
 import { Injectable } from "@angular/core";
 import { UserModel } from '../Models/user.model';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +38,9 @@ export class AppConfigurationService{
       email: '',
       userRoles: [],
       userRoleIds: [],
-      accountBalance: 0
+      accountBalance: 0,
+      applicationId: Number(environment.appId),
+      organizationId: 0
     }
     
     if (!this._userRawData.UserRoleIds.includes(',')) {

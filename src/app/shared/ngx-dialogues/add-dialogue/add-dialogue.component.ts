@@ -3,40 +3,7 @@ import { NbToastrService, NbWindowRef } from '@nebular/theme';
 
 @Component({
   selector: 'app-add-dialogue',
-  template: `
-    <section id="AddCategoryComponent" class="container">
-      <div class="row">
-        <input
-          nbInput
-          [(ngModel)]="textValue"
-          type="text"
-          placeholder="Title"
-          class="col-md-7"
-          #title
-        />
-        <button
-          nbButton
-          status="success"
-          class="col-md-2"
-          nbTooltip="Save"
-          nbTooltipStatus="primary"
-          (click)="submit(title.value)"
-        >
-          <nb-icon icon="checkmark"></nb-icon>
-        </button>
-        <button
-          nbButton
-          status="danger"
-          class="col-md-2"
-          nbTooltip="Cancel"
-          nbTooltipStatus="danger"
-          (click)="cancel()"
-        >
-          <nb-icon icon="close"></nb-icon>
-        </button>
-      </div>
-    </section>
-  `,
+  templateUrl: './add-dialogue.component.html',
   styles: [
     `
       #AddCategoryComponent .row {

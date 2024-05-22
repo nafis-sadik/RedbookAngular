@@ -50,7 +50,7 @@ export class RouteService{
 
   getRoutesByRole(roleId: number): Observable<Array<IRouteModel>>{   
     return this.http
-        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/GetRoutesByRoleId/${roleId}`)
+        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/Role/${roleId}`)
         .pipe(map(response => response ));
   }
 

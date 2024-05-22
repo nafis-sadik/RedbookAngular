@@ -126,21 +126,30 @@ export class RoleManagementComponent {
       });
   }
 
-  openSaveRoleWindow(windowMessage: string, roleModel: IRoleModel | null) {
+  /**
+   * Opens a window to save a role. If a `roleModel` is provided, it updates the existing role. Otherwise, it creates a new role.
+   *
+   * @param windowMessage - The message to display in the window title.
+   * @param roleModel - The role model to update, or `null` to create a new role.
+   */
+  openSaveRoleWindow(
+    windowMessage: string,
+    roleModel: IRoleModel | null
+  ): void {
     this.windowService.open(RoleFormComponent, {
       title: windowMessage,
       buttons: {
         close: false,
         fullScreen: true,
         maximize: true,
-        minimize: true
+        minimize: true,
       },
       context: {
         roleName: roleModel?.roleName,
         isAdminRole: roleModel?.isAdmin,
         saveMethod: (roleTitle: string, isAdminRole: boolean) => {
           let observableObj;
-          if(roleModel) {
+          if (roleModel) {
             roleModel.roleName = roleTitle;
             roleModel.isAdmin = isAdminRole;
             observableObj = this.roleService.updateRole(roleModel);
@@ -149,40 +158,40 @@ export class RoleManagementComponent {
               roleId: 0,
               organizationId: this.selectedBusinessId,
               roleName: roleTitle,
-              isAdmin: isAdminRole
+              isAdmin: isAdminRole,
             });
           }
 
           observableObj.subscribe((response) => {
             let isNewlyAdded: boolean = true;
-            for(let i = 0; i < this.rolesUnderThisBusiness.length; i++){
+            for (let i = 0; i < this.rolesUnderThisBusiness.length; i++) {
               // Update existing record
-              if(this.rolesUnderThisBusiness[i].roleId == response.roleId){
+              if (this.rolesUnderThisBusiness[i].roleId == response.roleId) {
                 isNewlyAdded = false;
                 this.rolesUnderThisBusiness[i] = {
                   organizationId: response.organizationId,
-                  roleId : response.roleId,
+                  roleId: response.roleId,
                   roleName: response.roleName,
-                  isAdmin: response.isAdmin
+                  isAdmin: response.isAdmin,
                 };
               }
             }
 
             // Append newly added record
-            if(isNewlyAdded){
+            if (isNewlyAdded) {
               this.rolesUnderThisBusiness.push({
-                roleId : response.roleId,
+                roleId: response.roleId,
                 roleName: response.roleName,
                 organizationId: response.organizationId,
-                isAdmin: response.isAdmin
+                isAdmin: response.isAdmin,
               });
             }
 
             this.chageDetector.detectChanges();
             this.toastrService.success('Saved Successfully', 'Success');
           });
-        }
-      }
+        },
+      },
     });
   }
 

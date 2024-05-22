@@ -3,6 +3,7 @@ export const environment = {
     appId: '1',
     baseUrlInventory: 'https://localhost:7238',
     cacheStorageLength: 20,
+    minimumSubscriptionFee: 500,
     attributeTypes: {
         quantity: 'Quantity',
         brands: 'Brands'

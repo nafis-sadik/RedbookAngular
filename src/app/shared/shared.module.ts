@@ -6,6 +6,7 @@ import {
   NbCardModule,
   NbIconModule,
   NbInputModule,
+  NbLayoutModule,
   NbSelectModule,
 } from '@nebular/theme';
 import { NgxPaginationComponent } from './ngx-pagination/ngx-pagination.component';
@@ -33,7 +34,8 @@ import { BlumeDropDirective } from './blume-drop.directive';
     NbSelectModule,
     NbInputModule,
     NbButtonModule,
-    FormsModule
+    FormsModule,
+    NbLayoutModule
   ],
   exports: [ NgxPaginationComponent, CommonModule, FormsModule, BlumeDropDirective ],
 })
