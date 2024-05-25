@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbToastrService } from '@nebular/theme';
-import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
+import { RoleModel } from 'src/app/dashboard/Models/role.model';
 import { UserModel } from 'src/app/dashboard/Models/user.model';
+import { EmployeeService } from 'src/app/dashboard/services/employee.service';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { RoleService } from 'src/app/dashboard/services/role.service';
-import { UserService } from 'src/app/dashboard/services/user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -14,28 +14,19 @@ import { UserService } from 'src/app/dashboard/services/user.service';
 })
 export class UserFormComponent implements OnInit {
   userForm: FormGroup;
-  roleList: IRoleModel[];
-  @Input() userModel: UserModel | null;
+  roleList: RoleModel[];
+  @Input() userModel: UserModel;
   @Input() selectedBusinessId: number;
   @Input() addUser: Function;
-
-  private isUpdateOperation: boolean;
-
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private employeeService: EmployeeService,
     private roleService: RoleService,
     private orgService: OrganizationService,
     private toasterService: NbToastrService,
   ) { }
 
   ngOnInit(): void {
-    // If null was passed, it's a creatge operation, otherwise it's an update operation
-    this.isUpdateOperation = !(this.userModel == null);
-    if(this.userModel == null){
-      this.userModel = new UserModel();
-    }
-
     this.roleService.getOrganizationRoles(this.selectedBusinessId)
       .subscribe((roles) => {
         this.roleList = roles;
@@ -45,7 +36,8 @@ export class UserFormComponent implements OnInit {
       firstName: [this.userModel.firstName],
       lastName: [this.userModel.lastName],
       userName: [this.userModel.userName, Validators.required],
-      email: [this.userModel.email, Validators.required],
+      email: [this.userModel.email, [Validators.required, Validators.email]],
+      phoneNumber: [this.userModel.phoneNumber],
       roles: [this.userModel.userRoleIds, Validators.required]
     });
 
@@ -55,6 +47,8 @@ export class UserFormComponent implements OnInit {
         this.userModel.lastName = value.lastName;
         this.userModel.userName = value.userName;
         this.userModel.email = value.email;
+        this.userModel.userRoleIds = value.roles;
+        this.userModel.phoneNumber = value.phoneNumber.toString();
       }
     });
   }
@@ -62,17 +56,25 @@ export class UserFormComponent implements OnInit {
   saveUser(): any {
     if (this.userModel) {
       this.userModel.organizationId = this.selectedBusinessId;
-      if(this.isUpdateOperation){
-        return this.userService.updateUser(this.userModel)
+      if (this.userModel.userRoleIds) {
+        this.userModel.userRoles = [];
+        this.userModel.userRoleIds.forEach(roleId => {
+          let roleModel = this.roleList.find(role => role.roleId == roleId);
+          if(roleModel)
+            this.userModel.userRoles.push(roleModel);
+        });
+      }
+
+      if(this.userModel.userId && this.userModel.userId > 0){
+        return this.employeeService.updateEmployee(this.userModel)
           .subscribe(() => {
             setTimeout(() => {
               location.reload();
             }, 500);
-
             this.toasterService.success('Operation Successfull', 'New user added successfully');
           });
       } else {
-        return this.orgService.addUserToBusiness(this.userModel)
+        return this.employeeService.registerEmployee(this.userModel)
           .subscribe((newUser) => {
             this.addUser(newUser);
             this.toasterService.success('Operation Successfull', 'New user added successfully');

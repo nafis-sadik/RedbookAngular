@@ -12,7 +12,7 @@ export class SharedService {
     // A sample conversion method
     paginationToParams<T>(pagedUserModel: IPaginationModel<T>): HttpParams {
         let params = new HttpParams();
-        if (pagedUserModel.searchingConfig) {
+        if (pagedUserModel.searchingConfig && pagedUserModel.searchingConfig.searchString) {
             params = params.append('searchString', pagedUserModel.searchingConfig.searchString);
         }
         

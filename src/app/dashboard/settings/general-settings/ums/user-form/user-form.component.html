@@ -14,7 +14,7 @@
                    formControlName="firstName"
                    class="form-control"
                    placeholder="First Name"
-                   [value]="userModel?.firstName">
+                   [value]="userModel.firstName">
           </div>
           <div class="col-md-6 p-1">
             <label class="mb-1">Last Name</label>
@@ -26,7 +26,7 @@
                    formControlName="lastName"
                    class="form-control"
                    placeholder="Last Name"
-                   [value]="userModel?.lastName">
+                   [value]="userModel.lastName">
           </div>
           <div class="col-md-6 p-1">
             <label class="mb-1">User Name</label>
@@ -38,7 +38,7 @@
                    formControlName="userName"
                    class="form-control"
                    placeholder="User Name"
-                   [value]="userModel?.userName"
+                   [value]="userModel.userName"
                    required>
             <div *ngIf="userForm.get('userName')?.touched && userForm.get('userName')?.invalid" class="validationError">
             </div>
@@ -53,7 +53,21 @@
                    formControlName="email"
                    class="form-control"
                    placeholder="Email"
-                   [value]="userModel?.email"
+                   [value]="userModel.email"
+                   required>
+            <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid" class="validationError"></div>
+          </div>
+          <div class="col-md-6 p-1">
+            <label class="mb-1">Phone Number</label>
+            <input
+                   nbInput
+                   fullWidth
+                   status="primary"
+                   type="number"
+                   formControlName="phoneNumber"
+                   class="form-control"
+                   placeholder="Phone Number"
+                   [value]="userModel.phoneNumber"
                    required>
             <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid" class="validationError"></div>
           </div>

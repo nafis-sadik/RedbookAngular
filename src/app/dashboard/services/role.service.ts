@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment.development";
 import { Observable, map } from "rxjs";
-import { IRoleModel } from "../Models/IRoleModel";
+import { RoleModel } from "../Models/role.model";
 
 @Injectable({ 
     providedIn: 'root',
@@ -14,21 +14,21 @@ export class RoleService{
       private http: HttpClient,
     ) {}
 
-    getOrganizationRoles(orgId: number): Observable<IRoleModel[]> {
+    getOrganizationRoles(orgId: number): Observable<RoleModel[]> {
         return this.http
             .get<Array<any>>(`${this.baseUrl}/api/Role/Organization/${orgId}`)
             .pipe(map((response) => response));
     }
 
-    addRole(role: IRoleModel): Observable<IRoleModel> {
+    addRole(role: RoleModel): Observable<RoleModel> {
         return this.http
-            .post<IRoleModel>(`${this.baseUrl}/api/Role`, role)
+            .post<RoleModel>(`${this.baseUrl}/api/Role`, role)
             .pipe(map((response) => response));
     }
 
-    updateRole(role: IRoleModel): Observable<IRoleModel> {
+    updateRole(role: RoleModel): Observable<RoleModel> {
         return this.http
-            .put<IRoleModel>(`${this.baseUrl}/api/Role`, role)
+            .put<RoleModel>(`${this.baseUrl}/api/Role`, role)
             .pipe(map((response) => response));
     }
 

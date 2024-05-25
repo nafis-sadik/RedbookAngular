@@ -7,7 +7,8 @@ import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-paginati
 import { UserFormComponent } from './user-form/user-form.component';
 import { NbDialogService } from '@nebular/theme';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
-import { RoleService } from 'src/app/dashboard/services/role.service';
+import { EmployeeService } from 'src/app/dashboard/services/employee.service';
+import { RoleModel } from 'src/app/dashboard/Models/role.model';
 
 @Component({
   selector: 'app-ums',
@@ -19,15 +20,11 @@ export class UmsComponent  implements OnInit{
   pagedUserModel: IPaginationModel<UserModel>;
   @Input() ownedBusinesses: OrganizationModel[];
 
-  // Need the role ids in a seperate array to preselect loaded data on the multiple select dropdown
-  private userRoleIds: number[] = [];
-  // Need this data only for displaying the role names on the table UI
-  private userRoleNames: string = "";
-
   constructor(
     dashboardService: DashboardService,
     private dialogService: NbDialogService,
     private orgService: OrganizationService,
+    private employeeService: EmployeeService,
     private ngxPaginationService: NGXPaginationService<UserModel>
   ) {
     this.pagedUserModel = dashboardService.getPagingConfig(UserFormComponent, 'User Management', 'Add User', 'Search User');
@@ -46,27 +43,14 @@ export class UmsComponent  implements OnInit{
       this.pagedUserModel.addNewElementButtonConfig.onAdd = () => {
         let dialogueRef = this.dialogService.open(UserFormComponent, {
           context: {
-            userModel: null,
+            userModel: new UserModel(),
             selectedBusinessId: this.selectedBusinessId,
-            addUser: (userModel: UserModel) => {
+            addUser: () => {
               if(this.pagedUserModel.pagingConfig){
-                this.pagedUserModel.pagingConfig.totalItems += 1;
-                let lastPageNumber: number = Math.ceil(this.pagedUserModel.pagingConfig.totalItems / this.pagedUserModel.pagingConfig.pageLength);
-              
-                if(lastPageNumber == this.pagedUserModel.pagingConfig.pageNumber){
-                  this.pagedUserModel.pagingConfig.totalItems += 1;
-                  this.pagedUserModel.tableConfig?.sourceData.push(userModel);
-                  this.ngxPaginationService.set(this.pagedUserModel);
-                } else {
-                  this.pagedUserModel.pagingConfig.pageNumber = lastPageNumber;
-                  this.orgService.getUserByBusinessId(this.pagedUserModel, this.selectedBusinessId)
-                  .subscribe((response) => {
-                    this.loadDataOnUI(response);
-                  });
-                }
-
-                dialogueRef.close();
+                this.pagedUserModel.pagingConfig.pageNumber = Math.ceil(this.pagedUserModel.pagingConfig.totalItems / this.pagedUserModel.pagingConfig.pageLength);
+                this.loadUsersUnderBusiness(this.selectedBusinessId);
               }
+              dialogueRef.close();
             }
           },
         });
@@ -82,30 +66,16 @@ export class UmsComponent  implements OnInit{
       };
 
       this.pagedUserModel.tableConfig.onEdit = (userModel: UserModel) => {
-        // Freshly load the api data
-        this.userRoleIds = [];
-        // userModel.roles.forEach(role => {
-        //   this.userRoleIds.push(role.roleId);
-        // })
-
         // Send the data to the pop up to load the data from api on the form
-        let user = new UserModel();        
-        user.firstName = userModel.firstName;
-        user.lastName = userModel.lastName;
-        user.accountBalance = 0;
-        user.email = userModel.email;
-        user.password = '';
-        user.userRoleIds = [];
-        user.userRoles = [];
-        user.userId = userModel.userId;
-        user.userName = userModel.userName;
-        user.organizationId = this.selectedBusinessId;
-        this.dialogService.open(UserFormComponent, {
-          context: {
-            userModel: user,
-            selectedBusinessId: this.selectedBusinessId
-          },
-        });
+        if(this.pagedUserModel.tableConfig){
+          let selectedUser = this.pagedUserModel.tableConfig.sourceData.find(x => x.userId == userModel.userId);
+          this.dialogService.open(UserFormComponent, {
+            context: {
+              userModel: selectedUser? selectedUser : new UserModel(),
+              selectedBusinessId: this.selectedBusinessId
+            },
+          });
+        }
       }
       
       this.pagedUserModel.tableConfig.onDelete = (data: any) => {
@@ -153,23 +123,29 @@ export class UmsComponent  implements OnInit{
     if (dataTableCard && dataTableCard.classList.contains('d-none'))
       dataTableCard.classList.remove('d-none');
 
-    this.orgService
-      .getUserByBusinessId(this.pagedUserModel, businessId)
+    this.employeeService
+      .getPagedEmployeeList(this.pagedUserModel, businessId)
       .subscribe((response) => {
         this.loadDataOnUI(response);
       });
   }
 
-  loadDataOnUI(response: any){
-    if(this.pagedUserModel.tableConfig == null) return;
-    if(this.pagedUserModel.pagingConfig == null) return;
-    if(this.pagedUserModel.searchingConfig == null) return;
-    
-    if(response.searchString)
+  /**
+   * Loads data onto the UI based on the response received from the server.
+   * This method updates the pagination configuration, search configuration, and the table data.
+   * It also processes the user roles for each user in the table data.
+   *
+   * @param response - The response object containing the data to be loaded onto the UI.
+   */
+  loadDataOnUI(response: any) {
+    if (this.pagedUserModel.tableConfig == null) return;
+    if (this.pagedUserModel.pagingConfig == null) return;
+    if (this.pagedUserModel.searchingConfig == null) return;
+
+    if (response.searchString)
       this.pagedUserModel.searchingConfig.searchString = response.searchString;
-    else
-      this.pagedUserModel.searchingConfig.searchString = '';
-    
+    else this.pagedUserModel.searchingConfig.searchString = '';
+
     // Preparing pagination data
     this.pagedUserModel.pagingConfig.pageLength = response.pageLength;
     this.pagedUserModel.pagingConfig.pageNumber = response.pageNumber;
@@ -177,22 +153,20 @@ export class UmsComponent  implements OnInit{
 
     // Preparing data table
     this.pagedUserModel.tableConfig.sourceData = response.sourceData;
-    // console.log('response', response);
     // Load the ids for multiple select on pop up form
-    this.pagedUserModel.tableConfig.sourceData.forEach((user: any) => {
-      this.userRoleIds = [];
-      this.userRoleNames = '';
-      user.roles.forEach((x: any) => {
-        this.userRoleIds.push(x.roleId);
-        if(!this.userRoleNames.includes(x.roleName)){
-          this.userRoleNames += (x.roleName + ", ");
+    this.pagedUserModel.tableConfig.sourceData.forEach((user: UserModel) => {
+      let userRoleNames = '';
+      user.userRoleIds = [];
+      user.userRoles.forEach((x: RoleModel) => {
+        user.userRoleIds.push(x.roleId);
+        if (!userRoleNames.includes(x.roleName)) {
+          userRoleNames += x.roleName + ', ';
         }
       });
-
-      user.roleIds = this.userRoleIds;
+      
       // slice last 2 characters from the string to remove the garbage from the tail that we needed to add during the loop two lines above
-      user.roleNames = this.userRoleNames.slice(0, -2);
-    })
+      user.roleNames = userRoleNames.slice(0, -2);
+    });
 
     this.ngxPaginationService.set(this.pagedUserModel);
   }

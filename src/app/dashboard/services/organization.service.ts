@@ -64,12 +64,6 @@ export class OrganizationService{
     }
   }
 
-  addUserToBusiness(userModel: UserModel): Observable<any>{
-    return this.http
-      .post<OrganizationModel>(`${this.baseUrl}/api/User`, userModel)
-        .pipe(map((response) => response));
-  }
-
   getUserByBusinessId(pagedUserModel: IPaginationModel<UserModel>, businessId: number): Observable<any>{
     let params = this.sharedService.paginationToParams<UserModel>(pagedUserModel);
     

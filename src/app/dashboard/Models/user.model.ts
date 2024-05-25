@@ -1,51 +1,62 @@
 import { environment } from "src/environments/environment.development";
+import { RoleModel } from "./role.model";
 
 export class UserModel{
   /**
    * Unique Identifier of specific user
    * @type {number}
    */
-  userId: number;
+  userId: number = 0;
   /**
    * Email address of user
    * @type {string}
    */
-  email: string;
+  email: string = '';
+  /**
+   * Phone number of user
+   * @type {string}
+   */
+  phoneNumber: string = '';
   /**
    * User name of user
    * @type {string}
    */
-  userName: string;
+  userName: string = '';
   /**
    * First name of user
    * @type {string}
    */
-  firstName: string;
+  firstName: string = '';
   /**
    * User name of user
    * @type {string}
    */
-  lastName: string;
+  lastName: string = '';
   /**
    * User name of user
    * @type {string}
    */
-  password: string;
+  password: string = '';
   /**
    * Current account balance of user
    * @type {number}
    */
-  accountBalance: number;
+  accountBalance: number = 0;
   /**
-   * User role ids in number array
+   * Role ids assigned to user from the user form (Only for form control)
    * @type {Array<number>}
    */
-  userRoleIds: Array<number>;
+  userRoleIds: Array<number> = [];
   /**
-   * User role names in string array
-   * @type {Array<string>}
+   * User role names seperated by comma in a single string to be displayed on table
+   * @type {string}
    */
-  userRoles: Array<string>;
+  roleNames: string = '';
+  /**
+   * Array of user roles
+   * @type {Array<RoleModel>}
+   */
+  userRoles: Array<RoleModel> = [];
   /**
    * Application id of the application this user is making the request from
    * @type {Array<string>}

@@ -1,5 +1,4 @@
-
-export declare interface IRoleModel {
+export class RoleModel {
   /**
    * Role Unique Id
    * @type {Number}

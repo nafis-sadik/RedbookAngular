@@ -1,16 +1,15 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { OrganizationModel } from 'src/app/dashboard/Models/organization.model';
-import { IRoleModel } from 'src/app/dashboard/Models/IRoleModel';
 import { IRouteModel } from 'src/app/dashboard/Models/IRouteModel';
 import { IRoutePermissionModel } from 'src/app/dashboard/Models/IRoutePermissionModel';
-import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { RoleService } from 'src/app/dashboard/services/role.service';
 import { RouteService } from 'src/app/dashboard/services/route.service';
 import { AddDialogueComponent } from 'src/app/shared/ngx-dialogues/add-dialogue/add-dialogue.component';
 import { RemoveDialogueComponent } from 'src/app/shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { RoleFormComponent } from './role-form/role-form.component';
+import { RoleModel } from 'src/app/dashboard/Models/role.model';
 
 @Component({
   selector: 'app-role-management',
@@ -20,7 +19,7 @@ import { RoleFormComponent } from './role-form/role-form.component';
 
 export class RoleManagementComponent {
   @Input() ownedBusinesses: OrganizationModel[];
-  rolesUnderThisBusiness: IRoleModel[];
+  rolesUnderThisBusiness: RoleModel[];
   roleRouteMapping: IRoutePermissionModel[];
 
   selectedRoleId: number = 0;
@@ -134,7 +133,7 @@ export class RoleManagementComponent {
    */
   openSaveRoleWindow(
     windowMessage: string,
-    roleModel: IRoleModel | null
+    roleModel: RoleModel | null
   ): void {
     this.windowService.open(RoleFormComponent, {
       title: windowMessage,

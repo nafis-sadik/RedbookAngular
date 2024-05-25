@@ -29,19 +29,10 @@ export class AppConfigurationService{
     console.log('jwt', token);
     this._userRawData = jwt_decode(token);
     console.log('decoded', this._userRawData);
-    this.UserModelData = {
-      userId: this._userRawData.UserId,
-      userName: this._userRawData.UserName,
-      firstName: '',
-      lastName: '',
-      password: '',
-      email: '',
-      userRoles: [],
-      userRoleIds: [],
-      accountBalance: 0,
-      applicationId: Number(environment.appId),
-      organizationId: 0
-    }
+    
+    this.UserModelData = new UserModel();
+    this.UserModelData.userId = this._userRawData.UserId;
+    this.UserModelData.userName = this._userRawData.UserName;
     
     if (!this._userRawData.UserRoleIds.includes(',')) {
       this.UserModelData.userRoleIds = [Number.parseInt(this._userRawData.UserRoleIds)];
@@ -49,13 +40,6 @@ export class AppConfigurationService{
     else {
       let roleIdArrStr = this._userRawData.UserRoleIds.split(',');
       this.UserModelData.userRoleIds = roleIdArrStr.map((role: any) => Number.parseInt(role));
-    }
-    
-    if (!this._userRawData.UserRoles.includes(',')) {
-      this.UserModelData.userRoles = [this._userRawData.UserRoleIds];
-    }
-    else {
-      this.UserModelData.userRoles = this._userRawData.UserRoles.split(',');
     }
     
     console.log('local user model', this.UserModelData);
