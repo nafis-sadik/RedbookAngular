@@ -10,9 +10,7 @@ import { RoleModel } from "../Models/role.model";
 export class RoleService{
     baseUrl = environment.baseUrlUMS;
 
-    constructor(
-      private http: HttpClient,
-    ) {}
+    constructor(private http: HttpClient) { }
 
     getOrganizationRoles(orgId: number): Observable<RoleModel[]> {
         return this.http
@@ -39,8 +37,8 @@ export class RoleService{
     }
 
     mapRolesWithRoute(roleId: number, routeId: number): Observable<any>{ 
-      return this.http
-          .get<Array<any>>(`${this.baseUrl}/AllowRouteForRole/${roleId}/${routeId}`)
-          .pipe(map(response => response));
+        return this.http
+            .get<Array<any>>(`${this.baseUrl}/AllowRouteForRole/${roleId}/${routeId}`)
+            .pipe(map(response => response));
     }
 }
