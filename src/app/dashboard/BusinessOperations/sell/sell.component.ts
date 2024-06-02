@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { AddSalesComponent } from './add-sales/add-sales.component';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { SalesService } from './sell.service';
 import { OrganizationModel } from '../../Models/organization.model';
-import { ISalesModel } from '../../Models/ISalesModel';
+import { SalesInvoiceModel } from '../../Models/sales-invoice.model';
 import { DashboardService } from '../../services/dashboard.service';
 import { OrganizationService } from '../../services/organization.service';
+import { SalesService } from '../../services/sell.service';
 
 @Component({
   selector: 'app-sell',
@@ -21,13 +21,13 @@ export class SellComponent {
 
   outlets: OrganizationModel[];
 
-  pagedSalesModel: IPaginationModel<ISalesModel>;
+  pagedSalesModel: IPaginationModel<SalesInvoiceModel>;
 
   constructor(
     private orgService: OrganizationService,
     private dashboardService: DashboardService,
     private salesService: SalesService,
-    private ngxPaginationService: NGXPaginationService<ISalesModel>
+    private ngxPaginationService: NGXPaginationService<SalesInvoiceModel>
   ) {
     // orgService.getAllOrganizations()
     //   .subscribe(response => {

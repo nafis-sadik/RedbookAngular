@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IVendorModel } from '../Models/IVendorModel';
 import { NbDialogService } from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { map } from 'rxjs';
 import { IRouteModel } from '../Models/IRouteModel';
+import { VendorModel } from '../Models/vendor.model';
 
 @Injectable({
     providedIn: 'root',
@@ -24,19 +24,19 @@ export class DashboardService {
     this.ngDialogService = dialogService;
   }
 
-  getVendors(): IVendorModel[]{
+  getVendors(): VendorModel[]{
     return [
       {
         clientId: 1,
         clientName: 'Chittagong Builders',
-        contactNumber: null,
-        emailAddress: null
+        contactNumber: '',
+        emailAddress: ''
       },
       {
         clientId: 2,
         clientName: 'RFL',
-        contactNumber: null,
-        emailAddress: null
+        contactNumber: '',
+        emailAddress: ''
       }
     ];
   }

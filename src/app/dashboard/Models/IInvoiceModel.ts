@@ -1,5 +1,5 @@
 import { IInvoicePaymentModel } from "./IInvoicePayment";
-import { IInvoiceProductModel } from "./IInvoiceProductModel";
+import { PurchaseInvoiceModes } from "./purchase-invoice.model";
 
 export declare interface IInvoiceModel{
   /**
@@ -46,7 +46,7 @@ export declare interface IInvoiceModel{
    * Primary keys of selected products to be purchased against this invoice
    * @type {IProductModel[]}
    */
-  invoiceProducts: IInvoiceProductModel[];
+  invoiceProducts: PurchaseInvoiceModes[];
   /**
    * User who created the invoice
    * @type {string}

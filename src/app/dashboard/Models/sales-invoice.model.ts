@@ -1,7 +1,6 @@
-import { IInvoiceProductModel } from "./IInvoiceProductModel";
-import { IPaymentModel } from "./IPaymentModel";
+import { SalesItemModel } from "./sales-item.model";
 
-export declare interface ISalesModel {
+export class SalesInvoiceModel {
     /**
      * Sales record Id
      * @type {Number}
@@ -52,18 +51,18 @@ export declare interface ISalesModel {
 
     /**
      * Products and quantity sold against this memo
-     * @type { IInvoiceProductModel[] }
+     * @type { SalesItemModel[] }
      */
-    ProductsSold: IInvoiceProductModel[]
+    ProductsSold: SalesItemModel[]
 
     /**
      * Terms and conditions against this sales
      * @type { string }
      */
     Terms: string;
-    /**
-     * Payment history of invoice
-     * @type {IPaymentModel[]}
-     */
-    PaymentHistory: IPaymentModel[];
+    // /**
+    //  * Payment history of invoice
+    //  * @type {PaymentModel[]}
+    //  */
+    // PaymentHistory: PaymentModel[];
 }

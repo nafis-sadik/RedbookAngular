@@ -19,11 +19,10 @@
                   <label class="mb-2 mt-4 p-0">Customer Name</label>
                   <div class="input-group">
                     <input fullWidth nbInput
-                          placeholder="Customer Name"
-                          name="CustomerName"
-                          [(ngModel)]="salesModel.CustomerName"
-                          [required]="!isUpdateOperation"
-                          [disabled]="isUpdateOperation">
+                           placeholder="Customer Name"
+                           name="CustomerName"
+                           [required]="!isUpdateOperation"
+                           [disabled]="isUpdateOperation">
                   </div>
                 </div>
                 <!--
@@ -34,11 +33,10 @@
                   <label class="mb-2 mt-4 p-0">Customer Phone Number</label>
                   <div class="input-group">
                     <input fullWidth nbInput type="number"
-                          placeholder="Customer Phone Number"
-                          name="CustomerPhoneNumber"
-                          [(ngModel)]="salesModel.CustomerPhoneNumber"
-                          [required]="!isUpdateOperation"
-                          [disabled]="isUpdateOperation">
+                           placeholder="Customer Phone Number"
+                           name="CustomerPhoneNumber"
+                           [required]="!isUpdateOperation"
+                           [disabled]="isUpdateOperation">
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -47,7 +45,6 @@
                     <input fullWidth nbInput
                            placeholder="Delivery Location"
                            name="DeliveryLocation"
-                           [(ngModel)]="salesModel.DeliveryLocation"
                            [required]="!isUpdateOperation"
                            [disabled]="isUpdateOperation">
                   </div>
@@ -55,19 +52,18 @@
                 <div class="col-md-12">
                   <label class="mb-2 mt-4 p-0">Terms & Conditions</label>
                   <div class="input-group">
+                    <!-- <textarea fullWidth nbInput
+                              placeholder="Terms & Conditions"
+                              name="Terms"
+                              [(ngModel)]="salesModel.Terms"
+                              [required]="!isUpdateOperation"
+                              [disabled]="isUpdateOperation"></textarea>
                     <textarea fullWidth nbInput
-                           placeholder="Terms & Conditions"
-                           name="Terms"
-                           [(ngModel)]="salesModel.Terms"
-                           [required]="!isUpdateOperation"
-                           [disabled]="isUpdateOperation"></textarea>
-                    <!-- NBNext doesn't work without this -->
-                    <textarea fullWidth nbInput
-                            placeholder="Terms & Conditions"
-                            name="Terms"
-                            class="d-none"
-                            [disabled]="false"
-                            [(ngModel)]="salesModel.Terms"></textarea>
+                              placeholder="Terms & Conditions"
+                              name="Terms"
+                              class="d-none"
+                              [disabled]="false"
+                              [(ngModel)]="salesModel.Terms"></textarea> -->
                   </div>
                 </div>
                 <div class="col-md-12 mt-5">
@@ -105,12 +101,12 @@
                         <th class="ng-star-inserted">Net Total</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <!-- <tbody>
                       <tr *ngFor="let product of salesModel.ProductsSold; let i = index">
                         <td>{{ product.ProductId }}</td>
                         <td>{{ product.ProductName }}</td>
                         <td>
-                          <!-- {{product.Quantity}} -->
+                          {{product.Quantity}}
                           <input fullWidth nbInput required
                                  placeholder="Purchase Quantity"
                                  [(ngModel)]="product.Quantity"
@@ -119,7 +115,7 @@
                                  (change)="updateProductNetTotalAmount()">
                         </td>
                         <td>
-                          <!-- {{product.PurchasePrice}} -->
+                          {{product.PurchasePrice}}
                           <input fullWidth nbInput required
                                  placeholder="Purchase Price"
                                  [(ngModel)]="product.RetailPrice"
@@ -133,7 +129,7 @@
                         <td colspan="4"><b>Net Total</b></td>
                         <td><b>{{ salesModel.NetTotal }}</b></td>
                       </tr>
-                    </tbody>
+                    </tbody> -->
                   </table>
                 </div>
                 <div class="col-md-12 mt-5">
@@ -166,7 +162,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let payment of salesModel.PaymentHistory; let i = index">
+                      <!-- <tr *ngFor="let payment of salesModel.PaymentHistory; let i = index">
                         <td>{{ payment.id }}</td>
                         <td>{{ payment.PaymentDate }}</td>
                         <td>{{ payment.PaymentAmount }}</td>
@@ -177,7 +173,7 @@
                         <td colspan="3"><b>Net Total</b></td>
                         <td><b>{{ salesModel.NetTotal }}</b></td>
                         <td><b>{{ salesModel.NetTotal }}</b></td>
-                      </tr>
+                      </tr> -->
                     </tbody>
                   </table>
                 </div>
@@ -194,8 +190,7 @@
                          placeholder="Payment Date"
                          name="PaymentDate"
                          class="input-group"
-                         [nbDatepicker]="dateTimePicker"
-                         [(ngModel)]="salesModel.SalesDate">
+                         [nbDatepicker]="dateTimePicker">
                   <nb-datepicker #dateTimePicker></nb-datepicker>
                 </div>
                 <div class="col-md-6">
@@ -203,8 +198,7 @@
                   <input fullWidth nbInput required
                          placeholder="Payment Amount"
                          name="PaymentAmount"
-                         class="input-group"
-                         [(ngModel)]="salesModel.PaymentAmount">
+                         class="input-group">
                 </div>
               </div>
               <div class="col-md-12 mt-5">

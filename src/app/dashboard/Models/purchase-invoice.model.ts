@@ -1,4 +1,4 @@
-export declare interface IInvoiceProductModel{
+export class PurchaseInvoiceModes{
   /**
    * Unique Identifier of selected product
    * @type {number}

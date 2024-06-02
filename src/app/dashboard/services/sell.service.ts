@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
-import { ISalesModel } from "../../Models/ISalesModel";
+import { SalesInvoiceModel } from "../Models/sales-invoice.model";
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class SalesService {
-  getSalesList(outletId: number, pageNumber: number, pageLength: number, searchString: string): ISalesModel[] {
-    let sourceData: ISalesModel[];
+  getSalesList(outletId: number, pageNumber: number, pageLength: number, searchString: string): SalesInvoiceModel[] {
+    let sourceData: SalesInvoiceModel[];
     if(outletId == 1){
       sourceData = [
         {
@@ -21,7 +21,7 @@ export class SalesService {
           DeliveryLocation: '',
           CustomerPhoneNumber: '',
           Terms: '',
-          PaymentHistory: []
+          // PaymentHistory: []
         },
         {
           id: 2,
@@ -34,7 +34,7 @@ export class SalesService {
           DeliveryLocation: '',
           CustomerPhoneNumber: '',
           Terms: '',
-          PaymentHistory: []
+          // PaymentHistory: []
         }
       ];
     } else if (outletId == 2) {
@@ -50,7 +50,7 @@ export class SalesService {
           DeliveryLocation: '',
           CustomerPhoneNumber: '',
           Terms: '',
-          PaymentHistory: []
+          // PaymentHistory: []
         },
         {
           id: 2,
@@ -63,7 +63,7 @@ export class SalesService {
           DeliveryLocation: '',
           CustomerPhoneNumber: '',
           Terms: '',
-          PaymentHistory: []
+          // PaymentHistory: []
         }
       ];
     } else {

@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { PurchaseService } from '../purchase.service';
 import { AddPurchaseService } from './add-purchase.service';
-import { IVendorModel } from 'src/app/dashboard/Models/IVendorModel';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { IInvoicePaymentModel } from 'src/app/dashboard/Models/IInvoicePayment';
 import { IAddressModel } from 'src/app/dashboard/Models/IAddressModel';
 import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
 import { IInvoiceModel } from 'src/app/dashboard/Models/IInvoiceModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
-import { IInvoiceProductModel } from 'src/app/dashboard/Models/IInvoiceProductModel';
+import { VendorModel } from 'src/app/dashboard/Models/vendor.model';
+import { PurchaseInvoiceModes } from 'src/app/dashboard/Models/purchase-invoice.model';
 
 @Component({
   selector: 'app-add-purchase',
@@ -20,7 +20,7 @@ export class AddPurchaseComponent {
 
   linearMode = true;
 
-  vendorList: IVendorModel[];
+  vendorList: VendorModel[];
 
   outletProductList: IProductModel[] = [];
 
@@ -105,16 +105,16 @@ export class AddPurchaseComponent {
     this.invoiceModel.InvoiceTotal = 0;
 
     // Cache currently selected items
-    let selecterProductList: IInvoiceProductModel[] = [];
+    let selecterProductList: PurchaseInvoiceModes[] = [];
 
     // Load previously selected items
-    let previousltSelectedItems: { [key: number]: IInvoiceProductModel } = {};
+    let previousltSelectedItems: { [key: number]: PurchaseInvoiceModes } = {};
     this.invoiceModel.invoiceProducts.forEach(product => {
       previousltSelectedItems[product.ProductId] = product;
     });
 
     this.invoiceProductIds.forEach(productId => {
-      let productModel: IInvoiceProductModel;
+      let productModel: PurchaseInvoiceModes;
       // Identify the id of newly added product
       if(!previousltSelectedItems[productId]){
         // filter out the newly selected item
