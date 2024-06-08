@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
-import { PurchaseService } from './purchase.service';
 import { OrganizationModel } from '../../Models/organization.model';
-import { IInvoiceModel } from '../../Models/IInvoiceModel';
 import { DashboardService } from '../../services/dashboard.service';
 import { OrganizationService } from '../../services/organization.service';
+import { PurchaseService } from '../../services/purchase.service';
+import { PurchaseInvoiceModel } from '../../Models/purchase-invoice.model';
 
 @Component({
   selector: 'app-purchase',
@@ -23,13 +23,13 @@ export class PurchaseComponent {
 
   outlets: OrganizationModel[];
 
-  pagedPurchaseModel: IPaginationModel<IInvoiceModel>;
+  pagedPurchaseModel: IPaginationModel<PurchaseInvoiceModel>;
 
   constructor(
     private orgService: OrganizationService,
     private dashboardService: DashboardService,
     private purchaseService: PurchaseService,
-    private ngxPaginationService: NGXPaginationService<IInvoiceModel>
+    private ngxPaginationService: NGXPaginationService<PurchaseInvoiceModel>
   )
   {
     // orgService.getAllOrganizations()
@@ -96,8 +96,15 @@ export class PurchaseComponent {
 
     let pageLength: number = this.pagedPurchaseModel.pagingConfig? this.pagedPurchaseModel.pagingConfig.pageLength : 5;
     let searchString: string = this.pagedPurchaseModel.searchingConfig? this.pagedPurchaseModel.searchingConfig.searchString : "";
-    if(this.pagedPurchaseModel.tableConfig)
-      this.pagedPurchaseModel.tableConfig.sourceData = this.purchaseService.getInvoiceList(outletId, 1, pageLength, searchString);
-    this.ngxPaginationService.set(this.pagedPurchaseModel);
+    if (this.pagedPurchaseModel.tableConfig) {
+      this.purchaseService.getInvoiceList(outletId, 1, pageLength, searchString)
+        .subscribe(response => {
+          if(this.pagedPurchaseModel.tableConfig){
+            this.pagedPurchaseModel.tableConfig.sourceData = response;
+          }
+          
+          this.ngxPaginationService.set(this.pagedPurchaseModel);
+        });
+    }
   }
 }

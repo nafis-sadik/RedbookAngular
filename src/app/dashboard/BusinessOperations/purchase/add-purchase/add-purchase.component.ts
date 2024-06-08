@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { PurchaseService } from '../purchase.service';
 import { AddPurchaseService } from './add-purchase.service';
 import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { IInvoicePaymentModel } from 'src/app/dashboard/Models/IInvoicePayment';
@@ -8,7 +7,8 @@ import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
 import { IInvoiceModel } from 'src/app/dashboard/Models/IInvoiceModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { VendorModel } from 'src/app/dashboard/Models/vendor.model';
-import { PurchaseInvoiceModes } from 'src/app/dashboard/Models/purchase-invoice.model';
+import { PurchaseInvoiceModel } from 'src/app/dashboard/Models/purchase-invoice.model';
+import { PurchaseService } from 'src/app/dashboard/services/purchase.service';
 
 @Component({
   selector: 'app-add-purchase',
@@ -105,16 +105,16 @@ export class AddPurchaseComponent {
     this.invoiceModel.InvoiceTotal = 0;
 
     // Cache currently selected items
-    let selecterProductList: PurchaseInvoiceModes[] = [];
+    let selecterProductList: PurchaseInvoiceModel[] = [];
 
     // Load previously selected items
-    let previousltSelectedItems: { [key: number]: PurchaseInvoiceModes } = {};
+    let previousltSelectedItems: { [key: number]: PurchaseInvoiceModel } = {};
     this.invoiceModel.invoiceProducts.forEach(product => {
       previousltSelectedItems[product.ProductId] = product;
     });
 
     this.invoiceProductIds.forEach(productId => {
-      let productModel: PurchaseInvoiceModes;
+      let productModel: PurchaseInvoiceModel;
       // Identify the id of newly added product
       if(!previousltSelectedItems[productId]){
         // filter out the newly selected item

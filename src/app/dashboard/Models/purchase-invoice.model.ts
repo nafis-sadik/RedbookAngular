@@ -1,32 +1,37 @@
-export class PurchaseInvoiceModes{
+export class PurchaseInvoiceModel{
   /**
-   * Unique Identifier of selected product
+   * The unique identifier for the purchase invoice.
    * @type {number}
    */
-  ProductId: number;
+  InvoiceId: number = 0;
+
   /**
-   * Product Name of selected product
+   * The total purchase price for the invoice.
+   * @type {number}
+   */
+  TotalPurchasePrice: number = 0;
+
+  /**
+   * The unique identifier for the organization associated with the purchase invoice.
+   * @type {number}
+   */
+  OrganizationId: number = 0;
+
+  /**
+   * The unique identifier for the purchase invoice.
    * @type {string}
    */
-  ProductName: string;
+  ChalanNumber: string = '';
+
   /**
-   * Quantity of selected product
-   * @type {number}
+   * The remarks associated with the purchase invoice.
+   * @type {string}
    */
-  Quantity: number;
+  Remarks: string = '';
+
   /**
-   * Selling price of product
-   * @type {number}
+   * The unique identifier for the vendor associated with the purchase invoice.
+   * @type {number | null;}
    */
-  RetailPrice: number;
-  /**
-   * Purchasing price of product
-   * @type {number}
-   */
-  PurchasePrice: number;
-  /**
-   * Total amount of money against selected product
-   * @type {number}
-   */
-  ProductNetTotalPrice: number;
+  VendorId: number | null = null;
 }
