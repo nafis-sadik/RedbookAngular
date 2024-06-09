@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { AddPurchaseService } from './add-purchase.service';
-import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { IInvoicePaymentModel } from 'src/app/dashboard/Models/IInvoicePayment';
 import { IAddressModel } from 'src/app/dashboard/Models/IAddressModel';
 import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
-import { IInvoiceModel } from 'src/app/dashboard/Models/IInvoiceModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { VendorModel } from 'src/app/dashboard/Models/vendor.model';
 import { PurchaseInvoiceModel } from 'src/app/dashboard/Models/purchase-invoice.model';
 import { PurchaseService } from 'src/app/dashboard/services/purchase.service';
+import { PurchaseDetailsModel } from 'src/app/dashboard/Models/purchase-details.model';
+import { ProductModel } from 'src/app/dashboard/Models/product.model';
 
 @Component({
   selector: 'app-add-purchase',
@@ -22,7 +22,7 @@ export class AddPurchaseComponent {
 
   vendorList: VendorModel[];
 
-  outletProductList: IProductModel[] = [];
+  outletProductList: ProductModel[] = [];
 
   invoiceProductIds: number[] = [];
 
@@ -32,7 +32,7 @@ export class AddPurchaseComponent {
 
   paymentInvoice: IPaymentModel;
 
-  invoiceModel: IInvoiceModel;
+  invoiceModel: PurchaseInvoiceModel;
 
   paymentRecords: IPaymentModel[] = [];
 
@@ -52,66 +52,48 @@ export class AddPurchaseComponent {
       TotalDueAmount: 0
     }
 
-    this.invoiceModel = {
-      InvoiceId: 0,
-      ClientId: 0,
-      ClientName: '',
-      PaymentStatusId: 0,
-      InvoiceNo: '',
-      InvoiceTerms: '',
-      Notes: '',
-      PaymentStatus: '',
-      IssueDate: new Date().toISOString().slice(0, 10),
-      CreatedBy: '',
-      UpdateDate: new Date().toISOString().slice(0, 10),
-      UpdateBy: '',
-      selectedAddresses: [],
-      invoiceProducts: [],
-      paymentHistory: this.paymentHistory,
-      InvoiceTotal: 0,
-      PaidAmount: 0
-    }
+    this.invoiceModel = new PurchaseInvoiceModel();
 
     this.addressesOfCurrentOutlet = this.addPurchaseService.getAddressesOfOutlet(this.dashboardService.selectedOutletId);
   }
 
   addSelectedAddress(addressId: number): void{
-    if (this.invoiceModel.selectedAddresses == null || this.invoiceModel.selectedAddresses == undefined)
-      this.invoiceModel.selectedAddresses = [];
+    if (this.invoiceModel.remarks)
+      this.invoiceModel.purchaseDetails = [];
 
-    if (!this.invoiceModel.selectedAddresses.includes(addressId))
-      this.invoiceModel.selectedAddresses.push(addressId)
-    else
-      this.invoiceModel.selectedAddresses = this.invoiceModel.selectedAddresses.filter(x => x != addressId);
+    // if (!this.invoiceModel.selectedAddresses.includes(addressId))
+    //   this.invoiceModel.selectedAddresses.push(addressId)
+    // else
+    //   this.invoiceModel.selectedAddresses = this.invoiceModel.selectedAddresses.filter(x => x != addressId);
   }
 
   initializeProductDetailsForm(): void{
-    this.invoiceModel.invoiceProducts = [];
+    this.invoiceModel.purchaseDetails = [];
     this.outletProductList = this.addPurchaseService.getProductsByBusinessId(this.dashboardService.selectedOutletId);
   }
 
   initializePaymentDetailsForm(): void{
-    this.invoiceModel.invoiceProducts = [];
-    this.paymentRecords = this.addPurchaseService.getPaymentsByInvoiceId(this.invoiceModel.InvoiceId);
+    this.invoiceModel.purchaseDetails = [];
+    this.paymentRecords = this.addPurchaseService.getPaymentsByInvoiceId(this.invoiceModel.invoiceId);
 
     this.paymentRecords.forEach(paymentRecord => {
       if(this.invoiceModel){
-        paymentRecord.InvoiceTotalAmount = this.invoiceModel.InvoiceTotal;
+        paymentRecord.InvoiceTotalAmount = this.invoiceModel.totalPurchasePrice;
       }
     })
   }
 
   selectProductForPurchase(): void{
-    this.invoiceModel.InvoiceTotal = 0;
+    this.invoiceModel.totalPurchasePrice = 0;
 
     // Cache currently selected items
     let selecterProductList: PurchaseInvoiceModel[] = [];
 
     // Load previously selected items
     let previousltSelectedItems: { [key: number]: PurchaseInvoiceModel } = {};
-    this.invoiceModel.invoiceProducts.forEach(product => {
-      previousltSelectedItems[product.ProductId] = product;
-    });
+    // this.invoiceModel.purchaseDetails.forEach(invoiceDetails => {
+    //   previousltSelectedItems[invoiceDetails.productId] = invoiceDetails;
+    // });
 
     this.invoiceProductIds.forEach(productId => {
       let productModel: PurchaseInvoiceModel;
@@ -119,14 +101,7 @@ export class AddPurchaseComponent {
       if(!previousltSelectedItems[productId]){
         // filter out the newly selected item
         let newlySelectedItems = this.outletProductList.filter(product => product.productId == productId)[0];
-        productModel = {
-          ProductId: newlySelectedItems.productId,
-          ProductName: newlySelectedItems.productName,
-          Quantity: 0,
-          PurchasePrice: 0,
-          RetailPrice: 0,
-          ProductNetTotalPrice: 0
-        }
+        productModel = new PurchaseInvoiceModel();
       }
       else{
         // get previous data object
@@ -135,23 +110,22 @@ export class AddPurchaseComponent {
 
       // Push previously selected item to finalize the list
       selecterProductList.push(productModel);
-      this.invoiceModel.InvoiceTotal += productModel.ProductNetTotalPrice;
+      this.invoiceModel.totalPurchasePrice += productModel.totalPurchasePrice;
     })
 
 
     // Cleaning previous selects as all selected products shall be pushed
-    this.invoiceModel.invoiceProducts = [];
+    this.invoiceModel.purchaseDetails = [];
     // Push items of finalized list to UI
-    selecterProductList.forEach(product => this.invoiceModel.invoiceProducts.push(product));
+    // selecterProductList.forEach(product => this.invoiceModel.purchaseDetails.push(product));
   }
 
   updateProductNetTotalAmount(productId: number): void{
-    this.invoiceModel.invoiceProducts.forEach(product => {
-      if(product.ProductId == productId){
-        product.ProductNetTotalPrice = product.Quantity * product.PurchasePrice;
+    this.invoiceModel.totalPurchasePrice = 0;
+    this.invoiceModel.purchaseDetails.forEach((invoice: PurchaseDetailsModel) => {
+      if(invoice.productId == productId){
+        this.invoiceModel.totalPurchasePrice = invoice.quantity * invoice.unitPrice;
       }
-
-      this.invoiceModel.InvoiceTotal += product.ProductNetTotalPrice;
     });
   }
 }

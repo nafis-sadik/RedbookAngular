@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { AddSalesService } from './add-sales.service';
-import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { ProductService } from 'src/app/dashboard/services/products.service';
+import { ProductModel } from 'src/app/dashboard/Models/product.model';
 
 @Component({
   selector: 'app-add-sales',
@@ -14,7 +14,7 @@ export class AddSalesComponent {
 
   linearMode = true;
 
-  outletProductList: IProductModel[] = [];
+  outletProductList: Array<ProductModel> = [];
 
   // salesModel: ISalesModel;
 

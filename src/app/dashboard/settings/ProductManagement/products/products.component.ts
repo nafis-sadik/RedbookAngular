@@ -4,10 +4,10 @@ import { ProductsDetailsFormComponent } from './products-details-form/products-d
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
 import { ProductService } from '../../../services/products.service';
 import { OrganizationModel } from 'src/app/dashboard/Models/organization.model';
-import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { NbToastrService } from '@nebular/theme';
+import { ProductModel } from 'src/app/dashboard/Models/product.model';
 
 @Component({
   selector: 'app-products',
@@ -20,7 +20,7 @@ export class ProductsComponent implements OnInit{
 
   organizationList: OrganizationModel[];
 
-  pagedProductModel: IPaginationModel<IProductModel>;
+  pagedProductModel: IPaginationModel<ProductModel>;
 
   loaderContainer: HTMLElement| null;
 
@@ -30,7 +30,7 @@ export class ProductsComponent implements OnInit{
     private productService: ProductService,
     private orgService: OrganizationService,
     private changeDetectorRef: ChangeDetectorRef,
-    private ngxPaginationService: NGXPaginationService<IProductModel>
+    private ngxPaginationService: NGXPaginationService<ProductModel>
   ) {
     // On Init shall remove this loading screen forcing to update the DOM.
     // Thus, change detector will work properly on page load
@@ -64,12 +64,12 @@ export class ProductsComponent implements OnInit{
         "MRP": "retailPrice"
       };
 
-      this.pagedProductModel.tableConfig.onEdit = (product: IProductModel) => {
+      this.pagedProductModel.tableConfig.onEdit = (product: ProductModel) => {
         dashboardService.ngDialogService.open(ProductsDetailsFormComponent, {
           context: {
             productModelInput: product,
             selectedBusinessId: this.selectedOutletId,
-            saveMethod: (product: IProductModel) => {
+            saveMethod: (product: ProductModel) => {
               this.productService.updateProduct(product)
                .subscribe(response => {
                   this.pagedProductModel.tableConfig?.sourceData.forEach(product => {
@@ -99,7 +99,7 @@ export class ProductsComponent implements OnInit{
           context: {
             productModel: undefined,
             selectedBusinessId: this.selectedOutletId,
-            saveMethod: (product: IProductModel) => {
+            saveMethod: (product: ProductModel) => {
               product.organizationId = this.selectedOutletId;
               
               this.productService.addProduct(product)

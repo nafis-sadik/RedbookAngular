@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
-import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
+import { ProductModel } from 'src/app/dashboard/Models/product.model';
 
 @Injectable({
     providedIn: 'root',
@@ -10,7 +10,7 @@ export class AddPurchaseService {
         throw new Error("Method not implemented.");
     }
 
-    getProductsByBusinessId(businessId: number): IProductModel[]{
+    getProductsByBusinessId(businessId: number): ProductModel[]{
         throw new Error("Method not implemented.");
     }
 

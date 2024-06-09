@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { CategoryModel } from 'src/app/dashboard/Models/category.model';
 import { ICommonAttribute } from 'src/app/dashboard/Models/ICommonAttribute';
-import { IProductModel } from 'src/app/dashboard/Models/IProductModel';
+import { ProductModel } from 'src/app/dashboard/Models/product.model';
 import { CategoryService } from 'src/app/dashboard/services/category.service';
 import { CommonAttributeService } from 'src/app/dashboard/services/common-attribute.service';
 import { SubcategoryService } from 'src/app/dashboard/services/subcategory.service';
@@ -15,12 +15,12 @@ import { environment } from 'src/environments/environment.development';
   styleUrls: ['./products-details-form.component.scss']
 })
 export class ProductsDetailsFormComponent {
-  @Input() productModelInput: IProductModel | undefined = undefined;
+  @Input() productModelInput: ProductModel | undefined = undefined;
   @Input() selectedBusinessId: number;
-  @Input() saveMethod: (productModel: IProductModel) => void;
+  @Input() saveMethod: (productModel: ProductModel) => void;
 
   productForm: FormGroup;
-  productModel: IProductModel;
+  productModel: ProductModel;
   categoryList: Array<CategoryModel>;
   subcategoryList: Array<CategoryModel>;
   quantityAttributes: Array<ICommonAttribute>;

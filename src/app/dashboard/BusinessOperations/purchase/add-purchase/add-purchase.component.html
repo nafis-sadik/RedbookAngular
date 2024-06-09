@@ -22,7 +22,7 @@
                              name="ClientId"
                              [required]="!isUpdateOperation"
                              [disabled]="isUpdateOperation"
-                             [(ngModel)]="invoiceModel.ClientId">
+                             [(ngModel)]="invoiceModel.vendorId">
                     <nb-option value>Select Client</nb-option>
                     <nb-option *ngFor="let client of vendorList" value={{client.clientId}}>{{ client.clientName
                       }}</nb-option>
@@ -39,7 +39,6 @@
                            placeholder="Issue Date"
                            [nbDatepicker]="dateTimePicker"
                            name="IssueDate"
-                           [(ngModel)]="invoiceModel.IssueDate"
                            [required]="!isUpdateOperation"
                            [disabled]="isUpdateOperation">
                     <nb-datepicker #dateTimePicker></nb-datepicker>
@@ -53,7 +52,7 @@
                               name="Notes"
                               [required]="!isUpdateOperation"
                               [disabled]="isUpdateOperation"
-                              [(ngModel)]="invoiceModel.Notes"></textarea>
+                              [(ngModel)]="invoiceModel.remarks"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -64,13 +63,13 @@
                               name="InvoiceTerms"
                               [required]="!isUpdateOperation"
                               [disabled]="isUpdateOperation"
-                              [(ngModel)]="invoiceModel.InvoiceTerms"></textarea>
+                              [(ngModel)]="invoiceModel.remarks"></textarea>
                     <!-- NBNext doesn't work without this -->
                     <textarea fullWidth nbInput
                               placeholder="Terms"
                               name="Terms"
                               class="d-none"
-                              [(ngModel)]="invoiceModel.InvoiceTerms"></textarea>
+                              [(ngModel)]="invoiceModel.remarks"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -122,31 +121,31 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let product of invoiceModel.invoiceProducts; let i = index">
-                        <td>{{ product.ProductId }}</td>
-                        <td>{{ product.ProductName }}</td>
+                        <td>{{ product.productId }}</td>
+                        <td>{{ product.productName }}</td>
                         <td>
                           <!-- {{product.Quantity}} -->
                           <input fullWidth nbInput required
                                  placeholder="Purchase Quantity"
-                                 [(ngModel)]="product.Quantity"
+                                 [(ngModel)]="product.quantity"
                                  name="product.Quantity[{{i}}]"
-                                 [value]="product.Quantity"
-                                 (change)="updateProductNetTotalAmount(product.ProductId)">
+                                 [value]="product.quantity"
+                                 (change)="updateProductNetTotalAmount(product.productId)">
                         </td>
                         <td>
                           <!-- {{product.PurchasePrice}} -->
                           <input fullWidth nbInput required
                                  placeholder="Purchase Price"
-                                 [(ngModel)]="product.PurchasePrice"
+                                 [(ngModel)]="product.purchasePrice"
                                  name="product.PurchasePrice[{{i}}]"
-                                 [value]="product.PurchasePrice"
-                                 (change)="updateProductNetTotalAmount(product.ProductId)">
+                                 [value]="product.purchasePrice"
+                                 (change)="updateProductNetTotalAmount(product.productId)">
                         </td>
-                        <td>{{ product.ProductNetTotalPrice }}</td>
+                        <td>{{ product.purchasePrice }}</td>
                       </tr>
                       <tr>
                         <td colspan="4"><b>Net Total</b></td>
-                        <td><b>{{ invoiceModel.InvoiceTotal }}</b></td>
+                        <td><b>{{ invoiceModel.totalPurchasePrice }}</b></td>
                       </tr>
                     </tbody>
                   </table>
@@ -190,8 +189,8 @@
                       </tr>
                       <tr>
                         <td colspan="3"><b>Net Total</b></td>
-                        <td><b>{{ invoiceModel.InvoiceTotal }}</b></td>
-                        <td><b>{{ invoiceModel.InvoiceTotal }}</b></td>
+                        <td><b>{{ invoiceModel.totalPurchasePrice }}</b></td>
+                        <td><b>{{ invoiceModel.totalPurchasePrice }}</b></td>
                       </tr>
                     </tbody>
                   </table>
