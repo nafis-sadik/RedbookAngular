@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { PurchaseInvoiceModel } from '../Models/purchase-invoice.model';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, map, share } from 'rxjs';
+import { SharedService } from 'src/app/shared/common-methods';
+import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class PurchaseService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private sharedService: SharedService) { }
 
-  getInvoiceList(outletId: number, pageNumber: number, pageLength: number, searchString: string): Observable<Array<PurchaseInvoiceModel>> {
+  getInvoiceList(outletId: number, pagedPurchaseModel: IPaginationModel<PurchaseInvoiceModel>): Observable<IPaginationModel<PurchaseInvoiceModel>> {
+    let paramsObject: HttpParams = this.sharedService.paginationToParams<PurchaseInvoiceModel>(pagedPurchaseModel);
+    paramsObject = paramsObject.append('organizationId', outletId.toString());
     return this.http
-      .get<Array<PurchaseInvoiceModel>>(`http://localhost:5000/api/purchase/getInvoiceList?outletId=${outletId}&pageNumber=${pageNumber}&pageLength=${pageLength}&searchString=${searchString}`)
+      .get<IPaginationModel<PurchaseInvoiceModel>>(`${environment.baseUrlInventory}/api/purchase/PagedAsync/`, { params: paramsObject })
       .pipe(map(response => response));
   }
 }

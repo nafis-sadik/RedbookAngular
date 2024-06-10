@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { AddPurchaseComponent } from './add-purchase/add-purchase.component';
 import { NGXPaginationService } from 'src/app/shared/ngx-pagination/ngx-pagination.service';
@@ -25,17 +25,26 @@ export class PurchaseComponent {
 
   pagedPurchaseModel: IPaginationModel<PurchaseInvoiceModel>;
 
+  loader: HTMLElement | null;
+
   constructor(
     private orgService: OrganizationService,
     private dashboardService: DashboardService,
     private purchaseService: PurchaseService,
+    private cdRef: ChangeDetectorRef,
     private ngxPaginationService: NGXPaginationService<PurchaseInvoiceModel>
   )
   {
-    // orgService.getAllOrganizations()
-    //   .subscribe(response => {
-    //     this.outlets = response;
-    //   });
+    this.loader = document.getElementById('LoadingScreen');
+    this.orgService.getUserOrgs()
+      .subscribe(response => {
+        this.outlets = response;
+        if(this.loader && this.loader.classList.contains('d-block')){
+          this.loader.classList.remove('d-block');
+          this.loader.classList.add('d-none');
+          this.cdRef.detectChanges();
+        }
+      });
 
     this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent, 'New Purchase');
 
@@ -80,7 +89,7 @@ export class PurchaseComponent {
   selectOutlet(outletId: number, event: any): void{
     this.dashboardService.selectedOutletId = outletId;
 
-    // Is display is hidden, make it visible
+    // If display is hidden, make it visible
     let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
     if(dataTableCard && dataTableCard.classList.contains('d-none'))
       dataTableCard.classList.remove('d-none');
@@ -94,13 +103,18 @@ export class PurchaseComponent {
         element.classList.add('active');
     });
 
-    let pageLength: number = this.pagedPurchaseModel.pagingConfig? this.pagedPurchaseModel.pagingConfig.pageLength : 5;
-    let searchString: string = this.pagedPurchaseModel.searchingConfig? this.pagedPurchaseModel.searchingConfig.searchString : "";
+    // API Call
     if (this.pagedPurchaseModel.tableConfig) {
-      this.purchaseService.getInvoiceList(outletId, 1, pageLength, searchString)
+      this.purchaseService.getInvoiceList(outletId, this.pagedPurchaseModel)
         .subscribe(response => {
-          if(this.pagedPurchaseModel.tableConfig){
-            this.pagedPurchaseModel.tableConfig.sourceData = response;
+          if (this.loader && this.loader.classList.contains('d-block')) {
+            this.loader.classList.remove('d-block');
+            this.loader.classList.add('d-none');
+            this.cdRef.detectChanges();
+          }
+
+          if(this.pagedPurchaseModel.tableConfig && response.tableConfig){
+            this.pagedPurchaseModel.tableConfig.sourceData = response.tableConfig.sourceData;
           }
           
           this.ngxPaginationService.set(this.pagedPurchaseModel);
