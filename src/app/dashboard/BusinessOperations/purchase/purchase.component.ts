@@ -15,8 +15,6 @@ import { PurchaseInvoiceModel } from '../../Models/purchase-invoice.model';
 })
 
 export class PurchaseComponent {
-  isUpdateOperation: boolean = false;
-
   cardHeader: string = "Product Purchase";
 
   selectedOutlet: number = 0;
@@ -59,11 +57,9 @@ export class PurchaseComponent {
       };
 
       this.pagedPurchaseModel.tableConfig.onEdit = () => {
-        this.isUpdateOperation = true;
-
         dashboardService.ngDialogService.open(AddPurchaseComponent, {
           context: {
-            isUpdateOperation: this.isUpdateOperation
+            invoiceModel: new PurchaseInvoiceModel()
           }
         });
       }
@@ -75,11 +71,9 @@ export class PurchaseComponent {
 
     if(this.pagedPurchaseModel.addNewElementButtonConfig){
       this.pagedPurchaseModel.addNewElementButtonConfig.onAdd = () => {
-        this.isUpdateOperation = false;
-
         dashboardService.ngDialogService.open(AddPurchaseComponent, {
           context: {
-            isUpdateOperation: this.isUpdateOperation
+            invoiceModel: new PurchaseInvoiceModel()
           }
         });
       }

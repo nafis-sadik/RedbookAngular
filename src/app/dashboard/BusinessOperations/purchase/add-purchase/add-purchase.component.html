@@ -16,12 +16,10 @@
             <div class="container-fluid input-group">
               <div class="row">
                 <div class="col-md-6">
-                  <label class="mb-2 mt-4 p-0">Select Client</label>
+                  <label class="mb-2 mt-4 p-0">Select Vendors</label>
                   <nb-select fullWidth
                              placeholder="Select Showcase"
                              name="ClientId"
-                             [required]="!isUpdateOperation"
-                             [disabled]="isUpdateOperation"
                              [(ngModel)]="invoiceModel.vendorId">
                     <nb-option value>Select Client</nb-option>
                     <nb-option *ngFor="let client of vendorList" value={{client.clientId}}>{{ client.clientName
@@ -37,10 +35,7 @@
                   <div class="input-group">
                     <input fullWidth nbInput
                            placeholder="Issue Date"
-                           [nbDatepicker]="dateTimePicker"
-                           name="IssueDate"
-                           [required]="!isUpdateOperation"
-                           [disabled]="isUpdateOperation">
+                           [nbDatepicker]="dateTimePicker">
                     <nb-datepicker #dateTimePicker></nb-datepicker>
                   </div>
                 </div>
@@ -50,8 +45,6 @@
                     <textarea fullWidth nbInput
                               placeholder="Notes"
                               name="Notes"
-                              [required]="!isUpdateOperation"
-                              [disabled]="isUpdateOperation"
                               [(ngModel)]="invoiceModel.remarks"></textarea>
                   </div>
                 </div>
@@ -61,8 +54,6 @@
                     <textarea fullWidth nbInput
                               placeholder="Terms"
                               name="InvoiceTerms"
-                              [required]="!isUpdateOperation"
-                              [disabled]="isUpdateOperation"
                               [(ngModel)]="invoiceModel.remarks"></textarea>
                     <!-- NBNext doesn't work without this -->
                     <textarea fullWidth nbInput
@@ -101,8 +92,6 @@
                   <label class="mb-2 mt-4 p-0">Select Product</label>
                   <nb-select fullWidth multiple required
                              placeholder="Select Product"
-                             [(selected)]="invoiceProductIds"
-                             [disabled]="isUpdateOperation"
                              (selectedChange)="selectProductForPurchase()">
                     <nb-option *ngFor="let product of outletProductList" value={{product.productId}}>
                       {{ product.productName }}</nb-option>

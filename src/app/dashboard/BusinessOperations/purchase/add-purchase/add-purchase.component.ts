@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AddPurchaseService } from './add-purchase.service';
+import { AddPurchaseService } from '../../../services/add-purchase.service';
 import { IInvoicePaymentModel } from 'src/app/dashboard/Models/IInvoicePayment';
 import { IAddressModel } from 'src/app/dashboard/Models/IAddressModel';
 import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
@@ -16,23 +16,19 @@ import { ProductModel } from 'src/app/dashboard/Models/product.model';
   styleUrls: ['./add-purchase.component.scss']
 })
 export class AddPurchaseComponent {
-  @Input() isUpdateOperation: boolean = false;
-
   linearMode = true;
 
-  vendorList: VendorModel[];
+  vendorList: Array<VendorModel> = [];
 
-  outletProductList: ProductModel[] = [];
+  outletProductList: Array<ProductModel> = [];
 
-  invoiceProductIds: number[] = [];
+  paymentHistory: Array<IInvoicePaymentModel> = [];
 
-  paymentHistory: IInvoicePaymentModel[] = [];
-
-  addressesOfCurrentOutlet: IAddressModel[];
+  addressesOfCurrentOutlet: Array<IAddressModel> = [];
 
   paymentInvoice: IPaymentModel;
 
-  invoiceModel: PurchaseInvoiceModel;
+  @Input() invoiceModel: PurchaseInvoiceModel = new PurchaseInvoiceModel();
 
   paymentRecords: IPaymentModel[] = [];
 
@@ -53,8 +49,10 @@ export class AddPurchaseComponent {
     }
 
     this.invoiceModel = new PurchaseInvoiceModel();
-
-    this.addressesOfCurrentOutlet = this.addPurchaseService.getAddressesOfOutlet(this.dashboardService.selectedOutletId);
+    this.addPurchaseService.getAddressesOfOutlet(this.dashboardService.selectedOutletId)
+      .subscribe(response => {
+        this.addressesOfCurrentOutlet = response;
+      });
   }
 
   addSelectedAddress(addressId: number): void{
@@ -69,18 +67,23 @@ export class AddPurchaseComponent {
 
   initializeProductDetailsForm(): void{
     this.invoiceModel.purchaseDetails = [];
-    this.outletProductList = this.addPurchaseService.getProductsByBusinessId(this.dashboardService.selectedOutletId);
+    this.addPurchaseService.getProductsByBusinessId(this.dashboardService.selectedOutletId)
+    .subscribe(response => {
+       this.outletProductList = response;
+     });
   }
 
   initializePaymentDetailsForm(): void{
     this.invoiceModel.purchaseDetails = [];
-    this.paymentRecords = this.addPurchaseService.getPaymentsByInvoiceId(this.invoiceModel.invoiceId);
-
-    this.paymentRecords.forEach(paymentRecord => {
-      if(this.invoiceModel){
-        paymentRecord.InvoiceTotalAmount = this.invoiceModel.totalPurchasePrice;
-      }
-    })
+    this.addPurchaseService.getPaymentsByInvoiceId(this.invoiceModel.invoiceId)
+    .subscribe(response => {
+      this.paymentRecords = response;
+      this.paymentRecords.forEach(paymentRecord => {
+        if(this.invoiceModel){
+          paymentRecord.InvoiceTotalAmount = this.invoiceModel.totalPurchasePrice;
+        }
+      })
+    });
   }
 
   selectProductForPurchase(): void{
@@ -94,7 +97,7 @@ export class AddPurchaseComponent {
     // this.invoiceModel.purchaseDetails.forEach(invoiceDetails => {
     //   previousltSelectedItems[invoiceDetails.productId] = invoiceDetails;
     // });
-
+/*
     this.invoiceProductIds.forEach(productId => {
       let productModel: PurchaseInvoiceModel;
       // Identify the id of newly added product
@@ -112,7 +115,7 @@ export class AddPurchaseComponent {
       selecterProductList.push(productModel);
       this.invoiceModel.totalPurchasePrice += productModel.totalPurchasePrice;
     })
-
+*/
 
     // Cleaning previous selects as all selected products shall be pushed
     this.invoiceModel.purchaseDetails = [];
