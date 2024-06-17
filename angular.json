@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Redbook-Frontend": {
+    "Redbook-Angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -15,11 +15,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/redbook-frontend",
+            "outputPath": "dist/redbook-angular",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -51,18 +51,9 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.development.ts"
-                }
-              ]
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -71,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Redbook-Frontend:build:production"
+              "buildTarget": "Redbook-Angular:build:production"
             },
             "development": {
-              "browserTarget": "Redbook-Frontend:build:development"
+              "buildTarget": "Redbook-Angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Redbook-Frontend:build"
+            "buildTarget": "Redbook-Angular:build"
           }
         },
         "test": {
@@ -108,6 +99,6 @@
     }
   },
   "cli": {
-    "analytics": "f4e2d9c1-2a67-430a-b165-118ce9d04811"
+    "analytics": "5b7c607a-c649-48fc-8fc5-25220c9a9660"
   }
 }

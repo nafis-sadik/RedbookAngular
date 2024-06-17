@@ -23,11 +23,7 @@ export class AddSalesComponent {
   // selectedProductsForSale: IInvoiceProductModel[];
 
   constructor(
-    private addSalesService: AddSalesService,
-    // private salesService: SalesService,
-    private dashboardService: DashboardService,
-    private productService: ProductService
-  ) {
+      ) {
     // this.selectedProductsForSale = [];
 
     // this.salesModel = {
@@ -97,8 +93,8 @@ export class AddSalesComponent {
     });
 
     if(newlyAddedProductId.length > 0){
-      newlyAddedProductId.forEach(productId => {
-        this.outletProductList.forEach(product => {
+      newlyAddedProductId.forEach(() => {
+        this.outletProductList.forEach(() => {
           // if(productId == product.productId)
             // this.selectedProductsForSale.push({
             //   ProductId: product.productId,

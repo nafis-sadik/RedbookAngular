@@ -1,4 +1,4 @@
-import { Component, Optional } from '@angular/core';
+import { Component, Input, Optional } from '@angular/core';
 import { NbWindowRef } from '@nebular/theme';
 
 @Component({
@@ -41,13 +41,12 @@ import { NbWindowRef } from '@nebular/theme';
   `,
 })
 export class RemoveDialogueComponent {  
-  deleteMethod: () => void;
+  @Input() deleteMethod: Function | undefined;
 
   constructor(@Optional() private ref: NbWindowRef<RemoveDialogueComponent>) {}
 
   submit(deleteEntry: boolean) {
-    if(deleteEntry)
-      this.deleteMethod();
+    if(deleteEntry && this.deleteMethod){ this.deleteMethod(); }      
     this.ref.close(deleteEntry);
   }
 }

@@ -1,7 +1,6 @@
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { Injectable } from "@angular/core";
 import { UserModel } from '../Models/user.model';
-import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +26,7 @@ export class AppConfigurationService{
     let tokenJson = JSON.parse(tokenString);
     let token = tokenJson.value;
     console.log('jwt', token);
-    this._userRawData = jwt_decode(token);
+    this._userRawData = jwtDecode(token);
     console.log('decoded', this._userRawData);
     
     this.UserModelData = new UserModel();

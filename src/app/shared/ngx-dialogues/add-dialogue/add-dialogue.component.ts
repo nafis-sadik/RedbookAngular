@@ -14,7 +14,7 @@ import { NbToastrService, NbWindowRef } from '@nebular/theme';
   ],
 })
 export class AddDialogueComponent implements OnInit{
-  saveMethod: (textValue: string) => void;
+  saveMethod: Function;
   textValue: string;
 
   constructor(

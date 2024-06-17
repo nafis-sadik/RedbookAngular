@@ -45,7 +45,7 @@ export class DashboardComponent {
     this.setTheme(this.selectedTheme);
     
     dashboardService.getMenuOptions()
-      .subscribe((menuList: any) => {
+      .subscribe((menuList: Array<IRouteModel>) => {
         let rootElements: { [key: number]: NbMenuItem } = {};
         
         menuList.forEach((menuItem: IRouteModel) => {
@@ -58,10 +58,10 @@ export class DashboardComponent {
           }
         });
 
-        menuList = menuList.filter((menuItem: any) => menuItem.parentRouteId != null && menuItem.parentRouteId != undefined);
+        let childMenuList = menuList.filter((menuItem: any) => menuItem.parentRouteId != null && menuItem.parentRouteId != undefined);
         
         let itemsToRemove: number[] = [];
-        menuList.forEach((menuItem: IRouteModel) => {
+        childMenuList.forEach((menuItem: IRouteModel) => {
           if(menuItem.parentRouteId != null && rootElements.hasOwnProperty(menuItem.parentRouteId)){
             if(!rootElements[menuItem.parentRouteId].children)
               rootElements[menuItem.parentRouteId].children = [];
@@ -76,7 +76,7 @@ export class DashboardComponent {
           }
         });
 
-        menuList = menuList.filter((menuItem: any) => !itemsToRemove.includes(menuItem.routeId));
+        menuList = [];
         
         menuList.forEach((menuItem: any) => {
           rootElements[menuItem.routeId] = {
@@ -94,16 +94,13 @@ export class DashboardComponent {
   }
 
   toggle(): void {
-    // this.sidebarService.toggle(false, 'left');
     let tempSide = document.getElementById('SideBar');
     let overlay = document.getElementById('Overlay');
     let sidebarElement: HTMLElement;
-    let overlayElement: HTMLElement;
     if(tempSide == null || overlay == null)
       return;
     
     sidebarElement = tempSide;
-    overlayElement = overlay;
     
     if(sidebarElement.classList.contains('expanded')){
       sidebarElement.classList.remove('expanded');
