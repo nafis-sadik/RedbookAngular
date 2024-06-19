@@ -33,13 +33,13 @@ export class AppConfigurationService{
     this.UserModelData.userId = this._userRawData.UserId;
     this.UserModelData.userName = this._userRawData.UserName;
     
-    if (!this._userRawData.UserRoleIds.includes(',')) {
-      this.UserModelData.userRoleIds = [Number.parseInt(this._userRawData.UserRoleIds)];
-    }
-    else {
-      let roleIdArrStr = this._userRawData.UserRoleIds.split(',');
-      this.UserModelData.userRoleIds = roleIdArrStr.map((role: any) => Number.parseInt(role));
-    }
+    // if (!this._userRawData.UserRoleIds.includes(',')) {
+    //   this.UserModelData.userRoleIds = [Number.parseInt(this._userRawData.UserRoleIds)];
+    // }
+    // else {
+    //   let roleIdArrStr = this._userRawData.UserRoleIds.split(',');
+    //   this.UserModelData.userRoleIds = roleIdArrStr.map((role: any) => Number.parseInt(role));
+    // }
     
     console.log('local user model', this.UserModelData);
   }
