@@ -29,4 +29,9 @@ export class PurchaseDetailsModel {
    * @type {number}
    */
     unitPrice: number = 0;
+    /**
+   * The total price of the product details. (Considering unit price and quantity)
+   * @type {number}
+   */
+    totalPrice: number = 0;
 }

@@ -15,22 +15,17 @@
           <form #clientDetails="ngForm" class="step-container">
             <div class="container-fluid input-group">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <label class="mb-2 mt-4 p-0">Select Vendors</label>
                   <nb-select fullWidth
                              placeholder="Select Showcase"
-                             name="ClientId"
-                             [(ngModel)]="invoiceModel.vendorId">
+                             name="ClientId">
                     <nb-option value>Select Client</nb-option>
                     <nb-option *ngFor="let client of vendorList" value={{client.clientId}}>{{ client.clientName
                       }}</nb-option>
                   </nb-select>
                 </div>
-                <!--
-                  Nebular Date Picker has bug
-                  https://github.com/akveo/nebular/issues/2338
-                -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <label class="mb-2 mt-4 p-0">Issue Date</label>
                   <div class="input-group">
                     <input fullWidth nbInput
@@ -39,13 +34,12 @@
                     <nb-datepicker #datepicker></nb-datepicker>
                   </div>
                 </div>
-                <div class="col-md-12">
-                  <label class="mb-2 mt-4 p-0">Notes</label>
+                <div class="col-md-4">
+                  <label class="mb-2 mt-4 p-0">Total Invoice Value</label>
                   <div class="input-group">
-                    <textarea fullWidth nbInput
-                              placeholder="Notes"
-                              name="Notes"
-                              [(ngModel)]="invoiceModel.remarks"></textarea>
+                    <input fullWidth nbInput
+                           placeholder="Total Invoice Value"
+                           type="number">
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -54,26 +48,17 @@
                     <textarea fullWidth nbInput
                               placeholder="Terms"
                               name="InvoiceTerms"
-                              [(ngModel)]="invoiceModel.remarks"></textarea>
-                    <!-- NBNext doesn't work without this -->
-                    <textarea fullWidth nbInput
-                              placeholder="Terms"
-                              name="Terms"
-                              class="d-none"
-                              [(ngModel)]="invoiceModel.remarks"></textarea>
+                              [(ngModel)]="invoiceModel.terms"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <label class="mb-2 mt-4 p-0">Select Address</label>
-                  <span *ngFor="let address of addressesOfCurrentOutlet">
-                    <div class="input-group">
-                      <nb-checkbox
-                                   status="primary"
-                                   (checkedChange)="addSelectedAddress(address.AddressId)">
-                        {{ address.FullAddress }}
-                      </nb-checkbox>
-                    </div>
-                  </span>
+                  <label class="mb-2 mt-4 p-0">Remarks</label>
+                  <div class="input-group">
+                    <textarea fullWidth nbInput
+                              placeholder="Remarks"
+                              name="Remarks"
+                              [(ngModel)]="invoiceModel.remarks"></textarea>
+                  </div>
                 </div>
                 <div class="col-md-12 mt-5">
                   <button nbButton type="button" status="primary" class="float-right" nbStepperNext
@@ -92,7 +77,7 @@
                   <label class="mb-2 mt-4 p-0">Select Product</label>
                   <nb-select fullWidth multiple required
                              placeholder="Select Product"
-                             (selectedChange)="selectProductForPurchase()">
+                             (selectedChange)="selectProductForPurchase($event)">
                     <nb-option *ngFor="let product of outletProductList" value={{product.productId}}>
                       {{ product.productName }}</nb-option>
                   </nb-select>
@@ -109,28 +94,26 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let product of invoiceModel.invoiceProducts; let i = index">
-                        <td>{{ product.productId }}</td>
-                        <td>{{ product.productName }}</td>
+                      <tr *ngFor="let purchaseDetail of invoiceModel.purchaseDetails; let i = index">
+                        <td>{{ purchaseDetail.productId }}</td>
+                        <td>{{ purchaseDetail.productName }}</td>
                         <td>
                           <!-- {{product.Quantity}} -->
                           <input fullWidth nbInput required
-                                 placeholder="Purchase Quantity"
-                                 [(ngModel)]="product.quantity"
-                                 name="product.Quantity[{{i}}]"
-                                 [value]="product.quantity"
-                                 (change)="updateProductNetTotalAmount(product.productId)">
+                                 type="number"
+                                 [value]="purchaseDetail.quantity"
+                                 [(ngModel)]="purchaseDetail.quantity"
+                                 (input)="updateProductQuantity(purchaseDetail, $event)">
                         </td>
                         <td>
                           <!-- {{product.PurchasePrice}} -->
                           <input fullWidth nbInput required
-                                 placeholder="Purchase Price"
-                                 [(ngModel)]="product.purchasePrice"
-                                 name="product.PurchasePrice[{{i}}]"
-                                 [value]="product.purchasePrice"
-                                 (change)="updateProductNetTotalAmount(product.productId)">
+                                 type="number"
+                                 [value]="purchaseDetail.unitPrice"
+                                 [(ngModel)]="purchaseDetail.unitPrice"
+                                 (input)="updateProductPrice(purchaseDetail, $event)">
                         </td>
-                        <td>{{ product.purchasePrice }}</td>
+                        <td>{{ purchaseDetail.quantity * purchaseDetail.unitPrice }}</td>
                       </tr>
                       <tr>
                         <td colspan="4"><b>Net Total</b></td>

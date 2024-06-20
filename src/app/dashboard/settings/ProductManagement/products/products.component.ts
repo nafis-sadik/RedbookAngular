@@ -139,7 +139,7 @@ export class ProductsComponent implements OnInit{
 
   fetchProductsOfOutlet(outletId: number){
     // Fetch Products for selected outlet
-    this.productService.getProductList(outletId, this.pagedProductModel)
+    this.productService.getProductListPaged(outletId, this.pagedProductModel)
       .subscribe((pagedProducts: any) => {
         // Get pagination data to update table
         if(this.pagedProductModel.tableConfig){

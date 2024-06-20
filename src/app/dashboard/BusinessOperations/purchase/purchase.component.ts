@@ -44,7 +44,7 @@ export class PurchaseComponent {
         }
       });
 
-    this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent, 'New Purchase');
+    this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent, 'Purchase Records', 'Add New Purchase');
 
     if(this.pagedPurchaseModel.tableConfig){
       this.pagedPurchaseModel.tableConfig.tableMaping = {

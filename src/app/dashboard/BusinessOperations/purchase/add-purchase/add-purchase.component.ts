@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { AddPurchaseService } from '../../../services/add-purchase.service';
 import { IInvoicePaymentModel } from 'src/app/dashboard/Models/IInvoicePayment';
 import { IAddressModel } from 'src/app/dashboard/Models/IAddressModel';
@@ -9,6 +9,7 @@ import { PurchaseInvoiceModel } from 'src/app/dashboard/Models/purchase-invoice.
 import { PurchaseService } from 'src/app/dashboard/services/purchase.service';
 import { PurchaseDetailsModel } from 'src/app/dashboard/Models/purchase-details.model';
 import { ProductModel } from 'src/app/dashboard/Models/product.model';
+import { ProductService } from 'src/app/dashboard/services/products.service';
 
 @Component({
   selector: 'app-add-purchase',
@@ -33,9 +34,11 @@ export class AddPurchaseComponent {
   paymentRecords: IPaymentModel[] = [];
 
   constructor(
+    private productPurchase: ProductService,
     private dashboardService: DashboardService,
     private purchaseService: PurchaseService,
     private addPurchaseService: AddPurchaseService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.vendorList = dashboardService.getVendors();
 
@@ -67,10 +70,8 @@ export class AddPurchaseComponent {
 
   initializeProductDetailsForm(): void{
     this.invoiceModel.purchaseDetails = [];
-    this.addPurchaseService.getProductsByBusinessId(this.dashboardService.selectedOutletId)
-    .subscribe(response => {
-       this.outletProductList = response;
-     });
+    this.productPurchase.getProductList(this.dashboardService.selectedOutletId)
+      .subscribe(response => { this.outletProductList = response; });
   }
 
   initializePaymentDetailsForm(): void{
@@ -86,49 +87,56 @@ export class AddPurchaseComponent {
     });
   }
 
-  selectProductForPurchase(): void{
-    this.invoiceModel.totalPurchasePrice = 0;
-
-    // Cache currently selected items
-    let selecterProductList: PurchaseInvoiceModel[] = [];
-
-    // Load previously selected items
-    let previousltSelectedItems: { [key: number]: PurchaseInvoiceModel } = {};
-    // this.invoiceModel.purchaseDetails.forEach(invoiceDetails => {
-    //   previousltSelectedItems[invoiceDetails.productId] = invoiceDetails;
-    // });
-/*
-    this.invoiceProductIds.forEach(productId => {
-      let productModel: PurchaseInvoiceModel;
-      // Identify the id of newly added product
-      if(!previousltSelectedItems[productId]){
-        // filter out the newly selected item
-        let newlySelectedItems = this.outletProductList.filter(product => product.productId == productId)[0];
-        productModel = new PurchaseInvoiceModel();
-      }
-      else{
-        // get previous data object
-        productModel = previousltSelectedItems[productId];
-      }
-
-      // Push previously selected item to finalize the list
-      selecterProductList.push(productModel);
-      this.invoiceModel.totalPurchasePrice += productModel.totalPurchasePrice;
-    })
-*/
-
-    // Cleaning previous selects as all selected products shall be pushed
-    this.invoiceModel.purchaseDetails = [];
-    // Push items of finalized list to UI
-    // selecterProductList.forEach(product => this.invoiceModel.purchaseDetails.push(product));
-  }
-
-  updateProductNetTotalAmount(productId: number): void{
-    this.invoiceModel.totalPurchasePrice = 0;
-    this.invoiceModel.purchaseDetails.forEach((invoice: PurchaseDetailsModel) => {
-      if(invoice.productId == productId){
-        this.invoiceModel.totalPurchasePrice = invoice.quantity * invoice.unitPrice;
+  selectProductForPurchase(prodIdArr: Array<number>): void{
+    prodIdArr = prodIdArr.map((value) => Number(value));
+    this.invoiceModel.purchaseDetails.forEach((purchaseDetailsModel: PurchaseDetailsModel) => {
+      if (prodIdArr.includes(purchaseDetailsModel.productId)) {
+        let prodIdIndex = prodIdArr.indexOf(purchaseDetailsModel.productId);
+        prodIdArr.splice(prodIdIndex, 1);
       }
     });
+    prodIdArr.forEach((prodId) => {
+      let purchaseDetails = new PurchaseDetailsModel();
+      let product = this.outletProductList.find(x => x.productId == prodId);
+      if(product){
+        purchaseDetails.productId = prodId;
+        purchaseDetails.productName = product.productName;
+        purchaseDetails.quantity = 1;
+        purchaseDetails.unitPrice = 0;
+      }
+      this.invoiceModel.purchaseDetails.push(purchaseDetails);
+    });
+
+    this.updateTotalAmount();
+  }
+
+  updateProductQuantity(purchaseProductDetail: PurchaseDetailsModel, event: any): void {
+    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseDetailsModel) => {
+      if (detail.productId == purchaseProductDetail.productId && event.target.value) {
+        detail.quantity = event.target.value;
+      }
+    });
+
+    this.updateTotalAmount();
+  }
+
+  updateProductPrice(purchaseProductDetail: PurchaseDetailsModel, event: any): void {
+    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseDetailsModel) => {
+      if (detail.productId == purchaseProductDetail.productId && event.target.value) {
+        detail.unitPrice = event.target.value;
+      }
+    });
+
+    this.updateTotalAmount();
+  }
+
+  updateTotalAmount() {
+    this.invoiceModel.totalPurchasePrice = 0;
+    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseDetailsModel) => {
+      detail.totalPrice = detail.quantity * detail.unitPrice;
+      this.invoiceModel.totalPurchasePrice += detail.totalPrice;
+    });
+
+    this.cdRef.detectChanges();
   }
 }

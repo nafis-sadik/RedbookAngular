@@ -33,6 +33,12 @@ export class PurchaseInvoiceModel{
   remarks: string = '';
 
   /**
+   * The terms and conditions associated with the purchase invoice.
+   * @type {string}
+   */
+  terms: string = '';
+
+  /**
    * The unique identifier for the vendor associated with the purchase invoice.
    * @type {number | null;}
    */

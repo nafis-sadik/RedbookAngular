@@ -31,8 +31,8 @@ export class CategoryService{
     }
 
     getCategoriesUnderOrganization(orgId: number): Observable<Array<CategoryModel>>{
-      return this.http
-        .get<Array<CategoryModel>>(`${this.baseUrl}/api/Category/${orgId}`)
-        .pipe(map(response => response));
+        return this.http
+            .get<Array<CategoryModel>>(`${this.baseUrl}/api/Category/${orgId}`)
+            .pipe(map(response => response));
     }
 }
