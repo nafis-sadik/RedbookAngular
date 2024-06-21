@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IAddressModel } from 'src/app/dashboard/Models/IAddressModel';
-import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
-import { ProductModel } from 'src/app/dashboard/Models/product.model';
 import { environment } from 'src/environments/environment';
+import { InvoicePaymentModel } from '../Models/invoice-payment.model';
 
 @Injectable({
     providedIn: 'root',
@@ -17,7 +16,7 @@ export class AddPurchaseService {
         return new Observable<Array<IAddressModel>>();
     }
 
-    getPaymentsByInvoiceId(invoiceId: number): Observable<Array<IPaymentModel>> {
-        return new Observable<Array<IPaymentModel>>();
+    getPaymentsByInvoiceId(invoiceId: number): Observable<Array<InvoicePaymentModel>> {
+        return new Observable<Array<InvoicePaymentModel>>();
     }
 }

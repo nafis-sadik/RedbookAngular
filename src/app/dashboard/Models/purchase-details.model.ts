@@ -3,7 +3,7 @@ export class PurchaseDetailsModel {
    * The unique identifier for the purchase details.
    * @type {number}
    */
-    detailId: number = 0;
+    recordId: number = 0;
     /**
    * The unique identifier for the purchase invoice.
    * @type {number}

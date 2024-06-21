@@ -62,3 +62,16 @@ nb-radio :hover{
   color: var(--card-header-danger-background-color);
   font-size: 0.7rem;
 }
+
+.tooltip-style{
+  color: var(--text-primary-focus-color);
+  border: 1px solid var(--text-primary-focus-color);
+  border-radius: 100%;
+  padding: 0 0.25rem;
+  margin-left: 0.2rem;
+  font-weight: bold;
+}
+
+.tooltip-style:hover{
+  cursor: pointer;
+}

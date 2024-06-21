@@ -11,7 +11,7 @@ import { NbWindowRef } from '@nebular/theme';
       </div>
       <div class="row d-flex justify-content-between">
         <button
-          nbButton
+          nbButton hero
           status="success"
           class="col-md-2 container-custom"
           nbTooltip="Cancel"
@@ -21,7 +21,7 @@ import { NbWindowRef } from '@nebular/theme';
           <nb-icon icon="close"></nb-icon>
         </button>
         <button
-          nbButton
+          nbButton hero
           status="danger"
           class="col-md-2 container-custom"
           nbTooltip="Save"

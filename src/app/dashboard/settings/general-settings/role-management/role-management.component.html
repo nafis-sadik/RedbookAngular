@@ -17,14 +17,14 @@
                 <div class="col-lg-4">
                   <div class="row">
                     <div class="col-6 p-0 pe-1">
-                      <button fullWidth nbButton type="button" status="primary" nbTooltip="Update"
+                      <button fullWidth nbButton hero type="button" status="primary" nbTooltip="Update"
                               nbTooltipStatus="primary"
                               (click)="openSaveBusinessWindow('Update Business Title - ' + business.organizationName, business)">
                         <nb-icon icon="copy"></nb-icon>
                       </button>
                     </div>
                     <div class="col-6 p-0 ps-1">
-                      <button fullWidth nbButton type="button" status="danger" nbTooltip="Delete"
+                      <button fullWidth nbButton hero type="button" status="danger" nbTooltip="Delete"
                               nbTooltipStatus="danger"
                               (click)="openDeleteBusinessWindow('Delete Category - ' + business.organizationName, business.organizationId)">
                         <nb-icon icon="trash-2"></nb-icon>
@@ -37,7 +37,8 @@
           </nb-list>
         </nb-card-body>
         <nb-card-footer>
-          <button nbButton status="primary" class="btn-save" (click)="openSaveBusinessWindow('Add New Business', null)">
+          <button nbButton hero status="primary" class="btn-save"
+                  (click)="openSaveBusinessWindow('Add New Business', null)">
             <nb-icon icon="plus-square"></nb-icon>
             <span class="d-lg-block d-none">Add New Business Outlet</span>
             <span class="d-sm-block d-lg-none">Add Business</span>
@@ -61,14 +62,14 @@
               <div class="col-lg-4">
                 <div class="row">
                   <div class="col-6 p-0 pe-1">
-                    <button class="w-100" nbButton type="button" status="primary" nbTooltip="Update"
+                    <button class="w-100" nbButton hero type="button" status="primary" nbTooltip="Update"
                             nbTooltipStatus="primary"
                             (click)="openSaveRoleWindow('Update Role - ' + role.roleName, role)">
                       <nb-icon icon="copy"></nb-icon>
                     </button>
                   </div>
                   <div class="col-6 p-0 ps-1">
-                    <button class="w-100" nbButton type="button" status="danger" nbTooltip="Delete"
+                    <button class="w-100" nbButton hero type="button" status="danger" nbTooltip="Delete"
                             nbTooltipStatus="danger"
                             (click)="openDeleteRoleWindow('Delete Role - ' + role.roleName, role.roleId)">
                       <nb-icon icon="trash-2"></nb-icon>
@@ -80,7 +81,7 @@
           </nb-list>
         </nb-card-body>
         <nb-card-footer>
-          <button nbButton status="primary" (click)="openSaveRoleWindow('Add New Role', null)">
+          <button nbButton hero status="primary" (click)="openSaveRoleWindow('Add New Role', null)">
             <nb-icon icon="plus-square"></nb-icon>
             Add Role
           </button>

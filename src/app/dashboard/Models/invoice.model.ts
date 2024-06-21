@@ -1,7 +1,7 @@
-import { IInvoicePaymentModel } from "./IInvoicePayment";
+import { InvoicePaymentModel } from "./invoice-payment.model";
 import { PurchaseInvoiceModel } from "./purchase-invoice.model";
 
-export declare interface IInvoiceModel{
+export class InvoiceModel{
   /**
    * Unique Identifier of the Invoices for database
    * @type {Number}
@@ -76,7 +76,7 @@ export declare interface IInvoiceModel{
    * Payment history of invoice
    * @type {number[]}
    */
-  paymentHistory: IInvoicePaymentModel[];
+  paymentHistory: InvoicePaymentModel[];
   /**
    * Total bill against this invoice
    * @type {number[]}

@@ -9,6 +9,12 @@ export class PurchaseInvoiceModel{
   invoiceId: number = 0;
 
   /**
+   * Purchase date for this invoice.
+   * @type {string}
+   */
+  purchaseDate: string = '';
+
+  /**
    * The total purchase price for the invoice.
    * @type {number}
    */
@@ -40,9 +46,9 @@ export class PurchaseInvoiceModel{
 
   /**
    * The unique identifier for the vendor associated with the purchase invoice.
-   * @type {number | null;}
+   * @type {number}
    */
-  vendorId: number | null = null;
+  vendorId: number = 0;
 
   /**
    * An array of purchase details associated with the purchase invoice.

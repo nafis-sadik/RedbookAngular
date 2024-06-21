@@ -1,8 +1,5 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { AddPurchaseService } from '../../../services/add-purchase.service';
-import { IInvoicePaymentModel } from 'src/app/dashboard/Models/IInvoicePayment';
-import { IAddressModel } from 'src/app/dashboard/Models/IAddressModel';
-import { IPaymentModel } from 'src/app/dashboard/Models/IPaymentModel';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { VendorModel } from 'src/app/dashboard/Models/vendor.model';
 import { PurchaseInvoiceModel } from 'src/app/dashboard/Models/purchase-invoice.model';
@@ -10,65 +7,84 @@ import { PurchaseService } from 'src/app/dashboard/services/purchase.service';
 import { PurchaseDetailsModel } from 'src/app/dashboard/Models/purchase-details.model';
 import { ProductModel } from 'src/app/dashboard/Models/product.model';
 import { ProductService } from 'src/app/dashboard/services/products.service';
+import { InvoicePaymentModel } from 'src/app/dashboard/Models/invoice-payment.model';
+import { FormBuilder, FormGroup, RequiredValidator, Validators } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-purchase',
   templateUrl: './add-purchase.component.html',
   styleUrls: ['./add-purchase.component.scss']
 })
-export class AddPurchaseComponent {
+export class AddPurchaseComponent implements OnInit {
   linearMode = true;
+
+  calculatedTotalAmount: number = 0;
 
   vendorList: Array<VendorModel> = [];
 
   outletProductList: Array<ProductModel> = [];
 
-  paymentHistory: Array<IInvoicePaymentModel> = [];
+  paymentHistory: Array<InvoicePaymentModel> = [];
 
-  addressesOfCurrentOutlet: Array<IAddressModel> = [];
-
-  paymentInvoice: IPaymentModel;
+  paymentInvoice: InvoicePaymentModel = new InvoicePaymentModel();
 
   @Input() invoiceModel: PurchaseInvoiceModel = new PurchaseInvoiceModel();
 
-  paymentRecords: IPaymentModel[] = [];
+  invoiceForm: FormGroup;
 
   constructor(
     private productPurchase: ProductService,
     private dashboardService: DashboardService,
     private purchaseService: PurchaseService,
     private addPurchaseService: AddPurchaseService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private datePipe: DatePipe,
+    formBuilder: FormBuilder
   ) {
     this.vendorList = dashboardService.getVendors();
 
-    this.paymentInvoice = {
-      id: 0,
-      InvoiceId: 0,
-      InvoiceTotalAmount: 0,
-      PaymentAmount: 0,
-      PaymentDate: new Date().toISOString().slice(0, 10),
-      TotalDueAmount: 0
-    }
-
     this.invoiceModel = new PurchaseInvoiceModel();
-    this.addPurchaseService.getAddressesOfOutlet(this.dashboardService.selectedOutletId)
-      .subscribe(response => {
-        this.addressesOfCurrentOutlet = response;
-      });
+
+    this.invoiceForm = formBuilder.group({
+      vendorId: [0, [Validators.required, Validators.min(1)]],
+      purchaseDate: ['', Validators.required],
+      totalPurchasePrice: [0, [Validators.required, Validators.min(1)]],
+      terms: [''],
+      remarks: [''],
+    });
   }
 
-  addSelectedAddress(addressId: number): void{
-    if (this.invoiceModel.remarks)
-      this.invoiceModel.purchaseDetails = [];
+  ngOnInit(): void {
+    document.getElementById('InvoiceForm')?.addEventListener('keyup', (event) => {
+      this.updateTotalAmount();
+    });
 
-    // if (!this.invoiceModel.selectedAddresses.includes(addressId))
-    //   this.invoiceModel.selectedAddresses.push(addressId)
-    // else
-    //   this.invoiceModel.selectedAddresses = this.invoiceModel.selectedAddresses.filter(x => x != addressId);
+    this.invoiceForm.valueChanges.subscribe(val => {
+      this.invoiceModel.vendorId = val.vendorId;
+
+      if(!Number.isNaN(Number(val.totalPurchasePrice)))
+        this.invoiceModel.totalPurchasePrice = Number(val.totalPurchasePrice);
+
+      if (val.purchaseDate) {
+        let purchaseDateTime = new Date(val.purchaseDate);
+        let displayDate = this.datePipe.transform(purchaseDateTime, 'MMM d, yyyy');
+        if(displayDate)
+            this.invoiceModel.purchaseDate = displayDate;
+      }
+    });
   }
 
   initializeProductDetailsForm(): void{
+    if (!this.invoiceForm.valid) {
+      let invalidControls: Array<string> = Object.keys(this.invoiceForm.controls)
+        .filter((controlName) => this.invoiceForm.controls[controlName].invalid);
+      
+      invalidControls.forEach(controlName => {
+        this.invoiceForm.get(controlName)?.markAsDirty();
+      });
+      return;
+    }
     this.invoiceModel.purchaseDetails = [];
     this.productPurchase.getProductList(this.dashboardService.selectedOutletId)
       .subscribe(response => { this.outletProductList = response; });
@@ -78,12 +94,7 @@ export class AddPurchaseComponent {
     this.invoiceModel.purchaseDetails = [];
     this.addPurchaseService.getPaymentsByInvoiceId(this.invoiceModel.invoiceId)
     .subscribe(response => {
-      this.paymentRecords = response;
-      this.paymentRecords.forEach(paymentRecord => {
-        if(this.invoiceModel){
-          paymentRecord.InvoiceTotalAmount = this.invoiceModel.totalPurchasePrice;
-        }
-      })
+      this.paymentHistory = response;
     });
   }
 
@@ -95,6 +106,7 @@ export class AddPurchaseComponent {
         prodIdArr.splice(prodIdIndex, 1);
       }
     });
+
     prodIdArr.forEach((prodId) => {
       let purchaseDetails = new PurchaseDetailsModel();
       let product = this.outletProductList.find(x => x.productId == prodId);
@@ -110,14 +122,13 @@ export class AddPurchaseComponent {
     this.updateTotalAmount();
   }
 
-  updateProductQuantity(purchaseProductDetail: PurchaseDetailsModel, event: any): void {
-    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseDetailsModel) => {
-      if (detail.productId == purchaseProductDetail.productId && event.target.value) {
-        detail.quantity = event.target.value;
-      }
-    });
-
-    this.updateTotalAmount();
+  addCustom() {
+    let purchaseDetails = new PurchaseDetailsModel();
+    purchaseDetails.productId = 0;
+    purchaseDetails.productName = "";
+    purchaseDetails.quantity = 1;
+    purchaseDetails.unitPrice = 0;
+    this.invoiceModel.purchaseDetails.push(purchaseDetails);
   }
 
   updateProductPrice(purchaseProductDetail: PurchaseDetailsModel, event: any): void {
@@ -131,10 +142,10 @@ export class AddPurchaseComponent {
   }
 
   updateTotalAmount() {
-    this.invoiceModel.totalPurchasePrice = 0;
+    this.calculatedTotalAmount = 0;
     this.invoiceModel.purchaseDetails.forEach((detail: PurchaseDetailsModel) => {
       detail.totalPrice = detail.quantity * detail.unitPrice;
-      this.invoiceModel.totalPurchasePrice += detail.totalPrice;
+      this.calculatedTotalAmount += detail.totalPrice;
     });
 
     this.cdRef.detectChanges();
