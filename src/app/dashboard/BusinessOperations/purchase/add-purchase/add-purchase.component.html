@@ -3,9 +3,9 @@
     <nb-card-header>
       <div class="container-fluid">
         <div class="row">
-          <span>
+          <div class="col-12">
             Product Purchase Invoice
-          </span>
+          </div>
         </div>
       </div>
     </nb-card-header>
@@ -22,7 +22,7 @@
                              formControlName="vendorId"
                              [(selected)]="invoiceModel.vendorId">
                     <nb-option value="0">Select Vendor</nb-option>
-                    <nb-option *ngFor="let client of vendorList" value={{client.clientId}}>{{ client.clientName
+                    <nb-option *ngFor="let Vendor of vendorList" value={{Vendor.vendorId}}>{{ Vendor.vendorName
                       }}</nb-option>
                   </nb-select>
                   <div *ngIf="(invoiceForm.get('vendorId')?.touched || invoiceForm.get('vendorId')?.dirty) && invoiceForm.get('vendorId')?.invalid"
@@ -67,8 +67,7 @@
                     <textarea fullWidth nbInput
                               placeholder="Terms"
                               formControlName="terms"
-                              [value]="invoiceModel.terms"
-                              [(ngModel)]="invoiceModel.terms"></textarea>
+                              [value]="invoiceModel.terms"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -77,13 +76,12 @@
                     <textarea fullWidth nbInput
                               placeholder="Remarks"
                               formControlName="remarks"
-                              [value]="invoiceModel.remarks"
-                              [(ngModel)]="invoiceModel.remarks"></textarea>
+                              [value]="invoiceModel.remarks"></textarea>
                   </div>
                 </div>
                 <div class="col-md-12 mt-5">
                   <button nbButton hero type="button" status="primary" class="float-right" nbStepperNext
-                          (click)="initializeProductDetailsForm()">next</button>
+                          (click)="initializeOrderDetails()">next</button>
                 </div>
               </div>
             </div>
@@ -98,7 +96,7 @@
                   <label class="mb-2 mt-4 p-0">Select Product</label>
                   <nb-select fullWidth multiple required
                              placeholder="Select Product"
-                             (selectedChange)="selectProductForPurchase($event)">
+                             (selectedChange)="selectProducts($event)">
                     <nb-option *ngFor="let product of outletProductList" value={{product.productId}}>
                       {{ product.productName }}</nb-option>
                   </nb-select>
@@ -165,7 +163,7 @@
                   </div>
                   <div>
                     <button nbButton hero nbStepperNext type="button" status="primary"
-                            (click)="initializePaymentDetailsForm()">next</button>
+                            (click)="saveInvoice()">next</button>
                   </div>
                 </div>
               </div>

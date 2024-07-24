@@ -10,6 +10,7 @@ import { ProductsComponent } from './settings/ProductManagement/products/product
 import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
 import { GeneralSettingsComponent } from './settings/general-settings/general-settings.component';
 import { ProductSettingsComponent } from './settings/ProductManagement/product-settings/product-settings.component';
+import { VendorsComponent } from './BusinessOperations/vendors/vendors.component';
 
 const routes: Routes = [{
   path: '',
@@ -54,6 +55,10 @@ const routes: Routes = [{
     {
       path: 'platform-settings',
       component: PlatformsettingsComponent
+    },
+    {
+      path: 'vendors',
+      component: VendorsComponent
     }
   ]
 }]

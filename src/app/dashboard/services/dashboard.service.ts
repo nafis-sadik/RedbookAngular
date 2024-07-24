@@ -5,10 +5,9 @@ import { environment } from 'src/environments/environment.development';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { map } from 'rxjs';
 import { IRouteModel } from '../Models/IRouteModel';
-import { VendorModel } from '../Models/vendor.model';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 
 export class DashboardService {
@@ -22,23 +21,6 @@ export class DashboardService {
     private http: HttpClient,
     private dialogService: NbDialogService) {
     this.ngDialogService = dialogService;
-  }
-
-  getVendors(): VendorModel[]{
-    return [
-      {
-        clientId: 1,
-        clientName: 'Chittagong Builders',
-        contactNumber: '',
-        emailAddress: ''
-      },
-      {
-        clientId: 2,
-        clientName: 'RFL',
-        contactNumber: '',
-        emailAddress: ''
-      }
-    ];
   }
 
   getPagingConfig<T>(
@@ -65,7 +47,7 @@ export class DashboardService {
         },
         sourceData: []
       },
-      pagingConfig:{
+      pagingConfig: {
         pageNumber: 1,
         totalItems: 268,
         pageLength: 5,
@@ -73,7 +55,7 @@ export class DashboardService {
           console.log('Page length change callback', data);
         }
       },
-      searchingConfig:{
+      searchingConfig: {
         searchString: '',
         inputFieldPlaceholder: searchFieldPlaceholder,
         buttonLabel: searchButtonLabel,
@@ -86,16 +68,16 @@ export class DashboardService {
         buttonLabel: addButtonLabel,
         showIcon: true,
         onAdd: () => {
-          if(dialogueComponent)
+          if (dialogueComponent)
             this.dialogService.open(dialogueComponent);
         }
       },
     };
   }
 
-  getMenuOptions(){
+  getMenuOptions() {
     return this.http
       .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetMenuRoutes/`)
-      .pipe(map(response =>  response))
+      .pipe(map(response => response))
   }
 }

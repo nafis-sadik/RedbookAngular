@@ -15,7 +15,7 @@ import { RoleModel } from 'src/app/dashboard/Models/role.model';
   templateUrl: './ums.component.html',
   styleUrls: ['./ums.component.scss']
 })
-export class UmsComponent  implements OnInit{
+export class UmsComponent implements OnInit {
   selectedBusinessId: number;
   pagedUserModel: IPaginationModel<UserModel>;
   @Input() ownedBusinesses: OrganizationModel[];
@@ -30,7 +30,7 @@ export class UmsComponent  implements OnInit{
     this.pagedUserModel = dashboardService.getPagingConfig(UserFormComponent, 'User Management', 'Add User', 'Search User');
 
     // Dropdown change event binding
-    if(this.pagedUserModel.pagingConfig){
+    if (this.pagedUserModel.pagingConfig) {
       this.pagedUserModel.pagingConfig.onUpdate = () => {
         this.orgService.getUserByBusinessId(this.pagedUserModel, this.selectedBusinessId)
           .subscribe((response) => {
@@ -39,14 +39,14 @@ export class UmsComponent  implements OnInit{
       }
     }
 
-    if(this.pagedUserModel.addNewElementButtonConfig){
+    if (this.pagedUserModel.addNewElementButtonConfig) {
       this.pagedUserModel.addNewElementButtonConfig.onAdd = () => {
         let dialogueRef = this.dialogService.open(UserFormComponent, {
           context: {
             userModel: new UserModel(),
             selectedBusinessId: this.selectedBusinessId,
             addUser: () => {
-              if(this.pagedUserModel.pagingConfig){
+              if (this.pagedUserModel.pagingConfig) {
                 this.pagedUserModel.pagingConfig.pageNumber = Math.ceil(this.pagedUserModel.pagingConfig.totalItems / this.pagedUserModel.pagingConfig.pageLength);
                 this.loadUsersUnderBusiness(this.selectedBusinessId);
               }
@@ -57,7 +57,7 @@ export class UmsComponent  implements OnInit{
       };
     }
 
-    if(this.pagedUserModel.tableConfig){
+    if (this.pagedUserModel.tableConfig) {
       this.pagedUserModel.tableConfig.tableMaping = {
         "First Name": "firstName",
         "Last Name": "lastName",
@@ -67,43 +67,43 @@ export class UmsComponent  implements OnInit{
 
       this.pagedUserModel.tableConfig.onEdit = (userModel: UserModel) => {
         // Send the data to the pop up to load the data from api on the form
-        if(this.pagedUserModel.tableConfig){
+        if (this.pagedUserModel.tableConfig) {
           let selectedUser = this.pagedUserModel.tableConfig.sourceData.find(x => x.userId == userModel.userId);
           this.dialogService.open(UserFormComponent, {
             context: {
-              userModel: selectedUser? selectedUser : new UserModel(),
+              userModel: selectedUser ? selectedUser : new UserModel(),
               selectedBusinessId: this.selectedBusinessId
             },
           });
         }
       }
-      
+
       this.pagedUserModel.tableConfig.onDelete = (data: any) => {
         this.orgService.removeUserFromBusiness(data.userId, this.selectedBusinessId)
-        .subscribe(() => {
-          location.reload();
-        });
+          .subscribe(() => {
+            location.reload();
+          });
       }
     }
 
-    if(this.pagedUserModel.searchingConfig){
+    if (this.pagedUserModel.searchingConfig) {
       this.pagedUserModel.searchingConfig.onSearch = (searchConfig: any) => {
-        if(this.pagedUserModel.pagingConfig && this.pagedUserModel.searchingConfig){
+        if (this.pagedUserModel.pagingConfig && this.pagedUserModel.searchingConfig) {
           this.pagedUserModel.pagingConfig.pageLength = searchConfig.pageLength;
           this.pagedUserModel.searchingConfig.searchString = searchConfig.searchString;
           this.pagedUserModel.pagingConfig.pageNumber = searchConfig.pageNumber;
           this.loadUsersUnderBusiness(this.selectedBusinessId);
         } else {
           return;
-        }        
+        }
       }
     }
   }
 
   ngOnInit(): void {
-    let loaderContainer: HTMLElement| null = document.getElementById('LoadingScreen');
+    let loaderContainer: HTMLElement | null = document.getElementById('LoadingScreen');
 
-    if(loaderContainer){
+    if (loaderContainer) {
       loaderContainer.classList.add('d-block');
       loaderContainer.classList.remove('d-none');
     }
@@ -163,7 +163,7 @@ export class UmsComponent  implements OnInit{
           userRoleNames += x.roleName + ', ';
         }
       });
-      
+
       // slice last 2 characters from the string to remove the garbage from the tail that we needed to add during the loop two lines above
       user.roleNames = userRoleNames.slice(0, -2);
     });

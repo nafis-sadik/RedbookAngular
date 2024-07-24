@@ -1,7 +1,8 @@
 import { ProductModel } from "./product.model";
 import { PurchaseDetailsModel } from "./purchase-details.model";
+import { PurchasePaymentModel } from "./purchase-payment.model";
 
-export class PurchaseInvoiceModel{
+export class PurchaseInvoiceModel {
   /**
    * The unique identifier for the purchase invoice.
    * @type {number}
@@ -55,9 +56,16 @@ export class PurchaseInvoiceModel{
    * @type {Array<PurchaseDetailsModel>}
    */
   purchaseDetails: Array<PurchaseDetailsModel> = [];
+
   /**
    * An array of product models associated with the purchase invoice.
    * @type {Array<ProductModel>}
    */
   invoiceProducts: Array<ProductModel> = [];
+
+  /**
+   * Payment records associated with the purchase invoice.
+   * @type {Array<PurchasePaymentModel>}
+   */
+  paymentRecords: Array<PurchasePaymentModel> = [];
 }

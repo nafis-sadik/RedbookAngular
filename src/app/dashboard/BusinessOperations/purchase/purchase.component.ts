@@ -19,7 +19,7 @@ export class PurchaseComponent {
 
   selectedOutlet: number = 0;
 
-  outlets: OrganizationModel[];
+  outlets: Array<OrganizationModel>;
 
   pagedPurchaseModel: IPaginationModel<PurchaseInvoiceModel>;
 
@@ -31,13 +31,12 @@ export class PurchaseComponent {
     private purchaseService: PurchaseService,
     private cdRef: ChangeDetectorRef,
     private ngxPaginationService: NGXPaginationService<PurchaseInvoiceModel>
-  )
-  {
+  ) {
     this.loader = document.getElementById('LoadingScreen');
     this.orgService.getUserOrgs()
       .subscribe(response => {
         this.outlets = response;
-        if(this.loader && this.loader.classList.contains('d-block')){
+        if (this.loader && this.loader.classList.contains('d-block')) {
           this.loader.classList.remove('d-block');
           this.loader.classList.add('d-none');
           this.cdRef.detectChanges();
@@ -46,7 +45,7 @@ export class PurchaseComponent {
 
     this.pagedPurchaseModel = dashboardService.getPagingConfig(AddPurchaseComponent, 'Purchase Records', 'Add New Purchase');
 
-    if(this.pagedPurchaseModel.tableConfig){
+    if (this.pagedPurchaseModel.tableConfig) {
       this.pagedPurchaseModel.tableConfig.tableMaping = {
         "Invoice Number": "InvoiceNo",
         "Client Name": "ClientName",
@@ -69,7 +68,7 @@ export class PurchaseComponent {
       };
     }
 
-    if(this.pagedPurchaseModel.addNewElementButtonConfig){
+    if (this.pagedPurchaseModel.addNewElementButtonConfig) {
       this.pagedPurchaseModel.addNewElementButtonConfig.onAdd = () => {
         dashboardService.ngDialogService.open(AddPurchaseComponent, {
           context: {
@@ -78,28 +77,44 @@ export class PurchaseComponent {
         });
       }
     }
+
+    this.purchaseService.listenInvoiceModel()
+      .subscribe((invoiceModel: PurchaseInvoiceModel) => {
+        invoiceModel.purchaseDate = new Date(invoiceModel.purchaseDate).toUTCString();
+        this.purchaseService.addPurchaseIncoice(invoiceModel)
+          .subscribe((response: PurchaseInvoiceModel) => {
+            if (this.pagedPurchaseModel.pagingConfig) {
+              this.pagedPurchaseModel.pagingConfig.pageNumber = Math.ceil(this.pagedPurchaseModel.pagingConfig.totalItems / this.pagedPurchaseModel.pagingConfig.pageLength);
+              this.getPagedInvoice();
+            }
+          });
+      })
   }
 
-  selectOutlet(outletId: number, event: any): void{
+  selectOutlet(outletId: number, event: any): void {
     this.dashboardService.selectedOutletId = outletId;
 
     // If display is hidden, make it visible
     let dataTableCard = Array.from(document.getElementsByTagName('ngx-pagination'))[0];
-    if(dataTableCard && dataTableCard.classList.contains('d-none'))
+    if (dataTableCard && dataTableCard.classList.contains('d-none'))
       dataTableCard.classList.remove('d-none');
 
     // Add active class to source element and remove from sibling elements
     let sourceElem = event.srcElement;
     Array.from(sourceElem.parentNode.children).forEach((element: any) => {
-      if(element != sourceElem)
+      if (element != sourceElem)
         element.classList.remove('active');
       else
         element.classList.add('active');
     });
 
     // API Call
+    this.getPagedInvoice();
+  }
+
+  getPagedInvoice() {
     if (this.pagedPurchaseModel.tableConfig) {
-      this.purchaseService.getInvoiceList(outletId, this.pagedPurchaseModel)
+      this.purchaseService.getInvoiceList(this.selectedOutlet, this.pagedPurchaseModel)
         .subscribe(response => {
           if (this.loader && this.loader.classList.contains('d-block')) {
             this.loader.classList.remove('d-block');
@@ -107,10 +122,10 @@ export class PurchaseComponent {
             this.cdRef.detectChanges();
           }
 
-          if(this.pagedPurchaseModel.tableConfig && response.tableConfig){
+          if (this.pagedPurchaseModel.tableConfig && response.tableConfig) {
             this.pagedPurchaseModel.tableConfig.sourceData = response.tableConfig.sourceData;
           }
-          
+
           this.ngxPaginationService.set(this.pagedPurchaseModel);
         });
     }

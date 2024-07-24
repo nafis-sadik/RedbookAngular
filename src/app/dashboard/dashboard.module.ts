@@ -45,6 +45,8 @@ import { UserFormComponent } from './settings/general-settings/ums/user-form/use
 import { RoleFormComponent } from './settings/general-settings/role-management/role-form/role-form.component';
 import { ProductSettingsComponent } from './settings/ProductManagement/product-settings/product-settings.component';
 import { QuantityUnitComponent } from './settings/ProductManagement/product-settings/quantity-unit/quantity-unit.component';
+import { VendorsComponent } from './BusinessOperations/vendors/vendors.component';
+import { AddVendorsComponent } from './BusinessOperations/vendors/add-vendors/add-vendors.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,8 @@ import { QuantityUnitComponent } from './settings/ProductManagement/product-sett
     PlatformsettingsComponent,
     ProductsDetailsFormComponent,
     QuantityUnitComponent,
+    VendorsComponent,
+    AddVendorsComponent
   ],
   imports: [
     CommonModule,
