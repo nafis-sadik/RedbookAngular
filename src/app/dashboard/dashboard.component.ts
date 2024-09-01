@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { NbMenuItem, NbThemeService } from '@nebular/theme';
 import { DashboardService } from './services/dashboard.service';
-import { IRouteModel } from './Models/IRouteModel';
+import { RouteModel } from './Models/route.model';
 import { AppConfigurationService } from './services/app-config.service';
+import { RouteService } from './services/route.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ import { AppConfigurationService } from './services/app-config.service';
 
 export class DashboardComponent {
   selectedTheme: string;
-  isButtonVisible: boolean;
+  isMobileView: boolean;
   themes: string[] = [
     'Default',
     'Evening',
@@ -22,14 +23,15 @@ export class DashboardComponent {
     'Midnight',
     'Aquamarine'
   ];
-  displayName: string;
-  displayRoles: string;
+  displayName: string = '';
+  displayRoles: string = '';
 
-  menuOptions: NbMenuItem[];
+  menuOptions: NbMenuItem[] = [];
 
   constructor(
     chageDetector: ChangeDetectorRef,
     dashboardService: DashboardService,
+    routeService: RouteService,
     private themeService: NbThemeService,
     appConfigService: AppConfigurationService,
   ) {
@@ -37,19 +39,19 @@ export class DashboardComponent {
 
     // If no theme has been cached, select default theme
     let preselectedTheme: string | null = localStorage.getItem('theme');
-    if(preselectedTheme)
+    if (preselectedTheme)
       this.selectedTheme = preselectedTheme;
     else
       this.selectedTheme = this.themes[0];
 
     this.setTheme(this.selectedTheme);
-    
-    dashboardService.getMenuOptions()
-      .subscribe((menuList: Array<IRouteModel>) => {
+
+    routeService.getMenuRoute()
+      .subscribe((menuList: Array<RouteModel>) => {
         let rootElements: { [key: number]: NbMenuItem } = {};
-        
-        menuList.forEach((menuItem: IRouteModel) => {
-          if(menuItem.parentRouteId == null || menuItem.parentRouteId == undefined){
+
+        menuList.forEach((menuItem: RouteModel) => {
+          if (menuItem.parentRouteId == null || menuItem.parentRouteId == undefined) {
             rootElements[menuItem.routeId] = {
               title: menuItem.routeName,
               icon: menuItem.description,
@@ -59,11 +61,11 @@ export class DashboardComponent {
         });
 
         let childMenuList = menuList.filter((menuItem: any) => menuItem.parentRouteId != null && menuItem.parentRouteId != undefined);
-        
+
         let itemsToRemove: number[] = [];
-        childMenuList.forEach((menuItem: IRouteModel) => {
-          if(menuItem.parentRouteId != null && rootElements.hasOwnProperty(menuItem.parentRouteId)){
-            if(!rootElements[menuItem.parentRouteId].children)
+        childMenuList.forEach((menuItem: RouteModel) => {
+          if (menuItem.parentRouteId != null && rootElements.hasOwnProperty(menuItem.parentRouteId)) {
+            if (!rootElements[menuItem.parentRouteId].children)
               rootElements[menuItem.parentRouteId].children = [];
 
             rootElements[menuItem.parentRouteId].children?.push({
@@ -77,32 +79,32 @@ export class DashboardComponent {
         });
 
         menuList = [];
-        
+
         menuList.forEach((menuItem: any) => {
           rootElements[menuItem.routeId] = {
             title: menuItem.routeName,
             icon: menuItem.description,
             link: menuItem.routeValue
           };
-        });        
-        
+        });
+
         this.menuOptions = Object.values(rootElements);
         chageDetector.detectChanges();
       });
 
-    this.isButtonVisible = false;
+    this.isMobileView = false;
   }
 
   toggle(): void {
     let tempSide = document.getElementById('SideBar');
     let overlay = document.getElementById('Overlay');
     let sidebarElement: HTMLElement;
-    if(tempSide == null || overlay == null)
+    if (tempSide == null || overlay == null)
       return;
-    
+
     sidebarElement = tempSide;
-    
-    if(sidebarElement.classList.contains('expanded')){
+
+    if (sidebarElement.classList.contains('expanded')) {
       sidebarElement.classList.remove('expanded');
       sidebarElement.classList.add('collapsed');
       overlay.classList.add('d-none');
@@ -116,7 +118,7 @@ export class DashboardComponent {
   }
 
   setTheme(theme: string): void {
-    if(theme == 'Evening'){
+    if (theme == 'Evening') {
       this.themeService.changeTheme('dark');
     }
     else {
@@ -124,7 +126,7 @@ export class DashboardComponent {
     }
   }
 
-  flipProfilePanelVisibility(): void { this.isButtonVisible = !this.isButtonVisible; }
+  flipProfilePanelVisibility(): void { this.isMobileView = !this.isMobileView; }
 
   logout(): void {
     localStorage.removeItem('auth_app_token');

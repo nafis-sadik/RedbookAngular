@@ -166,7 +166,8 @@ export class VendorsComponent {
 
     // API Call
     if (this.pagedVendorModel.tableConfig) {
-      this.vendorService.getPaged(outletId, this.pagedVendorModel)
+      this.pagedVendorModel.organizationId = outletId;
+      this.vendorService.getPaged(this.pagedVendorModel)
         .subscribe(response => {
           this.loadDataOnUI(response);
 

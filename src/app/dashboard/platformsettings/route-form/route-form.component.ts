@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppService } from '../../services/app.service';
 import { RouteService } from '../../services/route.service';
-import { IRouteModel } from '../../Models/IRouteModel';
 import { IApplicationModel } from '../../Models/IApplicationModel';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
+import { RouteModel } from '../../Models/route.model';
+import { RouteTypeModel } from '../../Models/route-type.model';
 
 @Component({
   selector: 'app-route-form',
@@ -13,9 +14,11 @@ import { NbDialogRef, NbToastrService } from '@nebular/theme';
 })
 export class RouteFormComponent implements OnInit {
   routeForm: FormGroup;
-  inputModel: IRouteModel;
+  inputModel: RouteModel;
+  routeTypeList: Array<RouteTypeModel>;
   appList: Array<IApplicationModel>;
-  routeList: Array<IRouteModel>;
+  routeList: Array<RouteModel>;
+  loaderContainer: HTMLElement;
 
   constructor(
     private fb: FormBuilder,
@@ -23,7 +26,9 @@ export class RouteFormComponent implements OnInit {
     private routeService: RouteService,
     private toasterService: NbToastrService,
     private dialogRef: NbDialogRef<RouteFormComponent>,
-  ){ }
+  ) {
+    this.loaderContainer = document.getElementById('LoadingScreen') as HTMLElement;
+  }
 
   ngOnInit(): void {
     // Generate form group
@@ -33,7 +38,8 @@ export class RouteFormComponent implements OnInit {
       routeValue: [this.inputModel.routeValue],
       applicationId: [this.inputModel.applicationId, Validators.required],
       description: [this.inputModel.description],
-      parentRouteId: [this.inputModel.parentRouteId]
+      parentRouteId: [this.inputModel.parentRouteId],
+      routeTypeId: [this.inputModel.routeTypeId],
     });
 
     // 2 way model binding - Load data from form to view model
@@ -43,6 +49,7 @@ export class RouteFormComponent implements OnInit {
       this.inputModel.routeName = value.routeName;
       this.inputModel.routeValue = value.routeValue;
       this.inputModel.parentRouteId = value.parentRouteId;
+      this.inputModel.routeTypeId = value.routeTypeId;
     });
 
     // Load data for dropdown
@@ -50,23 +57,34 @@ export class RouteFormComponent implements OnInit {
       this.appList = value;
     });
 
-    this.routeService.getAllRoute().subscribe(routeListResponse => {
+    this.routeService.getAppRoute().subscribe(routeListResponse => {
       this.routeList = routeListResponse;
     });
+
+    this.routeService.getRouteTypes().subscribe(routeTypeList => {
+      this.routeTypeList = routeTypeList;
+    })
   }
 
-  saveRoute(): void{
-    let loaderContainer: HTMLElement|null = document.getElementById('LoadingScreen');
-    if(loaderContainer){
-      loaderContainer.classList.add('d-block');
-      loaderContainer.classList.remove('d-none');
+  saveRoute(): void {
+    if (this.loaderContainer) {
+      this.loaderContainer.classList.add('d-block');
+      this.loaderContainer.classList.remove('d-none');
     }
 
-    if(this.inputModel.routeId == undefined || this.inputModel.routeId == null || this.inputModel.routeId <= 0){
+    if (this.inputModel.routeId == undefined || this.inputModel.routeId == null || this.inputModel.routeId <= 0) {
       this.routeService.addNewRoute(this.inputModel)
         .subscribe(() => {
-          window.location.reload()
-        })
+          this.loaderContainer.classList.add('d-none');
+          this.loaderContainer.classList.remove('d-block');
+          this.toasterService.success('Success', 'Saved Successfully');
+          this.dialogRef.close();
+        }, (error) => {
+          this.loaderContainer.classList.add('d-none');
+          this.loaderContainer.classList.remove('d-block');
+          this.toasterService.danger('Error', 'Failed to save');
+          console.log(error);
+        });
     } else {
       this.routeService.updateNewRoute(this.inputModel)
         .subscribe(
@@ -74,55 +92,20 @@ export class RouteFormComponent implements OnInit {
             // Switched to reload as actions have method bindings which unbinds
             // UI update works fine
             // Multiple set not required anymore
-            if(loaderContainer){
-              loaderContainer.classList.remove('d-none');
-              loaderContainer.classList.add('d-block');
-
+            if (this.loaderContainer) {
+              this.loaderContainer.classList.remove('d-block');
+              this.loaderContainer.classList.add('d-none');
               this.dialogRef.close();
-
               this.toasterService.success('Success', 'Saved Successfully')
             }
-            
-            window.location.reload();
-            return;
-
-            // Get pagination data to update table
-            // this.paginationService.get().subscribe((paginationModel) => {
-            //   if(paginationModel.tableConfig?.sourceData.length){
-            //     // Pick row from table data and update from response data
-            //     for(let i = 0; i < paginationModel.tableConfig.sourceData.length; i++){
-            //       if(paginationModel.tableConfig.sourceData[i].id == response.id){
-            //         paginationModel.tableConfig.sourceData[i].routeName = response.routeName;
-            //         paginationModel.tableConfig.sourceData[i].routeValue = response.routeValue;
-            //         paginationModel.tableConfig.sourceData[i].applicationId = response.applicationId;
-            //         paginationModel.tableConfig.sourceData[i].description = response.description;
-
-            //         // Break the loop as we don't allow multiple update from UI
-            //         // So, after data is found, no further interation is necessary
-            //         break;
-            //       }
-            //     }
-
-            //     this.paginationService.set(paginationModel);
-            //   }
-            // });
-
-            // if(loaderContainer){
-            //   loaderContainer.classList.remove('d-block');
-            //   loaderContainer.classList.add('d-none');
-
-            //   this.dialogRef.close();
-
-            //   this.toasterService.success('Success', 'Saved Successfully')
-            // }
           },
           (err) => {
             console.log(err)
             this.toasterService.danger(err.error, 'Failed to execute operation');
 
-            if(loaderContainer){
-              loaderContainer.classList.remove('d-block');
-              loaderContainer.classList.add('d-none');
+            if (this.loaderContainer) {
+              this.loaderContainer.classList.remove('d-block');
+              this.loaderContainer.classList.add('d-none');
             }
           });
     }

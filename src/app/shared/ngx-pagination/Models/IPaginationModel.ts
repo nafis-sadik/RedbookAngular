@@ -132,4 +132,6 @@ export declare interface IPaginationModel<T> {
      */
     onAdd: Function;
   } | null;
+
+  organizationId: number;
 }

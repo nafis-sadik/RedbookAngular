@@ -12,6 +12,7 @@ export class NGXPaginationService<T> {
     pagingConfig: null,
     searchingConfig: null,
     tableConfig: null,
+    organizationId: 0,
   });
 
   get() {

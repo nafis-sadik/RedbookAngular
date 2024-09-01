@@ -38,11 +38,10 @@ export class VendorService {
             .get<Array<VendorModel>>(`${environment.baseUrlInventory}/api/Vendor/List/${outletId}`);
     }
 
-    getPaged(outletId: number, pagedModel: IPaginationModel<VendorModel>): Observable<IPaginationModel<VendorModel>> {
+    getPaged(pagedModel: IPaginationModel<VendorModel>): Observable<IPaginationModel<VendorModel>> {
         let paramsObject: HttpParams = this.sharedService.paginationToParams<VendorModel>(pagedModel);
-        paramsObject = paramsObject.append('organizationId', outletId.toString());
 
-        return this.http.get<IPaginationModel<VendorModel>>(`${environment.baseUrlInventory}/api/Vendor/PagedAsync/${outletId}`, { params: paramsObject });
+        return this.http.get<IPaginationModel<VendorModel>>(`${environment.baseUrlInventory}/api/Vendor/PagedAsync`, { params: paramsObject });
     }
 
     getById(vendorId: number): Observable<VendorModel> {

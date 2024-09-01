@@ -47,6 +47,7 @@ import { ProductSettingsComponent } from './settings/ProductManagement/product-s
 import { QuantityUnitComponent } from './settings/ProductManagement/product-settings/quantity-unit/quantity-unit.component';
 import { VendorsComponent } from './BusinessOperations/vendors/vendors.component';
 import { AddVendorsComponent } from './BusinessOperations/vendors/add-vendors/add-vendors.component';
+import { RouteSettingsComponent } from './platformsettings/route-settings/route-settings.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { AddVendorsComponent } from './BusinessOperations/vendors/add-vendors/ad
     ProductsDetailsFormComponent,
     QuantityUnitComponent,
     VendorsComponent,
-    AddVendorsComponent
+    AddVendorsComponent,
+    RouteSettingsComponent
   ],
   imports: [
     CommonModule,

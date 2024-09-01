@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
 import { map } from 'rxjs';
-import { IRouteModel } from '../Models/IRouteModel';
+import { RouteModel } from '../Models/route.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +31,7 @@ export class DashboardService {
     searchFieldPlaceholder: string | null = null
   ): IPaginationModel<T> {
     return {
+      organizationId: 0,
       tableCardHeader: cardHeader,
       tableConfig: {
         onEdit: null,
@@ -73,11 +74,5 @@ export class DashboardService {
         }
       },
     };
-  }
-
-  getMenuOptions() {
-    return this.http
-      .get<IRouteModel[]>(`${this.baseUrl}/api/Route/GetMenuRoutes/`)
-      .pipe(map(response => response))
   }
 }

@@ -1,7 +1,7 @@
 import { environment } from "src/environments/environment.development";
 import { RoleModel } from "./role.model";
 
-export class UserModel{
+export class UserModel {
   /**
    * Unique Identifier of specific user
    * @type {number}
@@ -61,7 +61,7 @@ export class UserModel{
    * Application id of the application this user is making the request from
    * @type {Array<string>}
    */
-  applicationId: number = Number(environment.appId);
+  applicationId: number = 1;
   /**
    * Id of the organization that the user is associated with and trying to run the operation upon
    * @type {Array<string>}

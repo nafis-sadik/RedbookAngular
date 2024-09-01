@@ -1,67 +1,76 @@
 import { Injectable } from "@angular/core";
-import { IRouteModel } from "../Models/IRouteModel";
+import { RouteModel } from "../Models/route.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment.development";
-import { Observable, map, of } from "rxjs";
+import { Observable, Subject, map, of } from "rxjs";
 import { IPaginationModel } from "src/app/shared/ngx-pagination/Models/IPaginationModel";
 import { CachingService } from "./caching.service";
+import { RouteTypeModel } from "../Models/route-type.model";
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
-export class RouteService{
+export class RouteService {
+  private formData: Subject<RouteModel>;
   baseUrl = environment.baseUrlUMS;
-  appId = environment.appId
 
   constructor(
     private http: HttpClient,
     private cachingService: CachingService
   ) { }
 
-  addNewRoute(routeModel: IRouteModel): Observable<IRouteModel>{
-      return this.http
-          .post<IRouteModel>(`${this.baseUrl}/api/Route`, routeModel)
-          .pipe(map(response => {
-            this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes`);
-            return response
-          }));
+  emitFormData(model: RouteModel): void {
+    this.formData.next(model);
   }
 
-  updateNewRoute(routeModel: IRouteModel): Observable<IRouteModel>{
-      return this.http
-          .put<IRouteModel>(`${this.baseUrl}/api/Route`, routeModel)
-          .pipe(map(response => {
-            this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes`);
-            return response
-          }));
+  listenFormData(): Observable<RouteModel> {
+    return this.formData.asObservable();
   }
 
-  getPagedRoute(pagedRouteModel: IPaginationModel<IRouteModel>): Observable<any>{
-    if(pagedRouteModel.searchingConfig?.searchString){
+  addNewRoute(routeModel: RouteModel): Observable<RouteModel> {
+    return this.http
+      .post<RouteModel>(`${this.baseUrl}/api/Route`, routeModel)
+      .pipe(map(response => {
+        this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes`);
+        return response
+      }));
+  }
+
+  updateNewRoute(routeModel: RouteModel): Observable<RouteModel> {
+    return this.http
+      .put<RouteModel>(`${this.baseUrl}/api/Route`, routeModel)
+      .pipe(map(response => {
+        this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes`);
+        return response
+      }));
+  }
+
+  getPagedRoute(pagedRouteModel: IPaginationModel<RouteModel>): Observable<any> {
+    if (pagedRouteModel.searchingConfig?.searchString) {
       return this.http
-          .get<IPaginationModel<IRouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.pageNumber}&PageLength=${pagedRouteModel.pagingConfig?.pageLength}&SearchString=${pagedRouteModel.searchingConfig?.searchString}`)
-          .pipe(map(response => response ));
+        .get<IPaginationModel<RouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.pageNumber}&PageLength=${pagedRouteModel.pagingConfig?.pageLength}&SearchString=${pagedRouteModel.searchingConfig?.searchString}`)
+        .pipe(map(response => response));
     } else {
       return this.http
-        .get<IPaginationModel<IRouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.pageNumber}&PageLength=${pagedRouteModel.pagingConfig?.pageLength}`)
-        .pipe(map(response => response ));
+        .get<IPaginationModel<RouteModel>>(`${this.baseUrl}/api/Route/GetPaged?PageNumber=${pagedRouteModel.pagingConfig?.pageNumber}&PageLength=${pagedRouteModel.pagingConfig?.pageLength}`)
+        .pipe(map(response => response));
     }
   }
 
-  getRoutesByRole(roleId: number): Observable<Array<IRouteModel>>{   
+  getRoutesByRole(roleId: number): Observable<Array<RouteModel>> {
     return this.http
-        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/Role/${roleId}`)
-        .pipe(map(response => response ));
+      .get<Array<RouteModel>>(`${this.baseUrl}/api/Route/Role/${roleId}`)
+      .pipe(map(response => response));
   }
 
-  getAllRoute(): Observable<Array<IRouteModel>>{
-    let cachedRoutes: Array<IRouteModel> = this.cachingService.get(`${this.baseUrl}/api/Route/GetAppRoutes`);
-    if(!cachedRoutes){
+  getMenuRoute(): Observable<Array<RouteModel>> {
+    let cachedRoutes: Array<RouteModel> = this.cachingService.get(`${this.baseUrl}/api/Route/Menu`);
+    if (!cachedRoutes) {
       return this.http
-        .get<Array<IRouteModel>>(`${this.baseUrl}/api/Route/GetAppRoutes/${environment.appId}`)
+        .get<Array<RouteModel>>(`${this.baseUrl}/api/Route/Menu`)
         .pipe(map((response) => {
-          if(response && response.length > 0)
-            this.cachingService.set(`${this.baseUrl}/api/Route/GetAppRoutes`, response);
+          if (response && response.length > 0)
+            this.cachingService.set(`${this.baseUrl}/api/Route/Menu`, response);
           return response;
         }));
     }
@@ -69,10 +78,31 @@ export class RouteService{
     return of(cachedRoutes);
   }
 
-  deleteRoute(appId: number): Observable<any>{
+  getAppRoute(): Observable<Array<RouteModel>> {
+    let cachedRoutes: Array<RouteModel> = this.cachingService.get(`${this.baseUrl}/api/Route/App`);
+    if (!cachedRoutes) {
+      return this.http
+        .get<Array<RouteModel>>(`${this.baseUrl}/api/Route/App`)
+        .pipe(map((response) => {
+          if (response && response.length > 0)
+            this.cachingService.set(`${this.baseUrl}/api/Route/App`, response);
+          return response;
+        }));
+    }
+
+    return of(cachedRoutes);
+  }
+
+  getRouteTypes(): Observable<Array<RouteTypeModel>> {
+    return this.http
+      .get<Array<any>>(`${this.baseUrl}/api/Route/Types`)
+      .pipe(map(response => response));
+  }
+
+  deleteRoute(routeId: number): Observable<any> {
     this.cachingService.remove(`${this.baseUrl}/api/Route/GetAppRoutes`);
     return this.http
-      .delete(`${this.baseUrl}/api/Route/${appId}`)
+      .delete(`${this.baseUrl}/api/Route/${routeId}`)
       .pipe(map(response => response));
   }
 }

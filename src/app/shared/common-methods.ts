@@ -15,7 +15,10 @@ export class SharedService {
         if (pagedUserModel.searchingConfig && pagedUserModel.searchingConfig.searchString) {
             params = params.append('searchString', pagedUserModel.searchingConfig.searchString);
         }
-        
+
+        if (pagedUserModel.organizationId && pagedUserModel.organizationId > 0)
+            params = params.append('organizationId', pagedUserModel.organizationId);
+
         if (pagedUserModel.pagingConfig) {
             params = params.append('pageNumber', pagedUserModel.pagingConfig.pageNumber);
             params = params.append('pageLength', pagedUserModel.pagingConfig.pageLength);

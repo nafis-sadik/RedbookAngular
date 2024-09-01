@@ -34,7 +34,7 @@ export class PurchaseService {
     let paramsObject: HttpParams = this.sharedService.paginationToParams<PurchaseInvoiceModel>(pagedPurchaseModel);
     paramsObject = paramsObject.append('organizationId', outletId.toString());
     return this.http
-      .get<IPaginationModel<PurchaseInvoiceModel>>(`${environment.baseUrlInventory}/api/Purchase/Invoice/PagedAsync/`, { params: paramsObject })
+      .get<IPaginationModel<PurchaseInvoiceModel>>(`${environment.baseUrlInventory}/api/Purchase/PagedAsync/`, { params: paramsObject })
       .pipe(map(response => response));
   }
 }

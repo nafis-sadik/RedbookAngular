@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { OrganizationModel } from 'src/app/dashboard/Models/organization.model';
-import { IRouteModel } from 'src/app/dashboard/Models/IRouteModel';
 import { IRoutePermissionModel } from 'src/app/dashboard/Models/IRoutePermissionModel';
 import { OrganizationService } from 'src/app/dashboard/services/organization.service';
 import { RoleService } from 'src/app/dashboard/services/role.service';
@@ -10,6 +9,7 @@ import { AddDialogueComponent } from 'src/app/shared/ngx-dialogues/add-dialogue/
 import { RemoveDialogueComponent } from 'src/app/shared/ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { RoleFormComponent } from './role-form/role-form.component';
 import { RoleModel } from 'src/app/dashboard/Models/role.model';
+import { RouteModel } from 'src/app/dashboard/Models/route.model';
 
 @Component({
   selector: 'app-role-management',
@@ -51,7 +51,7 @@ export class RoleManagementComponent {
       context: {
         saveMethod: (businessTitle: string) => {
           let observableObj;
-          if(businessModel) {
+          if (businessModel) {
             businessModel.organizationName = businessTitle;
             observableObj = this.businessService.updateOrganization(businessModel);
           } else {
@@ -63,14 +63,14 @@ export class RoleManagementComponent {
 
           observableObj.subscribe((response) => {
             let isNewlyAdded = true;
-            for(let i = 0; i < this.ownedBusinesses.length; i++){
-              if(this.ownedBusinesses[i].organizationId == response.organizationId){
+            for (let i = 0; i < this.ownedBusinesses.length; i++) {
+              if (this.ownedBusinesses[i].organizationId == response.organizationId) {
                 isNewlyAdded = false;
                 this.ownedBusinesses[i] = response;
               }
             }
 
-            if(isNewlyAdded){
+            if (isNewlyAdded) {
               this.ownedBusinesses.push(response);
             }
             this.chageDetector.detectChanges();
@@ -107,18 +107,18 @@ export class RoleManagementComponent {
   }
 
   // Role Management
-  loadBusinessRoles(businessId: number): void{
+  loadBusinessRoles(businessId: number): void {
     this.selectedBusinessId = businessId;
     this.roleService.getOrganizationRoles(businessId)
       .subscribe((response) => {
         this.rolesUnderThisBusiness = [];
         response.forEach(element => {
           this.rolesUnderThisBusiness.push({
-                organizationId: element.organizationId,
-                roleId: element.roleId,
-                roleName: element.roleName,
-                isAdmin: element.isAdmin
-            });
+            organizationId: element.organizationId,
+            roleId: element.roleId,
+            roleName: element.roleName,
+            isAdmin: element.isAdmin
+          });
         });
 
         this.chageDetector.detectChanges();
@@ -218,15 +218,15 @@ export class RoleManagementComponent {
     });
   }
 
-  findLeafNodes(nodes: IRouteModel[]): IRouteModel[] {
+  findLeafNodes(nodes: RouteModel[]): RouteModel[] {
     let parentIds = nodes.map(node => node.parentRouteId);
     return nodes.filter(node => !parentIds.includes(node.routeId));
   }
 
-  loadRoleRoutes(roleId: any): void{
+  loadRoleRoutes(roleId: any): void {
     this.roleRouteMapping = [];
     this.selectedRoleId = roleId;
-    this.routeService.getAllRoute()
+    this.routeService.getAppRoute()
       .subscribe((appRoutes) => {
         this.routeService.getRoutesByRole(roleId)
           .subscribe((allowedRoutes) => {
@@ -248,10 +248,10 @@ export class RoleManagementComponent {
       });
   }
 
-  allowRouteToRole(routeId: number): void{
+  allowRouteToRole(routeId: number): void {
     this.roleService.mapRolesWithRoute(this.selectedRoleId, routeId)
-    .subscribe(() => {
-      this.toastrService.success('Route mapped successfully', 'Success');
-    });
+      .subscribe(() => {
+        this.toastrService.success('Route mapped successfully', 'Success');
+      });
   }
 }
