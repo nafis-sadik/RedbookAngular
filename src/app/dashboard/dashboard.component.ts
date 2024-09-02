@@ -30,7 +30,6 @@ export class DashboardComponent {
 
   constructor(
     chageDetector: ChangeDetectorRef,
-    dashboardService: DashboardService,
     routeService: RouteService,
     private themeService: NbThemeService,
     appConfigService: AppConfigurationService,
@@ -48,6 +47,7 @@ export class DashboardComponent {
 
     routeService.getMenuRoute()
       .subscribe((menuList: Array<RouteModel>) => {
+        menuList = menuList.sort(x => x.sequence);
         let rootElements: { [key: number]: NbMenuItem } = {};
 
         menuList.forEach((menuItem: RouteModel) => {

@@ -16,13 +16,10 @@ import { ProductModel } from 'src/app/dashboard/Models/product.model';
 })
 export class ProductsComponent implements OnInit{
   selectedOutletId: number;
-  isUpdateOperation: boolean = false;
-
-  organizationList: OrganizationModel[];
-
-  pagedProductModel: IPaginationModel<ProductModel>;
-
   loaderContainer: HTMLElement| null;
+  isUpdateOperation: boolean = false;
+  organizationList: OrganizationModel[];
+  pagedProductModel: IPaginationModel<ProductModel>;
 
   constructor(
     dashboardService: DashboardService,
@@ -57,9 +54,10 @@ export class ProductsComponent implements OnInit{
     if (this.pagedProductModel.tableConfig) {
       this.pagedProductModel.tableConfig.tableMaping = {
         "Product Id": "productId",
+        "Product Name": "productName",
+        "Brand Name": "brandName",
         "Product Category": "categoryName",
         "Product Subcategory": "subcategoryName",
-        "Product Name": "productName",
         "Price": "purchasePrice",
         "MRP": "retailPrice"
       };
@@ -81,16 +79,13 @@ export class ProductsComponent implements OnInit{
                   });
 
                   this.ngxPaginationService.set(this.pagedProductModel);
-                  return;
                 });
             }
           }
         });
       };
 
-      this.pagedProductModel.tableConfig.onDelete = () => {
-        console.log('onDelete');
-      };
+      this.pagedProductModel.tableConfig.onDelete = () => { console.log('onDelete'); };
     }
 
     if(this.pagedProductModel.addNewElementButtonConfig){
@@ -123,6 +118,7 @@ export class ProductsComponent implements OnInit{
 
   ngOnInit(): void {
     this.loaderContainer = document.getElementById('LoadingScreen');
+
     setTimeout(() => {
       if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
         this.loaderContainer.classList.remove('d-block');

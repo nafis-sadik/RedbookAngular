@@ -68,8 +68,7 @@
             <nb-select formControlName="brandAttributeId" [selected]="productModel.brandAttributeId" selected fullWidth
                        status="primary" placeholder="Quantity Type" aria-label="ProductSubcategory">
               <nb-option value>Select Brand</nb-option>
-              <nb-option *ngFor="let brand of brandAttributes" [value]="brand.attributeId">{{ brand.attributeName
-                }}</nb-option>
+              <nb-option *ngFor="let brand of brandAttributes" [value]="brand.attributeId">{{ brand.attributeName }}</nb-option>
             </nb-select>
             <div *ngIf="productForm.get('brandAttributeId')?.touched && productForm.get('brandAttributeId')?.invalid"
                  class="validationError"></div>

@@ -52,45 +52,30 @@ export class ProductsDetailsFormComponent {
           });
       this.productModel = this.productModelInput;
     } else {
-      this.productModel = {
-        productId: 0,
-        productName: '',
-        categoryId: 0,
-        subcategoryId: 0,
-        purchasePrice: 0,
-        retailPrice: 0,
-        categoryName: '',
-        quantity: 0,
-        subcategoryName: '',
-        organizationId: 0,
-        quantityTypeId: 0,
-        brandAttributeId: 0
-      };
+      this.productModel = new ProductModel();
     }
 
     this.loaderContainer = document.getElementById('LoadingScreen');
-
-    setTimeout(() => {
-      this.categoryService.getCategoriesUnderOrganization(this.selectedBusinessId)
-        .subscribe((categories) => {
-          this.categoryList = categories;
-        });
-
+    
+    this.categoryService.getCategoriesUnderOrganization(this.selectedBusinessId)
+    .subscribe((categories) => {
+      this.categoryList = categories;
+      
       this.commonAttributeService.getAttributes(environment.attributeTypes.quantity)
         .subscribe((attributes) => {
           this.quantityAttributes = attributes;
+          
+          this.commonAttributeService.getAttributes(environment.attributeTypes.brands)
+            .subscribe((attributes) => {
+              this.brandAttributes = attributes;
+              
+              if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
+                this.loaderContainer.classList.remove('d-block');
+                this.loaderContainer.classList.add('d-none');
+              }
+            });
         });
-
-      this.commonAttributeService.getAttributes(environment.attributeTypes.brands)
-        .subscribe((attributes) => {
-          this.brandAttributes = attributes;
-        });
-
-      if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
-        this.loaderContainer.classList.remove('d-block');
-        this.loaderContainer.classList.add('d-none');
-      }
-    }, 1.5 * 1000);
+    });
 
     this.productForm = this.fb.group({
       productName: [this.productModel.productName, Validators.required],
@@ -105,11 +90,14 @@ export class ProductsDetailsFormComponent {
       this.productModel.categoryId = value.categoryId;
       this.productModel.subcategoryId = value.subcategoryId;
       this.productModel.quantityTypeId = value.quantityTypeId;
+      this.productModel.brandAttributeId = value.brandAttributeId;
     });
   }
 
   save() {
     if (this.productForm.valid) {
+      let selectedBrand = this.brandAttributes.find(brand => brand.attributeId == this.productModel.brandAttributeId);
+      this.productModel.brandName = selectedBrand? selectedBrand.attributeName: '';
       this.saveMethod(this.productModel);
       this.dialogRef.close();
     }

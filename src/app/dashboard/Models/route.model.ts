@@ -52,4 +52,10 @@ export class RouteModel {
      * @type {boolean}
      */
     isMenuRoute: boolean = true;
+
+    /**
+     * Menu item display sequence
+     * @type {number}
+     */
+    sequence: number = 0;
 }

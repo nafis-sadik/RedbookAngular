@@ -59,4 +59,9 @@ export class ProductModel{
      * @type {number}
      */
     brandAttributeId: number = 0;
+    /**
+     * Brand name of product, (i.e. RFL, Beximco, GE etc)
+     * @type {string}
+     */
+    brandName: string = '';
 }
