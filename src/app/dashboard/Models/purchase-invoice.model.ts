@@ -1,5 +1,5 @@
 import { ProductModel } from "./product.model";
-import { PurchaseDetailsModel } from "./purchase-details.model";
+import { PurchaseInvoiceDetailsModel } from "./purchase-invoice-details.model";
 import { PurchasePaymentModel } from "./purchase-payment.model";
 
 export class PurchaseInvoiceModel {
@@ -16,10 +16,16 @@ export class PurchaseInvoiceModel {
   purchaseDate: string = '';
 
   /**
+   * The total discount value on the invoice.
+   * @type {number}
+   */
+  totalDiscount: number = 0;
+
+  /**
    * The total purchase price for the invoice.
    * @type {number}
    */
-  totalPurchasePrice: number = 0;
+  grossTotal: number = 0;
 
   /**
    * The unique identifier for the organization associated with the purchase invoice.
@@ -53,9 +59,9 @@ export class PurchaseInvoiceModel {
 
   /**
    * An array of purchase details associated with the purchase invoice.
-   * @type {Array<PurchaseDetailsModel>}
+   * @type {Array<PurchaseInvoiceDetailsModel>}
    */
-  purchaseDetails: Array<PurchaseDetailsModel> = [];
+  purchaseDetails: Array<PurchaseInvoiceDetailsModel> = [];
 
   /**
    * An array of product models associated with the purchase invoice.

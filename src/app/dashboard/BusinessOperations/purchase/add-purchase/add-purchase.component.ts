@@ -3,10 +3,10 @@ import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
 import { VendorModel } from 'src/app/dashboard/Models/vendor.model';
 import { PurchaseInvoiceModel } from 'src/app/dashboard/Models/purchase-invoice.model';
 import { PurchaseService } from 'src/app/dashboard/services/purchase.service';
-import { PurchaseDetailsModel } from 'src/app/dashboard/Models/purchase-details.model';
 import { ProductModel } from 'src/app/dashboard/Models/product.model';
 import { ProductService } from 'src/app/dashboard/services/products.service';
 import { InvoicePaymentModel } from 'src/app/dashboard/Models/invoice-payment.model';
+import { PurchaseInvoiceDetailsModel } from 'src/app/dashboard/Models/purchase-invoice-details.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { VendorService } from 'src/app/dashboard/services/vendor.service';
@@ -53,7 +53,7 @@ export class AddPurchaseComponent implements OnInit {
     this.invoiceForm = formBuilder.group({
       vendorId: [0, [Validators.required, Validators.min(1)]],
       purchaseDate: ['', Validators.required],
-      totalPurchasePrice: [0, [Validators.required, Validators.min(1)]],
+      grossTotal: [0, [Validators.required, Validators.min(1)]],
       terms: [''],
       remarks: [''],
     });
@@ -64,14 +64,14 @@ export class AddPurchaseComponent implements OnInit {
       this.updateTotalAmount();
     });
 
-    this.invoiceForm.valueChanges.subscribe(val => {
-      this.invoiceModel.vendorId = val.vendorId;
+    this.invoiceForm.valueChanges.subscribe(formData => {
+      this.invoiceModel.vendorId = formData.vendorId;
 
-      if (!Number.isNaN(Number(val.totalPurchasePrice)))
-        this.invoiceModel.totalPurchasePrice = Number(val.totalPurchasePrice);
+      if (!Number.isNaN(Number(formData.grossTotal)))
+        this.invoiceModel.grossTotal = Number(formData.grossTotal);
 
-      if (val.purchaseDate) {
-        let purchaseDateTime = new Date(val.purchaseDate);
+      if (formData.purchaseDate) {
+        let purchaseDateTime = new Date(formData.purchaseDate);
         let displayDate = this.datePipe.transform(purchaseDateTime, 'MMM d, yyyy');
         if (displayDate)
           this.invoiceModel.purchaseDate = displayDate;
@@ -123,8 +123,8 @@ export class AddPurchaseComponent implements OnInit {
    * This method takes an array of product IDs (`prodIdArr`) and performs the following steps:
    * 1. Maps the product IDs to numbers.
    * 2. Iterates through the `purchaseDetails` array and removes any products that are already in the list.
-   * 3. Iterates through the remaining product IDs and creates new `PurchaseDetailsModel` objects for each product, setting the `productId`, `productName`, `quantity`, and `unitPrice` properties.
-   * 4. Adds the new `PurchaseDetailsModel` objects to the `purchaseDetails` array of the `invoiceModel`.
+   * 3. Iterates through the remaining product IDs and creates new `PurchaseInvoiceDetailsModel` objects for each product, setting the `productId`, `productName`, `quantity`, and `unitPrice` properties.
+   * 4. Adds the new `PurchaseInvoiceDetailsModel` objects to the `purchaseDetails` array of the `invoiceModel`.
    * 5. Calls the `updateTotalAmount()` method to update the total amount of the purchase.
    *
    * @param prodIdArr - An array of product IDs to be selected.
@@ -133,16 +133,16 @@ export class AddPurchaseComponent implements OnInit {
     prodIdArr = prodIdArr.map((value) => Number(value));
 
     this.invoiceModel.purchaseDetails.forEach(
-      (purchaseDetailsModel: PurchaseDetailsModel) => {
-        if (prodIdArr.includes(purchaseDetailsModel.productId)) {
-          let prodIdIndex = prodIdArr.indexOf(purchaseDetailsModel.productId);
+      (PurchaseInvoiceDetailsModel: PurchaseInvoiceDetailsModel) => {
+        if (prodIdArr.includes(PurchaseInvoiceDetailsModel.productId)) {
+          let prodIdIndex = prodIdArr.indexOf(PurchaseInvoiceDetailsModel.productId);
           prodIdArr.splice(prodIdIndex, 1);
         }
       }
     );
 
     prodIdArr.forEach((prodId) => {
-      let purchaseDetails = new PurchaseDetailsModel();
+      let purchaseDetails = new PurchaseInvoiceDetailsModel();
       let product = this.outletProductList.find((x) => x.productId == prodId);
       if (product) {
         purchaseDetails.productId = prodId;
@@ -157,18 +157,18 @@ export class AddPurchaseComponent implements OnInit {
   }
 
   /**
-   * Adds a new `PurchaseDetailsModel` object to the `purchaseDetails` array of the `invoiceModel`.
+   * Adds a new `PurchaseInvoiceDetailsModel` object to the `purchaseDetails` array of the `invoiceModel`.
    * 
-   * This method creates a new `PurchaseDetailsModel` object with the following properties:
+   * This method creates a new `PurchaseInvoiceDetailsModel` object with the following properties:
    * - `productId`: 0
    * - `productName`: ""
    * - `quantity`: 1
    * - `unitPrice`: 0
    * 
-   * The new `PurchaseDetailsModel` object is then added to the `purchaseDetails` array of the `invoiceModel`.
+   * The new `PurchaseInvoiceDetailsModel` object is then added to the `purchaseDetails` array of the `invoiceModel`.
    */
   addCustom() {
-    let purchaseDetails = new PurchaseDetailsModel();
+    let purchaseDetails = new PurchaseInvoiceDetailsModel();
     purchaseDetails.productId = 0;
     purchaseDetails.productName = "";
     purchaseDetails.quantity = 1;
@@ -179,13 +179,13 @@ export class AddPurchaseComponent implements OnInit {
   /**
    * Updates the unit price of a purchase product detail and recalculates the total amount of the purchase.
    *
-   * This method is called when the unit price of a purchase product detail is updated. It iterates through the `purchaseDetails` array of the `invoiceModel` and updates the `unitPrice` property of the matching `PurchaseDetailsModel` object. It then calls the `updateTotalAmount()` method to recalculate the total amount of the purchase.
+   * This method is called when the unit price of a purchase product detail is updated. It iterates through the `purchaseDetails` array of the `invoiceModel` and updates the `unitPrice` property of the matching `PurchaseInvoiceDetailsModel` object. It then calls the `updateTotalAmount()` method to recalculate the total amount of the purchase.
    *
-   * @param purchaseProductDetail - The `PurchaseDetailsModel` object whose unit price is being updated.
+   * @param purchaseProductDetail - The `PurchaseInvoiceDetailsModel` object whose unit price is being updated.
    * @param event - The event object containing the new unit price value.
    */
-  updateProductPrice(purchaseProductDetail: PurchaseDetailsModel, event: any): void {
-    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseDetailsModel) => {
+  updateProductPrice(purchaseProductDetail: PurchaseInvoiceDetailsModel, event: any): void {
+    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseInvoiceDetailsModel) => {
       if (detail.productId == purchaseProductDetail.productId && event.target.value) {
         detail.unitPrice = event.target.value;
       }
@@ -200,10 +200,24 @@ export class AddPurchaseComponent implements OnInit {
    */
   updateTotalAmount() {
     this.calculatedTotalAmount = 0;
-    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseDetailsModel) => {
-      detail.totalPrice = detail.quantity * detail.unitPrice;
+    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseInvoiceDetailsModel) => {      
+      // Make sure the numbers are really numbers, it's js at the end of the day, you can never be too sure.
+      if (!Number.isNaN(Number(detail.unitPrice)))
+        detail.unitPrice = Number(detail.unitPrice);
+
+      if (!Number.isNaN(Number(detail.discount)))
+        detail.discount = Number(detail.discount);
+
+      if (!Number.isNaN(Number(detail.vat)))
+        detail.vat = Number(detail.vat);
+
+      let vatAmount: number = detail.unitPrice * (detail.vat / 100);
+      let grossTotalOnItem: number = detail.quantity * (detail.unitPrice + vatAmount);
+      detail.totalPrice = grossTotalOnItem - detail.discount;
       this.calculatedTotalAmount += detail.totalPrice;
     });
+
+    this.calculatedTotalAmount -= this.invoiceModel.totalDiscount;
 
     this.cdRef.detectChanges();
   }

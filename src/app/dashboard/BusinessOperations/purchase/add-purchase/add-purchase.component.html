@@ -54,10 +54,10 @@
                   <div class="input-group">
                     <input fullWidth nbInput required
                            placeholder="Total Invoice Value"
-                           formControlName="totalPurchasePrice"
-                           [value]="invoiceModel.totalPurchasePrice"
+                           formControlName="grossTotal"
+                           [value]="invoiceModel.grossTotal"
                            type="number">
-                    <div *ngIf="(invoiceForm.get('totalPurchasePrice')?.touched || invoiceForm.get('totalPurchasePrice')?.dirty) && invoiceForm.get('totalPurchasePrice')?.invalid"
+                    <div *ngIf="(invoiceForm.get('grossTotal')?.touched || invoiceForm.get('grossTotal')?.dirty) && invoiceForm.get('grossTotal')?.invalid"
                          class="validationError"></div>
                   </div>
                 </div>
@@ -109,43 +109,69 @@
                         <th class="ng-star-inserted">Product Name</th>
                         <th class="ng-star-inserted">Quantity</th>
                         <th class="ng-star-inserted">Price</th>
+                        <th class="ng-star-inserted">Vat (%)</th>
+                        <th class="ng-star-inserted">Discount</th>
                         <th class="ng-star-inserted">Net Total</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let purchaseDetail of invoiceModel.purchaseDetails; let i = index">
                         <td>{{ purchaseDetail.productId }}</td>
+                        <!-- {{product.productName}} -->
                         <td *ngIf="purchaseDetail.productId > 0">{{ purchaseDetail.productName }}</td>
-                        <td *ngIf="purchaseDetail.productId == 0">
-                          <!-- {{product.productName}} -->
+                        <td *ngIf="purchaseDetail.productId <= 0">
                           <input fullWidth nbInput required
                                  type="text"
                                  [value]="purchaseDetail.productName"
                                  (keyup)="purchaseDetail.productName = $any($event.target).value? $any($event.target).value : ''">
                         </td>
+                        <!-- {{product.Quantity}} -->
                         <td>
-                          <!-- {{product.Quantity}} -->
                           <input fullWidth nbInput required
                                  type="number"
                                  [value]="purchaseDetail.quantity"
                                  (keyup)="purchaseDetail.quantity = $any($event.target).value? $any($event.target).value : 1">
                         </td>
+                        <!-- {{product.unitPrice}} -->
                         <td>
-                          <!-- {{product.PurchasePrice}} -->
                           <input fullWidth nbInput required
                                  type="number"
                                  [value]="purchaseDetail.unitPrice"
                                  (keyup)="purchaseDetail.unitPrice = $any($event.target).value? $any($event.target).value : 1">
                         </td>
-                        <td>{{ purchaseDetail.quantity * purchaseDetail.unitPrice }}</td>
+                        <!-- {{product.vat}} -->
+                        <td>
+                          <input fullWidth nbInput required
+                                 type="number"
+                                 [value]="purchaseDetail.vat"
+                                 (keyup)="purchaseDetail.vat = $any($event.target).value? $any($event.target).value : 1">
+                        </td>
+                        <!-- {{product.discount}} -->
+                        <td>
+                          <input fullWidth nbInput required
+                                type="number"
+                                [value]="purchaseDetail.discount"
+                                (keyup)="purchaseDetail.discount = $any($event.target).value? $any($event.target).value : 1">
+                        </td>
+                        <td>{{ purchaseDetail.totalPrice }}</td>
                       </tr>
                       <tr>
-                        <td colspan="4"><b>Net Total</b></td>
+                        <!-- {{invoiceModel.totalDiscount}} -->
+                        <td colspan="6"><b>Discount</b></td>
+                        <td><b>
+                          <input fullWidth nbInput required
+                                 type="number"
+                                 [value]="invoiceModel.totalDiscount"
+                                 (keyup)="invoiceModel.totalDiscount = $any($event.target).value? $any($event.target).value : 0">
+                        </b></td>
+                      </tr>
+                      <tr>
+                        <td colspan="6"><b>Net Total</b></td>
                         <td><b>{{ calculatedTotalAmount }}</b></td>
                       </tr>
                       <tr>
-                        <td colspan="4"><b>Total Payable (Total amount mentioned in actual invoice)</b></td>
-                        <td><b>{{ invoiceModel.totalPurchasePrice }}</b></td>
+                        <td colspan="6"><b>Total Payable (Total amount mentioned in actual invoice)</b></td>
+                        <td><b>{{ invoiceModel.grossTotal }}</b></td>
                       </tr>
                     </tbody>
                   </table>
@@ -201,8 +227,8 @@
                       </tr>
                       <tr>
                         <td colspan="3"><b>Net Total</b></td>
-                        <td><b>{{ invoiceModel.totalPurchasePrice }}</b></td>
-                        <td><b>{{ invoiceModel.totalPurchasePrice }}</b></td>
+                        <td><b>{{ invoiceModel.grossTotal - invoiceModel.totalDiscount }}</b></td>
+                        <td><b>{{ invoiceModel.grossTotal - invoiceModel.totalDiscount }}</b></td>
                       </tr>
                     </tbody>
                   </table>
