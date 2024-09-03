@@ -38,11 +38,7 @@ export class DashboardComponent {
 
     // If no theme has been cached, select default theme
     let preselectedTheme: string | null = localStorage.getItem('theme');
-    if (preselectedTheme)
-      this.selectedTheme = preselectedTheme;
-    else
-      this.selectedTheme = this.themes[0];
-
+    this.selectedTheme = this.themes.find(x => x.toLowerCase() == preselectedTheme)? this.themes.find(x => x.toLowerCase() == preselectedTheme)! : this.themes[0];
     this.setTheme(this.selectedTheme);
 
     routeService.getMenuRoute()
