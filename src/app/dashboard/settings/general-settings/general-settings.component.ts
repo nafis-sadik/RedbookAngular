@@ -15,21 +15,24 @@ export class GeneralSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loaderContainer = document.getElementById('LoadingScreen');
-
-    setTimeout(() => {
-      if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
-        this.loaderContainer.classList.remove('d-block');
-        this.loaderContainer.classList.add('d-none');
-      }
-    }, 1.5 * 1000);
     
     this.orgService.getUserOrgs()
       .subscribe((orgList: OrganizationModel[]) => {
-        console.log('orgList' + orgList);
         this.organizationList = orgList;
+        
+        console.log(this.loaderContainer?.classList);
+        if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
+          this.loaderContainer.classList.remove('d-block');
+          this.loaderContainer.classList.add('d-none');
+        }
       },
       (error) => {
         console.log('error' + error);
+        
+        if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
+          this.loaderContainer.classList.remove('d-block');
+          this.loaderContainer.classList.add('d-none');
+        }
       });
   }
 }

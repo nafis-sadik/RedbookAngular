@@ -14,15 +14,15 @@ export class EmployeeService {
 
     constructor(private http: HttpClient, private sharedService: SharedService) { }
 
-    registerEmployee(userModel: UserModel): Observable<UserModel> {
+    registerEmployee(userModel: UserModel, selectedBusinessId: number): Observable<UserModel> {
         return this.http
-            .post<UserModel>(`${this.baseUrl}/api/Employee`, userModel)
+            .post<UserModel>(`${this.baseUrl}/api/Employee/${selectedBusinessId}`, userModel)
             .pipe(map((response) => response));
     }
 
-    updateEmployee(userModel: UserModel): Observable<UserModel> {
+    updateEmployeeRoles(userModel: UserModel, orgId: number): Observable<UserModel> {
         return this.http
-            .put<UserModel>(`${this.baseUrl}/api/Employee`, userModel)
+            .put<UserModel>(`${this.baseUrl}/api/Employee/UpdateEmployeeRoles/${orgId}`, userModel)
             .pipe(map((response) => response));
     }
 

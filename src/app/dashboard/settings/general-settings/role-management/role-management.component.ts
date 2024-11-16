@@ -248,10 +248,19 @@ export class RoleManagementComponent {
       });
   }
 
-  allowRouteToRole(routeId: number): void {
-    this.roleService.mapRolesWithRoute(this.selectedRoleId, routeId)
-      .subscribe(() => {
+  allowRouteToRole(event: any, route: IRoutePermissionModel): void {
+    event.preventDefault();
+    
+    this.roleService.mapRolesWithRoute(this.selectedRoleId, route.routeId)
+      .subscribe((response) => {
         this.toastrService.success('Route mapped successfully', 'Success');
+        route.isPermitted = response;
+        this.chageDetector.detectChanges();
+      }, (error) => {
+        console.log(error);
+        this.toastrService.danger(error.error, "Error");
+        route.isPermitted = route.isPermitted;
+        this.chageDetector.detectChanges();
       });
   }
 }

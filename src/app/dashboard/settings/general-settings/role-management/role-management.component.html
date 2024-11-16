@@ -98,8 +98,7 @@
             <nb-list-item *ngFor="let route of roleRouteMapping">
               <div class="container-fluid">
                 <div class="row">
-                  <nb-checkbox (checkedChange)="allowRouteToRole(route.routeId)" [checked]="route.isPermitted"
-                               status="primary"> {{ route.routeName }} </nb-checkbox>
+                  <nb-checkbox (click)="allowRouteToRole($event, route)" [checked]="route.isPermitted" status="primary"> {{ route.routeName }} </nb-checkbox>
                 </div>
               </div>
             </nb-list-item>

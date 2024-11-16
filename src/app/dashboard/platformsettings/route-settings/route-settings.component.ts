@@ -132,12 +132,11 @@ export class RouteSettingsComponent implements OnInit {
         }
 
         this.ngxPaginationService.set(this.pagedRouteModel);
-        setTimeout(() => {
-          if (loaderContainer) {
-            loaderContainer.classList.remove('d-block');
-            loaderContainer.classList.add('d-none');
-          }
-        }, 1.5 * 1000);
+        
+        if (loaderContainer) {
+          loaderContainer.classList.remove('d-block');
+          loaderContainer.classList.add('d-none');
+        }
       });
   }
 

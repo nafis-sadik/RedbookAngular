@@ -14,7 +14,9 @@
                    formControlName="firstName"
                    class="form-control"
                    placeholder="First Name"
-                   [value]="userModel.firstName">
+                   [value]="userModel.firstName"
+                   [readonly]="userModel.userId > 0"
+                   >
           </div>
           <div class="col-md-6 p-1">
             <label class="mb-1">Last Name</label>
@@ -26,7 +28,8 @@
                    formControlName="lastName"
                    class="form-control"
                    placeholder="Last Name"
-                   [value]="userModel.lastName">
+                   [value]="userModel.lastName"
+                   [readonly]="userModel.userId > 0">
           </div>
           <div class="col-md-6 p-1">
             <label class="mb-1">User Name</label>
@@ -39,6 +42,7 @@
                    class="form-control"
                    placeholder="User Name"
                    [value]="userModel.userName"
+                   [readonly]="userModel.userId > 0"
                    required>
             <div *ngIf="userForm.get('userName')?.touched && userForm.get('userName')?.invalid" class="validationError">
             </div>
@@ -54,6 +58,7 @@
                    class="form-control"
                    placeholder="Email"
                    [value]="userModel.email"
+                   [readonly]="userModel.userId > 0"
                    required>
             <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid" class="validationError"></div>
           </div>
@@ -68,6 +73,7 @@
                    class="form-control"
                    placeholder="Phone Number"
                    [value]="userModel.phoneNumber"
+                   [readonly]="userModel.userId > 0"
                    required>
             <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid" class="validationError"></div>
           </div>

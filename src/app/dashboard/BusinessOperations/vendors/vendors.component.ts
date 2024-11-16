@@ -46,9 +46,7 @@ export class VendorsComponent {
             "Contact Number": "phoneNumber",
             "Email": "emailAddress",
             "Total Payable": "totalPayable",
-            "Total Paid": "totalPaidAmount",
             "Total Recievable": "totalRecievable",
-            "Total Recieved": "totalRecieved",
           };
 
           this.pagedVendorModel.tableConfig.onEdit = (vendorModel: VendorModel) => {
@@ -62,9 +60,7 @@ export class VendorsComponent {
               });
           }
 
-          this.pagedVendorModel.tableConfig.onDelete = () => {
-            console.log('onDelete');
-          };
+          this.pagedVendorModel.tableConfig.onDelete = () => { console.log('onDelete'); };
         }
 
         if (this.pagedVendorModel.searchingConfig) {
@@ -101,7 +97,6 @@ export class VendorsComponent {
 
     this.vendorService.listenFormData()
       .subscribe((formModel: VendorModel) => {
-        console.log('listingin', formModel);
         let vendorObservable: Observable<VendorModel>;
         formModel.organizationId = this.dashboardService.selectedOutletId;
         if (formModel.vendorId <= 0) {

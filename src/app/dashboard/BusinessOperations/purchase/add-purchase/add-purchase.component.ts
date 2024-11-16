@@ -18,20 +18,15 @@ import { VendorService } from 'src/app/dashboard/services/vendor.service';
 })
 export class AddPurchaseComponent implements OnInit {
   linearMode = true;
-
   calculatedTotalAmount: number = 0;
-
   vendorList: Array<VendorModel> = [];
-
   outletProductList: Array<ProductModel> = [];
-
   paymentHistory: Array<InvoicePaymentModel> = [];
-
   paymentInvoice: InvoicePaymentModel = new InvoicePaymentModel();
-
-  @Input() invoiceModel: PurchaseInvoiceModel = new PurchaseInvoiceModel();
+  @Input() invoiceModel: PurchaseInvoiceModel;
 
   invoiceForm: FormGroup;
+  invoiceItemsForm: FormGroup;
 
   constructor(
     private vendorService: VendorService,
@@ -47,34 +42,30 @@ export class AddPurchaseComponent implements OnInit {
         this.vendorList = response;
         this.cdRef.detectChanges();
       });
-
-    this.invoiceModel = new PurchaseInvoiceModel();
-
+      
     this.invoiceForm = formBuilder.group({
       vendorId: [0, [Validators.required, Validators.min(1)]],
       purchaseDate: ['', Validators.required],
-      grossTotal: [0, [Validators.required, Validators.min(1)]],
+      invoiceTotal: [0, [Validators.required, Validators.min(1)]],
       terms: [''],
       remarks: [''],
     });
   }
 
   ngOnInit(): void {
-    document.getElementById('InvoiceForm')?.addEventListener('keyup', (event) => {
-      this.updateTotalAmount();
-    });
+    console.log('init', this.invoiceModel);
 
     this.invoiceForm.valueChanges.subscribe(formData => {
       this.invoiceModel.vendorId = formData.vendorId;
-
-      if (!Number.isNaN(Number(formData.grossTotal)))
-        this.invoiceModel.grossTotal = Number(formData.grossTotal);
+      
+      if (!Number.isNaN(Number(formData.invoiceTotal)))
+        this.invoiceModel.invoiceTotal = Number(formData.invoiceTotal);
 
       if (formData.purchaseDate) {
         let purchaseDateTime = new Date(formData.purchaseDate);
         let displayDate = this.datePipe.transform(purchaseDateTime, 'MMM d, yyyy');
         if (displayDate)
-          this.invoiceModel.purchaseDate = displayDate;
+          this.invoiceModel.chalanDate = displayDate;
       }
     });
   }
@@ -101,12 +92,12 @@ export class AddPurchaseComponent implements OnInit {
     this.invoiceModel.purchaseDetails = [];
     this.productPurchase
       .getProductList(this.dashboardService.selectedOutletId)
-      .subscribe((response) => {
-        this.outletProductList = response;
-      },
-        error => {
-          console.log('error', error);
-        });
+      .subscribe(
+        (response: Array<ProductModel>) => {
+          this.outletProductList = response;
+        }, 
+        error => { console.log('error', error); }
+      );
   }
 
   /**
@@ -130,6 +121,12 @@ export class AddPurchaseComponent implements OnInit {
    * @param prodIdArr - An array of product IDs to be selected.
    */
   selectProducts(prodIdArr: Array<number>): void {
+    document.querySelectorAll('#InvoiceForm .step-2')?.forEach(elems => {
+      elems.addEventListener('keyup', (event) => {
+        this.updateTotalAmount();
+      });
+    });
+
     prodIdArr = prodIdArr.map((value) => Number(value));
 
     this.invoiceModel.purchaseDetails.forEach(
@@ -150,10 +147,11 @@ export class AddPurchaseComponent implements OnInit {
         purchaseDetails.quantity = 1;
         purchaseDetails.unitPrice = 0;
       }
+
       this.invoiceModel.purchaseDetails.push(purchaseDetails);
     });
 
-    this.updateTotalAmount();
+    // this.updateTotalAmount();
   }
 
   /**
@@ -200,16 +198,23 @@ export class AddPurchaseComponent implements OnInit {
    */
   updateTotalAmount() {
     this.calculatedTotalAmount = 0;
-    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseInvoiceDetailsModel) => {      
-      // Make sure the numbers are really numbers, it's js at the end of the day, you can never be too sure.
-      if (!Number.isNaN(Number(detail.unitPrice)))
-        detail.unitPrice = Number(detail.unitPrice);
+    this.invoiceModel.purchaseDetails.forEach((detail: PurchaseInvoiceDetailsModel) => {
+      if(detail.vat == null || detail.vat == undefined
+        || detail.unitPrice == null || detail.unitPrice == undefined
+        || detail.discount == null || detail.discount == undefined
+        || detail.quantity == null || detail.quantity == undefined) return;
 
-      if (!Number.isNaN(Number(detail.discount)))
+      // Make sure the numbers are really numbers, it's js at the end of the day, you can never be too sure.
+      if (!detail.unitPrice.toString().includes('.') && !Number.isNaN(Number(detail.unitPrice)))
+        detail.unitPrice = Number(detail.unitPrice);
+      
+      if (!detail.discount.toString().includes('.') && !Number.isNaN(Number(detail.discount)))
         detail.discount = Number(detail.discount);
 
-      if (!Number.isNaN(Number(detail.vat)))
+      if (!detail.vat.toString().includes('.') && !Number.isNaN(Number(detail.vat)))
         detail.vat = Number(detail.vat);
+
+      if(detail.quantity <= 0) detail.quantity = 1;
 
       let vatAmount: number = detail.unitPrice * (detail.vat / 100);
       let grossTotalOnItem: number = detail.quantity * (detail.unitPrice + vatAmount);

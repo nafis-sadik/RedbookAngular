@@ -47,18 +47,18 @@ export class PurchaseComponent {
 
     if (this.pagedPurchaseModel.tableConfig) {
       this.pagedPurchaseModel.tableConfig.tableMaping = {
-        "Invoice Number": "InvoiceNo",
-        "Client Name": "ClientName",
-        "Issue Date": "IssueDate",
-        "Payment Status": "PaymentStatus",
-        "Invoice Total": "InvoiceTotal",
-        "Paid Amount": "PaidAmount"
+        "Invoice Number": "chalanNumber",
+        "Vendor Name": "vendorName",
+        "Chalan Date": "chalanDate",
+        "Payment Status": "paymentStatus",
+        "Invoice Total": "invoiceTotal",
+        "Paid Amount": "totalPaid"
       };
 
-      this.pagedPurchaseModel.tableConfig.onEdit = () => {
+      this.pagedPurchaseModel.tableConfig.onEdit = (model: PurchaseInvoiceModel) => {
         dashboardService.ngDialogService.open(AddPurchaseComponent, {
           context: {
-            invoiceModel: new PurchaseInvoiceModel()
+            invoiceModel: model
           }
         });
       }
@@ -80,9 +80,10 @@ export class PurchaseComponent {
 
     this.purchaseService.listenInvoiceModel()
       .subscribe((invoiceModel: PurchaseInvoiceModel) => {
-        invoiceModel.purchaseDate = new Date(invoiceModel.purchaseDate).toUTCString();
+        invoiceModel.chalanDate = `${invoiceModel.chalanDate} 06:00:00`;
+        invoiceModel.chalanDate = new Date(invoiceModel.chalanDate).toISOString();
         this.purchaseService.addPurchaseIncoice(invoiceModel)
-          .subscribe((response: PurchaseInvoiceModel) => {
+          .subscribe(() => {
             if (this.pagedPurchaseModel.pagingConfig) {
               this.pagedPurchaseModel.pagingConfig.pageNumber = Math.ceil(this.pagedPurchaseModel.pagingConfig.totalItems / this.pagedPurchaseModel.pagingConfig.pageLength);
               this.getPagedInvoice();
@@ -114,18 +115,24 @@ export class PurchaseComponent {
 
   getPagedInvoice() {
     if (this.pagedPurchaseModel.tableConfig) {
-      this.purchaseService.getInvoiceList(this.selectedOutlet, this.pagedPurchaseModel)
-        .subscribe(response => {
+      this.purchaseService.getPagedPurchaseInvoice(this.selectedOutlet, this.pagedPurchaseModel)
+        .subscribe((response: any) => {
           if (this.loader && this.loader.classList.contains('d-block')) {
             this.loader.classList.remove('d-block');
             this.loader.classList.add('d-none');
             this.cdRef.detectChanges();
           }
 
-          if (this.pagedPurchaseModel.tableConfig && response.tableConfig) {
-            this.pagedPurchaseModel.tableConfig.sourceData = response.tableConfig.sourceData;
+          if (this.pagedPurchaseModel.tableConfig) {
+            this.pagedPurchaseModel.tableConfig.sourceData = response.sourceData;
           }
 
+          if(this.pagedPurchaseModel.pagingConfig) {
+            this.pagedPurchaseModel.pagingConfig.pageNumber = response.pageNumber;
+            this.pagedPurchaseModel.pagingConfig.pageLength = response.pageLength;
+            this.pagedPurchaseModel.pagingConfig.totalItems = response.totalItems;
+          }
+          
           this.ngxPaginationService.set(this.pagedPurchaseModel);
         });
     }

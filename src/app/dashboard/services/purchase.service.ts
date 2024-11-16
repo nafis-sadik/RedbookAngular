@@ -26,15 +26,15 @@ export class PurchaseService {
 
   addPurchaseIncoice(model: PurchaseInvoiceModel): Observable<PurchaseInvoiceModel> {
     return this.http
-      .post<PurchaseInvoiceModel>(`${environment.baseUrlInventory}/api/Purchase/Invoice`, model)
+      .post<PurchaseInvoiceModel>(`${environment.baseUrlInventory}/api/Purchase/`, model)
       .pipe(map(response => response));
   }
 
-  getInvoiceList(outletId: number, pagedPurchaseModel: IPaginationModel<PurchaseInvoiceModel>): Observable<IPaginationModel<PurchaseInvoiceModel>> {
+  getPagedPurchaseInvoice(outletId: number, pagedPurchaseModel: IPaginationModel<PurchaseInvoiceModel>): Observable<IPaginationModel<PurchaseInvoiceModel>> {
     let paramsObject: HttpParams = this.sharedService.paginationToParams<PurchaseInvoiceModel>(pagedPurchaseModel);
     paramsObject = paramsObject.append('organizationId', outletId.toString());
     return this.http
-      .get<IPaginationModel<PurchaseInvoiceModel>>(`${environment.baseUrlInventory}/api/Purchase/PagedAsync/`, { params: paramsObject })
+      .get<any>(`${environment.baseUrlInventory}/api/Purchase/PagedAsync/`, { params: paramsObject })
       .pipe(map(response => response));
   }
 }

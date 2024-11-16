@@ -28,15 +28,13 @@ export class VendorModel {
    */
   remarks: string = '';
   /**
-   * The total amount that has been paid to the vendor.
+   * Total amount of money owed by this vendor (এই বিক্রেতার পাওনা টাকা মোট পরিমাণ).
    */
-  totalPaidAmount: number = 0;
   totalPayable: number = 0;
   /**
-   * The total liability of the vendor.
+   * Total amount of money owed from this vendor (এই বিক্রেতা থেকে পাওনা টাকা মোট পরিমাণ).
    */
   totalRecievable: number = 0;
-  totalRecieved: number = 0;
   /**
    * The unique identifier of the organization associated with this vendor.
    */

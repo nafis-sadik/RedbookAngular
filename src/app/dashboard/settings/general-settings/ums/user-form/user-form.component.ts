@@ -66,7 +66,7 @@ export class UserFormComponent implements OnInit {
       }
 
       if(this.userModel.userId && this.userModel.userId > 0){
-        return this.employeeService.updateEmployee(this.userModel)
+        return this.employeeService.updateEmployeeRoles(this.userModel, this.selectedBusinessId)
           .subscribe(() => {
             setTimeout(() => {
               location.reload();
@@ -74,7 +74,7 @@ export class UserFormComponent implements OnInit {
             this.toasterService.success('Operation Successfull', 'New user added successfully');
           });
       } else {
-        return this.employeeService.registerEmployee(this.userModel)
+        return this.employeeService.registerEmployee(this.userModel, this.selectedBusinessId)
           .subscribe((newUser) => {
             this.addUser(newUser);
             this.toasterService.success('Operation Successfull', 'New user added successfully');

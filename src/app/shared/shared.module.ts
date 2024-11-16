@@ -16,6 +16,7 @@ import { AddDialogueComponent } from './ngx-dialogues/add-dialogue/add-dialogue.
 import { RemoveDialogueComponent } from './ngx-dialogues/remove-dialogue/remove-dialogue.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { BlumeDropDirective } from './blume-drop.directive';
+import { SelectOnFocusDirective } from './select-on-focus.directive';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { BlumeDropDirective } from './blume-drop.directive';
     RemoveDialogueComponent,
     NotFoundComponent,
     BlumeDropDirective,
+    SelectOnFocusDirective
   ],
   imports: [
     NbCardModule,
@@ -37,6 +39,6 @@ import { BlumeDropDirective } from './blume-drop.directive';
     FormsModule,
     NbLayoutModule
   ],
-  exports: [ NgxPaginationComponent, CommonModule, FormsModule, BlumeDropDirective ],
+  exports: [ NgxPaginationComponent, CommonModule, FormsModule, BlumeDropDirective, SelectOnFocusDirective ],
 })
 export class SharedModule {}

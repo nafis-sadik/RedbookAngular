@@ -31,6 +31,9 @@ export class NgxPaginationComponent<T> {
       this.paginationModel = updatedModel;
 
       if (this.paginationModel.pagingConfig){
+        if(this.paginationModel.pagingConfig.totalItems <= 0){
+          console.log('this.paginationModel.pagingConfig.totalItems', this.paginationModel.pagingConfig.totalItems);
+        }
         this.totalPageCount = Math.ceil(this.paginationModel.pagingConfig.totalItems/this.paginationModel.pagingConfig.pageLength);
 
         // Preparing page numbers to print

@@ -13,7 +13,25 @@ export class PurchaseInvoiceModel {
    * Purchase date for this invoice.
    * @type {string}
    */
-  purchaseDate: string = '';
+  chalanDate: string = '';
+
+  /**
+   * Person or entity, you are purchasing from.
+   * @type {string}
+   */
+  vendorName: string = '';
+
+  /**
+   * The total purchase price for the invoice.
+   * @type {number}
+   */
+  invoiceTotal: number = 0;
+
+  /**
+   * The total amount of mmoney paid to this vendor against this invoice.
+   * @type {number}
+   */
+  totalPaid: number = 0;
 
   /**
    * The total discount value on the invoice.
@@ -22,10 +40,10 @@ export class PurchaseInvoiceModel {
   totalDiscount: number = 0;
 
   /**
-   * The total purchase price for the invoice.
-   * @type {number}
+   * Current status of payment for this invoice
+   * @type {string}
    */
-  grossTotal: number = 0;
+  paymentStatus: string = '';
 
   /**
    * The unique identifier for the organization associated with the purchase invoice.
@@ -62,12 +80,6 @@ export class PurchaseInvoiceModel {
    * @type {Array<PurchaseInvoiceDetailsModel>}
    */
   purchaseDetails: Array<PurchaseInvoiceDetailsModel> = [];
-
-  /**
-   * An array of product models associated with the purchase invoice.
-   * @type {Array<ProductModel>}
-   */
-  invoiceProducts: Array<ProductModel> = [];
 
   /**
    * Payment records associated with the purchase invoice.

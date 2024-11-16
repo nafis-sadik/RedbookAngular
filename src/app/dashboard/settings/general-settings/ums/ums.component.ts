@@ -15,7 +15,7 @@ import { RoleModel } from 'src/app/dashboard/Models/role.model';
   templateUrl: './ums.component.html',
   styleUrls: ['./ums.component.scss']
 })
-export class UmsComponent implements OnInit {
+export class UmsComponent {
   selectedBusinessId: number;
   pagedUserModel: IPaginationModel<UserModel>;
   @Input() ownedBusinesses: OrganizationModel[];
@@ -97,15 +97,6 @@ export class UmsComponent implements OnInit {
           return;
         }
       }
-    }
-  }
-
-  ngOnInit(): void {
-    let loaderContainer: HTMLElement | null = document.getElementById('LoadingScreen');
-
-    if (loaderContainer) {
-      loaderContainer.classList.add('d-block');
-      loaderContainer.classList.remove('d-none');
     }
   }
 
