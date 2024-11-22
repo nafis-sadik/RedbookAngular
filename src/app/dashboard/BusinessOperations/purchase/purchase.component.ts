@@ -80,8 +80,23 @@ export class PurchaseComponent {
 
     this.purchaseService.listenInvoiceModel()
       .subscribe((invoiceModel: PurchaseInvoiceModel) => {
-        invoiceModel.chalanDate = `${invoiceModel.chalanDate} 06:00:00`;
-        invoiceModel.chalanDate = new Date(invoiceModel.chalanDate).toISOString();
+        // Parse the date string to a Date object 
+        let localDate = new Date(invoiceModel.chalanDate); 
+        
+        // Convert the local date to UTC 
+        let utcDate = new Date(
+          Date.UTC( localDate.getFullYear(), 
+            localDate.getMonth(), 
+            localDate.getDate(), 
+            localDate.getHours(), 
+            localDate.getMinutes(), 
+            localDate.getSeconds() 
+          )); // Format the UTC date as needed (ISO string in this example) 
+          
+        let utcDateString = utcDate.toISOString();
+        invoiceModel.chalanDate = utcDateString;
+        invoiceModel.organizationId = this.selectedOutlet;
+        console.log('invoiceModel', invoiceModel);
         this.purchaseService.addPurchaseIncoice(invoiceModel)
           .subscribe(() => {
             if (this.pagedPurchaseModel.pagingConfig) {
@@ -125,6 +140,17 @@ export class PurchaseComponent {
 
           if (this.pagedPurchaseModel.tableConfig) {
             this.pagedPurchaseModel.tableConfig.sourceData = response.sourceData;
+          
+            this.pagedPurchaseModel.tableConfig.sourceData.forEach(invoice => {
+              // Parse the UTC date string to a Date object
+              let utcDate = new Date(invoice.chalanDate.toString());
+
+              // Convert the UTC date to local time
+              let localDate = new Date(utcDate.toLocaleString());
+
+              // Format the local date as needed (e.g., ISO string)
+              invoice.chalanDate = localDate.toDateString();
+            });
           }
 
           if(this.pagedPurchaseModel.pagingConfig) {
@@ -132,7 +158,7 @@ export class PurchaseComponent {
             this.pagedPurchaseModel.pagingConfig.pageLength = response.pageLength;
             this.pagedPurchaseModel.pagingConfig.totalItems = response.totalItems;
           }
-          
+
           this.ngxPaginationService.set(this.pagedPurchaseModel);
         });
     }

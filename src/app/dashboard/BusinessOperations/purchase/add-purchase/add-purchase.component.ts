@@ -17,7 +17,7 @@ import { VendorService } from 'src/app/dashboard/services/vendor.service';
   styleUrls: ['./add-purchase.component.scss']
 })
 export class AddPurchaseComponent implements OnInit {
-  linearMode = true;
+  linearMode = false;
   calculatedTotalAmount: number = 0;
   vendorList: Array<VendorModel> = [];
   outletProductList: Array<ProductModel> = [];
@@ -44,8 +44,9 @@ export class AddPurchaseComponent implements OnInit {
       });
       
     this.invoiceForm = formBuilder.group({
-      vendorId: [0, [Validators.required, Validators.min(1)]],
+      chalanNumber: ['', Validators.required],
       purchaseDate: ['', Validators.required],
+      vendorId: [0, [Validators.required, Validators.min(1)]],
       invoiceTotal: [0, [Validators.required, Validators.min(1)]],
       terms: [''],
       remarks: [''],
@@ -67,6 +68,8 @@ export class AddPurchaseComponent implements OnInit {
         if (displayDate)
           this.invoiceModel.chalanDate = displayDate;
       }
+
+      this.invoiceModel.chalanNumber = formData.chalanNumber;
     });
   }
 
@@ -199,7 +202,7 @@ export class AddPurchaseComponent implements OnInit {
   updateTotalAmount() {
     this.calculatedTotalAmount = 0;
     this.invoiceModel.purchaseDetails.forEach((detail: PurchaseInvoiceDetailsModel) => {
-      if(detail.vat == null || detail.vat == undefined
+      if(detail.vatRate == null || detail.vatRate == undefined
         || detail.unitPrice == null || detail.unitPrice == undefined
         || detail.discount == null || detail.discount == undefined
         || detail.quantity == null || detail.quantity == undefined) return;
@@ -211,13 +214,13 @@ export class AddPurchaseComponent implements OnInit {
       if (!detail.discount.toString().includes('.') && !Number.isNaN(Number(detail.discount)))
         detail.discount = Number(detail.discount);
 
-      if (!detail.vat.toString().includes('.') && !Number.isNaN(Number(detail.vat)))
-        detail.vat = Number(detail.vat);
+      if (!detail.vatRate.toString().includes('.') && !Number.isNaN(Number(detail.vatRate)))
+        detail.vatRate = Number(detail.vatRate);
 
       if(detail.quantity <= 0) detail.quantity = 1;
 
-      let vatAmount: number = detail.unitPrice * (detail.vat / 100);
-      let grossTotalOnItem: number = detail.quantity * (detail.unitPrice + vatAmount);
+      let vatRateAmount: number = detail.unitPrice * (detail.vatRate / 100);
+      let grossTotalOnItem: number = detail.quantity * (detail.unitPrice + vatRateAmount);
       detail.totalPrice = grossTotalOnItem - detail.discount;
       this.calculatedTotalAmount += detail.totalPrice;
     });

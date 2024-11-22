@@ -38,7 +38,7 @@ export class PurchaseInvoiceDetailsModel {
      * Vat percentage on product
      * @type {number}
      */
-    vat: number = 0;
+    vatRate: number = 0;
     /**
      * The total price of the product details. (Considering unit price and quantity)
      * @type {number}

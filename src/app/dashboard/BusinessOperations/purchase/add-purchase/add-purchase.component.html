@@ -10,12 +10,29 @@
       </div>
     </nb-card-header>
     <nb-card-body>
-      <nb-stepper #stepper disableStepNavigation [linear]=linearMode>
+      <!-- <nb-stepper #stepper disableStepNavigation [linear]="linearMode"> -->
+      <nb-stepper #stepper [linear]="linearMode">
         <nb-step [stepControl]="invoiceForm" label="Invoice">
           <form [formGroup]="invoiceForm" class="step-container">
             <div class="container-fluid input-group">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
+                  <label class="mb-2 mt-4 p-0">
+                    Chalan Number
+                    <span nbTooltipStatus="primary" nbTooltip="Invoice Number / Id of this purchase"
+                          class="tooltip-style">?</span>
+                  </label>
+                  <div class="input-group">
+                    <input fullWidth nbInput required
+                           placeholder="Chalan Number"
+                           formControlName="chalanNumber"
+                           [value]="invoiceModel.chalanNumber">
+                    <nb-datepicker #datepicker></nb-datepicker>
+                    <div *ngIf="(invoiceForm.get('chalanNumber')?.touched || invoiceForm.get('chalanNumber')?.dirty) && invoiceForm.get('chalanNumber')?.invalid"
+                         class="validationError"></div>
+                  </div>
+                </div>
+                <div class="col-md-3">
                   <label class="mb-2 mt-4 p-0">Select Vendors/Supplier</label>
                   <nb-select fullWidth required
                              placeholder="Select Showcase"
@@ -28,7 +45,7 @@
                   <div *ngIf="(invoiceForm.get('vendorId')?.touched || invoiceForm.get('vendorId')?.dirty) && invoiceForm.get('vendorId')?.invalid"
                        class="validationError"></div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <label class="mb-2 mt-4 p-0">
                     Issue Date
                     <span nbTooltipStatus="primary" nbTooltip="Date mentioned in actual invoice"
@@ -45,7 +62,7 @@
                          class="validationError"></div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <label class="mb-2 mt-4 p-0">
                     Invoice Payable
                     <span nbTooltipStatus="primary" nbTooltip="Total amount mentioned in actual invoice"
@@ -144,7 +161,7 @@
                           <input fullWidth nbInput required
                                  type="number"
                                  selectOnFocus
-                                 [(ngModel)]="purchaseDetail.vat">
+                                 [(ngModel)]="purchaseDetail.vatRate">
                         </td>
                         <!-- {{product.discount}} -->
                         <td>
