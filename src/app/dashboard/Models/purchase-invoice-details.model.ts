@@ -25,20 +25,25 @@ export class PurchaseInvoiceDetailsModel {
      */
     quantity: number = 0;
     /**
-     * The unit price of the product associated with the purchase details.
-     * @type {number}
-     */
-    unitPrice: number = 0;
-    /**
      * The total price of the product details. (Considering unit price and quantity)
      * @type {number}
      */
     discount: number = 0;
     /**
-     * Vat percentage on product
+     * The total price of the product details. (Considering unit price and quantity)
      * @type {number}
      */
     vatRate: number = 0;
+    /**
+     * The unit price of the product associated with the purchase details.
+     * @type {number}
+     */
+    purchasePrice: number = 0;
+    /**
+     * Retail price of this product
+     * @type {number}
+     */
+    retailPrice: number = 0;
     /**
      * The total price of the product details. (Considering unit price and quantity)
      * @type {number}

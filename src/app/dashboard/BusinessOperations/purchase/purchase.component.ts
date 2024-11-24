@@ -7,6 +7,7 @@ import { DashboardService } from '../../services/dashboard.service';
 import { OrganizationService } from '../../services/organization.service';
 import { PurchaseService } from '../../services/purchase.service';
 import { PurchaseInvoiceModel } from '../../Models/purchase-invoice.model';
+import { PurchaseDetailsComponent } from './purchase-details/purchase-details.component';
 
 @Component({
   selector: 'app-purchase',
@@ -16,8 +17,6 @@ import { PurchaseInvoiceModel } from '../../Models/purchase-invoice.model';
 
 export class PurchaseComponent {
   cardHeader: string = "Product Purchase";
-
-  selectedOutlet: number = 0;
 
   outlets: Array<OrganizationModel>;
 
@@ -55,8 +54,10 @@ export class PurchaseComponent {
         "Paid Amount": "totalPaid"
       };
 
-      this.pagedPurchaseModel.tableConfig.onEdit = (model: PurchaseInvoiceModel) => {
-        dashboardService.ngDialogService.open(AddPurchaseComponent, {
+      this.pagedPurchaseModel.tableConfig.onEdit = null;
+
+      this.pagedPurchaseModel.tableConfig.onView = (model: PurchaseInvoiceModel) => {
+        dashboardService.ngDialogService.open(PurchaseDetailsComponent, {
           context: {
             invoiceModel: model
           }
@@ -68,6 +69,12 @@ export class PurchaseComponent {
       };
     }
 
+    if(this.pagedPurchaseModel.searchingConfig){
+      this.pagedPurchaseModel.searchingConfig.onSearch = () => {
+        this.getPagedInvoice();
+      }
+    }
+
     if (this.pagedPurchaseModel.addNewElementButtonConfig) {
       this.pagedPurchaseModel.addNewElementButtonConfig.onAdd = () => {
         dashboardService.ngDialogService.open(AddPurchaseComponent, {
@@ -75,6 +82,12 @@ export class PurchaseComponent {
             invoiceModel: new PurchaseInvoiceModel()
           }
         });
+      }
+    }
+
+    if(this.pagedPurchaseModel.pagingConfig){
+      this.pagedPurchaseModel.pagingConfig.onUpdate = (anys: any) => {
+        this.getPagedInvoice();
       }
     }
 
@@ -95,8 +108,8 @@ export class PurchaseComponent {
           
         let utcDateString = utcDate.toISOString();
         invoiceModel.chalanDate = utcDateString;
-        invoiceModel.organizationId = this.selectedOutlet;
-        console.log('invoiceModel', invoiceModel);
+        invoiceModel.organizationId = this.dashboardService.selectedOutletId;
+        
         this.purchaseService.addPurchaseIncoice(invoiceModel)
           .subscribe(() => {
             if (this.pagedPurchaseModel.pagingConfig) {
@@ -104,7 +117,7 @@ export class PurchaseComponent {
               this.getPagedInvoice();
             }
           });
-      })
+      });
   }
 
   selectOutlet(outletId: number, event: any): void {
@@ -124,13 +137,16 @@ export class PurchaseComponent {
         element.classList.add('active');
     });
 
+    if(this.pagedPurchaseModel.pagingConfig)
+      this.pagedPurchaseModel.pagingConfig.pageNumber = 1;
+
     // API Call
     this.getPagedInvoice();
   }
 
   getPagedInvoice() {
     if (this.pagedPurchaseModel.tableConfig) {
-      this.purchaseService.getPagedPurchaseInvoice(this.selectedOutlet, this.pagedPurchaseModel)
+      this.purchaseService.getPagedPurchaseInvoice(this.dashboardService.selectedOutletId, this.pagedPurchaseModel)
         .subscribe((response: any) => {
           if (this.loader && this.loader.classList.contains('d-block')) {
             this.loader.classList.remove('d-block');

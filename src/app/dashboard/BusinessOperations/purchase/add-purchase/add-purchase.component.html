@@ -18,8 +18,8 @@
               <div class="row">
                 <div class="col-md-3">
                   <label class="mb-2 mt-4 p-0">
-                    Chalan Number
-                    <span nbTooltipStatus="primary" nbTooltip="Invoice Number / Id of this purchase"
+                    Reference #
+                    <span nbTooltipStatus="primary" nbTooltip="Invoice/Chalan Number (Id of this purchase)"
                           class="tooltip-style">?</span>
                   </label>
                   <div class="input-group">
@@ -47,13 +47,13 @@
                 </div>
                 <div class="col-md-3">
                   <label class="mb-2 mt-4 p-0">
-                    Issue Date
+                    Purchase Date
                     <span nbTooltipStatus="primary" nbTooltip="Date mentioned in actual invoice"
                           class="tooltip-style">?</span>
                   </label>
                   <div class="input-group">
                     <input fullWidth nbInput required
-                           placeholder="Issue Date"
+                           placeholder="Purchase Date"
                            formControlName="purchaseDate"
                            [value]="invoiceModel.chalanDate"
                            [nbDatepicker]="datepicker">
@@ -125,8 +125,9 @@
                         <th class="ng-star-inserted">Product Id</th>
                         <th class="ng-star-inserted">Product Name</th>
                         <th class="ng-star-inserted">Quantity</th>
-                        <th class="ng-star-inserted">Price</th>
-                        <th class="ng-star-inserted">Vat (%)</th>
+                        <th class="ng-star-inserted">Purchase Price</th>
+                        <th class="ng-star-inserted">Retail Price</th>
+                        <th class="ng-star-inserted">Vat Rate</th>
                         <th class="ng-star-inserted">Discount</th>
                         <th class="ng-star-inserted">Net Total</th>
                       </tr>
@@ -142,53 +143,61 @@
                                  [value]="purchaseDetail.productName"
                                  (keyup)="purchaseDetail.productName = $any($event.target).value? $any($event.target).value : ''">
                         </td>
-                        <!-- {{product.Quantity}} -->
+                        <!-- {{product.productName}} -->
                         <td>
                           <input fullWidth nbInput required
                                  type="number"
                                  selectOnFocus
                                  [(ngModel)]="purchaseDetail.quantity">
                         </td>
-                        <!-- {{product.unitPrice}} -->
+                        <!-- {{product.quantity}} -->
                         <td>
                           <input fullWidth nbInput required
                                  type="number"
                                  selectOnFocus
-                                 [(ngModel)]="purchaseDetail.unitPrice">
+                                 [(ngModel)]="purchaseDetail.purchasePrice">
                         </td>
-                        <!-- {{product.vat}} -->
+                        <!-- {{product.purchasePrice}} -->
+                        <td>
+                          <input fullWidth nbInput required
+                                 type="number"
+                                 selectOnFocus
+                                 [(ngModel)]="purchaseDetail.retailPrice">
+                        </td>
+                        <!-- {{product.retailPrice}} -->
                         <td>
                           <input fullWidth nbInput required
                                  type="number"
                                  selectOnFocus
                                  [(ngModel)]="purchaseDetail.vatRate">
                         </td>
-                        <!-- {{product.discount}} -->
+                        <!-- {{product.vatRate}} -->
                         <td>
                           <input fullWidth nbInput required
                                 type="number"
                                 selectOnFocus
                                 [(ngModel)]="purchaseDetail.discount">
                         </td>
+                        <!-- {{product.discount}} -->
                         <td>{{ purchaseDetail.totalPrice }}</td>
                       </tr>
                       <tr>
-                        <td colspan="6"><b>Total</b></td>
+                        <td colspan="7"><b>Total</b></td>
                         <td><b>{{ calculatedTotalAmount + invoiceModel.totalDiscount }}</b></td>
                       </tr>
                       <tr>
                         <!-- {{invoiceModel.totalDiscount}} -->
-                        <td colspan="6"><b>Discount</b></td>
+                        <td colspan="7"><b>Discount</b></td>
                         <td><b>
                           <input fullWidth nbInput required type="number" [(ngModel)]="invoiceModel.totalDiscount">
                         </b></td>
                       </tr>
                       <tr>
-                        <td colspan="6"><b>Net Total</b></td>
+                        <td colspan="7"><b>Net Total</b></td>
                         <td><b>{{ calculatedTotalAmount }}</b></td>
                       </tr>
                       <tr>
-                        <td colspan="6"><b>Total Payable (Total amount mentioned in actual invoice)</b></td>
+                        <td colspan="7"><b>Total Payable (Total amount mentioned in actual invoice)</b></td>
                         <td><b>{{ invoiceModel.invoiceTotal }}</b></td>
                       </tr>
                     </tbody>

@@ -54,8 +54,6 @@ export class AddPurchaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('init', this.invoiceModel);
-
     this.invoiceForm.valueChanges.subscribe(formData => {
       this.invoiceModel.vendorId = formData.vendorId;
       
@@ -148,7 +146,7 @@ export class AddPurchaseComponent implements OnInit {
         purchaseDetails.productId = prodId;
         purchaseDetails.productName = product.productName;
         purchaseDetails.quantity = 1;
-        purchaseDetails.unitPrice = 0;
+        purchaseDetails.purchasePrice = 0;
       }
 
       this.invoiceModel.purchaseDetails.push(purchaseDetails);
@@ -173,7 +171,7 @@ export class AddPurchaseComponent implements OnInit {
     purchaseDetails.productId = 0;
     purchaseDetails.productName = "";
     purchaseDetails.quantity = 1;
-    purchaseDetails.unitPrice = 0;
+    purchaseDetails.purchasePrice = 0;
     this.invoiceModel.purchaseDetails.push(purchaseDetails);
   }
 
@@ -188,7 +186,7 @@ export class AddPurchaseComponent implements OnInit {
   updateProductPrice(purchaseProductDetail: PurchaseInvoiceDetailsModel, event: any): void {
     this.invoiceModel.purchaseDetails.forEach((detail: PurchaseInvoiceDetailsModel) => {
       if (detail.productId == purchaseProductDetail.productId && event.target.value) {
-        detail.unitPrice = event.target.value;
+        detail.purchasePrice = event.target.value;
       }
     });
 
@@ -202,25 +200,25 @@ export class AddPurchaseComponent implements OnInit {
   updateTotalAmount() {
     this.calculatedTotalAmount = 0;
     this.invoiceModel.purchaseDetails.forEach((detail: PurchaseInvoiceDetailsModel) => {
-      if(detail.vatRate == null || detail.vatRate == undefined
-        || detail.unitPrice == null || detail.unitPrice == undefined
+      if(detail.retailPrice == null || detail.retailPrice == undefined
+        || detail.purchasePrice == null || detail.purchasePrice == undefined
         || detail.discount == null || detail.discount == undefined
         || detail.quantity == null || detail.quantity == undefined) return;
 
       // Make sure the numbers are really numbers, it's js at the end of the day, you can never be too sure.
-      if (!detail.unitPrice.toString().includes('.') && !Number.isNaN(Number(detail.unitPrice)))
-        detail.unitPrice = Number(detail.unitPrice);
+      if (!detail.purchasePrice.toString().includes('.') && !Number.isNaN(Number(detail.purchasePrice)))
+        detail.purchasePrice = Number(detail.purchasePrice);
       
       if (!detail.discount.toString().includes('.') && !Number.isNaN(Number(detail.discount)))
         detail.discount = Number(detail.discount);
 
-      if (!detail.vatRate.toString().includes('.') && !Number.isNaN(Number(detail.vatRate)))
-        detail.vatRate = Number(detail.vatRate);
+      if (!detail.retailPrice.toString().includes('.') && !Number.isNaN(Number(detail.retailPrice)))
+        detail.retailPrice = Number(detail.retailPrice);
 
       if(detail.quantity <= 0) detail.quantity = 1;
 
-      let vatRateAmount: number = detail.unitPrice * (detail.vatRate / 100);
-      let grossTotalOnItem: number = detail.quantity * (detail.unitPrice + vatRateAmount);
+      let vatRateAmount: number = detail.purchasePrice * (detail.vatRate / 100);
+      let grossTotalOnItem: number = detail.quantity * (detail.purchasePrice + vatRateAmount);
       detail.totalPrice = grossTotalOnItem - detail.discount;
       this.calculatedTotalAmount += detail.totalPrice;
     });

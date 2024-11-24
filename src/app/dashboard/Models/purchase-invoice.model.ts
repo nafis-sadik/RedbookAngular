@@ -1,4 +1,3 @@
-import { ProductModel } from "./product.model";
 import { PurchaseInvoiceDetailsModel } from "./purchase-invoice-details.model";
 import { PurchasePaymentModel } from "./purchase-payment.model";
 
