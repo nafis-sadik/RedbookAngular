@@ -6,10 +6,7 @@ import { OnboardingComponent } from './onboarding/onboarding.component';
 import { CustomersComponent } from './CRM/customers/customers.component';
 import { SellComponent } from './BusinessOperations/sell/sell.component';
 import { PurchaseComponent } from './BusinessOperations/purchase/purchase.component';
-import { ProductsComponent } from './settings/ProductManagement/products/products.component';
 import { PlatformsettingsComponent } from './platformsettings/platformsettings.component';
-import { GeneralSettingsComponent } from './settings/general-settings/general-settings.component';
-import { ProductSettingsComponent } from './settings/ProductManagement/product-settings/product-settings.component';
 import { VendorsComponent } from './BusinessOperations/vendors/vendors.component';
 
 const routes: Routes = [{
@@ -25,14 +22,6 @@ const routes: Routes = [{
       component: HomeComponent
     },
     {
-      path: 'products',
-      component: ProductsComponent
-    },
-    {
-      path: 'product-settings',
-      component: ProductSettingsComponent
-    },
-    {
       path: 'sales',
       component: SellComponent
     },
@@ -42,7 +31,11 @@ const routes: Routes = [{
     },
     {
       path: 'settings',
-      component: GeneralSettingsComponent
+      loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
+    },
+    {
+      path: 'products',
+      loadChildren: () => import('./product-management/product-management.module').then(m => m.ProductManagementModule)
     },
     {
       path: 'customers',

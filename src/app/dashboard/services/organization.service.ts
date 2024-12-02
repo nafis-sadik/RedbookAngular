@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment.development";
 import { OrganizationModel } from "../Models/organization.model";
-import { Observable, map, of } from "rxjs";
+import { Observable, Subject, map, of } from "rxjs";
 import { CachingService } from "./caching.service";
 import { UserModel } from "../Models/user.model";
 import { IPaginationModel } from "src/app/shared/ngx-pagination/Models/IPaginationModel";
@@ -13,12 +13,23 @@ import { SharedService } from "src/app/shared/common-methods";
 })
 export class OrganizationService{
   baseUrl = environment.baseUrlUMS;
+  private orgSubject: Subject<Array<OrganizationModel>>;
 
   constructor(
     private http: HttpClient,
     private cachingService: CachingService,
     private sharedService: SharedService
-  ) {}
+  ) {
+    this.orgSubject = new Subject<Array<OrganizationModel>>();
+  }  
+
+  emitOrgList(model: Array<OrganizationModel>): void {
+    this.orgSubject.next(model);
+  }
+
+  listenOrgList(): Observable<Array<OrganizationModel>> {
+    return this.orgSubject.asObservable();
+  }
 
   addNewOrganization(orgModel: OrganizationModel): Observable<OrganizationModel> {
     return this.http

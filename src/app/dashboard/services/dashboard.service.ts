@@ -3,8 +3,6 @@ import { NbDialogService } from '@nebular/theme';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { IPaginationModel } from 'src/app/shared/ngx-pagination/Models/IPaginationModel';
-import { map } from 'rxjs';
-import { RouteModel } from '../Models/route.model';
 
 @Injectable({
   providedIn: 'root',

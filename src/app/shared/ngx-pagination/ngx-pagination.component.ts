@@ -12,13 +12,12 @@ import { IParamModel } from './Models/IParamModel';
 })
 export class NgxPaginationComponent<T> {
   @Input() paginationModel: IPaginationModel<T>;
-
+  
   pageNumbersToPrint: number[] = [];
   pageLengthArray: number[] = [];
   maxNumberOfPagesToRender: number = 5;
   totalPageCount: number;
-
-
+  
   tableConfig: ITableModel;
   addNewButtonConfig: IAddNewModel;
 
