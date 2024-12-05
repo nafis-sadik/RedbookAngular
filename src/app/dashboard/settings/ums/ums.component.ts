@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { OrganizationModel } from 'src/app/dashboard/Models/organization.model';
 import { UserModel } from 'src/app/dashboard/Models/user.model';
 import { DashboardService } from 'src/app/dashboard/services/dashboard.service';
@@ -16,16 +16,18 @@ import { RoleModel } from 'src/app/dashboard/Models/role.model';
   styleUrls: ['./ums.component.scss']
 })
 
-export class UmsComponent {
+export class UmsComponent implements OnInit {
   selectedBusinessId: number;
   pagedUserModel: IPaginationModel<UserModel>;
   ownedBusinesses: Array<OrganizationModel> = [];
+  loaderContainer: HTMLElement = document.getElementById('LoadingScreen') as HTMLElement;
 
   constructor(
     dashboardService: DashboardService,
     private dialogService: NbDialogService,
     private orgService: OrganizationService,
     private employeeService: EmployeeService,
+    private cdRef: ChangeDetectorRef,
     private ngxPaginationService: NGXPaginationService<UserModel>
   ) {
     this.pagedUserModel = dashboardService.getPagingConfig(UserFormComponent, 'User Management', 'Add User', 'Search User');
@@ -99,10 +101,22 @@ export class UmsComponent {
         }
       }
     }
+  }
 
-    this.orgService.listenOrgList().subscribe((response) => {
-      this.ownedBusinesses = response;
-    });
+  ngOnInit(): void {    
+    this.orgService.getUserOrgs()
+      .subscribe((orgList: Array<OrganizationModel>) => {
+        this.ownedBusinesses = orgList;
+        this.cdRef.detectChanges();
+      },
+      (error) => {
+        console.log('error', error);
+      }).add(() => {        
+        if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
+          this.loaderContainer.classList.remove('d-block');
+          this.loaderContainer.classList.add('d-none');
+        }
+      });
   }
 
   /**

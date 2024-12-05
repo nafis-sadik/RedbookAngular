@@ -4,7 +4,7 @@ import { ProductsComponent } from './products/products.component';
 import { ProductSettingsComponent } from './product-settings/product-settings.component';
 import { ProductManagementComponent } from './product-management.component';
 
-const routes: Routes = [  
+const routes: Routes = [
   {
     path: '',
     component: ProductManagementComponent,

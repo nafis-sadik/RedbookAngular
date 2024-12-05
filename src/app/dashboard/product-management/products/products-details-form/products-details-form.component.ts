@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { CategoryModel } from 'src/app/dashboard/Models/category.model';
@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment.development';
   templateUrl: './products-details-form.component.html',
   styleUrls: ['./products-details-form.component.scss']
 })
-export class ProductsDetailsFormComponent {
+export class ProductsDetailsFormComponent implements OnInit {
   @Input() productModelInput: ProductModel | undefined = undefined;
   @Input() selectedBusinessId: number;
   @Input() saveMethod: (productModel: ProductModel) => void;
@@ -25,7 +25,6 @@ export class ProductsDetailsFormComponent {
   subcategoryList: Array<CategoryModel>;
   quantityAttributes: Array<ICommonAttribute>;
   brandAttributes: Array<ICommonAttribute>;
-  loaderContainer: HTMLElement| null;
 
   constructor(
     private fb: FormBuilder,
@@ -34,15 +33,7 @@ export class ProductsDetailsFormComponent {
     private subCategoryService: SubcategoryService,
     private commonAttributeService: CommonAttributeService,
     private dialogRef: NbDialogRef<ProductsDetailsFormComponent>
-  ) {
-    // On Init shall remove this loading screen forcing to update the DOM.
-    // Thus, change detector will work properly on page load
-    this.loaderContainer = document.getElementById('LoadingScreen');
-    if(this.loaderContainer && this.loaderContainer.classList.contains('d-none')){
-      this.loaderContainer.classList.remove('d-none');
-      this.loaderContainer.classList.add('d-block');
-    }
-  }
+  ) { }
 
   ngOnInit() {
     if (this.productModelInput != undefined) {
@@ -54,28 +45,21 @@ export class ProductsDetailsFormComponent {
     } else {
       this.productModel = new ProductModel();
     }
-
-    this.loaderContainer = document.getElementById('LoadingScreen');
     
     this.categoryService.getCategoriesUnderOrganization(this.selectedBusinessId)
-    .subscribe((categories) => {
-      this.categoryList = categories;
-      
-      this.commonAttributeService.getAttributes(environment.attributeTypes.quantity)
-        .subscribe((attributes) => {
-          this.quantityAttributes = attributes;
-          
-          this.commonAttributeService.getAttributes(environment.attributeTypes.brands)
-            .subscribe((attributes) => {
-              this.brandAttributes = attributes;
-              
-              if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
-                this.loaderContainer.classList.remove('d-block');
-                this.loaderContainer.classList.add('d-none');
-              }
-            });
-        });
-    });
+      .subscribe((categories) => {
+        this.categoryList = categories;
+        
+        this.commonAttributeService.getAttributes(environment.attributeTypes.quantity)
+          .subscribe((attributes) => {
+            this.quantityAttributes = attributes;
+            
+            this.commonAttributeService.getAttributes(environment.attributeTypes.brands)
+              .subscribe((attributes) => {
+                this.brandAttributes = attributes;
+              });
+          });
+      });
 
     this.productForm = this.fb.group({
       productName: [this.productModel.productName, Validators.required],

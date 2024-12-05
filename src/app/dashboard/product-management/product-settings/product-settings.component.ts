@@ -11,41 +11,40 @@ import { environment } from 'src/environments/environment.development';
   styleUrls: ['./product-settings.component.scss']
 })
 export class ProductSettingsComponent implements OnInit {
-
-  private loaderContainer: HTMLElement | null;
   ownedBusinesses: Array<OrganizationModel>;
   quantityUnits: Array<ICommonAttribute>;
   brands: Array<ICommonAttribute>;
+  loaderContainer: HTMLElement = document.getElementById('LoadingScreen') as HTMLElement;
 
   constructor(
     private commonAttributeService: CommonAttributeService,
     private orgService: OrganizationService,
     private cdRef: ChangeDetectorRef
-  ) { this.loaderContainer = document.getElementById('LoadingScreen'); }
+  ) { }
 
   ngOnInit(): void {
-    this.loaderContainer = document.getElementById('LoadingScreen');
-
-    this.orgService.listenOrgList()
-      .subscribe((orgList: OrganizationModel[]) => {
+    this.orgService.getUserOrgs()
+      .subscribe((orgList: Array<OrganizationModel>) => {
         this.ownedBusinesses = orgList;
-
+        this.cdRef.detectChanges();
+      },
+      (error) => {
+        console.log('error', error);
+      }).add(() => {        
         this.commonAttributeService.getAttributes(environment.attributeTypes.quantity)
-        .subscribe((response: Array<ICommonAttribute>) => {
-          this.quantityUnits = response;
-        });
+          .subscribe((response: Array<ICommonAttribute>) => {
+            this.quantityUnits = response;
+          });
     
         this.commonAttributeService.getAttributes(environment.attributeTypes.brands)
           .subscribe((response: Array<ICommonAttribute>) => {
             this.brands = response;
           });
 
-        if (this.loaderContainer && this.loaderContainer.classList.contains('d-block')) {
+        if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
           this.loaderContainer.classList.remove('d-block');
           this.loaderContainer.classList.add('d-none');
         }
-
-        this.cdRef.detectChanges();
       });
   }
 }

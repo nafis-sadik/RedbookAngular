@@ -21,14 +21,6 @@ export class OrganizationService{
     private sharedService: SharedService
   ) {
     this.orgSubject = new Subject<Array<OrganizationModel>>();
-  }  
-
-  emitOrgList(model: Array<OrganizationModel>): void {
-    this.orgSubject.next(model);
-  }
-
-  listenOrgList(): Observable<Array<OrganizationModel>> {
-    return this.orgSubject.asObservable();
   }
 
   addNewOrganization(orgModel: OrganizationModel): Observable<OrganizationModel> {

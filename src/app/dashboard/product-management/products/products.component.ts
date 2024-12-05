@@ -17,27 +17,19 @@ import { ProductService } from '../../services/products.service';
 
 export class ProductsComponent implements OnInit{
   selectedOutletId: number;
-  loaderContainer: HTMLElement| null;
   isUpdateOperation: boolean = false;
   pagedProductModel: IPaginationModel<ProductModel>;
   organizationList: Array<OrganizationModel>;
+  loaderContainer: HTMLElement = document.getElementById('LoadingScreen') as HTMLElement;
 
   constructor(
+    private cdRef: ChangeDetectorRef,
     dashboardService: DashboardService,
     private toastrService: NbToastrService,
     private productService: ProductService,
     private orgService: OrganizationService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private ngxPaginationService: NGXPaginationService<ProductModel>
+    private ngxPaginationService: NGXPaginationService<ProductModel>,
   ) {
-    // On Init shall remove this loading screen forcing to update the DOM.
-    // Thus, change detector will work properly on page load
-    this.loaderContainer = document.getElementById('LoadingScreen');
-    if(this.loaderContainer && this.loaderContainer.classList.contains('d-none')){
-      this.loaderContainer.classList.remove('d-none');
-      this.loaderContainer.classList.add('d-block');
-    }
-
     this.pagedProductModel = dashboardService.getPagingConfig(ProductsDetailsFormComponent, 'Product List', 'Add New Product');
 
     if (this.pagedProductModel.pagingConfig) {
@@ -54,7 +46,6 @@ export class ProductsComponent implements OnInit{
 
     if (this.pagedProductModel.tableConfig) {
       this.pagedProductModel.tableConfig.tableMaping = {
-        "Product Id": "productId",
         "Product Name": "productName",
         "Brand Name": "brandName",
         "Product Category": "categoryName",
@@ -108,7 +99,7 @@ export class ProductsComponent implements OnInit{
                     this.pagedProductModel.pagingConfig.pageNumber = targetPageNumber;
                     this.fetchProductsOfOutlet(this.selectedOutletId);
                   }
-                  this.changeDetectorRef.detectChanges();
+                  this.cdRef.detectChanges();
                 });
             }
           }
@@ -120,18 +111,18 @@ export class ProductsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.loaderContainer = document.getElementById('LoadingScreen');
-    
-    this.orgService.listenOrgList()
-      .subscribe((orgList: OrganizationModel[]) => {
+    this.orgService.getUserOrgs()
+      .subscribe((orgList: Array<OrganizationModel>) => {
         this.organizationList = orgList;
-        console.log('organizationList', this.organizationList);
-        
+        this.cdRef.detectChanges();
+      },
+      (error) => {
+        console.log('error', error);
+      }).add(() => {        
         if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
           this.loaderContainer.classList.remove('d-block');
           this.loaderContainer.classList.add('d-none');
         }
-        this.changeDetectorRef.detectChanges();
       });
   }
 

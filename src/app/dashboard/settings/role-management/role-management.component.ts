@@ -18,28 +18,41 @@ import { RouteModel } from 'src/app/dashboard/Models/route.model';
 })
 
 export class RoleManagementComponent {
-  @Input() ownedBusinesses: OrganizationModel[];
+  ownedBusinesses: OrganizationModel[];
   rolesUnderThisBusiness: RoleModel[];
   roleRouteMapping: IRoutePermissionModel[];
+  loaderContainer: HTMLElement = document.getElementById('LoadingScreen') as HTMLElement;
 
   selectedRoleId: number = 0;
   selectedBusinessId: number = 0;
 
   constructor(
-    orgService: OrganizationService,
+    private orgService: OrganizationService,
     private roleService: RoleService,
     private routeService: RouteService,
     private toastrService: NbToastrService,
     private windowService: NbWindowService,
-    private changeDetector: ChangeDetectorRef,
+    private cdRef: ChangeDetectorRef,
     private businessService: OrganizationService,
   ) {
     this.roleRouteMapping = [];
     this.rolesUnderThisBusiness = [];
+  }
 
-    orgService.listenOrgList().subscribe((response) => {
-      this.ownedBusinesses = response;
-    });
+  ngOnInit(): void {    
+    this.orgService.getUserOrgs()
+      .subscribe((orgList: Array<OrganizationModel>) => {
+        this.ownedBusinesses = orgList;
+        this.cdRef.detectChanges();
+      },
+      (error) => {
+        console.log('error', error);
+      }).add(() => {        
+        if(this.loaderContainer && this.loaderContainer.classList.contains('d-block')){
+          this.loaderContainer.classList.remove('d-block');
+          this.loaderContainer.classList.add('d-none');
+        }
+      });
   }
 
   // Organization / Business management
@@ -78,7 +91,7 @@ export class RoleManagementComponent {
             if (isNewlyAdded) {
               this.ownedBusinesses.push(response);
             }
-            this.changeDetector.detectChanges();
+            this.cdRef.detectChanges();
             this.toastrService.success(toasterMsg, 'Success');
           })
         },
@@ -104,7 +117,7 @@ export class RoleManagementComponent {
             .subscribe(() => {
               let filteredList = this.ownedBusinesses.filter(x => x.organizationId != businessId);
               this.ownedBusinesses = filteredList;
-              this.changeDetector.detectChanges();
+              this.cdRef.detectChanges();
             });
         }
       }
@@ -126,7 +139,7 @@ export class RoleManagementComponent {
           });
         });
 
-        this.changeDetector.detectChanges();
+        this.cdRef.detectChanges();
       });
   }
 
@@ -191,7 +204,7 @@ export class RoleManagementComponent {
               });
             }
 
-            this.changeDetector.detectChanges();
+            this.cdRef.detectChanges();
             this.toastrService.success('Saved Successfully', 'Success');
           });
         },
@@ -216,7 +229,7 @@ export class RoleManagementComponent {
             .subscribe(() => {
               let filteredList = this.rolesUnderThisBusiness.filter(x => x.roleId != roleId);
               this.rolesUnderThisBusiness = filteredList;
-              this.changeDetector.detectChanges();
+              this.cdRef.detectChanges();
             });
         }
       }
@@ -248,7 +261,7 @@ export class RoleManagementComponent {
             });
 
 
-            this.changeDetector.detectChanges();
+            this.cdRef.detectChanges();
           });
       });
   }
@@ -260,12 +273,12 @@ export class RoleManagementComponent {
       .subscribe((response) => {
         this.toastrService.success('Route mapped successfully', 'Success');
         route.isPermitted = response;
-        this.changeDetector.detectChanges();
+        this.cdRef.detectChanges();
       }, (error) => {
         console.log(error);
         this.toastrService.danger(error.error, "Error");
         route.isPermitted = route.isPermitted;
-        this.changeDetector.detectChanges();
+        this.cdRef.detectChanges();
       });
   }
 }
