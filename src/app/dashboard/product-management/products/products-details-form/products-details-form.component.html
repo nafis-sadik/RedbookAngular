@@ -65,12 +65,12 @@
           </div>
           <div class="col-md-6">
             <label class="mb-2 mt-4 p-0 col-md-6">Brand</label>
-            <nb-select formControlName="brandAttributeId" [selected]="productModel.brandAttributeId" selected fullWidth
+            <nb-select formControlName="brandId" [selected]="productModel.brandId" selected fullWidth
                        status="primary" placeholder="Quantity Type" aria-label="ProductSubcategory">
               <nb-option value>Select Brand</nb-option>
               <nb-option *ngFor="let brand of brandAttributes" [value]="brand.attributeId">{{ brand.attributeName }}</nb-option>
             </nb-select>
-            <div *ngIf="productForm.get('brandAttributeId')?.touched && productForm.get('brandAttributeId')?.invalid"
+            <div *ngIf="productForm.get('brandId')?.touched && productForm.get('brandId')?.invalid"
                  class="validationError"></div>
           </div>
         </div>

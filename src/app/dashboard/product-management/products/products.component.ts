@@ -50,8 +50,8 @@ export class ProductsComponent implements OnInit{
         "Brand Name": "brandName",
         "Product Category": "categoryName",
         "Product Subcategory": "subcategoryName",
-        "Price": "purchasePrice",
-        "MRP": "retailPrice"
+        "Purchase Price": "purchasePrice",
+        "Retail Price": "retailPrice"
       };
 
       this.pagedProductModel.tableConfig.onEdit = (product: ProductModel) => {

@@ -15,15 +15,15 @@ export class ProductModel{
      */
     categoryId: number = 0;
     /**
-     * Product subcategory or Subcategory Id
-     * @type {number}
-     */
-    subcategoryId: number = 0;
-    /**
      * Product category name
      * @type {string}
      */
     categoryName: string;
+    /**
+     * Product subcategory or Subcategory Id
+     * @type {number}
+     */
+    subcategoryId: number = 0;
     /**
      * Product subcategory name
      * @type {string}
@@ -58,10 +58,15 @@ export class ProductModel{
      * Brand id of product, (i.e. RFL, Beximco, GE etc)
      * @type {number}
      */
-    brandAttributeId: number = 0;
+    brandId: number = 0;
     /**
      * Brand name of product, (i.e. RFL, Beximco, GE etc)
      * @type {string}
      */
     brandName: string = '';
+    /**
+     * Stock Keeping Unit
+     * @type {string}
+     */
+    sku: string = '';
 }

@@ -66,7 +66,7 @@ export class ProductsDetailsFormComponent implements OnInit {
       categoryId: [this.productModel.categoryId, [Validators.required, Validators.min(1)]],
       subcategoryId: [this.productModel.subcategoryId, [Validators.required, Validators.min(1)]],
       quantityTypeId: [this.productModel.quantityTypeId, [Validators.required, Validators.min(1)]],
-      brandAttributeId: [this.productModel.brandAttributeId, [Validators.required, Validators.min(1)]],
+      brandId: [this.productModel.brandId, [Validators.required, Validators.min(1)]],
     });
 
     this.productForm.valueChanges.subscribe((value) => {
@@ -74,13 +74,13 @@ export class ProductsDetailsFormComponent implements OnInit {
       this.productModel.categoryId = value.categoryId;
       this.productModel.subcategoryId = value.subcategoryId;
       this.productModel.quantityTypeId = value.quantityTypeId;
-      this.productModel.brandAttributeId = value.brandAttributeId;
+      this.productModel.brandId = value.brandId;
     });
   }
 
   save() {
     if (this.productForm.valid) {
-      let selectedBrand = this.brandAttributes.find(brand => brand.attributeId == this.productModel.brandAttributeId);
+      let selectedBrand = this.brandAttributes.find(brand => brand.attributeId == this.productModel.brandId);
       this.productModel.brandName = selectedBrand? selectedBrand.attributeName: '';
       this.saveMethod(this.productModel);
       this.dialogRef.close();
