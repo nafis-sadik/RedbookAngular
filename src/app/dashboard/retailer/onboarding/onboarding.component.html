@@ -2,84 +2,72 @@
     <nb-card>
         <nb-card-header>Onboarding</nb-card-header>
         <nb-card-body>
-            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]="linearMode"
-                        #stepper>
+            <nb-stepper [orientation]="isMobile? 'horizontal': 'vertical'" class="container-fluid" [linear]="linearMode" #stepper>
                 <nb-step label="Register Client Organization">
                     <ng-template #labelOne>Organization step</ng-template>
-                    <form [formGroup]="OrganizationForm"
-                          class="step-container row">
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-12 p-1">
-                                    <label for="OrganizationName">Organization Name</label>
+                    <form [formGroup]="OrganizationForm" class="step-container">
+                        <div class="row">                            
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="mb-2 mt-4 p-0">Organization Name</label>
+                                        <input
+                                            nbInput
+                                            fullWidth
+                                            formControlName="organizationName"
+                                            status="primary"
+                                            type="text"
+                                            placeholder="Organization Name"
+                                            required>
+                                        <div *ngIf="OrganizationForm.get('organizationName')?.touched && OrganizationForm.get('organizationName')?.invalid" class="validationError"></div>
+                                    </div>
                                 </div>
-                                <div class="col-md-12 p-1">
-                                    <input
-                                           id="OrganizationName"
-                                           nbInput
-                                           fullWidth
-                                           formControlName="organizationName"
-                                           status="primary"
-                                           type="text"
-                                           class="form-control"
-                                           id="OrganizationName"
-                                           placeholder="Organization Name"
-                                           required>
-                                    <div id="OrganizationNameWarning"
-                                         *ngIf="OrganizationForm.get('organizationName')?.touched && OrganizationForm.get('organizationName')?.invalid"
-                                         class="validationError"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="mb-2 mt-4 p-0">Organization Address</label>
+                                        <input
+                                            nbInput
+                                            fullWidth
+                                            formControlName="organizationAddress"
+                                            status="primary"
+                                            type="text"
+                                            placeholder="Organization Address"
+                                            required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 p-1">
-                                    <label for="OrganizationAddress">Organization Address</label>
-                                </div>
-                                <div class="col-md-12 p-1">
-                                    <input
-                                           id="OrganizationAddress"
-                                           nbInput
-                                           fullWidth
-                                           formControlName="organizationAddress"
-                                           status="primary"
-                                           type="text"
-                                           class="form-control"
-                                           placeholder="Organization Address"
-                                           required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 p-1">
-                                    <label for="SubscriptionFee">Monthly Subscription Fee (Prepaid)</label>
-                                </div>
-                                <div class="col-md-12 p-1">
-                                    <input
-                                           id="SubscriptionFee"
-                                           nbInput
-                                           fullWidth
-                                           formControlName="subscriptionFee"
-                                           status="primary"
-                                           type="number"
-                                           class="form-control"
-                                           placeholder="Subscription Fee"
-                                           required>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="mb-2 mt-4 p-0">Monthly Subscription Fee (Prepaid)</label>
+                                        <input
+                                            nbInput
+                                            fullWidth
+                                            formControlName="subscriptionFee"
+                                            status="primary"
+                                            type="number"
+                                            placeholder="Subscription Fee"
+                                            required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12 p-1">
-                                    <button nbButton hero status="primary" class="float-right"
-                                            (click)="validateOrgReg(stepper)">Next</button>
+                            <div class="col-md-6">
+                                <div class="blumeDrop"
+                                    appBlumeDrop
+                                    [allowedFileTypes]="['image/png', 'image/jpeg']"
+                                    [uploadUrl]="'http://example.com/upload'"
+                                    [allowMultiSelect]="false"
+                                    (filesDropped)="handleOutputFiles($event)">
+                                    <div class="drop-label">
+                                        <nb-icon icon="cloud-upload-outline" status="primary"></nb-icon>
+                                        <br>
+                                        Drop or Tap your logo here
+                                    </div>
+                                    <img id="drop-view" src="" alt="">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="blumeDrop"
-                                 appBlumeDrop
-                                 [allowedFileTypes]="['image/png', 'image/jpeg']"
-                                 [uploadUrl]="'http://example.com/upload'"
-                                 [allowMultiSelect]="false"
-                                 (filesDropped)="handleOutputFiles($event)">
-                                <div class="drop-label">Drop or Tap your logo here</div>
-                                <img id="drop-view" src="" alt="">
+                        <div class="row pt-4">
+                            <div class="d-flex justify-content-end">
+                                <button nbButton hero status="primary" (click)="validateOrgReg(stepper)">Next</button>
                             </div>
                         </div>
                     </form>
@@ -87,7 +75,7 @@
                 <nb-step [stepControl]="AdminUserForm" label="Register Admin User">
                     <ng-template #labelTwo>Admin User Step</ng-template>
                     <form [formGroup]="AdminUserForm" class="step-container row">
-                        <div class="col-md-6 p-1">
+                        <div class="col-md-6">
                             <label for="FirstName" class="mb-2">First Name</label>
                             <input
                                    formControlName="firstName"
@@ -99,7 +87,7 @@
                                    id="FirstName"
                                    placeholder="First Name">
                         </div>
-                        <div class="col-md-6 p-1">
+                        <div class="col-md-6">
                             <label for="LastName" class="mb-2">Last Name</label>
                             <div class="col-md-12">
                                 <input
@@ -113,7 +101,7 @@
                                        placeholder="Last Name">
                             </div>
                         </div>
-                        <div class="col-md-6 p-1">
+                        <div class="col-md-6">
                             <label for="UserName" class="mb-2">User Name</label>
                             <div class="col-md-12">
                                 <input
@@ -130,7 +118,7 @@
                                      class="validationError"></div>
                             </div>
                         </div>
-                        <div class="col-md-6 p-1">
+                        <div class="col-md-6">
                             <label for="Email" class="mb-2">User Email</label>
                             <div class="col-md-12">
                                 <input
@@ -147,7 +135,7 @@
                                      class="validationError"></div>
                             </div>
                         </div>
-                        <div class="col-md-12 p-1">
+                        <div class="col-md-12">
                             <label for="accountBalance" class="mb-2">Initial Account Balance</label>
                             <div class="col-md-12">
                                 <input
@@ -164,7 +152,7 @@
                                      class="validationError"></div>
                             </div>
                         </div>
-                        <div class="col-md-12 p-1">
+                        <div class="col-md-12">
                             <button nbButton hero status="primary" class="float-right"
                                     (click)="onboardUser(stepper)">Save</button>
                         </div>
@@ -173,8 +161,7 @@
                 <nb-step [hidden]="true">
                     <div class="step-container">
                         <h3>Wizard completed!</h3>
-                        <button status="primary" nbButton hero (click)="resetAllForms(stepper)">Add Another
-                            User</button>
+                        <button status="primary" nbButton hero (click)="resetAllForms(stepper)">Add Another User</button>
                     </div>
                 </nb-step>
             </nb-stepper>

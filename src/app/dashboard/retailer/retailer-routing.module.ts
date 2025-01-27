@@ -5,7 +5,7 @@ import { OnboardingComponent } from './onboarding/onboarding.component';
 
 const routes: Routes = [
   {
-    path: 'retailer',
+    path: '',
     component: RetailerComponent,
     children: [
       {
@@ -20,8 +20,10 @@ const routes: Routes = [
   }
 ];
 
+
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
+
 export class RetailerRoutingModule { }

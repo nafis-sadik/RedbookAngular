@@ -1,3 +1,5 @@
+import { ProductVariantModel } from "./product-variant.model";
+
 export class ProductModel{
     /**
      * Product Id
@@ -64,9 +66,5 @@ export class ProductModel{
      * @type {string}
      */
     brandName: string = '';
-    /**
-     * Stock Keeping Unit
-     * @type {string}
-     */
-    sku: string = '';
+    productVariants: Array<ProductVariantModel> = [];
 }

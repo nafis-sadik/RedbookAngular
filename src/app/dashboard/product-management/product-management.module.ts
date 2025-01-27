@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductManagementRoutingModule } from './product-management-routing.module';
-import { NbAccordionModule, NbButton, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbListModule, NbRadioModule, NbSelectModule, NbTooltipModule } from '@nebular/theme';
+import { NbAccordionModule, NbButton, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbListModule, NbOptionModule, NbRadioModule, NbSelectModule, NbTooltipModule } from '@nebular/theme';
 import { ProductManagementComponent } from './product-management.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProductsComponent } from './products/products.component';
@@ -15,25 +15,26 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     ProductManagementComponent,
     ProductsDetailsFormComponent,
-    ProductsComponent,
     ProductSettingsComponent,
     QuantityUnitComponent,
-    CategoryComponent
+    ProductsComponent,
+    CategoryComponent,
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    ProductManagementRoutingModule,
     NbCardModule,
     SharedModule,
-    NbAccordionModule,
     NbIconModule,
     NbListModule,
     NbRadioModule,
+    NbInputModule,
     NbButtonModule,
     NbSelectModule,
-    NbInputModule,
-    NbTooltipModule
+    NbOptionModule,
+    NbTooltipModule,
+    NbAccordionModule,
+    ReactiveFormsModule,
+    ProductManagementRoutingModule,
   ]
 })
 

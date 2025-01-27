@@ -39,7 +39,7 @@ export class OnboardingComponent {
 
   ngOnInit() {
     this.isMobile = this.appConfigService.isMobilePhone();
-
+    
     this.OrganizationForm = this.fb.group({
       organizationName: ['', Validators.required],
       organizationAddress: ['', Validators.required],

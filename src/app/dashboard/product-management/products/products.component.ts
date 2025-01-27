@@ -8,6 +8,7 @@ import { OrganizationService } from 'src/app/dashboard/services/organization.ser
 import { NbToastrService } from '@nebular/theme';
 import { ProductModel } from 'src/app/dashboard/Models/product.model';
 import { ProductService } from '../../services/products.service';
+import { ProductVariantService } from '../../services/product-variant.service';
 
 @Component({
   selector: 'app-products',
@@ -76,7 +77,7 @@ export class ProductsComponent implements OnInit{
           }
         });
       };
-
+      
       this.pagedProductModel.tableConfig.onDelete = () => { console.log('onDelete'); };
     }
 
@@ -133,6 +134,7 @@ export class ProductsComponent implements OnInit{
         // Get pagination data to update table
         if(this.pagedProductModel.tableConfig){
           this.pagedProductModel.tableConfig.sourceData = pagedProducts.sourceData;
+          console.log('this.pagedProductModel.tableConfig.sourceData', this.pagedProductModel.tableConfig.sourceData);
         }
 
         if(this.pagedProductModel.pagingConfig){

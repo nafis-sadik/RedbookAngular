@@ -5,6 +5,7 @@ export const environment = {
     minimumSubscriptionFee: 500,
     attributeTypes: {
         quantity: 'Quantity',
-        brands: 'Brands'
+        brands: 'Brands',
+        colors: 'Colors',
     }
 };

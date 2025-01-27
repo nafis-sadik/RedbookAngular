@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef, NbToastrService } from '@nebular/theme';
 import { CategoryModel } from 'src/app/dashboard/Models/category.model';
 import { ICommonAttribute } from 'src/app/dashboard/Models/ICommonAttribute';
+import { ProductVariantModel } from 'src/app/dashboard/Models/product-variant.model';
 import { ProductModel } from 'src/app/dashboard/Models/product.model';
 import { CategoryService } from 'src/app/dashboard/services/category.service';
 import { CommonAttributeService } from 'src/app/dashboard/services/common-attribute.service';
@@ -25,9 +26,11 @@ export class ProductsDetailsFormComponent implements OnInit {
   subcategoryList: Array<CategoryModel>;
   quantityAttributes: Array<ICommonAttribute>;
   brandAttributes: Array<ICommonAttribute>;
+  colorAttributes: Array<ICommonAttribute>;
 
   constructor(
     private fb: FormBuilder,
+    private cdRef: ChangeDetectorRef,
     private toasterService: NbToastrService,
     private categoryService: CategoryService,
     private subCategoryService: SubcategoryService,
@@ -57,6 +60,11 @@ export class ProductsDetailsFormComponent implements OnInit {
             this.commonAttributeService.getAttributes(environment.attributeTypes.brands)
               .subscribe((attributes) => {
                 this.brandAttributes = attributes;
+
+                this.commonAttributeService.getAttributes(environment.attributeTypes.colors)
+                  .subscribe((attributes) => {
+                    this.colorAttributes = attributes;
+                  });
               });
           });
       });
@@ -76,6 +84,29 @@ export class ProductsDetailsFormComponent implements OnInit {
       this.productModel.quantityTypeId = value.quantityTypeId;
       this.productModel.brandId = value.brandId;
     });
+  }
+
+  addVariant(){
+    let variant = new ProductVariantModel();
+    if(this.productModel.productVariants == null || this.productModel.productVariants == undefined){
+      this.productModel.productVariants = [];
+    }
+
+    if(this.productModel.productVariants.length <= 0) {
+      variant.variantName = this.productModel.productName;
+    } else {
+      variant.variantName = '';
+    }
+    variant.productId = this.productModel.productId;
+    variant.variantId = 0;
+    variant.stockQuantity = 0;
+    this.productModel.productVariants.push(variant);
+    this.cdRef.detectChanges();
+    console.log('this.productModel.productVariants', this.productModel.productVariants);
+  }
+
+  removeVariant(variant: ProductVariantModel) {
+    this.productModel.productVariants = this.productModel.productVariants.filter(x => x != variant);
   }
 
   save() {
