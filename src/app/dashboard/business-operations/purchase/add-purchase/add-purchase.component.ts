@@ -10,6 +10,7 @@ import { PurchaseInvoiceDetailsModel } from 'src/app/dashboard/Models/purchase-i
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { VendorService } from 'src/app/dashboard/services/vendor.service';
+import { ProductVariantModel } from 'src/app/dashboard/Models/product-variant.model';
 
 @Component({
   selector: 'app-add-purchase',
@@ -69,6 +70,13 @@ export class AddPurchaseComponent implements OnInit {
 
       this.invoiceModel.chalanNumber = formData.chalanNumber;
     });
+
+    // Add event listener to calculate total amount
+    document.querySelectorAll('#InvoiceForm .step-2')?.forEach(elems => {
+      elems.addEventListener('keyup', (event) => {
+        this.updateTotalAmount();
+      });
+    });
   }
 
   /**
@@ -87,7 +95,7 @@ export class AddPurchaseComponent implements OnInit {
       invalidControls.forEach((controlName) => {
         this.invoiceForm.get(controlName)?.markAsDirty();
       });
-      return;
+      // return;
     }
 
     this.invoiceModel.purchaseDetails = [];
@@ -119,40 +127,45 @@ export class AddPurchaseComponent implements OnInit {
    * 4. Adds the new `PurchaseInvoiceDetailsModel` objects to the `purchaseDetails` array of the `invoiceModel`.
    * 5. Calls the `updateTotalAmount()` method to update the total amount of the purchase.
    *
-   * @param prodIdArr - An array of product IDs to be selected.
+   * @param selectedProdIdArr - An array of product IDs to be selected.
    */
-  selectProducts(prodIdArr: Array<number>): void {
-    document.querySelectorAll('#InvoiceForm .step-2')?.forEach(elems => {
-      elems.addEventListener('keyup', (event) => {
-        this.updateTotalAmount();
-      });
-    });
-
-    prodIdArr = prodIdArr.map((value) => Number(value));
-
+  selectProducts(selectedProdIdArr: Array<number>): void {
+    // Remove existing products that have been removed by user
     this.invoiceModel.purchaseDetails.forEach(
-      (PurchaseInvoiceDetailsModel: PurchaseInvoiceDetailsModel) => {
-        if (prodIdArr.includes(PurchaseInvoiceDetailsModel.productId)) {
-          let prodIdIndex = prodIdArr.indexOf(PurchaseInvoiceDetailsModel.productId);
-          prodIdArr.splice(prodIdIndex, 1);
+      (invoiceDetailsModel: PurchaseInvoiceDetailsModel) => {
+        if (!selectedProdIdArr.includes(invoiceDetailsModel.productId)) {
+          this.invoiceModel.purchaseDetails = this.invoiceModel.purchaseDetails.filter(
+            (x) => x.productId != invoiceDetailsModel.productId
+          )
         }
       }
     );
 
-    prodIdArr.forEach((prodId) => {
-      let purchaseDetails = new PurchaseInvoiceDetailsModel();
-      let product = this.outletProductList.find((x) => x.productId == prodId);
-      if (product) {
-        purchaseDetails.productId = prodId;
-        purchaseDetails.productName = product.productName;
-        purchaseDetails.quantity = 1;
-        purchaseDetails.purchasePrice = 0;
-      }
+    // Get new products
+    var existingProdIds = this.invoiceModel.purchaseDetails.filter(x => x.productId > 0).map(x => x.productId);
+    selectedProdIdArr.forEach((prodId) => {
+      if(!existingProdIds.includes(prodId)){
+        let purchaseDetails = new PurchaseInvoiceDetailsModel();
+        let product = this.outletProductList.find((x) => x.productId == prodId);
+        if (product) {
+          purchaseDetails.productId = prodId;
+          purchaseDetails.productName = product.productName;
+          purchaseDetails.quantity = 1;
+          purchaseDetails.purchasePrice = 0;
+          let variantList = this.outletProductList.find((x) => x.productId == prodId)?.productVariants;
+          if(variantList)
+            purchaseDetails.variants = variantList;
+        }
 
-      this.invoiceModel.purchaseDetails.push(purchaseDetails);
+        this.invoiceModel.purchaseDetails.push(purchaseDetails);
+      }
     });
 
-    // this.updateTotalAmount();
+    this.updateTotalAmount();
+  }
+
+  selectVariant(variantId: number): void {
+
   }
 
   /**

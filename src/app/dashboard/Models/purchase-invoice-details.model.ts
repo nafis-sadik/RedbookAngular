@@ -1,3 +1,5 @@
+import { ProductVariantModel } from "./product-variant.model";
+
 export class PurchaseInvoiceDetailsModel {
     /**
      * The unique identifier for the purchase details.
@@ -14,6 +16,11 @@ export class PurchaseInvoiceDetailsModel {
      * @type {number}
      */
     productId: number = 0;
+    /**
+     * The unique identifier for the variant of the selected product that is being purchased under this invoice.
+     * @type {number}
+     */
+    productVariantId: number = 0;
     /**
      * The name of the product associated with the purchase details.
      * @type {string}
@@ -49,4 +56,8 @@ export class PurchaseInvoiceDetailsModel {
      * @type {number}
      */
     totalPrice: number = 0;
+    /**
+     * Array of product variants of the selected product
+     */
+    variants: Array<ProductVariantModel> = [];
 }

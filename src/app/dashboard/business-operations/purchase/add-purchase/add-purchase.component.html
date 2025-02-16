@@ -123,6 +123,7 @@
                       <tr class="align-bottom row-color-2">
                         <th class="ng-star-inserted">Product Id</th>
                         <th class="ng-star-inserted">Product Name</th>
+                        <th class="ng-star-inserted">Variant Name</th>
                         <th class="ng-star-inserted">Quantity</th>
                         <th class="ng-star-inserted">Purchase Price</th>
                         <th class="ng-star-inserted">Purchase Discount</th>
@@ -135,8 +136,15 @@
                     <tbody>
                       <tr *ngFor="let purchaseDetail of invoiceModel.purchaseDetails; let i = index">
                         <td>{{ purchaseDetail.productId }}</td>
-                        <!-- {{product.productName}} -->
                         <td *ngIf="purchaseDetail.productId > 0">{{ purchaseDetail.productName }}</td>
+                        <td>
+                          <nb-select fullWidth required
+                                     placeholder="Select Variant"
+                                     (selectedChange)="selectVariant($event)">
+                            <nb-option *ngFor="let variant of purchaseDetail.variants" value={{variant.variantId}}>
+                              {{ variant.variantName }}</nb-option>
+                          </nb-select>
+                        </td>
                         <td *ngIf="purchaseDetail.productId <= 0">
                           <input fullWidth nbInput required
                                  type="text"
